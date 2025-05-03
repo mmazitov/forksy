@@ -1,0 +1,53 @@
+{
+	"editor.detectIndentation": false,
+	"editor.tabSize": 2,
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.stylelint": "explicit",
+		"source.organizeImports": "explicit"
+	},
+	"files.watcherExclude": {
+		"**/.next/**": true,
+		"**/node_modules/**": true
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[css]": {
+		"editor.defaultFormatter": "stylelint.vscode-stylelint"
+	},
+	"[prisma]": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "Prisma.prisma"
+	},
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 2,
+	"prettier.singleQuote": true,
+	"prettier.requireConfig": true,
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact"
+	],
+	"stylelint.validate": ["css", "scss"],
+	"css.validate": false,
+	"scss.validate": false,
+	"stylelint.enable": true,
+	"stylelint.configFile": ".stylelintrc.js",
+	"files.associations": {
+		"*css": "tailwindcss"
+	}
+}

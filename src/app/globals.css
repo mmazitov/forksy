@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+
+:root {
+	--font-poppins: 'Poppins', sans-serif;
+	--main-color: #9372f1;
+	--black-color: #212832;
+	--black-color-weak: #393948;
+	--white-color: #ffffff;
+	--grey-color: #878787;
+	--green-color: #60c06a;
+	--red-color: #df2727;
+
+	--gradient-start-color: #9772ff;
+	--gradient-end-color: #7f51ff;
+
+	--shadow-color: #7e59e899;
+	--shadow: 0 1px 13px;
+
+	--background: var(--white-color);
+	--foreground: var(--black-color);
+
+	--radius: 10px;
+	--radius-sm: 3px;
+
+	--btn-padding: 9px 8px;
+	--btn-color: var(--white-color);
+	--btn-bg: var(--main-color);
+	--btn-border: var(--main-color);
+	--btn-color-hover: var(--main-color);
+	--btn-bg-hover: transparent;
+	--rounded-btn-bg: #f2f2f2;
+
+	--input-bg: var(--white-color);
+	--input-placeholder-color: var(--grey-color);
+	--input-color: var(--grey-color);
+	--input-border: rgba(0, 0, 0, 0.1);
+
+	--font-xs: 12px;
+	--font-sm: 14px;
+	--font-base: 16px;
+	--font-lg: 18px;
+	--font-xl: 20px;
+	--font-2xl: 22px;
+	--font-3xl: 24px;
+	--font-4xl: 26px;
+	--font-5xl: 28px;
+	--font-6xl: 30px;
+}
+
+@theme inline {
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--main-color: #9372f1;
+		--black-color: #212832;
+		--black-color-weak: #393948;
+		--white-color: #ffffff;
+		--grey-color: #c4c4c4;
+		--green-color: #60c06a;
+		--red-color: #df2727;
+		--gradient-start-color: #9772ff;
+		--gradient-end-color: #7f51ff;
+
+		--background: var(--black-color);
+		--foreground: var(--white-color);
+		--btn-color: var(--color-white);
+	}
+}
+
+@layer utilities {
+	.transition-link {
+		transition: color 0.3s ease-in-out;
+	}
+	.transition-link-border {
+		transition: width 0.3s ease-in-out;
+	}
+	.shadow-drop {
+		box-shadow: var(--shadow) var(--shadow-color);
+	}
+	.drop-hidden {
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			opacity 0.3s ease-in-out,
+			visibility 0.3s ease-in-out;
+	}
+	.drop-visible {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+body {
+	background: var(--background);
+	color: var(--foreground);
+	font-family: var(--font-poppins), sans-serif;
+}
+
+.container {
+	@apply mx-auto px-[5px] max-w-[1320px];
+}
