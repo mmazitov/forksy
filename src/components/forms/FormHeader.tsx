@@ -1,4 +1,4 @@
-import CloseButton from './CloseButton';
+import CloseButton from '@/components/ui/CloseButton';
 
 export interface FormHeaderProps {
 	title?: string;

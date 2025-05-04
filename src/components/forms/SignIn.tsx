@@ -12,8 +12,8 @@ import { signInSchema } from '@/lib/utils/schemas/validate';
 import SocialAuth from '../SocialAuth';
 import Button from '../ui/Button';
 import Checkbox from '../ui/Checkbox';
-import FormHeader from '../ui/FormHeader';
 import Input from '../ui/Input';
+import FormHeader from './FormHeader';
 
 // Define type for form data based on the schema
 type SignInFormData = z.infer<typeof signInSchema>;
