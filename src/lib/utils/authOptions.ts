@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 import { NextAuthOptions } from 'next-auth';
 import { Adapter } from 'next-auth/adapters';
 import GoogleProvider from 'next-auth/providers/google';
-import FacebookProvider from 'next-auth/providers/facebook';
 
 import prisma from '@/lib/db/prisma';
 import { env } from '@/lib/utils/schemas/env.zod';
@@ -14,10 +13,6 @@ export const authOptions: NextAuthOptions = {
 		GoogleProvider({
 			clientId: env.GOOGLE_CLIENT_ID,
 			clientSecret: env.GOOGLE_CLIENT_SECRET,
-		}),
-		FacebookProvider({
-			clientId: env.FACEBOOK_CLIENT_ID,
-			clientSecret: env.FACEBOOK_CLIENT_SECRET,
 		}),
 	],
 	secret: env.NEXTAUTH_SECRET,

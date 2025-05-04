@@ -26,10 +26,7 @@ const SocialAuth = () => {
 	const handleFacebookSignIn = async () => {
 		dispatch(closeModal('isSignIn'));
 		dispatch(closeModal('isSignUp'));
-		setIsLoading(true);
-		await signIn('facebook', {
-			callbackUrl: '/',
-		});
+		alert('Facebook authentication is not implemented yet');
 	};
 
 	return (
