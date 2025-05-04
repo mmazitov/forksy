@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{ hostname: 'www.istockphoto.com' },
 			{ hostname: 'lh3.googleusercontent.com' },
+			{ hostname: 'accounts.google.com' },
+			{ hostname: 'googleusercontent.com' },
 		],
 	},
 };

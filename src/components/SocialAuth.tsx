@@ -1,4 +1,5 @@
 import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 
@@ -8,21 +9,27 @@ import Button from './ui/Button';
 
 const SocialAuth = () => {
 	const dispatch = useDispatch();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleGoogleSignIn = async () => {
 		dispatch(closeModal('isSignIn'));
 		dispatch(closeModal('isSignUp'));
-		try {
-			await signIn('google', { callbackUrl: '/' });
-		} catch (error) {
-			console.error('Google sign-in failed:', error);
-		}
+		setIsLoading(true);
+
+		// Don't use try/catch with redirect:true as it won't catch errors
+		// since the page redirects away
+		await signIn('google', {
+			callbackUrl: '/',
+		});
 	};
 
 	const handleFacebookSignIn = async () => {
 		dispatch(closeModal('isSignIn'));
 		dispatch(closeModal('isSignUp'));
-		alert('Facebook authentication is not implemented yet');
+		setIsLoading(true);
+		await signIn('facebook', {
+			callbackUrl: '/',
+		});
 	};
 
 	return (
@@ -31,6 +38,7 @@ const SocialAuth = () => {
 				<Button
 					className="flex justify-center items-center bg-[var(--grey-color)] p-0 border-[var(--grey-color)] rounded-full w-[40px] min-w-auto h-[40px]"
 					onClick={handleGoogleSignIn}
+					disabled={isLoading}
 				>
 					<FaGoogle size={18} />
 				</Button>
