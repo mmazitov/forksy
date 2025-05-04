@@ -40,13 +40,7 @@ const AddProductPage = () => {
 			<form action={addProduct}>
 				<div className="">
 					<label htmlFor="name">Name</label>
-					<Input
-						placeholder="Product name"
-						name="name"
-						type="text"
-						id="name"
-						required
-					/>
+					<Input placeholder="Product name" name="name" type="text" id="name" />
 				</div>
 				<div className="">
 					<label htmlFor="category">Category</label>
@@ -55,7 +49,6 @@ const AddProductPage = () => {
 						name="category"
 						type="text"
 						id="category"
-						required
 					/>
 				</div>
 				<div className="">
@@ -65,7 +58,6 @@ const AddProductPage = () => {
 						name="imageUrl"
 						type="text"
 						id="imageUrl"
-						required
 					/>
 				</div>
 
@@ -77,7 +69,6 @@ const AddProductPage = () => {
 							name="protein"
 							type="text"
 							id="protein"
-							required
 						/>
 					</div>
 
@@ -88,19 +79,12 @@ const AddProductPage = () => {
 							name="carbohydrates"
 							type="text"
 							id="carbohydrates"
-							required
 						/>
 					</div>
 
 					<div className="">
 						<label htmlFor="fat">Fat</label>
-						<Input
-							placeholder="Product Fat"
-							name="fat"
-							type="text"
-							id="fat"
-							required
-						/>
+						<Input placeholder="Product Fat" name="fat" type="text" id="fat" />
 					</div>
 
 					<div className="">
@@ -110,7 +94,6 @@ const AddProductPage = () => {
 							name="fiber"
 							type="text"
 							id="fiber"
-							required
 						/>
 					</div>
 				</div>

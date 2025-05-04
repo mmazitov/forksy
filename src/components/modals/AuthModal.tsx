@@ -6,7 +6,9 @@ import SignUp from '../forms/SignUp';
 
 const AuthModal = () => {
 	const { isSignIn, isSignUp } = useSelector(
-		(state: any) => state.persisted.modal,
+		(state: {
+			persisted: { modal: { isSignIn: boolean; isSignUp: boolean } };
+		}) => state.persisted.modal,
 	);
 
 	if (!isSignIn && !isSignUp) return null;
