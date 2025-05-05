@@ -1,9 +1,11 @@
 import { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import prisma from '@/lib/db/prisma';
+import { authOptions } from '@/lib/utils/authOptions';
 
 export const metadata: Metadata = {
 	title: 'Add product - Flowmazon',
@@ -34,7 +36,12 @@ const addProduct = async (formData: FormData) => {
 	redirect('/');
 };
 
-const AddProductPage = () => {
+const AddProductPage = async () => {
+	const session = await getServerSession(authOptions);
+
+	if (!session) {
+		redirect('/');
+	}
 	return (
 		<div>
 			<h1>Add Product</h1>

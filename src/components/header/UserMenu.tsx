@@ -18,6 +18,7 @@ const UserMenu = ({ session }: UserMenuProps) => {
 	const dispatch = useDispatch();
 
 	const user = session?.user;
+	const firstName = user?.name?.split(' ')[0] || '';
 
 	const handleClick = useCallback(() => {
 		setActive(!active);
@@ -40,13 +41,16 @@ const UserMenu = ({ session }: UserMenuProps) => {
 				onClick={handleClick}
 			>
 				{user ? (
-					<Image
-						src={user?.image || profilePicPlaceholder}
-						alt="profile"
-						width={40}
-						height={40}
-						className="rounded-full w-10"
-					/>
+					<div className="flex flex-col items-center">
+						<Image
+							src={user?.image || profilePicPlaceholder}
+							alt="profile"
+							width={40}
+							height={40}
+							className="rounded-full w-10"
+						/>
+						<span>{firstName}</span>
+					</div>
 				) : (
 					<PiUserCircleLight className="!w-[32px] !h-[32px]" />
 				)}
