@@ -9,6 +9,7 @@ datasource db {
 
 model Product {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
+  slug          String @unique
   name          String @unique
   imageUrl      String
   category      String

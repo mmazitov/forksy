@@ -6,19 +6,19 @@ import prisma from '@/lib/db/prisma';
 
 interface ProductPageProps {
 	params: Promise<{
-		id: string;
+		slug: string;
 	}>;
 }
 
-const getProduct = cache(async (id: string) => {
-	const product = await prisma.product.findUnique({ where: { id } });
+const getProduct = cache(async (slug: string) => {
+	const product = await prisma.product.findUnique({ where: { slug } });
 	if (!product) notFound();
 	return product;
 });
 
 const generateMetadata = async ({ params }: ProductPageProps) => {
-	const { id } = await params; // Await params before destructuring
-	const product = await getProduct(id);
+	const { slug } = await params; // Await params before destructuring
+	const product = await getProduct(slug);
 
 	return {
 		title: `${product.name} - Forksy`,
@@ -29,8 +29,8 @@ const generateMetadata = async ({ params }: ProductPageProps) => {
 };
 
 const ProductPage = async ({ params }: ProductPageProps) => {
-	const { id } = await params; // Await params before destructuring
-	const product = await getProduct(id);
+	const { slug } = await params; // Await params before destructuring
+	const product = await getProduct(slug);
 
 	return (
 		<div className="flex lg:flex-row flex-col lg:items-center gap-4">

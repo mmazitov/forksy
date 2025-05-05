@@ -28,6 +28,7 @@ const addProduct = async (formData: FormData) => {
 			carbohydrates,
 			fat,
 			fiber,
+			slug: name.toLowerCase().replace(/\s+/g, '-'), // Generate slug from name
 		},
 	});
 	redirect('/');

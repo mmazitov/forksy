@@ -7,7 +7,7 @@ interface ProductProps {
 }
 const ProductCard = ({ product }: ProductProps) => {
 	return (
-		<Link href={`/${product.id}`}>
+		<Link href={`/products/${product.slug}`}>
 			<figure className="card-image">
 				<Image
 					src={product.imageUrl}
