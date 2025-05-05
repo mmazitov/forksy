@@ -13,7 +13,7 @@ const Header = async () => {
 		<header className="border-[var(--main-color)] border-b-[1px]" role="banner">
 			<div className="flex justify-between items-center py-[5px] container">
 				<Logo />
-				<Navigation />
+				<Navigation session={session} />
 				<UserMenu session={session} />
 			</div>
 		</header>

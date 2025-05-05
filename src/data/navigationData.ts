@@ -17,6 +17,7 @@ export const navigationItems = [
 			{
 				name: 'Add Product',
 				href: '/add-product',
+				authRequired: true,
 			},
 		],
 	},
@@ -34,6 +35,7 @@ export const navigationItems = [
 			{
 				name: 'Add Recipe',
 				href: '/add-recipe',
+				authRequired: true,
 			},
 		],
 	},

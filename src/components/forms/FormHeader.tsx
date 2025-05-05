@@ -22,7 +22,7 @@ const FormHeader = ({
 				<p className="mb-[35px] text-[12px] md:text-[18px]">{caption}</p>
 			</div>
 			{showCancel && modalType && (
-				<CloseButton modalType={modalType} className="mt-2" />
+				<CloseButton modalType={modalType} className="mt-[-35px]" />
 			)}
 		</div>
 	);
