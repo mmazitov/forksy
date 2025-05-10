@@ -14,6 +14,8 @@ interface InputProps {
 	className?: string;
 	icon?: React.ReactNode;
 	disabled?: boolean;
+	value?: string;
+	onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Input = ({
@@ -26,6 +28,8 @@ const Input = ({
 	showToggle = false,
 	showIcon,
 	icon,
+	value,
+	onChange,
 }: InputProps) => {
 	const [showPassword, setShowPassword] = useState(!showToggle);
 
@@ -37,6 +41,8 @@ const Input = ({
 				name={name}
 				placeholder={placeholder}
 				disabled={disabled}
+				value={value}
+				onChange={onChange}
 				className={cn(
 					'w-full rounded-[var(--radius)] text-[10px] md:text-[14px] border-[var(--input-border)] border-[1px] bg-[var(--input-bg)] p-[8px] outline-none text-[var(--input-color)] placeholder:text-[var(--input-placeholder-color)]',
 					className,

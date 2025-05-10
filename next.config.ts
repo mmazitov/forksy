@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
 			{ hostname: 'lh3.googleusercontent.com' },
 			{ hostname: 'accounts.google.com' },
 			{ hostname: 'googleusercontent.com' },
+			{ hostname: '*.googleusercontent.com' },
+			{ hostname: '*.ggpht.com' },
+			{ hostname: '*.gstatic.com' },
+			{ hostname: '*.googleapis.com' },
+			// Разрешаем изображения с других доменов для результатов поиска
+			{ hostname: '*' },
 		],
 	},
 };
