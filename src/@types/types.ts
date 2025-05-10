@@ -53,6 +53,19 @@ export interface GoogleSearchItem {
 		cse_image?: {
 			src: string;
 		}[];
-		[key: string]: any;
+		[key: string]: unknown;
 	};
+}
+
+export interface NutritionSearchProps {
+	onNutritionSelect: (nutrition: NutritionData) => void;
+}
+
+export interface NutritionData {
+	name?: string;
+	calories?: number;
+	protein?: number;
+	fat?: number;
+	carbohydrates?: number;
+	fiber?: number;
 }

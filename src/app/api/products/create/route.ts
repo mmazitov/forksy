@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import prisma from '@/lib/db/prisma';
 
+// Make sure to export the POST function directly
 export async function POST(request: NextRequest) {
 	try {
 		const formData = await request.formData();
 		const name = formData.get('name') as string;
 		const category = formData.get('category') as string;
-		const imageUrl = formData.get('imageUrl') as string;
 		const protein = Number(formData.get('protein'));
 		const carbohydrates = Number(formData.get('carbohydrates'));
 		const fat = Number(formData.get('fat'));
@@ -26,8 +26,6 @@ export async function POST(request: NextRequest) {
 			data: {
 				name,
 				category,
-				imageUrl:
-					imageUrl || 'https://via.placeholder.com/400x400?text=No+Image',
 				protein,
 				carbohydrates,
 				fat,
@@ -47,4 +45,12 @@ export async function POST(request: NextRequest) {
 			{ status: 500 },
 		);
 	}
+}
+
+// Add a GET handler to make the endpoint respond to multiple methods
+export async function GET() {
+	return NextResponse.json(
+		{ message: 'Please use POST method to create a product' },
+		{ status: 405 },
+	);
 }

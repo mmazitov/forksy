@@ -16,6 +16,8 @@ interface InputProps {
 	disabled?: boolean;
 	value?: string;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
+	// onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+	onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 const Input = ({
@@ -30,6 +32,7 @@ const Input = ({
 	icon,
 	value,
 	onChange,
+	onKeyDown,
 }: InputProps) => {
 	const [showPassword, setShowPassword] = useState(!showToggle);
 
@@ -43,6 +46,7 @@ const Input = ({
 				disabled={disabled}
 				value={value}
 				onChange={onChange}
+				onKeyDown={onKeyDown}
 				className={cn(
 					'w-full rounded-[var(--radius)] text-[10px] md:text-[14px] border-[var(--input-border)] border-[1px] bg-[var(--input-bg)] p-[8px] outline-none text-[var(--input-color)] placeholder:text-[var(--input-placeholder-color)]',
 					className,

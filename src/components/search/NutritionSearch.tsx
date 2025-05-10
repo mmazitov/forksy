@@ -3,21 +3,9 @@
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
+import { NutritionData, NutritionSearchProps } from '@/@types/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-
-interface NutritionSearchProps {
-	onNutritionSelect: (nutrition: NutritionData) => void;
-}
-
-export interface NutritionData {
-	name?: string;
-	calories?: number;
-	protein?: number;
-	fat?: number;
-	carbohydrates?: number;
-	fiber?: number;
-}
 
 const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 	const [mounted, setMounted] = useState(false);
@@ -52,7 +40,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 
 			// Process search results to extract nutrition data
 			const processedResults: NutritionData[] =
-				data.items?.map((item: any) => {
+				data.items?.map((item: { snippet: string; title: string }) => {
 					const snippet = item.snippet || '';
 					const title = item.title || '';
 

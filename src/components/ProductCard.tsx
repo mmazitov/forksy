@@ -1,5 +1,4 @@
 import { Product } from '@prisma/client';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface ProductProps {
@@ -8,14 +7,6 @@ interface ProductProps {
 const ProductCard = ({ product }: ProductProps) => {
 	return (
 		<Link href={`/products/${product.slug}`}>
-			<figure className="card-image">
-				<Image
-					src={product.imageUrl}
-					alt={product.name}
-					width={400}
-					height={400}
-				/>
-			</figure>
 			<div className="">
 				<h2>{product.name}</h2>
 				<div>

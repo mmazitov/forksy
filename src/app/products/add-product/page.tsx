@@ -15,7 +15,6 @@ const AddProductPage = () => {
 	const [formData, setFormData] = useState({
 		name: '',
 		category: '',
-		imageUrl: '',
 		protein: '',
 		carbohydrates: '',
 		fat: '',
@@ -56,19 +55,33 @@ const AddProductPage = () => {
 		});
 
 		try {
+			console.log('Sending request to create product...');
 			const response = await fetch('/api/products/create', {
 				method: 'POST',
 				body: formDataToSend,
+				headers: {
+					// No Content-Type header when using FormData - browser sets it automatically with boundary
+				},
 			});
 
+			console.log('Response status:', response.status);
+
 			if (!response.ok) {
-				const errorData = await response.json().catch(() => null);
-				console.error('Error response:', errorData);
+				let errorData;
+				try {
+					errorData = await response.json();
+					console.error('Error response data:', errorData);
+				} catch (jsonError) {
+					console.error('Could not parse error response as JSON:', jsonError);
+				}
+
 				throw new Error(
 					`Failed to add product: ${response.status} ${response.statusText}`,
 				);
 			}
 
+			const result = await response.json();
+			console.log('Product created successfully:', result);
 			router.push('/');
 		} catch (error) {
 			console.error('Error adding product:', error);
@@ -111,19 +124,6 @@ const AddProductPage = () => {
 						type="text"
 						id="category"
 						value={formData.category}
-						onChange={handleInputChange}
-					/>
-				</div>
-				<div>
-					<label htmlFor="imageUrl" className="block font-medium">
-						Image URL
-					</label>
-					<Input
-						placeholder="Product Image URL"
-						name="imageUrl"
-						type="text"
-						id="imageUrl"
-						value={formData.imageUrl}
 						onChange={handleInputChange}
 					/>
 				</div>
