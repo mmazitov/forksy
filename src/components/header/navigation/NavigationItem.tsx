@@ -10,6 +10,7 @@ export type NavigationItem = {
 	href?: string;
 	children?: NavigationItem[];
 	authRequired?: boolean;
+	showChildrenOnlyWhenAuthed?: boolean;
 };
 
 interface NavigationItemProps {
@@ -51,17 +52,22 @@ export const NavigationItem = ({
 		return null;
 	}
 
+	// Determine if we should show this item as a link or with a dropdown
+	const shouldShowAsLink = item.showChildrenOnlyWhenAuthed && !session;
+	const displayHref = shouldShowAsLink ? item.href : item.href;
+	const displayChildren = shouldShowAsLink ? null : item.children;
+
 	return (
 		<li
 			className="group relative"
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 		>
-			{item.href ? (
+			{displayHref ? (
 				<Link
-					href={item.href}
+					href={displayHref}
 					className={`${navigationStyle} ${isActive ? activeStyle : ''} ${
-						isHovered && item.children ? activeStyle : ''
+						isHovered && displayChildren ? activeStyle : ''
 					}`}
 				>
 					{item.name}
@@ -69,19 +75,19 @@ export const NavigationItem = ({
 			) : (
 				<span
 					className={`cursor-pointer ${navigationStyle} ${isActive ? activeStyle : ''} ${
-						isHovered && item.children ? activeStyle : ''
+						isHovered && displayChildren ? activeStyle : ''
 					}`}
 				>
 					{item.name}
 				</span>
 			)}
-			{item.children && (
+			{displayChildren && (
 				<DropdownMenu
 					isVisible={isHovered}
 					currentPath={currentPath}
 					session={session}
 				>
-					{item.children}
+					{displayChildren}
 				</DropdownMenu>
 			)}
 		</li>

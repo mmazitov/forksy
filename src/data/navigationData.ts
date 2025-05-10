@@ -5,36 +5,31 @@ export const navigationItems = [
 	},
 	{
 		name: 'Products',
+		href: 'products/products-list',
+		showChildrenOnlyWhenAuthed: true,
 		children: [
 			{
 				name: 'Products List',
-				href: '/products-list',
-			},
-			{
-				name: 'Categories',
-				href: '/products-categories',
+				href: 'products/products-list',
 			},
 			{
 				name: 'Add Product',
 				href: '/products/add-product',
-				authRequired: true,
 			},
 		],
 	},
 	{
 		name: 'Recipes',
+		href: '/recipes/recipes-list',
+		showChildrenOnlyWhenAuthed: true,
 		children: [
 			{
 				name: 'Recipes List',
-				href: '/recipes-list',
-			},
-			{
-				name: 'Categories',
-				href: '/recipes-categories',
+				href: '/recipes/recipes-list',
 			},
 			{
 				name: 'Add Recipe',
-				href: '/add-recipe',
+				href: '/recipes/add-recipe',
 				authRequired: true,
 			},
 		],
