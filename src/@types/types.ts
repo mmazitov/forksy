@@ -58,6 +58,7 @@ export interface GoogleSearchItem {
 }
 
 export interface NutritionSearchProps {
+	// eslint-disable-next-line no-unused-vars
 	onNutritionSelect: (nutrition: NutritionData) => void;
 }
 

@@ -3,9 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import NutritionSearch, {
-	NutritionData,
-} from '@/components/search/NutritionSearch';
+import { NutritionData } from '@/@types/types';
+import NutritionSearch from '@/components/search/NutritionSearch';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 

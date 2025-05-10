@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/utils/authOptions';
 
 import Logo from './Logo';
-import Navigation from './Navigation';
+import Navigation from './navigation/Navigation';
 import UserMenu from './UserMenu';
 
 const Header = async () => {
