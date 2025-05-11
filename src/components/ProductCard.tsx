@@ -6,7 +6,7 @@ interface ProductProps {
 }
 const ProductCard = ({ product }: ProductProps) => {
 	return (
-		<Link href={`/products/${product.slug}`}>
+		<Link href={`/${product.slug}`}>
 			<div className="p-[var(--space)] border border-[var(--card-border)] rounded-[var(--radius)]">
 				<h2 className="font-bold text-lg">{product.name}</h2>
 				<div className="flex gap-[var(--space)]">

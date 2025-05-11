@@ -90,17 +90,6 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 							'вуглеводи',
 							'вуглевод',
 						),
-						fiber: extractNumberFromText(
-							snippet,
-							'fiber',
-							'dietary fiber',
-							'клетчатка',
-							'волокна',
-							'пищевые волокна',
-							'клітковина',
-							'волокна',
-							'харчові волокна',
-						),
 					};
 
 					return nutritionData;
