@@ -3,7 +3,11 @@
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-import { NutritionData, NutritionSearchProps } from '@/@types/types';
+import {
+	FatSecretFood,
+	NutritionData,
+	NutritionSearchProps,
+} from '@/@types/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
@@ -14,7 +18,6 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	// Ensure component is only rendered on the client
 	useEffect(() => {
 		setMounted(true);
 	}, []);
@@ -26,74 +29,49 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 		setError(null);
 
 		try {
-			// Determine search query language and add appropriate nutrition facts search terms
-			const searchQuery = createMultilingualSearchQuery(productName);
-			const response = await fetch(
-				`/api/search?q=${encodeURIComponent(searchQuery)}`,
-			);
+			const searchUrl = `/api/nutrition/search?q=${encodeURIComponent(productName.trim())}`;
+			const response = await fetch(searchUrl);
 
 			if (!response.ok) {
 				throw new Error('Failed to fetch nutrition information');
 			}
 
 			const data = await response.json();
+			const foods = data.foods?.food || [];
 
-			// Process search results to extract nutrition data
-			const processedResults: NutritionData[] =
-				data.items?.map((item: { snippet: string; title: string }) => {
-					const snippet = item.snippet || '';
-					const title = item.title || '';
+			// For each food item, fetch detailed nutrition information
+			const processedResults: NutritionData[] = await Promise.all(
+				foods.map(async (food: FatSecretFood) => {
+					try {
+						const detailsUrl = `/api/nutrition/details?id=${food.food_id}`;
+						const detailsResponse = await fetch(detailsUrl);
+						const detailsData = await detailsResponse.json();
 
-					const nutritionData: NutritionData = {
-						name: cleanProductName(title),
-						calories: extractNumberFromText(
-							snippet,
-							'calories',
-							'kcal',
-							'cal',
-							'калории',
-							'ккал',
-							'калорий',
-							'калорії',
-							'ккал',
-						),
-						protein: extractNumberFromText(
-							snippet,
-							'protein',
-							'proteins',
-							'белки',
-							'белок',
-							'протеин',
-							'білки',
-							'білок',
-							'протеїн',
-						),
-						fat: extractNumberFromText(
-							snippet,
-							'fat',
-							'fats',
-							'total fat',
-							'жиры',
-							'жир',
-							'жирность',
-							'жири',
-							'жир',
-						),
-						carbohydrates: extractNumberFromText(
-							snippet,
-							'carbohydrate',
-							'carbs',
-							'total carbohydrate',
-							'углеводы',
-							'углевод',
-							'угл',
-							'вуглеводи',
-							'вуглевод',
-						),
-					};
-
-					return nutritionData;
-				}) || [];
+						const serving = detailsData.food.servings.serving[0]; // Get first serving
+						return {
+							name: food.food_name,
+							calories: serving ? parseFloat(serving.calories) : undefined,
+							protein: serving ? parseFloat(serving.protein) : undefined,
+							fat: serving ? parseFloat(serving.fat) : undefined,
+							carbohydrates: serving
+								? parseFloat(serving.carbohydrate)
+								: undefined,
+						};
+					} catch (err) {
+						console.error(
+							`Failed to fetch details for ${food.food_name}:`,
+							err,
+						);
+						return {
+							name: food.food_name,
+							calories: undefined,
+							protein: undefined,
+							fat: undefined,
+							carbohydrates: undefined,
+						};
+					}
+				}),
+			);
 
 			setSearchResults(processedResults);
 		} catch (err) {
@@ -104,89 +82,10 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 		}
 	};
 
-	// Create search query with appropriate language terms
-	const createMultilingualSearchQuery = (query: string): string => {
-		// Check if query is likely Russian or Ukrainian
-		const cyrillicPattern = /[а-яА-ЯёЁіІїЇєЄґҐ]/;
-		if (cyrillicPattern.test(query)) {
-			// If Cyrillic, check for Ukrainian specific characters
-			const ukrainianPattern = /[іІїЇєЄґҐ]/;
-			if (ukrainianPattern.test(query)) {
-				return `${query} харчова цінність калорії білки жири вуглеводи`;
-			} else {
-				return `${query} пищевая ценность калории белки жиры углеводы`;
-			}
-		} else {
-			// Default to English
-			return `${query} nutrition facts calories protein fat carbohydrates`;
-		}
-	};
-
-	// Clean product name from unnecessary words in multiple languages
-	const cleanProductName = (title: string): string => {
-		return (
-			title
-				// English
-				.replace(/nutrition facts/i, '')
-				.replace(/calories/i, '')
-				.replace(/carbs/i, '')
-				.replace(/protein/i, '')
-				.replace(/fat/i, '')
-				// Russian
-				.replace(/пищевая ценность/i, '')
-				.replace(/калории/i, '')
-				.replace(/белки/i, '')
-				.replace(/жиры/i, '')
-				.replace(/углеводы/i, '')
-				// Ukrainian
-				.replace(/харчова цінність/i, '')
-				.replace(/калорії/i, '')
-				.replace(/білки/i, '')
-				.replace(/жири/i, '')
-				.replace(/вуглеводи/i, '')
-				// Generic cleanup
-				.replace(/\|/g, '')
-				.replace(/\s+/g, ' ')
-				.trim()
-		);
-	};
-
-	// Enhanced number extraction from text for multilingual support
-	const extractNumberFromText = (
-		text: string,
-		...keywords: string[]
-	): number | undefined => {
-		for (const keyword of keywords) {
-			// Patterns for finding a number before or after a keyword
-			const regexBefore = new RegExp(
-				`(\\d+(?:[.,]\\d+)?)\\s*(?:g|mg|kcal|г|мг|ккал)?\\s*(?:of|из|із)?\\s*${keyword}`,
-				'i',
-			);
-			const regexAfter = new RegExp(
-				`${keyword}\\s*(?::|contains|is|=|-|содержит|составляет|містить|становить)\\s*(\\d+(?:[.,]\\d+)?)\\s*(?:g|mg|kcal|г|мг|ккал)?`,
-				'i',
-			);
-
-			let match = text.match(regexBefore);
-			if (match && match[1]) {
-				// Handle comma as decimal separator in European/Russian formats
-				return parseFloat(match[1].replace(',', '.'));
-			}
-
-			match = text.match(regexAfter);
-			if (match && match[1]) {
-				return parseFloat(match[1].replace(',', '.'));
-			}
-		}
-		return undefined;
-	};
-
-	// Handle selection of a nutrition item
 	const handleSelectNutrition = (nutrition: NutritionData) => {
 		onNutritionSelect(nutrition);
 	};
 
-	// If not mounted yet, don't render to prevent hydration mismatch
 	if (!mounted) {
 		return null;
 	}
