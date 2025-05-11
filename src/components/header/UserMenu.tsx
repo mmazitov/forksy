@@ -47,7 +47,7 @@ const UserMenu = ({ session }: UserMenuProps) => {
 							alt="profile"
 							width={40}
 							height={40}
-							className="rounded-full w-10"
+							className="rounded-full"
 						/>
 						<span>{firstName}</span>
 					</div>
@@ -60,29 +60,29 @@ const UserMenu = ({ session }: UserMenuProps) => {
 					active ? 'drop-visible' : ''
 				}`}
 			>
-				<ul className="py-1">
+				<ul className="">
 					{user ? (
 						<>
 							<li
-								className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
+								className="hover:bg-gray-100 px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
 								onClick={() => signOut({ callbackUrl: '/' })}
 							>
-								Sign out
+								Вийти
 							</li>
 						</>
 					) : (
 						<>
 							<li
-								className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
+								className="hover:bg-gray-100 px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
 								onClick={handleSignIn}
 							>
-								Sign in
+								Авторизація
 							</li>
 							<li
-								className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
+								className="hover:bg-gray-100 px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
 								onClick={handleSignUp}
 							>
-								Sign up
+								Реєстрація
 							</li>
 						</>
 					)}

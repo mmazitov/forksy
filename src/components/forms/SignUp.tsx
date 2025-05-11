@@ -50,8 +50,8 @@ const SignUp = () => {
 	return (
 		<>
 			<FormHeader
-				title="Create Account"
-				caption="Fill in your details to get started"
+				title="Створення облікового запису"
+				caption="Заповніть форму нижче, щоб зареєструватися"
 				showCancel={true}
 				modalType="isSignUp"
 			/>
@@ -61,7 +61,7 @@ const SignUp = () => {
 			>
 				<div>
 					<Input
-						placeholder="Full Name"
+						placeholder="Ім'я"
 						type="text"
 						required
 						className={errors.name ? 'border-red-500' : ''}
@@ -70,7 +70,7 @@ const SignUp = () => {
 				</div>
 				<div>
 					<Input
-						placeholder="Email"
+						placeholder="Пошта"
 						type="text"
 						required
 						className={errors.email ? 'border-red-500' : ''}
@@ -79,7 +79,7 @@ const SignUp = () => {
 				</div>
 				<div>
 					<Input
-						placeholder="Password"
+						placeholder="Пароль"
 						type="password"
 						showToggle={true}
 						required
@@ -89,7 +89,7 @@ const SignUp = () => {
 				</div>
 				<div>
 					<Input
-						placeholder="Confirm Password"
+						placeholder="Повторіть пароль"
 						type="password"
 						showToggle={true}
 						required
@@ -99,28 +99,28 @@ const SignUp = () => {
 				</div>
 				<div>
 					<Button type="submit" className="w-full" disabled={isSubmitting}>
-						{isSubmitting ? 'Creating Account...' : 'Sign Up'}
+						{isSubmitting ? 'Створення...' : 'Реестрація'}
 					</Button>
 				</div>
 				<div className="flex justify-between items-center">
 					<Checkbox
-						label="I agree to the Terms and Conditions"
+						label="Згоден з умовами використання"
 						checked={isChecked}
 						onChange={(e) => setIsChecked(e.target.checked)}
 					/>
 				</div>
 			</form>
 			<p className="mb-[12px] text-[12px] md:text-[14px] text-center">
-				Or sign up with
+				Ви також можете увійти за допомогою соціальних мереж
 			</p>
 			<SocialAuth />
 			<p className="text-[10px] md:text-[14px] text-center">
-				Already have an account?{' '}
+				Вже маете аккаует?{' '}
 				<span
 					className="text-[var(--main-color)] hover:underline cursor-pointer"
 					onClick={switchToSignIn}
 				>
-					Sign in
+					Увійти
 				</span>
 			</p>
 		</>

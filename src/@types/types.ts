@@ -68,5 +68,5 @@ export interface NutritionData {
 	protein?: number;
 	fat?: number;
 	carbohydrates?: number;
-	fiber?: number;
+	category?: number;
 }

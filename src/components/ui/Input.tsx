@@ -16,7 +16,6 @@ interface InputProps {
 	disabled?: boolean;
 	value?: string;
 	onChange?: React.ChangeEventHandler<HTMLInputElement>;
-	// onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 	onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 

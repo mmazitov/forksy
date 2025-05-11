@@ -51,8 +51,8 @@ const SignIn = () => {
 	return (
 		<>
 			<FormHeader
-				title="Welcome!"
-				caption="Sign in to continue"
+				title="Привіт"
+				caption="Авторизуйтесь, щоб продовжити"
 				showCancel={true}
 				modalType="isSignIn"
 			/>
@@ -62,7 +62,7 @@ const SignIn = () => {
 			>
 				<div>
 					<Input
-						placeholder="Email"
+						placeholder="Пошта"
 						type="text"
 						required
 						className={errors.email ? 'border-red-500' : ''}
@@ -71,7 +71,7 @@ const SignIn = () => {
 				</div>
 				<div>
 					<Input
-						placeholder="Password"
+						placeholder="Пароль"
 						type="password"
 						showToggle={true}
 						required
@@ -81,7 +81,7 @@ const SignIn = () => {
 				</div>
 				<div>
 					<Button type="submit" className="w-full" disabled={isSubmitting}>
-						{isSubmitting ? 'Signing in...' : 'Sign In'}
+						{isSubmitting ? 'Авторизація...' : 'Увійти'}
 					</Button>
 				</div>
 				<div className="flex justify-between items-center">
@@ -93,16 +93,16 @@ const SignIn = () => {
 				</div>
 			</form>
 			<p className="mb-[12px] text-[12px] md:text-[14px] text-center">
-				Or login with
+				Чи увійдіть за допомогою соціальних мереж
 			</p>
 			<SocialAuth />
 			<p className="text-[10px] md:text-[14px] text-center">
-				Dont have an account?{' '}
+				Не маете аккаунту?{' '}
 				<span
 					className="text-[var(--main-color)] hover:underline cursor-pointer"
 					onClick={switchToSignUp}
 				>
-					Sign up
+					Зареєструватись
 				</span>
 			</p>
 		</>

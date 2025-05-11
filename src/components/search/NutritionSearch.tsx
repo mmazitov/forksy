@@ -202,30 +202,16 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 		return null;
 	}
 
-	// Create a placeholder based on detected language
-	const getPlaceholder = () => {
-		const cyrillicPattern = /[а-яА-ЯёЁіІїЇєЄґҐ]/;
-		if (cyrillicPattern.test(productName)) {
-			const ukrainianPattern = /[іІїЇєЄґҐ]/;
-			if (ukrainianPattern.test(productName)) {
-				return 'Введіть назву продукту для пошуку';
-			} else {
-				return 'Введите название продукта для поиска';
-			}
-		}
-		return 'Enter product name to search nutrition facts';
-	};
-
 	return (
-		<div className="bg-[var(--white-color)] shadow-drop mb-[16px] p-4 border border-[var(--black-color-weak)] rounded-[var(--radius)]">
-			<h2 className="font-semibold text-lg">Search Nutrition Facts</h2>
+		<div className="bg-[var(--white-color)] shadow-drop mb-[var(--space)] p-[var(--space)] border border-[var(--black-color-weak)] rounded-[var(--radius)]">
+			<h2 className="font-semibold text-lg">Пошук продукту</h2>
 
 			<div className="flex gap-[16px]">
 				<div className="flex-grow">
 					<Input
 						type="text"
 						name="nutrition-search"
-						placeholder={getPlaceholder()}
+						placeholder="Пошук продукту"
 						value={productName}
 						onChange={(e) => setProductName(e.target.value)}
 						onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -239,17 +225,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 					onClick={handleSearch}
 					disabled={isLoading}
 				>
-					{isLoading
-						? productName.match(/[а-яА-ЯёЁ]/)
-							? 'Поиск...'
-							: productName.match(/[іІїЇєЄґҐ]/)
-								? 'Пошук...'
-								: 'Searching...'
-						: productName.match(/[а-яА-ЯёЁ]/)
-							? 'Поиск'
-							: productName.match(/[іІїЇєЄґҐ]/)
-								? 'Пошук'
-								: 'Search'}
+					{isLoading ? 'Пошук...' : 'Пошук'}
 				</Button>
 			</div>
 
@@ -262,11 +238,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 			{searchResults.length > 0 && (
 				<div className="mt-4">
 					<h3 className="mb-2 font-medium">
-						{productName.match(/[а-яА-ЯёЁ]/) && !productName.match(/[іІїЇєЄґҐ]/)
-							? 'Результаты:'
-							: productName.match(/[іІїЇєЄґҐ]/)
-								? 'Результати:'
-								: 'Results:'}
+						Результати пошуку для: {productName}
 					</h3>
 					<div className="space-y-3 max-h-[300px] overflow-y-auto">
 						{searchResults.map((nutrition, index) => (
@@ -278,59 +250,16 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 								<div className="font-medium">{nutrition.name}</div>
 								<div className="gap-2 grid grid-cols-2 sm:grid-cols-4 mt-2 text-sm">
 									{nutrition.calories !== undefined && (
-										<div>
-											{productName.match(/[а-яА-ЯёЁ]/) &&
-											!productName.match(/[іІїЇєЄґҐ]/)
-												? 'Калории: '
-												: productName.match(/[іІїЇєЄґҐ]/)
-													? 'Калорії: '
-													: 'Calories: '}
-											{nutrition.calories}
-										</div>
+										<div>Калорії: {nutrition.calories}ккал</div>
 									)}
 									{nutrition.protein !== undefined && (
-										<div>
-											{productName.match(/[а-яА-ЯёЁ]/) &&
-											!productName.match(/[іІїЇєЄґҐ]/)
-												? 'Белки: '
-												: productName.match(/[іІїЇєЄґҐ]/)
-													? 'Білки: '
-													: 'Protein: '}
-											{nutrition.protein}г
-										</div>
+										<div>Білки: {nutrition.protein}г</div>
 									)}
 									{nutrition.fat !== undefined && (
-										<div>
-											{productName.match(/[а-яА-ЯёЁ]/) &&
-											!productName.match(/[іІїЇєЄґҐ]/)
-												? 'Жиры: '
-												: productName.match(/[іІїЇєЄґҐ]/)
-													? 'Жири: '
-													: 'Fat: '}
-											{nutrition.fat}г
-										</div>
+										<div>Жири: {nutrition.fat}г</div>
 									)}
 									{nutrition.carbohydrates !== undefined && (
-										<div>
-											{productName.match(/[а-яА-ЯёЁ]/) &&
-											!productName.match(/[іІїЇєЄґҐ]/)
-												? 'Углеводы: '
-												: productName.match(/[іІїЇєЄґҐ]/)
-													? 'Вуглеводи: '
-													: 'Carbs: '}
-											{nutrition.carbohydrates}г
-										</div>
-									)}
-									{nutrition.fiber !== undefined && (
-										<div>
-											{productName.match(/[а-яА-ЯёЁ]/) &&
-											!productName.match(/[іІїЇєЄґҐ]/)
-												? 'Клетчатка: '
-												: productName.match(/[іІїЇєЄґҐ]/)
-													? 'Клітковина: '
-													: 'Fiber: '}
-											{nutrition.fiber}г
-										</div>
+										<div>Вуглеводи: {nutrition.carbohydrates}г</div>
 									)}
 								</div>
 							</div>

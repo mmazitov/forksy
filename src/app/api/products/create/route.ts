@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 		const protein = Number(formData.get('protein'));
 		const carbohydrates = Number(formData.get('carbohydrates'));
 		const fat = Number(formData.get('fat'));
-		const fiber = Number(formData.get('fiber'));
+		const calories = Number(formData.get('calories'));
 
 		// Validate required fields
 		if (!name || !category) {
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 				protein,
 				carbohydrates,
 				fat,
-				fiber,
+				calories,
 				slug: name.toLowerCase().replace(/\s+/g, '-'), // Generate slug from name
 			},
 		});

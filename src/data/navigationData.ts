@@ -1,45 +1,45 @@
 export const navigationItems = [
 	{
-		name: 'Home',
+		name: 'Головна',
 		href: '/',
 	},
 	{
-		name: 'Products',
-		href: 'products/products-list',
+		name: 'Продукти',
+		href: '/products-list',
 		showChildrenOnlyWhenAuthed: true,
 		children: [
 			{
-				name: 'Products List',
-				href: 'products/products-list',
+				name: 'Список продуктів',
+				href: '/products-list',
 			},
 			{
-				name: 'Add Product',
-				href: '/products/add-product',
+				name: 'Додати продукт',
+				href: '/products-add',
 			},
 		],
 	},
 	{
-		name: 'Recipes',
-		href: '/recipes/recipes-list',
+		name: 'Рецепти',
+		href: '/recipes-list',
 		showChildrenOnlyWhenAuthed: true,
 		children: [
 			{
-				name: 'Recipes List',
-				href: '/recipes/recipes-list',
+				name: 'Список рецептів',
+				href: '/recipes-list',
 			},
 			{
-				name: 'Add Recipe',
-				href: '/recipes/add-recipe',
+				name: 'Додати рецепт',
+				href: '/add-recipe',
 				authRequired: true,
 			},
 		],
 	},
 	{
-		name: 'About',
+		name: 'Про нас',
 		href: '/about',
 	},
 	{
-		name: 'Contact',
+		name: 'Контакти',
 		href: '/contact',
 	},
 ];

@@ -7,14 +7,25 @@ interface ProductProps {
 const ProductCard = ({ product }: ProductProps) => {
 	return (
 		<Link href={`/products/${product.slug}`}>
-			<div className="">
-				<h2>{product.name}</h2>
-				<div>
-					<p>category: {product.category}</p>
-					<p>protein: {product.protein}</p>
-					<p>carbohydrates: {product.carbohydrates}</p>
-					<p>fat: {product.fat}</p>
-					<p>fiber: {product.fiber}</p>
+			<div className="p-[var(--space)] border border-[var(--card-border)] rounded-[var(--radius)]">
+				<h2 className="font-bold text-lg">{product.name}</h2>
+				<div className="flex gap-[var(--space)]">
+					<p>
+						<span className="font-medium">Категорія:</span> {product.category}
+					</p>
+					<p>
+						<span className="font-medium">Калорії:</span> {product.calories}
+					</p>
+					<p>
+						<span className="font-medium">Білки:</span> {product.protein}
+					</p>
+					<p>
+						<span className="font-medium">Жири:</span> {product.fat}
+					</p>
+					<p>
+						<span className="font-medium">Вуглеводи:</span>{' '}
+						{product.carbohydrates}
+					</p>
 				</div>
 			</div>
 		</Link>

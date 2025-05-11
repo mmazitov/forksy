@@ -4,20 +4,21 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { NutritionData } from '@/@types/types';
+import PageHeader from '@/components/heading/PageHeader';
 import NutritionSearch from '@/components/search/NutritionSearch';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
-const AddProductPage = () => {
+const ProductsAdd = () => {
 	const router = useRouter();
 	const [mounted, setMounted] = useState(false);
 	const [formData, setFormData] = useState({
 		name: '',
 		category: '',
+		calories: '',
 		protein: '',
-		carbohydrates: '',
 		fat: '',
-		fiber: '',
+		carbohydrates: '',
 	});
 
 	// This ensures the component only renders fully on the client side
@@ -38,10 +39,10 @@ const AddProductPage = () => {
 		setFormData((prev) => ({
 			...prev,
 			name: nutrition.name || prev.name,
-			protein: nutrition.protein?.toString() || prev.protein,
+			calories: nutrition.calories?.toString() || prev.calories,
 			carbohydrates: nutrition.carbohydrates?.toString() || prev.carbohydrates,
 			fat: nutrition.fat?.toString() || prev.fat,
-			fiber: nutrition.fiber?.toString() || prev.fiber,
+			protein: nutrition.protein?.toString() || prev.protein,
 		}));
 	};
 
@@ -94,18 +95,18 @@ const AddProductPage = () => {
 	}
 
 	return (
-		<div className="py-8">
-			<h1 className="mb-6 font-bold text-2xl">Add Product</h1>
+		<section>
+			<PageHeader pageTitle="Додати продукт" />
 
 			<NutritionSearch onNutritionSelect={handleNutritionSelect} />
 
 			<form onSubmit={handleSubmit} className="flex flex-col gap-[16px]">
 				<div>
 					<label htmlFor="name" className="block font-medium">
-						Name
+						Назва
 					</label>
 					<Input
-						placeholder="Product name"
+						placeholder="Назва продукту"
 						name="name"
 						type="text"
 						id="name"
@@ -115,10 +116,10 @@ const AddProductPage = () => {
 				</div>
 				<div>
 					<label htmlFor="category" className="block font-medium">
-						Category
+						Категорія
 					</label>
 					<Input
-						placeholder="Product Category"
+						placeholder="Категорія продукту"
 						name="category"
 						type="text"
 						id="category"
@@ -129,11 +130,25 @@ const AddProductPage = () => {
 
 				<div className="gap-[16px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 					<div>
-						<label htmlFor="protein" className="block font-medium">
-							Protein (g)
+						<label htmlFor="calories" className="block font-medium">
+							Калорії (ккал)
 						</label>
 						<Input
-							placeholder="Product Protein"
+							placeholder="Калорії"
+							name="calories"
+							type="text"
+							id="calories"
+							value={formData.calories}
+							onChange={handleInputChange}
+						/>
+					</div>
+
+					<div>
+						<label htmlFor="protein" className="block font-medium">
+							Білки (г)
+						</label>
+						<Input
+							placeholder="Білки"
 							name="protein"
 							type="text"
 							id="protein"
@@ -143,25 +158,11 @@ const AddProductPage = () => {
 					</div>
 
 					<div>
-						<label htmlFor="carbohydrates" className="block font-medium">
-							Carbohydrates (g)
-						</label>
-						<Input
-							placeholder="Product Carbohydrates"
-							name="carbohydrates"
-							type="text"
-							id="carbohydrates"
-							value={formData.carbohydrates}
-							onChange={handleInputChange}
-						/>
-					</div>
-
-					<div>
 						<label htmlFor="fat" className="block font-medium">
-							Fat (g)
+							Жири (г)
 						</label>
 						<Input
-							placeholder="Product Fat"
+							placeholder="Жири"
 							name="fat"
 							type="text"
 							id="fat"
@@ -171,25 +172,25 @@ const AddProductPage = () => {
 					</div>
 
 					<div>
-						<label htmlFor="fiber" className="block font-medium">
-							Fiber (g)
+						<label htmlFor="carbohydrates" className="block font-medium">
+							Вуглеводи (г)
 						</label>
 						<Input
-							placeholder="Product Fiber"
-							name="fiber"
+							placeholder="Вуглеводи"
+							name="carbohydrates"
 							type="text"
-							id="fiber"
-							value={formData.fiber}
+							id="carbohydrates"
+							value={formData.carbohydrates}
 							onChange={handleInputChange}
 						/>
 					</div>
 				</div>
 				<div>
-					<Button type="submit">Add Product</Button>
+					<Button type="submit">Додати продукт</Button>
 				</div>
 			</form>
-		</div>
+		</section>
 	);
 };
 
-export default AddProductPage;
+export default ProductsAdd;

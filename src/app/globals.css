@@ -22,6 +22,8 @@
 	--radius: 10px;
 	--radius-sm: 3px;
 
+	--space: 16px;
+
 	--btn-padding: 9px 8px;
 	--btn-color: var(--white-color);
 	--btn-bg: var(--main-color);
@@ -34,7 +36,7 @@
 	--input-placeholder-color: var(--grey-color);
 	--input-color: var(--grey-color);
 	--input-border: rgba(0, 0, 0, 0.1);
-
+	--card-border: rgba(0, 0, 0, 0.1);
 	--font-xs: 12px;
 	--font-sm: 14px;
 	--font-base: 16px;
