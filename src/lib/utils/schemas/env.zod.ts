@@ -8,6 +8,8 @@ const envSchema = z.object({
 	NEXTAUTH_SECRET: z.string().nonempty(),
 	GOOGLE_API_KEY: z.string().nonempty(),
 	GOOGLE_CSE_ID: z.string().nonempty(),
+	FATSECRET_ID: z.string().nonempty(),
+	FATSECRET_SECRET: z.string().nonempty(),
 });
 
 export const env = envSchema.parse(process.env);
