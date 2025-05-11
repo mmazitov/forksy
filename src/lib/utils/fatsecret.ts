@@ -6,7 +6,7 @@ const generateOauthParams = (
 	method: string,
 	additionalParams: Record<string, string> = {},
 ) => {
-	const params = {
+	const params: Record<string, string> = {
 		oauth_consumer_key: env.FATSECRET_ID,
 		oauth_nonce: crypto.randomBytes(16).toString('hex'),
 		oauth_signature_method: 'HMAC-SHA1',
@@ -62,7 +62,7 @@ export const createFatSecretRequest = (
 	const oauthParams = generateOauthParams(method, additionalParams);
 	const signature = generateSignature('GET', BASE_URL, oauthParams);
 
-	const allParams = {
+	const allParams: Record<string, string> = {
 		...oauthParams,
 		oauth_signature: signature,
 	};

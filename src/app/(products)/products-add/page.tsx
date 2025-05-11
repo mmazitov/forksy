@@ -4,10 +4,12 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { NutritionData } from '@/@types/types';
+import { createProduct } from '@/app/api/products/actions';
 import PageHeader from '@/components/heading/PageHeader';
 import NutritionSearch from '@/components/search/NutritionSearch';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import withAuthClient from '@/lib/hoc/withAuthClient';
 
 const ProductsAdd = () => {
 	const router = useRouter();
@@ -55,34 +57,14 @@ const ProductsAdd = () => {
 		});
 
 		try {
-			console.log('Sending request to create product...');
-			const response = await fetch('/api/products/create', {
-				method: 'POST',
-				body: formDataToSend,
-				headers: {
-					// No Content-Type header when using FormData - browser sets it automatically with boundary
-				},
-			});
+			const result = await createProduct(formDataToSend);
 
-			console.log('Response status:', response.status);
-
-			if (!response.ok) {
-				let errorData;
-				try {
-					errorData = await response.json();
-					console.error('Error response data:', errorData);
-				} catch (jsonError) {
-					console.error('Could not parse error response as JSON:', jsonError);
-				}
-
-				throw new Error(
-					`Failed to add product: ${response.status} ${response.statusText}`,
-				);
+			if (result.success) {
+				console.log('Product created successfully:', result.product);
+				router.push('/');
+			} else {
+				console.error('Failed to create product:', result.error);
 			}
-
-			const result = await response.json();
-			console.log('Product created successfully:', result);
-			router.push('/');
 		} catch (error) {
 			console.error('Error adding product:', error);
 		}
@@ -193,4 +175,4 @@ const ProductsAdd = () => {
 	);
 };
 
-export default ProductsAdd;
+export default withAuthClient(ProductsAdd);
