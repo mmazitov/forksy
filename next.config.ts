@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
 			{ hostname: '*.googleapis.com' },
 			// Разрешаем изображения с других доменов для результатов поиска
 			{ hostname: '*' },
+			{
+				hostname: 'spoonacular.com',
+				protocol: 'https',
+				pathname: '/**',
+			},
+			{
+				hostname: '*.spoonacular.com',
+				protocol: 'https',
+				pathname: '/**',
+			},
 		],
 	},
 };

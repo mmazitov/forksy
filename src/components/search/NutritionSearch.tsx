@@ -1,15 +1,17 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import {
-	FatSecretFood,
 	NutritionData,
 	NutritionSearchProps,
+	SpoonacularFoodItem,
 } from '@/@types/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import { findEnglishName } from '@/data/foodTranslations';
 
 const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 	const [mounted, setMounted] = useState(false);
@@ -29,61 +31,42 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 		setError(null);
 
 		try {
-			const searchUrl = `/api/nutrition/search?q=${encodeURIComponent(productName.trim())}`;
+			const englishQuery = findEnglishName(productName);
+			const searchUrl = `/api/nutrition/search?q=${encodeURIComponent(englishQuery)}`;
 			const response = await fetch(searchUrl);
+			const data = await response.json();
 
 			if (!response.ok) {
-				throw new Error('Failed to fetch nutrition information');
+				throw new Error(data.error || 'Failed to fetch nutrition information');
 			}
 
-			const data = await response.json();
-			const foods = data.foods?.food || [];
+			const foods = data.searchResults?.[0]?.results || [];
 
-			// For each food item, fetch detailed nutrition information
-			const processedResults: NutritionData[] = await Promise.all(
-				foods.map(async (food: FatSecretFood) => {
-					try {
-						const detailsUrl = `/api/nutrition/details?id=${food.food_id}`;
-						const detailsResponse = await fetch(detailsUrl);
-						const detailsData = await detailsResponse.json();
-
-						const serving = detailsData.food.servings.serving[0]; // Get first serving
-						return {
-							name: food.food_name,
-							calories: serving ? parseFloat(serving.calories) : undefined,
-							protein: serving ? parseFloat(serving.protein) : undefined,
-							fat: serving ? parseFloat(serving.fat) : undefined,
-							carbohydrates: serving
-								? parseFloat(serving.carbohydrate)
-								: undefined,
-						};
-					} catch (err) {
-						console.error(
-							`Failed to fetch details for ${food.food_name}:`,
-							err,
-						);
-						return {
-							name: food.food_name,
-							calories: undefined,
-							protein: undefined,
-							fat: undefined,
-							carbohydrates: undefined,
-						};
-					}
+			const processedResults: NutritionData[] = foods.map(
+				(food: SpoonacularFoodItem) => ({
+					id: food.id,
+					name: productName.trim(), // Используем оригинальное украинское название
+					calories: Math.round(food.calories || 0),
+					protein: Math.round(food.protein || 0),
+					fat: Math.round(food.fat || 0),
+					carbohydrates: Math.round(food.carbs || 0),
+					image: food.image || null,
 				}),
 			);
 
 			setSearchResults(processedResults);
+
+			if (processedResults.length === 0) {
+				setError('За вашим запитом нічого не знайдено');
+			}
 		} catch (err) {
 			console.error('Search error:', err);
-			setError('Failed to fetch nutrition information. Please try again.');
+			setError(
+				'Помилка при отриманні інформації про продукт. Спробуйте ще раз.',
+			);
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const handleSelectNutrition = (nutrition: NutritionData) => {
-		onNutritionSelect(nutrition);
 	};
 
 	if (!mounted) {
@@ -99,7 +82,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 					<Input
 						type="text"
 						name="nutrition-search"
-						placeholder="Пошук продукту"
+						placeholder="Введіть назву продукту"
 						value={productName}
 						onChange={(e) => setProductName(e.target.value)}
 						onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -132,23 +115,32 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 						{searchResults.map((nutrition, index) => (
 							<div
 								key={index}
-								className="hover:bg-gray-50 p-3 border border-gray-200 rounded cursor-pointer"
-								onClick={() => handleSelectNutrition(nutrition)}
+								className="flex items-start gap-4 hover:bg-gray-50 p-3 border border-gray-200 rounded cursor-pointer"
+								onClick={() => onNutritionSelect(nutrition)}
 							>
-								<div className="font-medium">{nutrition.name}</div>
-								<div className="gap-2 grid grid-cols-2 sm:grid-cols-4 mt-2 text-sm">
-									{nutrition.calories !== undefined && (
-										<div>Калорії: {nutrition.calories}ккал</div>
-									)}
-									{nutrition.protein !== undefined && (
-										<div>Білки: {nutrition.protein}г</div>
-									)}
-									{nutrition.fat !== undefined && (
-										<div>Жири: {nutrition.fat}г</div>
-									)}
-									{nutrition.carbohydrates !== undefined && (
-										<div>Вуглеводи: {nutrition.carbohydrates}г</div>
-									)}
+								{nutrition.image && (
+									<div className="flex-shrink-0">
+										<Image
+											src={nutrition.image}
+											alt={nutrition.name || ''}
+											width={80}
+											height={80}
+											className="rounded-md object-cover"
+										/>
+									</div>
+								)}
+								<div className="flex-grow">
+									<div className="font-medium">{nutrition.name}</div>
+									<div className="gap-2 grid grid-cols-2 sm:grid-cols-4 mt-2 text-sm">
+										<div>
+											Калорії: {Math.round(nutrition.calories || 0)} ккал
+										</div>
+										<div>Білки: {Math.round(nutrition.protein || 0)}г</div>
+										<div>Жири: {Math.round(nutrition.fat || 0)}г</div>
+										<div>
+											Вуглеводи: {Math.round(nutrition.carbohydrates || 0)}г
+										</div>
+									</div>
 								</div>
 							</div>
 						))}

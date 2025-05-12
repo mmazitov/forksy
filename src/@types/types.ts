@@ -69,6 +69,8 @@ export interface NutritionData {
 	fat?: number;
 	carbohydrates?: number;
 	category?: number;
+	image?: string;
+	id?: number;
 }
 
 export interface FatSecretFood {
@@ -121,5 +123,34 @@ export interface FatSecretDetailedFood {
 				serving_url: string;
 			}[];
 		};
+	};
+}
+
+export interface SpoonacularSearchResult {
+	searchResults: {
+		results: SpoonacularFoodItem[];
+		totalResults: number;
+	}[];
+}
+
+export interface SpoonacularFoodItem {
+	id: number;
+	name: string;
+	image: string;
+	calories: number;
+	protein: string;
+	fat: string;
+	carbs: string;
+}
+
+export interface SpoonacularFoodDetail {
+	id: number;
+	title: string;
+	nutrition: {
+		nutrients: {
+			name: string;
+			amount: number;
+			unit: string;
+		}[];
 	};
 }
