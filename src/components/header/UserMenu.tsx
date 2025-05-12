@@ -56,7 +56,7 @@ const UserMenu = ({ session }: UserMenuProps) => {
 				)}
 			</button>
 			<div
-				className={`right-0 absolute bg-[var(--white-color)] shadow-drop mt-2 border border-[var(--black-color-weak)] rounded-[var(--radius)] w-48 drop-hidden ${
+				className={`right-0 absolute bg-[var(--drop-bg)] shadow-drop mt-2 border border-[var(--drop-border)] rounded-[var(--radius)] w-48 drop-hidden ${
 					active ? 'drop-visible' : ''
 				}`}
 			>

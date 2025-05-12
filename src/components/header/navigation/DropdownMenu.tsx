@@ -13,7 +13,7 @@ interface DropdownMenuProps {
 
 // Styles
 const dropStyle =
-	'left-0 absolute bg-[var(--white-color)] shadow-drop border border-[var(--black-color-weak)] rounded-[var(--radius)] w-[150px] z-100 drop-hidden';
+	'left-0 absolute shadow-drop border bg-[var(--drop-bg)] border-[var(--drop-border)] rounded-[var(--radius)] w-[150px] z-100 drop-hidden';
 const dropStyleVisible = 'drop-visible';
 
 // Dropdown Menu Component

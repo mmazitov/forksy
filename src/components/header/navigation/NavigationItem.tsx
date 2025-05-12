@@ -25,7 +25,7 @@ interface NavigationItemProps {
 
 // Styles
 export const navigationStyle =
-	'relative px-[10px] pb-[5px] text-[var(--black-color)] hover:text-[var(--main-color)] transition-link before:content-[""] before:absolute before:left-0 before:bottom-0 before:h-[1px] before:bg-[var(--main-color)] hover:before:w-full before:w-0 before:transition-all before:duration-300 before:ease-in-out';
+	'relative px-[10px] pb-[5px] text-[var(--navigation-color)] hover:text-[var(--main-color)] transition-link before:content-[""] before:absolute before:left-0 before:bottom-0 before:h-[1px] before:bg-[var(--main-color)] hover:before:w-full before:w-0 before:transition-all before:duration-300 before:ease-in-out';
 export const activeStyle = 'text-[var(--main-color)] before:w-full';
 
 // Navigation Item Component

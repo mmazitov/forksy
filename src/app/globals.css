@@ -18,6 +18,9 @@
 
 	--background: var(--white-color);
 	--foreground: var(--black-color);
+	--navigation-color: var(--black-color);
+	--drop-bg: var(--white-color);
+	--drop-border: var(--black-color-weak);
 
 	--radius: 10px;
 	--radius-sm: 3px;
@@ -61,12 +64,31 @@
 		--grey-color: #c4c4c4;
 		--green-color: #60c06a;
 		--red-color: #df2727;
+
 		--gradient-start-color: #9772ff;
 		--gradient-end-color: #7f51ff;
 
+		--shadow-color: #7e59e899;
+
 		--background: var(--black-color);
 		--foreground: var(--white-color);
-		--btn-color: var(--color-white);
+		--btn-color: var(--white-color);
+		--btn-bg: var(--main-color);
+		--btn-border: var(--main-color);
+		--btn-color-hover: var(--main-color);
+		--btn-bg-hover: transparent;
+		--rounded-btn-bg: #f2f2f2;
+
+		--input-bg: var(--black-color-weak);
+		--input-placeholder-color: var(--grey-color);
+		--input-color: var(--grey-color);
+		--input-border: rgba(0, 0, 0, 0.1);
+		--card-border: rgba(255, 255, 255, 0.1);
+
+		--navigation-color: var(--white-color);
+
+		--drop-bg: var(--black-color);
+		--drop-border: var(--black-color-weak);
 	}
 }
 

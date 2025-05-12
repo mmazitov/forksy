@@ -16,7 +16,7 @@ const page = async () => {
 					<Filter />
 				</div>
 			</PageHeader>
-			<div className="flex flex-col gap-[var(--space)]">
+			<div className="gap-[var(--space)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 				{products.map((product) => (
 					<ProductCard key={product.id} product={product} />
 				))}

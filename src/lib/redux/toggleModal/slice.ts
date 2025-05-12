@@ -4,10 +4,15 @@ import { createSlice } from '@reduxjs/toolkit';
 interface IModalState {
 	isSignIn: boolean;
 	isSignUp: boolean;
+	isProductEdit: boolean;
+	currentProduct: any | null;
 }
+
 const initialState = {
 	isSignIn: false,
 	isSignUp: false,
+	isProductEdit: false,
+	currentProduct: null,
 };
 
 const modalSlice = createSlice({
@@ -20,9 +25,12 @@ const modalSlice = createSlice({
 		closeModal: (state, action: PayloadAction<keyof IModalState>) => {
 			state[action.payload] = false;
 		},
+		setCurrentProduct: (state, action) => {
+			state.currentProduct = action.payload;
+		},
 	},
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, setCurrentProduct } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { closeModal } from '@/lib/redux/toggleModal/slice';
 
 interface CloseButtonProps {
-	modalType: 'isSignIn' | 'isSignUp';
+	modalType: 'isSignIn' | 'isSignUp' | 'isProductEdit';
 	className?: string;
 }
 

@@ -1,34 +1,71 @@
+'use client';
+
 import { Product } from '@prisma/client';
-import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import { MdEditSquare, MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+
+import { openModal, setCurrentProduct } from '@/lib/redux/toggleModal/slice';
 
 interface ProductProps {
 	product: Product;
 }
 const ProductCard = ({ product }: ProductProps) => {
+	const dispatch = useDispatch();
+	const [favorite, setFavorite] = useState(false);
+
+	const handleFavoriteClick = () => {
+		setFavorite((prev) => !prev);
+	};
+
+	const handleEditClick = () => {
+		dispatch(setCurrentProduct(product));
+		dispatch(openModal('isProductEdit'));
+	};
+
 	return (
-		<Link href={`/${product.slug}`}>
-			<div className="p-[var(--space)] border border-[var(--card-border)] rounded-[var(--radius)]">
-				<h2 className="font-bold text-lg">{product.name}</h2>
-				<div className="flex gap-[var(--space)]">
-					<p>
-						<span className="font-medium">Категорія:</span> {product.category}
-					</p>
-					<p>
-						<span className="font-medium">Калорії:</span> {product.calories}
-					</p>
-					<p>
-						<span className="font-medium">Білки:</span> {product.protein}
-					</p>
-					<p>
-						<span className="font-medium">Жири:</span> {product.fat}
-					</p>
-					<p>
+		<div className="flex items-start gap-[var(--space)] p-[var(--space)] border border-[var(--card-border)] rounded-[var(--radius)]">
+			<div>
+				<Image
+					src={product.image}
+					alt={product.name}
+					width={150}
+					height={150}
+				/>
+			</div>
+			<div className="grow-1">
+				<div className="flex justify-between items-start">
+					<h2 className="font-bold text-lg capitalize">{product.name}</h2>
+					<ul className="flex gap-[var(--space)]">
+						<li className="cursor-pointer" onClick={handleEditClick}>
+							<MdEditSquare />
+						</li>
+						<li onClick={handleFavoriteClick} className="cursor-pointer">
+							{favorite ? <MdFavorite /> : <MdFavoriteBorder />}
+						</li>
+					</ul>
+				</div>
+				<p className="mb-[calc(var(--space)/2)]">
+					<span className="font-medium">Категорія:</span> {product.category}
+				</p>
+				<ul className="flex flex-wrap gap-x-[calc(var(--space)/4)]">
+					<li>
+						<span className="font-medium">Калорії:</span> {product.calories},
+					</li>
+					<li>
+						<span className="font-medium">Білки:</span> {product.protein},
+					</li>
+					<li>
+						<span className="font-medium">Жири:</span> {product.fat},
+					</li>
+					<li>
 						<span className="font-medium">Вуглеводи:</span>{' '}
 						{product.carbohydrates}
-					</p>
-				</div>
+					</li>
+				</ul>
 			</div>
-		</Link>
+		</div>
 	);
 };
 

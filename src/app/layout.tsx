@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 
 import Header from '@/components/header/Header';
 import AuthModal from '@/components/modals/AuthModal';
+import ProductModal from '@/components/modals/ProductModal';
 import Providers from '@/lib/providers';
 import './globals.css';
 
@@ -27,6 +28,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 					<Header />
 					<div className="container">{children}</div>
 					<AuthModal />
+					<ProductModal />
 				</Providers>
 			</body>
 		</html>

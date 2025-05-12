@@ -16,6 +16,7 @@ model Product {
   protein       Float
   carbohydrates Float
   fat           Float
+  image         String @default("")
 }
 
 model Account {
