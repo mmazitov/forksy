@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { GoogleSearchItem, GoogleSearchResult } from '@/@types/types';
 import SearchBar from '@/components/search/SearchBar';
+
+import { GoogleSearchItem, GoogleSearchResult } from '@/lib/types/google';
 
 const SearchPage = () => {
 	const searchParams = useSearchParams();

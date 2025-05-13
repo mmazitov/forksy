@@ -1,8 +1,16 @@
+'use server';
+
 import PageHeader from '@/components/heading/PageHeader';
 import ProductCard from '@/components/ProductCard';
 import Filter from '@/components/ui/Filter';
 import prisma from '@/lib/db/prisma';
-const page = async () => {
+
+const generateMetadata = () => ({
+	title: 'Список продуктів',
+	description: 'Список продуктів',
+});
+
+const ProductsList = async () => {
 	const products = await prisma.product.findMany({
 		orderBy: {
 			id: 'desc',
@@ -25,4 +33,5 @@ const page = async () => {
 	);
 };
 
-export default page;
+export default ProductsList;
+export { generateMetadata };

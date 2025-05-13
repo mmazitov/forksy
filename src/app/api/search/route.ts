@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { GoogleSearchResult } from '@/@types/types';
 import { env } from '@/lib/utils/schemas/env.zod';
+
+import { GoogleSearchResult } from '@/lib/types/google';
 
 export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams;

@@ -4,14 +4,15 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
+import { findEnglishName } from '@/data/foodTranslations';
+
 import {
 	NutritionData,
 	NutritionSearchProps,
 	SpoonacularFoodItem,
-} from '@/@types/types';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import { findEnglishName } from '@/data/foodTranslations';
+} from '@/lib/types/nutrition';
 
 const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 	const [mounted, setMounted] = useState(false);

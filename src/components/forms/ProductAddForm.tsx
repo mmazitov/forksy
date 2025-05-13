@@ -3,10 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { NutritionData } from '@/@types/types';
 import { createProduct } from '@/app/api/products/actions';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+
+import { NutritionData } from '@/lib/types/nutrition';
 
 interface ProductAddFormProps {
 	selectedNutrition?: NutritionData;
