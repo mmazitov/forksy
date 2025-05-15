@@ -6,6 +6,7 @@ import { NutritionData } from './nutrition';
 
 export interface ProductProps {
 	product: Product;
+	session: Session | null;
 }
 
 export interface ButtonProps {

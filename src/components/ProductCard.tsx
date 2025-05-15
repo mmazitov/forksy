@@ -8,7 +8,9 @@ import { useDispatch } from 'react-redux';
 import { openModal, setCurrentProduct } from '@/lib/redux/toggleModal/slice';
 import { ProductProps } from '@/lib/types/types';
 
-const ProductCard = ({ product }: ProductProps) => {
+const ProductCard = ({ product, session }: ProductProps) => {
+	const user = session?.user;
+
 	const dispatch = useDispatch();
 	const [favorite, setFavorite] = useState(false);
 
@@ -35,9 +37,12 @@ const ProductCard = ({ product }: ProductProps) => {
 				<div className="flex justify-between items-start">
 					<h2 className="font-bold text-lg capitalize">{product.name}</h2>
 					<ul className="flex gap-[var(--space)]">
-						<li className="cursor-pointer" onClick={handleEditClick}>
-							<MdEditSquare />
-						</li>
+						{/* {user?.role === 'ADMIN' ? ( */}
+						{user && (
+							<li className="cursor-pointer" onClick={handleEditClick}>
+								<MdEditSquare />
+							</li>
+						)}
 						<li onClick={handleFavoriteClick} className="cursor-pointer">
 							{favorite ? <MdFavorite /> : <MdFavoriteBorder />}
 						</li>
