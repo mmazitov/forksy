@@ -1,13 +1,18 @@
-import { env } from './schemas/env.zod';
+import {
+	NutrientInfo,
+	NutritionData,
+	SpoonacularIngredient,
+} from '@/lib/types/nutrition';
 
+import { env } from './schemas/env.zod';
 const BASE_URL = 'https://api.spoonacular.com';
 
 export const searchFood = async (query: string) => {
 	const params = new URLSearchParams({
 		apiKey: env.SPOONACULAR_KEY,
 		query,
-		language: 'uk', // используем русский, так как украинский пока не поддерживается
-		number: '1',
+		language: 'uk',
+		number: '5',
 	});
 
 	try {
@@ -24,7 +29,7 @@ export const searchFood = async (query: string) => {
 
 		// Получаем детальную информацию для каждого ингредиента
 		const results = await Promise.all(
-			data.results.map(async (item: any) => {
+			data.results.map(async (item: SpoonacularIngredient) => {
 				const nutritionParams = new URLSearchParams({
 					apiKey: env.SPOONACULAR_KEY,
 					amount: '100',
@@ -35,12 +40,13 @@ export const searchFood = async (query: string) => {
 				const nutritionResponse = await fetch(
 					`${BASE_URL}/food/ingredients/${item.id}/information?${nutritionParams}`,
 				);
-				const nutritionData = await nutritionResponse.json();
+				const nutritionData: NutritionData = await nutritionResponse.json();
 				const nutrition = nutritionData.nutrition?.nutrients || [];
 
 				const findNutrient = (name: string) =>
-					nutrition.find((n: any) => n.name.toLowerCase().includes(name))
-						?.amount || 0;
+					nutrition.find((n: NutrientInfo) =>
+						n.name.toLowerCase().includes(name),
+					)?.amount || 0;
 
 				return {
 					id: item.id,

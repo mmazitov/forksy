@@ -7,7 +7,6 @@ import { FaSearch } from 'react-icons/fa';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { findEnglishName } from '@/data/foodTranslations';
-
 import {
 	NutritionData,
 	NutritionSearchProps,
@@ -47,10 +46,10 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 				(food: SpoonacularFoodItem) => ({
 					id: food.id,
 					name: productName.trim(), // Используем оригинальное украинское название
-					calories: Math.round(food.calories || 0),
-					protein: Math.round(food.protein || 0),
-					fat: Math.round(food.fat || 0),
-					carbohydrates: Math.round(food.carbs || 0),
+					calories: Number(food.calories || 0),
+					protein: Number(food.protein || 0),
+					fat: Number(food.fat || 0),
+					carbohydrates: Number(food.carbs || 0),
 					image: food.image || null,
 				}),
 			);

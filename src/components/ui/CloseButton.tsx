@@ -2,11 +2,7 @@ import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 
 import { closeModal } from '@/lib/redux/toggleModal/slice';
-
-interface CloseButtonProps {
-	modalType: 'isSignIn' | 'isSignUp' | 'isProductEdit';
-	className?: string;
-}
+import { CloseButtonProps } from '@/lib/types/types';
 
 const CloseButton = ({ modalType, className = '' }: CloseButtonProps) => {
 	const dispatch = useDispatch();

@@ -1,11 +1,5 @@
 import CloseButton from '@/components/ui/CloseButton';
-
-export interface FormHeaderProps {
-	title?: string;
-	caption?: string;
-	showCancel?: boolean;
-	modalType?: 'isSignIn' | 'isSignUp';
-}
+import { FormHeaderProps } from '@/lib/types/types';
 
 const FormHeader = ({
 	title,

@@ -4,8 +4,8 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import { navigationItems } from '@/data/navigationData';
+import { NavigationItem as NavigationItemType } from '@/lib/types/types';
 
-import type { NavigationItem as NavigationItemType } from './NavigationItem';
 import { NavigationItem } from './NavigationItem';
 
 interface NavigationProps {
@@ -27,7 +27,11 @@ const Navigation = ({ session }: NavigationProps) => {
 	// Check if item or any of its children is active
 	const isActive = (item: NavigationItemType) => {
 		if (item.href === pathname) return true;
-		return item.children?.some((child) => child.href === pathname) || false;
+		return (
+			item.children?.some(
+				(child: NavigationItemType) => child.href === pathname,
+			) || false
+		);
 	};
 
 	return (

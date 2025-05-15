@@ -64,7 +64,6 @@ const SignIn = () => {
 					<Input
 						placeholder="Пошта"
 						type="text"
-						required
 						className={errors.email ? 'border-red-500' : ''}
 						{...register('email')}
 					/>
@@ -74,7 +73,6 @@ const SignIn = () => {
 						placeholder="Пароль"
 						type="password"
 						showToggle={true}
-						required
 						className={errors.password ? 'border-red-500' : ''}
 						{...register('password')}
 					/>

@@ -1,14 +1,18 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-interface IModalState {
+import { Product } from '@/lib/types/store';
+
+type ModalTypes = 'isSignIn' | 'isSignUp' | 'isProductEdit';
+
+interface ModalStateProps {
 	isSignIn: boolean;
 	isSignUp: boolean;
 	isProductEdit: boolean;
-	currentProduct: any | null;
+	currentProduct: Product | null;
 }
 
-const initialState = {
+const initialState: ModalStateProps = {
 	isSignIn: false,
 	isSignUp: false,
 	isProductEdit: false,
@@ -19,13 +23,13 @@ const modalSlice = createSlice({
 	name: 'modal',
 	initialState,
 	reducers: {
-		openModal: (state, action: PayloadAction<keyof IModalState>) => {
+		openModal: (state, action: PayloadAction<ModalTypes>) => {
 			state[action.payload] = true;
 		},
-		closeModal: (state, action: PayloadAction<keyof IModalState>) => {
+		closeModal: (state, action: PayloadAction<ModalTypes>) => {
 			state[action.payload] = false;
 		},
-		setCurrentProduct: (state, action) => {
+		setCurrentProduct: (state, action: PayloadAction<Product | null>) => {
 			state.currentProduct = action.payload;
 		},
 	},

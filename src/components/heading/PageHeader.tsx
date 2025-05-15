@@ -1,10 +1,4 @@
-import { ReactNode } from 'react';
-
-interface PageHeaderProps {
-	children?: ReactNode;
-	className?: string;
-	pageTitle?: string;
-}
+import { PageHeaderProps } from '@/lib/types/types';
 
 const PageHeader = ({ children, className, pageTitle }: PageHeaderProps) => {
 	return (

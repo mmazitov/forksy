@@ -1,15 +1,9 @@
 'use client';
-import { Session } from 'next-auth';
 import Link from 'next/link';
 
-import { activeStyle, NavigationItem, navigationStyle } from './NavigationItem';
+import { DropdownMenuProps } from '@/lib/types/types';
 
-interface DropdownMenuProps {
-	children: NavigationItem[];
-	isVisible: boolean;
-	currentPath: string;
-	session: Session | null;
-}
+import { activeStyle, navigationStyle } from './NavigationItem';
 
 // Styles
 const dropStyle =

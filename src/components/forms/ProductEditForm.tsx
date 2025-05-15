@@ -1,117 +1,153 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { z } from 'zod';
 
 import { updateProduct } from '@/app/api/products/actions';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { closeModal } from '@/lib/redux/toggleModal/slice';
+import { productSchema } from '@/lib/utils/schemas/validate';
 
-type ProductEditFormProps = {
-	currentProduct: any;
-};
+type ProductFormData = z.infer<typeof productSchema>;
+
+interface ProductEditFormProps {
+	currentProduct: ProductFormData & { id: string };
+}
 
 const ProductEditForm = ({ currentProduct }: ProductEditFormProps) => {
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const [isLoading, setIsLoading] = useState(false);
-	const [formData, setFormData] = useState({
-		name: '',
-		category: '',
-		protein: '',
-		carbohydrates: '',
-		fat: '',
-		calories: '',
+
+	const {
+		register,
+		handleSubmit,
+		setValue,
+		formState: { errors, isSubmitting },
+	} = useForm<ProductFormData>({
+		resolver: zodResolver(productSchema),
+		defaultValues: {
+			name: '',
+			category: '',
+			calories: null,
+			protein: null,
+			fat: null,
+			carbohydrates: null,
+			image: '',
+		},
 	});
 
 	useEffect(() => {
 		if (currentProduct) {
-			setFormData({
-				name: currentProduct.name,
-				category: currentProduct.category,
-				protein: currentProduct.protein.toString(),
-				carbohydrates: currentProduct.carbohydrates.toString(),
-				fat: currentProduct.fat.toString(),
-				calories: currentProduct.calories.toString(),
+			setValue('name', currentProduct.name);
+			setValue('category', currentProduct.category);
+			setValue('protein', currentProduct.protein);
+			setValue('carbohydrates', currentProduct.carbohydrates);
+			setValue('fat', currentProduct.fat);
+			setValue('calories', currentProduct.calories);
+			setValue('image', currentProduct.image || '');
+		}
+	}, [currentProduct, setValue]);
+
+	const onSubmit = async (data: ProductFormData) => {
+		try {
+			const formData = new FormData();
+			formData.append('id', currentProduct.id);
+			Object.entries(data).forEach(([key, value]) => {
+				formData.append(key, value?.toString() || '');
 			});
+
+			const result = await updateProduct(formData);
+
+			if (result.success) {
+				dispatch(closeModal('isProductEdit'));
+				router.refresh();
+			}
+		} catch (error) {
+			console.error('Error updating product:', error);
 		}
-	}, [currentProduct]);
-
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		setIsLoading(true);
-
-		const form = new FormData();
-		form.append('id', currentProduct.id);
-		Object.entries(formData).forEach(([key, value]) => {
-			form.append(key, value.toString());
-		});
-
-		const result = await updateProduct(form);
-
-		if (result.success) {
-			dispatch(closeModal('isProductEdit'));
-			router.refresh();
-		} else {
-			console.error('Error updating product:', result.error);
-		}
-
-		setIsLoading(false);
-	};
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFormData((prev) => ({
-			...prev,
-			[e.target.name]: e.target.value,
-		}));
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4">
-			<Input
-				type="text"
-				name="name"
-				placeholder="Назва продукту"
-				value={formData.name}
-				onChange={handleChange}
-			/>
-			<Input
-				type="text"
-				name="category"
-				placeholder="Категорія"
-				value={formData.category}
-				onChange={handleChange}
-			/>
-			<Input
-				type="number"
-				name="protein"
-				placeholder="Білки"
-				value={formData.protein}
-				onChange={handleChange}
-			/>
-			<Input
-				type="number"
-				name="carbohydrates"
-				placeholder="Вуглеводи"
-				value={formData.carbohydrates}
-				onChange={handleChange}
-			/>
-			<Input
-				type="number"
-				name="fat"
-				placeholder="Жири"
-				value={formData.fat}
-				onChange={handleChange}
-			/>
-			<Input
-				type="number"
-				name="calories"
-				placeholder="Калорії"
-				value={formData.calories}
-				onChange={handleChange}
-			/>
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className="flex flex-col gap-[calc(var(--space)/4)] space-y-4"
+		>
+			{errors.root && (
+				<div className="bg-red-100 mb-4 p-3 border border-red-400 rounded text-red-700">
+					{errors.root.message}
+				</div>
+			)}
+
+			<div className="mb-0">
+				<label htmlFor="name" className="block font-medium">
+					Назва
+				</label>
+				<Input
+					{...register('name')}
+					placeholder="Назва продукту"
+					className={errors.name ? 'border-red-500' : ''}
+				/>
+			</div>
+
+			<div className="mb-0">
+				<label htmlFor="category" className="block font-medium">
+					Категорія
+				</label>
+				<Input
+					{...register('category')}
+					placeholder="Категорія"
+					className={errors.category ? 'border-red-500' : ''}
+				/>
+			</div>
+
+			<div className="mb-0">
+				<label htmlFor="calories" className="block font-medium">
+					Калорії (ккал)
+				</label>
+				<Input
+					{...register('calories', { valueAsNumber: true })}
+					type="number"
+					placeholder="Калорії"
+				/>
+			</div>
+
+			<div className="mb-0">
+				<label htmlFor="protein" className="block font-medium">
+					Білки (г)
+				</label>
+				<Input
+					{...register('protein', { valueAsNumber: true })}
+					type="number"
+					placeholder="Білки"
+				/>
+			</div>
+
+			<div className="mb-0">
+				<label htmlFor="fat" className="block font-medium">
+					Жири (г)
+				</label>
+				<Input
+					{...register('fat', { valueAsNumber: true })}
+					type="number"
+					placeholder="Жири"
+				/>
+			</div>
+
+			<div className="mb-0">
+				<label htmlFor="carbohydrates" className="block font-medium">
+					Вуглеводи (г)
+				</label>
+				<Input
+					{...register('carbohydrates', { valueAsNumber: true })}
+					type="number"
+					placeholder="Вуглеводи"
+				/>
+			</div>
 
 			<div className="flex justify-end gap-2 mt-4">
 				<Button
@@ -121,8 +157,8 @@ const ProductEditForm = ({ currentProduct }: ProductEditFormProps) => {
 				>
 					Скасувати
 				</Button>
-				<Button type="submit" disabled={isLoading}>
-					{isLoading ? 'Збереження...' : 'Зберегти'}
+				<Button type="submit" disabled={isSubmitting}>
+					{isSubmitting ? 'Збереження...' : 'Зберегти'}
 				</Button>
 			</div>
 		</form>

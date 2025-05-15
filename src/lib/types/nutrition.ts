@@ -1,8 +1,12 @@
 export interface NutritionSearchProps {
+	// eslint-disable-next-line no-unused-vars
 	onNutritionSelect: (nutrition: NutritionData) => void;
 }
 
 export interface NutritionData {
+	nutrition?: {
+		nutrients: NutrientInfo[];
+	};
 	name?: string;
 	calories?: number;
 	protein?: number;
@@ -41,4 +45,16 @@ export interface SpoonacularFoodDetail {
 			unit: string;
 		}[];
 	};
+}
+
+export interface SpoonacularIngredient {
+	id: number;
+	name: string;
+	image: string;
+}
+
+export interface NutrientInfo {
+	name: string;
+	amount: number;
+	unit: string;
 }

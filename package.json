@@ -51,8 +51,12 @@
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"postcss": "^8.5.3",
 		"prettier": "^3.5.3",
+		"ts-node": "^10.9.2",
 		"tsx": "^4.19.3",
 		"typescript": "^5",
 		"zod": "^3.24.3"
+	},
+	"prisma": {
+		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	}
 }

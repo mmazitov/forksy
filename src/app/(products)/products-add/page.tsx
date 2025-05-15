@@ -6,7 +6,6 @@ import ProductAddForm from '@/components/forms/ProductAddForm';
 import PageHeader from '@/components/heading/PageHeader';
 import NutritionSearch from '@/components/search/NutritionSearch';
 import withAuthClient from '@/lib/hoc/withAuthClient';
-
 import { NutritionData } from '@/lib/types/nutrition';
 
 const ProductsAdd = () => {

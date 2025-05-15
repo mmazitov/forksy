@@ -1,5 +1,7 @@
 import { cva } from 'class-variance-authority';
 
+import { ButtonProps } from '@/lib/types/types';
+
 import { cn } from '../../lib/utils/cn';
 
 const buttonVariants = cva(
@@ -23,14 +25,6 @@ const buttonVariants = cva(
 	},
 );
 
-interface ButtonProps {
-	type?: 'button' | 'submit' | 'reset';
-	onClick?: () => void;
-	children: React.ReactNode;
-	className?: string;
-	variant?: 'default' | 'ghost' | 'roundedColor' | 'roundedWhite';
-	disabled?: boolean;
-}
 const Button = ({
 	children,
 	className,

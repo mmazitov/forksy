@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
+import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import AuthModal from '@/components/modals/AuthModal';
 import ProductModal from '@/components/modals/ProductModal';
@@ -25,8 +26,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 		<html lang="en">
 			<body className={`${poppinsFont.variable} antialiased`}>
 				<Providers>
-					<Header />
-					<div className="container">{children}</div>
+					<div className="flex flex-col h-screen wrapper">
+						<Header />
+						<div className="container">{children}</div>
+						<Footer />
+					</div>
 					<AuthModal />
 					<ProductModal />
 				</Providers>

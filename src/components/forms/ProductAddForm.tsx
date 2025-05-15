@@ -1,140 +1,115 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { createProduct } from '@/app/api/products/actions';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import { ProductAddFormProps } from '@/lib/types/types';
+import { productSchema } from '@/lib/utils/schemas/validate';
 
-import { NutritionData } from '@/lib/types/nutrition';
-
-interface ProductAddFormProps {
-	selectedNutrition?: NutritionData;
-}
+type ProductFormData = z.infer<typeof productSchema>;
 
 const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 	const router = useRouter();
-	const [error, setError] = useState<string | null>(null);
-	const [formData, setFormData] = useState({
-		name: '',
-		category: '',
-		calories: '',
-		protein: '',
-		fat: '',
-		carbohydrates: '',
-		image: '',
+	const {
+		register,
+		handleSubmit,
+		setError,
+		setValue,
+		formState: { errors },
+	} = useForm<ProductFormData>({
+		resolver: zodResolver(productSchema),
+		defaultValues: {
+			name: '',
+			category: '',
+			calories: null,
+			protein: null,
+			fat: null,
+			carbohydrates: null,
+			image: '',
+		},
 	});
 
 	useEffect(() => {
 		if (selectedNutrition) {
-			setFormData((prev) => ({
-				...prev,
-				name: selectedNutrition.name || prev.name,
-				calories: selectedNutrition.calories?.toString() || prev.calories,
-				carbohydrates:
-					selectedNutrition.carbohydrates?.toString() || prev.carbohydrates,
-				fat: selectedNutrition.fat?.toString() || prev.fat,
-				protein: selectedNutrition.protein?.toString() || prev.protein,
-				image: selectedNutrition.image || prev.image,
-			}));
+			setValue('name', selectedNutrition.name || '');
+			setValue('calories', selectedNutrition.calories || 0);
+			setValue('carbohydrates', selectedNutrition.carbohydrates || 0);
+			setValue('fat', selectedNutrition.fat || 0);
+			setValue('protein', selectedNutrition.protein || 0);
+			setValue('image', selectedNutrition.image || '');
 		}
-	}, [selectedNutrition]);
+	}, [selectedNutrition, setValue]);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setFormData((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-	};
-
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		setError(null);
-
-		const formDataToSend = new FormData();
-		Object.entries(formData).forEach(([key, value]) => {
-			formDataToSend.append(key, value);
-		});
-
+	const onSubmit = async (data: ProductFormData) => {
 		try {
-			const result = await createProduct(formDataToSend);
+			const result = await createProduct(data);
 
 			if (result.success) {
-				console.log('Product created successfully:', result.product);
 				router.push('/products-list');
 			} else {
-				setError(result.error || 'Failed to create product');
-				console.error('Failed to create product:', result.error);
+				setError('root', { message: result.error });
 			}
-		} catch (error: any) {
-			const errorMessage = error.message || 'Error adding product';
-			setError(errorMessage);
-			console.error('Error adding product:', error);
+		} catch (error) {
+			console.error('Error add product:', error);
 		}
 	};
 
 	return (
 		<>
-			{error && (
+			{errors.root && (
 				<div className="bg-red-100 mb-4 p-3 border border-red-400 rounded text-red-700">
-					{error}
+					{errors.root.message}
 				</div>
 			)}
 
-			<form onSubmit={handleSubmit} className="flex flex-col gap-[16px]">
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="flex flex-col gap-[16px]"
+			>
 				<div>
 					<label htmlFor="name" className="block font-medium">
 						Назва
 					</label>
 					<Input
+						{...register('name')}
 						placeholder="Назва продукту"
-						name="name"
-						type="text"
-						id="name"
-						value={formData.name}
-						onChange={handleInputChange}
+						className={errors.name ? 'border-red-500' : ''}
 					/>
 				</div>
+
 				<div>
 					<label htmlFor="category" className="block font-medium">
 						Категорія
 					</label>
 					<Input
+						{...register('category')}
 						placeholder="Категорія продукту"
-						name="category"
-						type="text"
-						id="category"
-						value={formData.category}
-						onChange={handleInputChange}
+						className={errors.category ? 'border-red-500' : ''}
 					/>
 				</div>
+
 				<div>
 					<label htmlFor="image" className="block font-medium">
 						Зображення
 					</label>
-					<Input
-						placeholder="URL зображення"
-						name="image"
-						type="text"
-						id="image"
-						value={formData.image}
-						onChange={handleInputChange}
-					/>
+					<Input {...register('image')} placeholder="URL зображення" />
 				</div>
+
 				<div className="gap-[16px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
 					<div>
 						<label htmlFor="calories" className="block font-medium">
 							Калорії (ккал)
 						</label>
 						<Input
-							placeholder="Калорії"
-							name="calories"
+							{...register('calories', { valueAsNumber: true })}
 							type="number"
-							id="calories"
-							value={formData.calories}
-							onChange={handleInputChange}
+							placeholder="Калорії"
 						/>
 					</div>
 					<div>
@@ -142,12 +117,9 @@ const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 							Білки (г)
 						</label>
 						<Input
-							placeholder="Білки"
-							name="protein"
+							{...register('protein', { valueAsNumber: true })}
 							type="number"
-							id="protein"
-							value={formData.protein}
-							onChange={handleInputChange}
+							placeholder="Білки"
 						/>
 					</div>
 					<div>
@@ -155,12 +127,9 @@ const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 							Жири (г)
 						</label>
 						<Input
-							placeholder="Жири"
-							name="fat"
+							{...register('fat', { valueAsNumber: true })}
 							type="number"
-							id="fat"
-							value={formData.fat}
-							onChange={handleInputChange}
+							placeholder="Жири"
 						/>
 					</div>
 					<div>
@@ -168,15 +137,13 @@ const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 							Вуглеводи (г)
 						</label>
 						<Input
-							placeholder="Вуглеводи"
-							name="carbohydrates"
+							{...register('carbohydrates', { valueAsNumber: true })}
 							type="number"
-							id="carbohydrates"
-							value={formData.carbohydrates}
-							onChange={handleInputChange}
+							placeholder="Вуглеводи"
 						/>
 					</div>
 				</div>
+
 				<div>
 					<Button type="submit">Додати продукт</Button>
 				</div>

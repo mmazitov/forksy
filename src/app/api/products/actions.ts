@@ -1,129 +1,76 @@
 'use server';
 
+import { z } from 'zod';
+
 import prisma from '@/lib/db/prisma';
+import { productSchema } from '@/lib/utils/schemas/validate';
 
-export async function createProduct(formData: FormData) {
+type ProductInput = z.infer<typeof productSchema>;
+
+export const createProduct = async (data: ProductInput) => {
 	try {
-		const name = formData.get('name') as string;
-		const category = formData.get('category') as string;
-		const protein = Number(formData.get('protein'));
-		const carbohydrates = Number(formData.get('carbohydrates'));
-		const fat = Number(formData.get('fat'));
-		const calories = Number(formData.get('calories'));
-		const image = formData.get('image') as string; // Change back to image
+		const { name, category, calories, protein, fat, carbohydrates, image } =
+			data;
 
-		// Validate required fields
-		if (!name?.trim()) {
-			return { success: false, error: 'Name is required' };
-		}
-		if (!category?.trim()) {
-			return { success: false, error: 'Category is required' };
-		}
-
-		// Validate numeric fields
-		if (isNaN(protein) || protein < 0) {
-			return { success: false, error: 'Invalid protein value' };
-		}
-		if (isNaN(carbohydrates) || carbohydrates < 0) {
-			return { success: false, error: 'Invalid carbohydrates value' };
-		}
-		if (isNaN(fat) || fat < 0) {
-			return { success: false, error: 'Invalid fat value' };
-		}
-		if (isNaN(calories) || calories < 0) {
-			return { success: false, error: 'Invalid calories value' };
-		}
-
-		try {
-			// Log the data we're trying to create
-			console.log('Attempting to create product with data:', {
-				name: name.trim(),
-				category: category.trim(),
-				protein,
-				carbohydrates,
-				fat,
-				calories,
-				image: image?.trim() || '', // Change back to image
+		const product = await prisma.product.create({
+			data: {
+				name,
+				category,
+				image: image || '',
 				slug: name.toLowerCase().trim().replace(/\s+/g, '-'),
-			});
+				calories: calories ?? 0,
+				protein: protein ?? 0,
+				fat: fat ?? 0,
+				carbohydrates: carbohydrates ?? 0,
+			},
+		});
 
-			const product = await prisma.product.create({
-				data: {
-					name: name.trim(),
-					category: category.trim(),
-					protein: Number(protein) || 0,
-					carbohydrates: Number(carbohydrates) || 0,
-					fat: Number(fat) || 0,
-					calories: Number(calories) || 0,
-					image: image?.trim() || '',
-					slug: name.toLowerCase().trim().replace(/\s+/g, '-'),
-				},
-			});
-
-			return { success: true, product };
-		} catch (error) {
-			console.error('Database error:', error);
-			return {
-				success: false,
-				error:
-					error instanceof Error ? error.message : 'Failed to create product',
-			};
-		}
-	} catch (error: any) {
+		return { success: true, product };
+	} catch (error) {
 		console.error('Error creating product:', error);
 		return {
 			success: false,
-			error:
-				error.message ||
-				'An unexpected error occurred while creating the product',
+			error: 'An unexpected error occurred while creating the product',
 		};
 	}
-}
+};
 
-export async function updateProduct(formData: FormData) {
+export const updateProduct = async (formData: FormData) => {
 	try {
 		const id = formData.get('id') as string;
-		const name = formData.get('name') as string;
-		const category = formData.get('category') as string;
-		const protein = Number(formData.get('protein'));
-		const carbohydrates = Number(formData.get('carbohydrates'));
-		const fat = Number(formData.get('fat'));
-		const calories = Number(formData.get('calories'));
+		if (!id) return { success: false, error: 'ID is required' };
 
-		if (!id) {
-			return { success: false, error: 'ID is required' };
+		const inputData = {
+			name: formData.get('name') as string,
+			category: formData.get('category') as string,
+			protein: Number(formData.get('protein') ?? 0),
+			carbohydrates: Number(formData.get('carbohydrates') ?? 0),
+			fat: Number(formData.get('fat') ?? 0),
+			calories: Number(formData.get('calories') ?? 0),
+			image: formData.get('image') as string,
+		};
+
+		const validationResult = productSchema.safeParse(inputData);
+
+		if (!validationResult.success) {
+			return {
+				success: false,
+				error: validationResult.error.errors[0]?.message || 'Validation error',
+			};
 		}
 
-		// Validate other fields (reuse existing validation logic)
-		if (!name?.trim()) {
-			return { success: false, error: 'Name is required' };
-		}
-		if (!category?.trim()) {
-			return { success: false, error: 'Category is required' };
-		}
-		if (isNaN(protein) || protein < 0) {
-			return { success: false, error: 'Invalid protein value' };
-		}
-		if (isNaN(carbohydrates) || carbohydrates < 0) {
-			return { success: false, error: 'Invalid carbohydrates value' };
-		}
-		if (isNaN(fat) || fat < 0) {
-			return { success: false, error: 'Invalid fat value' };
-		}
-		if (isNaN(calories) || calories < 0) {
-			return { success: false, error: 'Invalid calories value' };
-		}
+		const validatedData = validationResult.data;
 
 		const product = await prisma.product.update({
 			where: { id },
 			data: {
-				name: name.trim(),
-				category: category.trim(),
-				protein: Number(protein) || 0,
-				carbohydrates: Number(carbohydrates) || 0,
-				fat: Number(fat) || 0,
-				calories: Number(calories) || 0,
-				slug: name.toLowerCase().trim().replace(/\s+/g, '-'),
+				...validatedData,
+				image: validatedData.image || '',
+				slug: validatedData.name.toLowerCase().trim().replace(/\s+/g, '-'),
+				calories: validatedData.calories ?? 0,
+				protein: validatedData.protein ?? 0,
+				fat: validatedData.fat ?? 0,
+				carbohydrates: validatedData.carbohydrates ?? 0,
 			},
 		});
 
@@ -136,4 +83,27 @@ export async function updateProduct(formData: FormData) {
 				error instanceof Error ? error.message : 'Failed to update product',
 		};
 	}
-}
+};
+
+export const checkProductExist = async (name: string) => {
+	try {
+		const product = await prisma.product.findFirst({
+			where: {
+				name: {
+					equals: name,
+					mode: 'insensitive',
+				},
+			},
+		});
+		return { success: true, exists: !!product };
+	} catch (error) {
+		console.log('Error checking product existence:', error);
+		return {
+			success: false,
+			error:
+				error instanceof Error
+					? error.message
+					: 'Failed to check product existence',
+		};
+	}
+};

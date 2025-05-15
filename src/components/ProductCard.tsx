@@ -1,16 +1,13 @@
 'use client';
 
-import { Product } from '@prisma/client';
 import Image from 'next/image';
 import { useState } from 'react';
 import { MdEditSquare, MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 
 import { openModal, setCurrentProduct } from '@/lib/redux/toggleModal/slice';
+import { ProductProps } from '@/lib/types/types';
 
-interface ProductProps {
-	product: Product;
-}
 const ProductCard = ({ product }: ProductProps) => {
 	const dispatch = useDispatch();
 	const [favorite, setFavorite] = useState(false);

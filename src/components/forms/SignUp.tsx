@@ -63,7 +63,6 @@ const SignUp = () => {
 					<Input
 						placeholder="Ім'я"
 						type="text"
-						required
 						className={errors.name ? 'border-red-500' : ''}
 						{...register('name')}
 					/>
@@ -72,7 +71,6 @@ const SignUp = () => {
 					<Input
 						placeholder="Пошта"
 						type="text"
-						required
 						className={errors.email ? 'border-red-500' : ''}
 						{...register('email')}
 					/>
@@ -82,7 +80,6 @@ const SignUp = () => {
 						placeholder="Пароль"
 						type="password"
 						showToggle={true}
-						required
 						className={errors.password ? 'border-red-500' : ''}
 						{...register('password')}
 					/>
@@ -92,7 +89,6 @@ const SignUp = () => {
 						placeholder="Повторіть пароль"
 						type="password"
 						showToggle={true}
-						required
 						className={errors.confirmPassword ? 'border-red-500' : ''}
 						{...register('confirmPassword')}
 					/>

@@ -16,6 +16,10 @@ export const navigationItems = [
 				name: 'Додати продукт',
 				href: '/products-add',
 			},
+			{
+				name: 'Переклади',
+				href: '/translation',
+			},
 		],
 	},
 	{

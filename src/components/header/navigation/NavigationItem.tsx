@@ -1,27 +1,9 @@
 'use client';
-import { Session } from 'next-auth';
 import Link from 'next/link';
 
+import { NavigationItemProps } from '@/lib/types/types';
+
 import DropdownMenu from './DropdownMenu';
-
-// Type definitions
-export type NavigationItem = {
-	name: string;
-	href?: string;
-	children?: NavigationItem[];
-	authRequired?: boolean;
-	showChildrenOnlyWhenAuthed?: boolean;
-};
-
-interface NavigationItemProps {
-	item: NavigationItem;
-	isActive: boolean;
-	isHovered: boolean;
-	onMouseEnter: () => void;
-	onMouseLeave: () => void;
-	currentPath: string;
-	session: Session | null;
-}
 
 // Styles
 export const navigationStyle =

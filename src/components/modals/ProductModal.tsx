@@ -4,10 +4,11 @@ import { useSelector } from 'react-redux';
 
 import ProductEditForm from '@/components/forms/ProductEditForm';
 import CloseButton from '@/components/ui/CloseButton';
+import { RootState } from '@/lib/types/store';
 
 const ProductModal = () => {
 	const { isProductEdit, currentProduct } = useSelector(
-		(state: any) => state.persisted.modal,
+		(state: RootState) => state.persisted.modal,
 	);
 
 	if (!isProductEdit) return null;
@@ -20,7 +21,7 @@ const ProductModal = () => {
 					className="top-4 right-4 absolute"
 				/>
 				<h2 className="mb-4 font-bold text-xl">Редагування продукту</h2>
-				<ProductEditForm currentProduct={currentProduct} />
+				{currentProduct && <ProductEditForm currentProduct={currentProduct} />}
 			</div>
 		</div>
 	);

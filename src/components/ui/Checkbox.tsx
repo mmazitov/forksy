@@ -1,10 +1,4 @@
-import React from 'react';
-
-export interface CheckboxProps {
-	label: string;
-	checked?: boolean;
-	onChange: React.ChangeEventHandler<HTMLInputElement>;
-}
+import { CheckboxProps } from '@/lib/types/types';
 
 const Checkbox = ({ label, checked, onChange }: CheckboxProps) => {
 	return (
