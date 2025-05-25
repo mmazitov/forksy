@@ -53,6 +53,9 @@ export interface NavigationItemProps {
 	onMouseLeave: () => void;
 	currentPath: string;
 	session: Session | null;
+	isMobile?: boolean;
+	isDropdownOpen?: boolean;
+	onDropdownToggle?: boolean;
 }
 
 export interface PageHeaderProps {

@@ -7,7 +7,7 @@ import rootReducer from './rootReducer';
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['dummy', 'modal'],
+	whitelist: ['modal', 'menuSlice'],
 };
 
 const ignoredActions = [

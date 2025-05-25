@@ -1,6 +1,11 @@
 import TranslationAddForm from '@/components/forms/TranslationAddForm';
 import TranslationTable from '@/components/translation/TranslationTable';
 
+export const metadata = {
+	title: 'Переклади',
+	description: 'Перегляд та додавання перекладів',
+};
+
 const TranslationPage = async () => {
 	return (
 		<div className="py-[var(--space)]">

@@ -7,12 +7,17 @@ export const signInSchema = z.object({
 		.min(1, { message: 'Password must be at least 6 characters long' }),
 });
 
-export const signUpSchema = signInSchema.extend({
-	name: z.string().min(1, 'Name is required'),
-	email: z.string().email('Invalid email address'),
-	password: z.string().min(1, 'Password must be at least 6 characters long'),
-	confirmPassword: z.string().min(1, 'Confirm Password is required'),
-});
+export const signUpSchema = signInSchema
+	.extend({
+		name: z.string().min(1, 'Name is required'),
+		email: z.string().email('Invalid email address'),
+		password: z.string().min(1, 'Password must be at least 6 characters long'),
+		confirmPassword: z.string().min(1, 'Confirm password is required'),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		path: ['confirmPassword'],
+		message: 'Passwords do not match',
+	});
 
 export const translationSchema = z.object({
 	ukrainian: z.string().trim().min(1, "Назва обов'язкова"),

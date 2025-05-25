@@ -1,3 +1,5 @@
+import store from '../redux/store';
+
 export interface Product {
 	id: string;
 	name: string;
@@ -14,8 +16,5 @@ export interface ModalState {
 	currentProduct: Product | null;
 }
 
-export interface RootState {
-	persisted: {
-		modal: ModalState;
-	};
-}
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

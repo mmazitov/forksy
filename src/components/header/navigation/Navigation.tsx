@@ -35,7 +35,7 @@ const Navigation = ({ session }: NavigationProps) => {
 	};
 
 	return (
-		<nav role="navigation">
+		<nav role="navigation" className="hidden md:block">
 			<ul className="flex">
 				{navigationItems.map((item) => (
 					<NavigationItem

@@ -1,8 +1,7 @@
 'use client';
 
 import { Translations } from '@prisma/client';
-import { useEffect, useState } from 'react';
-import { MdEditSquare, MdSave } from 'react-icons/md';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
 	getTranslations,
@@ -10,39 +9,50 @@ import {
 } from '@/app/api/translations/actions';
 import withAuthClient from '@/lib/hoc/withAuthClient';
 
+import TableRow from './TableRow';
+
 const TranslationTable = () => {
 	const [translations, setTranslations] = useState<Translations[]>([]);
 	const [editingId, setEditingId] = useState<string | null>(null);
 	const [editData, setEditData] = useState({ ukrainian: '', english: '' });
 
-	const fetchTranslations = async () => {
+	const fetchTranslations = useCallback(async () => {
 		const result = await getTranslations();
 		if (result.success && result.translations) {
 			setTranslations(result.translations);
 		} else {
 			setTranslations([]); // Set empty array as fallback
 		}
-	};
+	}, []);
 
-	const handleEdit = (translation: Translations) => {
-		setEditingId(translation.id);
-		setEditData({
-			ukrainian: translation.ukrainian,
-			english: translation.english,
-		});
-	};
+	const handleEdit = useCallback(
+		(translation: Pick<Translations, 'id' | 'ukrainian' | 'english'>) => {
+			setEditingId(translation.id);
+			setEditData({
+				ukrainian: translation.ukrainian,
+				english: translation.english,
+			});
+		},
+		[],
+	);
 
-	const handleSave = async (id: string) => {
-		const result = await updateTranslation(id, editData);
-		if (result.success) {
-			setEditingId(null);
-			fetchTranslations();
-		}
-	};
+	const handleSave = useCallback(
+		async (translation: Pick<Translations, 'id' | 'ukrainian' | 'english'>) => {
+			const result = await updateTranslation(translation.id, editData);
+			if (result.success) {
+				setEditingId(null);
+				fetchTranslations();
+			}
+		},
+		[editData, fetchTranslations],
+	);
 
-	const handleChange = (field: 'ukrainian' | 'english', value: string) => {
-		setEditData((prev) => ({ ...prev, [field]: value }));
-	};
+	const handleChange = useCallback(
+		(field: 'ukrainian' | 'english', value: string) => {
+			setEditData((prev) => ({ ...prev, [field]: value }));
+		},
+		[],
+	);
 
 	useEffect(() => {
 		fetchTranslations();
@@ -55,7 +65,23 @@ const TranslationTable = () => {
 		return () => {
 			window.removeEventListener('translationAdded', handleTranslationAdded);
 		};
-	}, []);
+	}, [fetchTranslations]);
+
+	const tableRows = useMemo(
+		() =>
+			translations.map((translation) => (
+				<TableRow
+					key={translation.id}
+					translation={translation}
+					isEditing={editingId === translation.id}
+					editData={editData}
+					onEdit={handleEdit}
+					onSave={handleSave}
+					onChange={handleChange}
+				/>
+			)),
+		[translations, editingId, editData, handleEdit, handleSave, handleChange],
+	);
 
 	return (
 		<div className="relative flex flex-col h-[500px]">
@@ -79,54 +105,7 @@ const TranslationTable = () => {
 
 			<div className="flex-1 bg-[var(--input-bg)] rounded-b-[var(--radius)] overflow-y-auto">
 				<table className="w-full border-collapse">
-					<tbody>
-						{translations.map((translation) => (
-							<tr
-								key={translation.id}
-								className="hover:bg-[var(--hover-bg)] border-[var(--card-border)] border-b transition-all duration-300"
-							>
-								<td className="p-[calc(var(--space)/2)] w-[225px] text-[var(--grey-color)]">
-									{editingId === translation.id ? (
-										<input
-											type="text"
-											value={editData.ukrainian}
-											onChange={(e) =>
-												handleChange('ukrainian', e.target.value)
-											}
-											className="bg-transparent border-[var(--grey-color)] focus:border-[var(--foreground)] border-b focus:outline-none w-full"
-										/>
-									) : (
-										<span>{translation.ukrainian}</span>
-									)}
-								</td>
-								<td className="p-[calc(var(--space)/2)] w-[225px] text-[var(--grey-color)]">
-									{editingId === translation.id ? (
-										<input
-											type="text"
-											value={editData.english}
-											onChange={(e) => handleChange('english', e.target.value)}
-											className="bg-transparent border-[var(--grey-color)] focus:border-[var(--foreground)] border-b focus:outline-none w-full"
-										/>
-									) : (
-										<span>{translation.english}</span>
-									)}
-								</td>
-								<td className="p-[calc(var(--space)/2)] w-[50px] text-[var(--grey-color)]">
-									{editingId === translation.id ? (
-										<MdSave
-											className="cursor-pointer"
-											onClick={() => handleSave(translation.id)}
-										/>
-									) : (
-										<MdEditSquare
-											className="cursor-pointer"
-											onClick={() => handleEdit(translation)}
-										/>
-									)}
-								</td>
-							</tr>
-						))}
-					</tbody>
+					<tbody>{tableRows}</tbody>
 				</table>
 			</div>
 		</div>
