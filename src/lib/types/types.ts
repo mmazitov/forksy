@@ -55,7 +55,7 @@ export interface NavigationItemProps {
 	session: Session | null;
 	isMobile?: boolean;
 	isDropdownOpen?: boolean;
-	onDropdownToggle?: boolean;
+	onDropdownToggle?: () => void;
 }
 
 export interface PageHeaderProps {

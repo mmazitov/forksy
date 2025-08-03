@@ -116,7 +116,7 @@ export const NavigationItem = ({
 			)}
 			{displayChildren && (
 				<DropdownMenu
-					isVisible={isMobile ? isDropdownOpen : isHovered}
+					isVisible={!!(isMobile ? isDropdownOpen : isHovered)}
 					currentPath={currentPath}
 					session={session}
 					isMobile={isMobile}

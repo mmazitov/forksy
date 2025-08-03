@@ -37,8 +37,8 @@ const TranslationTable = () => {
 	);
 
 	const handleSave = useCallback(
-		async (translation: Pick<Translations, 'id' | 'ukrainian' | 'english'>) => {
-			const result = await updateTranslation(translation.id, editData);
+		async (id: string) => {
+			const result = await updateTranslation(id, editData);
 			if (result.success) {
 				setEditingId(null);
 				fetchTranslations();
