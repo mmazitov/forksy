@@ -78,7 +78,7 @@ const ProductEditForm = ({ currentProduct }: ProductEditFormProps) => {
 			className="flex flex-col gap-[calc(var(--space)/4)] space-y-4"
 		>
 			{errors.root && (
-				<div className="bg-red-100 mb-4 p-3 border border-red-400 rounded text-red-700">
+				<div className="bg-[var(--error-bg)] mb-4 p-3 border border-[var(--error-border)] rounded text-[var(--error-text)]">
 					{errors.root.message}
 				</div>
 			)}
@@ -90,7 +90,7 @@ const ProductEditForm = ({ currentProduct }: ProductEditFormProps) => {
 				<Input
 					{...register('name')}
 					placeholder="Назва продукту"
-					className={errors.name ? 'border-red-500' : ''}
+					className={errors.name ? 'input-error' : ''}
 				/>
 			</div>
 
@@ -101,7 +101,7 @@ const ProductEditForm = ({ currentProduct }: ProductEditFormProps) => {
 				<Input
 					{...register('category')}
 					placeholder="Категорія"
-					className={errors.category ? 'border-red-500' : ''}
+					className={errors.category ? 'input-error' : ''}
 				/>
 			</div>
 

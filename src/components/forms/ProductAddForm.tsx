@@ -63,7 +63,7 @@ const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 	return (
 		<>
 			{errors.root && (
-				<div className="bg-red-100 mb-4 p-3 border border-red-400 rounded text-red-700">
+				<div className="bg-[var(--error-bg)] mb-4 p-3 border border-[var(--error-border)] rounded text-[var(--error-text)]">
 					{errors.root.message}
 				</div>
 			)}
@@ -79,7 +79,7 @@ const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 					<Input
 						{...register('name')}
 						placeholder="Назва продукту"
-						className={errors.name ? 'border-red-500' : ''}
+						className={errors.name ? 'border-[var(--error-input-border)]' : ''}
 					/>
 				</div>
 
@@ -90,7 +90,7 @@ const ProductAddForm = ({ selectedNutrition }: ProductAddFormProps) => {
 					<Input
 						{...register('category')}
 						placeholder="Категорія продукту"
-						className={errors.category ? 'border-red-500' : ''}
+						className={errors.category ? 'input-error' : ''}
 					/>
 				</div>
 

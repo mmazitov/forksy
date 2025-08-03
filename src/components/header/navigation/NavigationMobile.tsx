@@ -51,21 +51,21 @@ const NavigationMobile = ({ session }: NavigationMobileProps) => {
 				}`}
 			>
 				<span
-					className={`block absolute h-0.5 w-full bg-black transform transition duration-300 ease-in-out  
+					className={`block absolute h-0.5 w-full bg-[var(--foreground)] transform transition duration-300 ease-in-out  
           ${isMenuOpen ? 'rotate-45 top-3.5' : 'top-1'}`}
 				></span>
 				<span
-					className={`block absolute h-0.5 w-full bg-black transform transition duration-300 ease-in-out top-3.5 
+					className={`block absolute h-0.5 w-full bg-[var(--foreground)] transform transition duration-300 ease-in-out top-3.5 
           ${isMenuOpen ? 'opacity-0' : ''}`}
 				></span>
 				<span
-					className={`block absolute h-0.5 w-full bg-black transform transition duration-300 ease-in-out  
+					className={`block absolute h-0.5 w-full bg-[var(--foreground)] transform transition duration-300 ease-in-out  
           ${isMenuOpen ? '-rotate-45 top-3.5' : 'top-6'}`}
 				></span>
 			</button>
 
 			<div
-				className={`fixed inset-0 w-64 bg-white transform transition-transform duration-300 ease-in-out z-10 ${
+				className={`fixed inset-0 w-64 bg-[var(--background)] transform transition-transform duration-300 ease-in-out z-10 ${
 					isMenuOpen ? 'translate-x-[0]' : 'translate-x-[-200%]'
 				}`}
 			>

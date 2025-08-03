@@ -20,11 +20,11 @@ const Checkbox = ({ label, checked, onChange }: CheckboxProps) => {
 							viewBox="0 0 12 12"
 							fill="none"
 							xmlns="http://www.w3.org/2000/svg"
-							className="text-white"
+							className="text-[var(--btn-color)]"
 						>
 							<path
 								d="M10 3L4.5 8.5L2 6"
-								stroke="white"
+								stroke="var(--btn-color)"
 								strokeWidth="1.5"
 								strokeLinecap="round"
 								strokeLinejoin="round"

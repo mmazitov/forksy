@@ -58,7 +58,7 @@ const SearchPage = () => {
 			</div>
 
 			{query && (
-				<div className="mb-4 text-gray-600 text-sm">
+				<div className="mb-4 text-muted text-sm">
 					{!isLoading && (
 						<p>
 							Найдено {totalResults} результатов ({searchTime} сек.) по запросу:{' '}
@@ -75,7 +75,7 @@ const SearchPage = () => {
 			)}
 
 			{error && (
-				<div className="bg-red-100 mb-4 px-4 py-3 border border-red-400 rounded text-red-700">
+				<div className="bg-[var(--error-bg)] mb-4 px-4 py-3 border border-[var(--error-border)] rounded text-[var(--error-text)]">
 					<p>{error}</p>
 				</div>
 			)}
@@ -91,7 +91,7 @@ const SearchPage = () => {
 				{results.map((result) => (
 					<div
 						key={result.cacheId || result.link}
-						className="hover:shadow-md p-4 border border-gray-200 rounded-lg transition-shadow"
+						className="bg-[var(--search-result-bg)] hover:shadow-md p-4 border border-[var(--search-result-border)] rounded-lg transition-shadow"
 					>
 						<div className="flex items-start">
 							{result.pagemap?.cse_image?.[0]?.src && (
@@ -110,14 +110,16 @@ const SearchPage = () => {
 									href={result.link}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="font-medium text-[var(--main-color)] text-lg hover:underline"
+									className="font-medium text-[var(--link-color)] text-lg hover:underline"
 								>
 									{result.title}
 								</Link>
-								<p className="mt-1 text-green-600 text-sm">
+								<p className="mt-1 text-[var(--link-domain-color)] text-sm">
 									{result.displayLink}
 								</p>
-								<p className="mt-2 text-gray-700 text-sm">{result.snippet}</p>
+								<p className="mt-2 text-[var(--text-muted)] text-sm">
+									{result.snippet}
+								</p>
 							</div>
 						</div>
 					</div>

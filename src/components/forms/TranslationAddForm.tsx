@@ -78,11 +78,11 @@ const TranslationAddForm = () => {
 					placeholder="Назва продукту"
 					type="text"
 					id="ukrainian"
-					className={errors.ukrainian || existsError ? 'border-red-500' : ''}
+					className={errors.ukrainian || existsError ? 'input-error' : ''}
 					{...register('ukrainian')}
 				/>
 				{existsError && (
-					<p className="mt-1 text-red-500 text-sm">{existsError}</p>
+					<p className="mt-1 text-[var(--error-text)] text-sm">{existsError}</p>
 				)}
 			</div>
 			<div>
@@ -93,7 +93,7 @@ const TranslationAddForm = () => {
 					placeholder="Product name"
 					type="text"
 					id="english"
-					className={errors.english ? 'border-red-500' : ''}
+					className={errors.english ? 'input-error' : ''}
 					{...register('english')}
 				/>
 			</div>

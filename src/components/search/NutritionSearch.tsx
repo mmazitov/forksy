@@ -74,7 +74,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 	}
 
 	return (
-		<div className="bg-[var(--white-color)] shadow-drop mb-[var(--space)] p-[var(--space)] border border-[var(--black-color-weak)] rounded-[var(--radius)]">
+		<div className="shadow-drop mb-[var(--space)] p-[var(--space)] border rounded-[var(--radius)] card-adaptive">
 			<h2 className="font-semibold text-lg">Пошук продукту</h2>
 
 			<div className="flex gap-[16px]">
@@ -101,7 +101,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 			</div>
 
 			{error && (
-				<div className="bg-red-100 mb-4 p-3 border border-red-400 rounded text-red-700">
+				<div className="bg-[var(--error-bg)] mb-4 p-3 border border-[var(--error-border)] rounded text-[var(--error-text)]">
 					{error}
 				</div>
 			)}
@@ -115,7 +115,7 @@ const NutritionSearch = ({ onNutritionSelect }: NutritionSearchProps) => {
 						{searchResults.map((nutrition, index) => (
 							<div
 								key={index}
-								className="flex items-start gap-4 hover:bg-gray-50 p-3 border border-gray-200 rounded cursor-pointer"
+								className="flex items-start gap-4 bg-[var(--search-result-bg)] p-3 border border-[var(--search-result-border)] rounded cursor-pointer hover-subtle"
 								onClick={() => onNutritionSelect(nutrition)}
 							>
 								{nutrition.image && (

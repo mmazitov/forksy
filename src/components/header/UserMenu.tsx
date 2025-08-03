@@ -64,7 +64,7 @@ const UserMenu = ({ session }: UserMenuProps) => {
 					{user ? (
 						<>
 							<li
-								className="hover:bg-gray-100 px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
+								className="hover:bg-[var(--hover-bg)] px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
 								onClick={() => signOut({ callbackUrl: '/' })}
 							>
 								Вийти
@@ -73,13 +73,13 @@ const UserMenu = ({ session }: UserMenuProps) => {
 					) : (
 						<>
 							<li
-								className="hover:bg-gray-100 px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
+								className="hover:bg-[var(--hover-bg)] px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
 								onClick={handleSignIn}
 							>
 								Авторизація
 							</li>
 							<li
-								className="hover:bg-gray-100 px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
+								className="hover:bg-[var(--hover-bg)] px-4 py-2 rounded-[var(--radius)] transition-colors duration-300 ease-in-out cursor-pointer"
 								onClick={handleSignUp}
 							>
 								Реєстрація

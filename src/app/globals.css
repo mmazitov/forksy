@@ -40,6 +40,21 @@
 	--input-color: var(--grey-color);
 	--input-border: rgba(0, 0, 0, 0.1);
 	--card-border: rgba(0, 0, 0, 0.1);
+
+	/* Переменные для ошибок */
+	--error-bg: #fef2f2;
+	--error-border: #fca5a5;
+	--error-text: #dc2626;
+	--error-input-border: #ef4444;
+
+	/* Переменные для hover эффектов и адаптивных цветов */
+	--hover-bg: rgba(0, 0, 0, 0.05);
+	--search-result-bg: var(--white-color);
+	--search-result-border: rgba(0, 0, 0, 0.1);
+	--link-color: var(--main-color);
+	--link-domain-color: var(--green-color);
+	--text-muted: var(--grey-color);
+
 	--font-xs: 12px;
 	--font-sm: 14px;
 	--font-base: 16px;
@@ -58,17 +73,17 @@
 @media (prefers-color-scheme: dark) {
 	:root {
 		--main-color: #9372f1;
-		--black-color: #212832;
-		--black-color-weak: #393948;
+		--black-color: #1a1a1a;
+		--black-color-weak: #2d2d2d;
 		--white-color: #ffffff;
 		--grey-color: #c4c4c4;
 		--green-color: #60c06a;
-		--red-color: #df2727;
+		--red-color: #ef4444;
 
 		--gradient-start-color: #9772ff;
 		--gradient-end-color: #7f51ff;
 
-		--shadow-color: #7e59e899;
+		--shadow-color: #00000099;
 
 		--background: var(--black-color);
 		--foreground: var(--white-color);
@@ -77,18 +92,32 @@
 		--btn-border: var(--main-color);
 		--btn-color-hover: var(--main-color);
 		--btn-bg-hover: transparent;
-		--rounded-btn-bg: #f2f2f2;
+		--rounded-btn-bg: #404040;
 
 		--input-bg: var(--black-color-weak);
 		--input-placeholder-color: var(--grey-color);
-		--input-color: var(--grey-color);
-		--input-border: rgba(0, 0, 0, 0.1);
+		--input-color: var(--white-color);
+		--input-border: rgba(255, 255, 255, 0.2);
 		--card-border: rgba(255, 255, 255, 0.1);
 
 		--navigation-color: var(--white-color);
 
-		--drop-bg: var(--black-color);
-		--drop-border: var(--black-color-weak);
+		--drop-bg: var(--black-color-weak);
+		--drop-border: rgba(255, 255, 255, 0.2);
+
+		/* Добавляем переменные для ошибок в темной теме */
+		--error-bg: rgba(239, 68, 68, 0.1);
+		--error-border: rgba(239, 68, 68, 0.3);
+		--error-text: #fca5a5;
+		--error-input-border: #ef4444;
+
+		/* Новые переменные для hover эффектов */
+		--hover-bg: rgba(255, 255, 255, 0.1);
+		--search-result-bg: var(--black-color-weak);
+		--search-result-border: rgba(255, 255, 255, 0.2);
+		--link-color: var(--main-color);
+		--link-domain-color: var(--green-color);
+		--text-muted: var(--grey-color);
 	}
 }
 
@@ -112,6 +141,19 @@
 	.drop-visible {
 		opacity: 1;
 		visibility: visible;
+	}
+	.input-error {
+		border-color: var(--error-input-border) !important;
+	}
+	.hover-subtle:hover {
+		background-color: var(--hover-bg);
+	}
+	.card-adaptive {
+		background-color: var(--search-result-bg);
+		border-color: var(--search-result-border);
+	}
+	.text-muted {
+		color: var(--text-muted);
 	}
 }
 
