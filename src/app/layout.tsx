@@ -21,16 +21,36 @@ export const metadata: Metadata = {
 	description: 'Управление продуктами и рецептами',
 	manifest: '/manifest.json',
 	icons: [
-		{ rel: 'icon', url: '/icons/icon-192x192.png' },
-		{ rel: 'apple-touch-icon', url: '/icons/icon-192x192.png' },
+		{ rel: 'icon', url: '/icons/android-chrome-192x192.png' },
+		{
+			rel: 'apple-touch-icon',
+			url: '/icons/apple-touch-icon.png',
+			sizes: '180x180',
+		},
+		{ rel: 'icon', url: '/icons/android-chrome-512x512.png', sizes: '512x512' },
 	],
+	appleWebApp: {
+		capable: true,
+		title: 'Forksy',
+		statusBarStyle: 'default',
+	},
+	other: {
+		'apple-mobile-web-app-capable': 'yes',
+		'apple-mobile-web-app-status-bar-style': 'default',
+		'apple-mobile-web-app-title': 'Forksy',
+		'mobile-web-app-capable': 'yes',
+		'msapplication-TileColor': '#9372f1',
+		'msapplication-config': '/browserconfig.xml',
+	},
 };
 
 export const viewport = {
 	width: 'device-width',
 	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
 	viewportFit: 'cover',
-	themeColor: '#000000',
+	themeColor: '#9372f1',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
