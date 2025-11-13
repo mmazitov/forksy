@@ -1,0 +1,38 @@
+@keyframes drawCalendar {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes fillCalendar {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes forkSlideUp {
+	to {
+		transform: translateY(0);
+	}
+}
+
+.calendar-outline {
+	fill: none;
+	stroke: #33ccbf;
+	stroke-width: 2;
+	stroke-dasharray: 1500;
+	stroke-dashoffset: 1500;
+	animation: drawCalendar 2s ease-in-out forwards;
+}
+
+.calendar-fill {
+	fill: #33ccbf;
+	opacity: 0;
+	animation: fillCalendar 0.5s ease-in-out 2s forwards;
+}
+
+.fork {
+	fill: #33ccbf;
+	transform: translateY(200px);
+	animation: forkSlideUp 1.5s ease-out 2.5s forwards;
+}
