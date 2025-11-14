@@ -8,6 +8,7 @@ import {
 	Input,
 	Label,
 	PageTitle,
+	PwaManagement,
 	Separator,
 } from '@/components';
 import { useToast } from '@/hooks/useToast';
@@ -96,6 +97,8 @@ const Settings = () => {
 						</div>
 					</CardContent>
 				</Card>
+
+				<PwaManagement />
 
 				<div className="flex justify-end gap-4">
 					<Button variant="outline">Скасувати</Button>

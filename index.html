@@ -1,13 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forksy</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- PWA Meta Tags -->
+		<meta name="theme-color" content="#4db8c4" />
+		<meta
+			name="description"
+			content="A simple and intuitive meal planner and recipe manager app for planning meals and managing your recipes."
+		/>
+		<meta
+			name="keywords"
+			content="meal planner, recipe manager, food, cooking"
+		/>
+		<meta name="author" content="Forksy Team" />
+
+		<!-- Apple Meta Tags for iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<meta name="apple-mobile-web-app-title" content="Forksy" />
+		<link rel="apple-touch-icon" href="/icon-128.png" />
+
+		<!-- Manifest -->
+		<link rel="manifest" href="/site.webmanifest" />
+
+		<!-- Icons -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="shortcut icon" href="/favicon.svg" />
+
+		<!-- Preconnect for performance -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+		<title>Forksy - Meal Planner & Recipe Manager</title>
+	</head>
+	<body>
+		<div id="root"></div>
+		<script type="module" src="/src/main.tsx"></script>
+
+		<!-- Service Worker Registration -->
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker
+						.register('/sw.js', { scope: '/' })
+						.then((registration) => {
+							console.log('[PWA] Service Worker registered:', registration);
+						})
+						.catch((error) => {
+							console.error('[PWA] Service Worker registration failed:', error);
+						});
+				});
+			}
+		</script>
+	</body>
 </html>

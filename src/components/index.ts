@@ -9,6 +9,7 @@ export { MetaData } from './metaData';
 export { AddDishModal, AuthModal, Modal } from './modal';
 export { MenuButton, NavigationDesktop, NavigationMobile } from './navigation';
 export { PageTitle } from './pageTitle';
+export { PwaManagement } from './pwaManagement';
 export { ScheduleMonth, ScheduleNavigation, ScheduleWeek } from './schedule';
 export { Search } from './search';
 export { SocialList } from './socialList';
