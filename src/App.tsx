@@ -1,4 +1,9 @@
-import { Header, SplashScreen, useSplashScreen } from '@/components';
+import {
+	Header,
+	PwaInstallPrompt,
+	SplashScreen,
+	useSplashScreen,
+} from '@/components';
 import { Providers } from '@/lib/providers';
 import {
 	AddDish,
@@ -22,6 +27,7 @@ const App = () => {
 	return (
 		<Providers>
 			{showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+			<PwaInstallPrompt />
 			<BrowserRouter>
 				<div className="min-h-screen bg-background">
 					<Header />

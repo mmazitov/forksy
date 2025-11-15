@@ -15,7 +15,7 @@ interface CacheInfo {
 	totalSize: number;
 }
 
-export const PwaManagement = () => {
+const PwaManagement = () => {
 	const [cacheInfo, setCacheInfo] = useState<CacheInfo | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isServiceWorkerActive, setIsServiceWorkerActive] = useState(false);
@@ -172,3 +172,5 @@ export const PwaManagement = () => {
 		</div>
 	);
 };
+
+export default PwaManagement;

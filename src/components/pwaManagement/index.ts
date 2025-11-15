@@ -1,1 +1,1 @@
-export { PwaManagement } from './PwaManagement';
+export { default as PwaManagement } from './PwaManagement';
