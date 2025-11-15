@@ -4,6 +4,7 @@ import {
 	LuCalendar,
 	LuChefHat,
 	LuNotebookPen,
+	LuSettings,
 	LuSoup,
 } from 'react-icons/lu';
 
@@ -18,6 +19,11 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
 		name: 'Головна',
 		href: '/',
 		icon: LuChefHat,
+	},
+	{
+		name: 'Налаштування',
+		href: '/settings',
+		icon: LuSettings,
 	},
 	{
 		name: 'Розклад',
