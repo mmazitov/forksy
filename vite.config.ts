@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react-swc';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { defineConfig, Plugin } from 'vite';
+import { defineConfig } from 'vite';
+import type { Plugin } from 'vite';
 
 // Generate hash for a file
 function generateFileHash(filePath: string): string {
@@ -30,7 +31,7 @@ const swBuildHashPlugin = (): Plugin => {
 	return {
 		name: 'sw-build-hash',
 		apply: 'build',
-		async generateBundle(options) {
+		async generateBundle() {
 			// Read sw.js after it's been processed
 			const swDistPath = path.resolve(__dirname, './dist/sw.js');
 			if (fs.existsSync(swDistPath)) {
