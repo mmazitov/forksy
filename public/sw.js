@@ -1,6 +1,8 @@
 // Cache version with build hash for automatic cache invalidation
 const CACHE_VERSION = 'v1';
-const BUILD_HASH = Date.now().toString(); // This will be updated on each build
+// Use a hash based on the current time during development
+// In production, this should be replaced during build with actual build hash
+const BUILD_HASH = 'VITE_BUILD_HASH_PLACEHOLDER';
 const CACHE_NAME = `forksy-${CACHE_VERSION}-${BUILD_HASH}`;
 
 // Separate cache for HTML pages (including index.html for SPA)

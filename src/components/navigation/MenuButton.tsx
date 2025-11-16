@@ -1,4 +1,4 @@
-import { Button, ThemeToggle, UserMenu } from '@/components';
+import { Button, UserMenu } from '@/components';
 import { Menu, X } from 'lucide-react';
 
 interface MenuButtonProps {
@@ -20,7 +20,6 @@ const MenuButton = ({
 }: MenuButtonProps) => {
 	return (
 		<div className="flex md:hidden items-center gap-2">
-			<ThemeToggle />
 			<UserMenu
 				isLoggedIn={isLoggedIn}
 				userName={userName}

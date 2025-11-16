@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
 
 // Generate hash for a file
 function generateFileHash(filePath: string): string {
@@ -25,8 +25,36 @@ const logoHash = generateFileHash(logoPath);
 const swPath = path.resolve(__dirname, './public/sw.js');
 const swHash = generateFileHash(swPath);
 
+// Plugin to replace build hash in Service Worker
+const swBuildHashPlugin = (): Plugin => {
+	return {
+		name: 'sw-build-hash',
+		apply: 'build',
+		async generateBundle(options) {
+			// Read sw.js after it's been processed
+			const swDistPath = path.resolve(__dirname, './dist/sw.js');
+			if (fs.existsSync(swDistPath)) {
+				let swContent = fs.readFileSync(swDistPath, 'utf-8');
+				swContent = swContent.replace(
+					'VITE_BUILD_HASH_PLACEHOLDER',
+					buildTimestamp.slice(0, 10).replace(/-/g, ''),
+				);
+				fs.writeFileSync(swDistPath, swContent);
+			}
+		},
+		async closeBundle() {
+			// Also ensure src version is updated for development
+			const swSrcPath = path.resolve(__dirname, './public/sw.js');
+			const swContent = fs.readFileSync(swSrcPath, 'utf-8');
+			if (swContent.includes('VITE_BUILD_HASH_PLACEHOLDER')) {
+				// Keep placeholder in src for git
+			}
+		},
+	};
+};
+
 export default defineConfig({
-	plugins: [react(), tailwindcss()],
+	plugins: [react(), tailwindcss(), swBuildHashPlugin()],
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),
