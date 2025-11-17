@@ -16,6 +16,15 @@ export const usePwaInstallPrompt = () => {
 	const [deferredPrompt, setDeferredPrompt] =
 		useState<BeforeInstallPromptEvent | null>(null);
 	const [showPrompt, setShowPrompt] = useState(true);
+	const pwaInstalledMarker = 'pwa-install-prompt';
+
+	// Check if user already dismissed the prompt
+	useEffect(() => {
+		const isDismissed = localStorage.getItem(pwaInstalledMarker) === 'true';
+		if (isDismissed) {
+			setShowPrompt(false);
+		}
+	}, []);
 
 	// Check if device is mobile
 	const isMobileDevice = () => {
@@ -26,9 +35,14 @@ export const usePwaInstallPrompt = () => {
 
 	useEffect(() => {
 		// Only show install prompt on mobile devices
-		if (!isMobileDevice()) return;
+		// if (!isMobileDevice()) return;
 
 		const handleBeforeInstall = (e: BeforeInstallPromptEvent) => {
+			// Check if user already dismissed
+			if (localStorage.getItem(pwaInstalledMarker) === 'true') {
+				return;
+			}
+
 			// Prevent the mini-infobar from appearing on mobile
 			e.preventDefault();
 			// Stash the event for later use
@@ -41,7 +55,7 @@ export const usePwaInstallPrompt = () => {
 			console.log('[PWA] App installed');
 			setCanInstall(false);
 			setShowPrompt(false);
-			localStorage.setItem('pwa-installed-prompt-shown', 'true');
+			localStorage.setItem(pwaInstalledMarker, 'true');
 		};
 
 		window.addEventListener(
@@ -59,6 +73,13 @@ export const usePwaInstallPrompt = () => {
 		};
 	}, []);
 
+	const handleDismiss = () => {
+		// Mark as dismissed in localStorage
+		localStorage.setItem(pwaInstalledMarker, 'true');
+		setShowPrompt(false);
+		setDeferredPrompt(null);
+	};
+
 	const handleInstall = async () => {
 		if (!deferredPrompt) return;
 
@@ -73,7 +94,11 @@ export const usePwaInstallPrompt = () => {
 				// PWA was installed
 				setCanInstall(false);
 				setShowPrompt(false);
-				localStorage.setItem('pwa-installed-prompt-shown', 'true');
+				localStorage.setItem(pwaInstalledMarker, 'true');
+			} else if (outcome === 'dismissed') {
+				// User dismissed the system prompt, mark as dismissed
+				localStorage.setItem(pwaInstalledMarker, 'true');
+				setShowPrompt(false);
 			}
 
 			setDeferredPrompt(null);
@@ -85,7 +110,7 @@ export const usePwaInstallPrompt = () => {
 	return {
 		canInstall,
 		showPrompt,
-		setShowPrompt,
+		handleDismiss,
 		handleInstall,
 	};
 };

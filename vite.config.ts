@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react-swc';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { defineConfig } from 'vite';
 import type { Plugin } from 'vite';
+import { defineConfig } from 'vite';
 
 // Generate hash for a file
 function generateFileHash(filePath: string): string {

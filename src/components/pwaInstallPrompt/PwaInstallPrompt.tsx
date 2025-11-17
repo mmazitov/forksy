@@ -2,7 +2,7 @@ import { Button } from '../ui/button';
 import { usePwaInstallPrompt } from './usePwaInstallPrompt';
 
 const PwaInstallPrompt = () => {
-	const { canInstall, showPrompt, setShowPrompt, handleInstall } =
+	const { canInstall, showPrompt, handleDismiss, handleInstall } =
 		usePwaInstallPrompt();
 
 	if (!canInstall || !showPrompt) return null;
@@ -20,7 +20,7 @@ const PwaInstallPrompt = () => {
 							Встановити
 						</Button>
 						<Button
-							onClick={() => setShowPrompt(false)}
+							onClick={handleDismiss}
 							variant="outline"
 							className="h-8 text-xs"
 							size="lg"
