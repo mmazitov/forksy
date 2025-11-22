@@ -5,16 +5,22 @@ import {
 	CardDescription,
 	CardHeader,
 	CardTitle,
+	Checkbox,
 	Input,
 	Label,
+	MetaData,
 	PageTitle,
 	PwaManagement,
 	Separator,
 } from '@/components';
 import { useToast } from '@/hooks/useToast';
+import { METADATA_CONFIG } from '@/lib/config/metaDataConfig';
+import { useState } from 'react';
 
 const Settings = () => {
 	const { toast } = useToast();
+	const [emailNotifications, setEmailNotifications] = useState(false);
+	const [menuReminders, setMenuReminders] = useState(false);
 
 	const handleSave = () => {
 		toast({
@@ -26,6 +32,12 @@ const Settings = () => {
 	return (
 		<main className="container mx-auto px-4 py-8">
 			<div className="max-w-2xl mx-auto space-y-6">
+				<MetaData
+					title="Налаштування"
+					description={METADATA_CONFIG.descriptions.settings}
+					keywords={METADATA_CONFIG.keywords.settings}
+					type="website"
+				/>
 				<PageTitle
 					title="Налаштування"
 					subtitle="Керуйте своїм обліковим записом та параметрами додатку"
@@ -40,25 +52,19 @@ const Settings = () => {
 						</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-4">
-						<div className="flex items-center justify-between">
-							<div>
-								<Label>Email сповіщення</Label>
-								<p className="text-sm text-muted-foreground">
-									Отримуйте сповіщення про нові страви та оновлення
-								</p>
-							</div>
-							<Input type="checkbox" className="w-auto" />
-						</div>
+						<Checkbox
+							label="Email сповіщення"
+							subLabel="Отримуйте сповіщення про нові страви та оновлення"
+							checked={emailNotifications}
+							setChecked={setEmailNotifications}
+						/>
 						<Separator />
-						<div className="flex items-center justify-between">
-							<div>
-								<Label>Нагадування про меню</Label>
-								<p className="text-sm text-muted-foreground">
-									Сповіщення про планування меню
-								</p>
-							</div>
-							<Input type="checkbox" className="w-auto" />
-						</div>
+						<Checkbox
+							label="Нагадування про меню"
+							subLabel="Сповіщення про планування меню"
+							checked={menuReminders}
+							setChecked={setMenuReminders}
+						/>
 					</CardContent>
 				</Card>
 

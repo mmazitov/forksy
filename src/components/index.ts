@@ -103,4 +103,6 @@ export { Toaster } from './ui/toaster';
 
 export { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
+export { Checkbox } from './ui/checkbox';
+
 export { PwaInstallPrompt } from './pwaInstallPrompt';

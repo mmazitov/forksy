@@ -54,6 +54,13 @@ export const METADATA_CONFIG = {
 			'страви',
 			'підготовка їжі',
 		],
+		settings: [
+			'налаштування',
+			'уподобання',
+			'параметри додатку',
+			'безпека',
+			'сповіщення',
+		],
 	},
 
 	// Descriptions for different pages

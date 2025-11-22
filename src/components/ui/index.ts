@@ -97,3 +97,5 @@ export { Toaster } from './toaster';
 
 // Tooltip
 export { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
+
+export { Checkbox } from './checkbox';
