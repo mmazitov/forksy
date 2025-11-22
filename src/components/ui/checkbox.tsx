@@ -13,7 +13,7 @@ interface Props
 
 function Checkbox({ label, subLabel, className, setChecked, ...props }: Props) {
 	return (
-		<label className="flex items-center justify-between cursor-pointer select-none">
+		<label className="flex items-center gap-2 justify-between cursor-pointer select-none">
 			<div className="flex flex-col">
 				{label && <Label>{label}</Label>}{' '}
 				{subLabel && (
@@ -22,7 +22,7 @@ function Checkbox({ label, subLabel, className, setChecked, ...props }: Props) {
 			</div>
 			<CheckboxPrimitive.Root
 				className={clsx(
-					'peer h-5 w-5 border border-input bg-background',
+					'peer h-5 min-w-5 border border-input bg-background',
 					'data-[state=checked]:bg-ring data-[state=checked]:border-ring',
 					'data-[state=unchecked]:bg-background',
 					'transition-colors',
