@@ -6,8 +6,8 @@ import {
 	PageTitle,
 	Search,
 } from '@/components';
+import { useFilter } from '@/components/filter';
 import { CATEGORIES_PRODUCTS } from '@/constants';
-import { useFilter } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
 import { products } from '@/mock';
 import { LuPlus } from 'react-icons/lu';

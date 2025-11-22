@@ -1,2 +1,2 @@
-export { default as useSplashScreen } from '../../hooks/useSplashScreen';
 export { default as SplashScreen } from './SplashScreen';
+export { default as useSplashScreen } from './useSplashScreen';
