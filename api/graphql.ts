@@ -1,16 +1,8 @@
 import { ApolloServer } from '@apollo/server';
+import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { PrismaClient } from '@prisma/client';
-import { VercelRequest, VercelResponse } from '@vercel/node';
 
 const prisma = new PrismaClient();
-
-// Helper to parse request body
-async function parseBody(req: VercelRequest): Promise<any> {
-	if (typeof req.body === 'string') {
-		return JSON.parse(req.body);
-	}
-	return req.body || {};
-}
 
 const typeDefs = `
   type Dish {
@@ -102,6 +94,11 @@ const typeDefs = `
     ): Product!
 
     deleteProduct(id: ID!): Boolean!
+
+		createUser(
+			email: String!
+			password: String!
+		): User!
   }
 `;
 
@@ -117,8 +114,8 @@ const resolvers = {
 	},
 
 	Mutation: {
-		createDish: (_parent: any, input: any, context: any) => {
-			const userId = context.userId || 'placeholder-user-id';
+		createDish: (_parent: any, input: any) => {
+			const userId = 'placeholder-user-id';
 			return prisma.dish.create({
 				data: { ...input, userId },
 			});
@@ -135,8 +132,8 @@ const resolvers = {
 			return true;
 		},
 
-		createProduct: (_parent: any, input: any, context: any) => {
-			const userId = context.userId || 'placeholder-user-id';
+		createProduct: (_parent: any, input: any) => {
+			const userId = 'placeholder-user-id';
 			return prisma.product.create({
 				data: { ...input, userId },
 			});
@@ -152,48 +149,18 @@ const resolvers = {
 			prisma.product.delete({ where: { id } });
 			return true;
 		},
+
+		createUser: (
+			_parent: any,
+			{ email, password }: { email: string; password: string },
+		) => {
+			return prisma.user.create({
+				data: { email, password },
+			});
+		},
 	},
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-// Initialize server
-let serverStarted = false;
-
-export default async (req: VercelRequest, res: VercelResponse) => {
-	// Start server once
-	if (!serverStarted) {
-		await server.start();
-		serverStarted = true;
-	}
-
-	// Handle CORS
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-	if (req.method === 'OPTIONS') {
-		return res.status(200).end();
-	}
-
-	if (req.method !== 'POST') {
-		return res.status(405).json({ error: 'Method not allowed' });
-	}
-
-	try {
-		const body = await parseBody(req);
-
-		const result = await server.executeOperation({
-			query: body.query,
-			variables: body.variables,
-		});
-
-		res.status(200).json(result);
-	} catch (error) {
-		console.error('GraphQL error:', error);
-		res.status(500).json({
-			error: 'GraphQL request failed',
-			message: error instanceof Error ? error.message : 'Unknown error',
-		});
-	}
-};
+export default startServerAndCreateNextHandler(server);
