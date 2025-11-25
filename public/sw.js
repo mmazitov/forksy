@@ -35,6 +35,11 @@ function shouldCacheAsset(url) {
 function isDevServerRequest(url) {
 	return url.includes('@vite') || url.includes('@react-refresh');
 }
+
+// Check if URL scheme is supported for caching
+function isSupportedScheme(url) {
+	return url.startsWith('http://') || url.startsWith('https://');
+}
 // Install event - cache essential files
 self.addEventListener('install', (event) => {
 	console.log('[Service Worker] Installing...');
@@ -71,6 +76,11 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
 	const { request } = event;
 	const url = new URL(request.url);
+
+	// Skip caching for unsupported schemes (chrome-extension, etc)
+	if (!isSupportedScheme(url.href)) {
+		return;
+	}
 
 	// Skip caching for dev server and API requests
 	if (isDevServerRequest(url.href)) {
@@ -166,10 +176,13 @@ self.addEventListener('fetch', (event) => {
 						return response;
 					}
 
-					const responseToCache = response.clone();
-					caches.open(CACHE_NAME).then((cache) => {
-						cache.put(request, responseToCache);
-					});
+					// Only cache if URL scheme is supported
+					if (isSupportedScheme(request.url)) {
+						const responseToCache = response.clone();
+						caches.open(CACHE_NAME).then((cache) => {
+							cache.put(request, responseToCache);
+						});
+					}
 
 					return response;
 				});

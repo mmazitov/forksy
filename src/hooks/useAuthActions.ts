@@ -1,22 +1,14 @@
 import { toast } from '@/hooks/useToast';
-import { useState } from 'react';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 const useAuthActions = () => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [userName, setUserName] = useState('');
+	const { user, logout } = useAuth();
 
-	const handleLogin = (email: string, password: string) => {
-		setIsLoggedIn(true);
-		setUserName(email.split('@')[0]);
-		toast({
-			title: 'Успішний вхід',
-			description: `Вітаю, ${email.split('@')[0]}!`,
-		});
-	};
+	const isLoggedIn = !!user;
+	const userName = user?.name || user?.email?.split('@')[0] || '';
 
 	const handleLogout = () => {
-		setIsLoggedIn(false);
-		setUserName('');
+		logout();
 		toast({
 			title: 'Ви вийшли з акаунта',
 			description: 'До скорої зустрічі!',
@@ -26,7 +18,6 @@ const useAuthActions = () => {
 	return {
 		isLoggedIn,
 		userName,
-		handleLogin,
 		handleLogout,
 	};
 };

@@ -1,16 +1,16 @@
 import { Button } from '@/components';
 import { SOCIAL_ITEMS } from '@/constants';
-import { useAuthActions } from '@/hooks';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 interface SocialListProps {
 	onOpenChange: (open: boolean) => void;
 }
 const SocialList = ({ onOpenChange }: SocialListProps) => {
-	const { handleLogin } = useAuthActions();
+	const { login } = useAuth();
 
 	const handleSocialLogin = (provider: string) => {
 		console.log(`Login with ${provider}`);
-		handleLogin(`${provider}@example.com`, 'social-password');
+		// Social login handler - can be extended with actual OAuth flow
 		onOpenChange(false);
 	};
 

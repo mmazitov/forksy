@@ -1,5 +1,8 @@
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { Toaster } from '@/components/ui/toaster';
+import { client } from '@/lib/apollo';
+import { AuthProvider } from '@/lib/auth/AuthContext';
+import { ApolloProvider } from '@apollo/client/react';
 import QueryProvider from './QueryProvider';
 import SeoProvider from './SeoProvider';
 import ThemeProvider from './ThemeProvider';
@@ -11,17 +14,21 @@ interface ProvidersProps {
 
 const Providers = ({ children }: ProvidersProps) => {
 	return (
-		<SeoProvider>
-			<QueryProvider>
-				<ThemeProvider>
-					<TooltipProvider>
-						<Toaster />
-						<Sonner />
-						{children}
-					</TooltipProvider>
-				</ThemeProvider>
-			</QueryProvider>
-		</SeoProvider>
+		<ApolloProvider client={client}>
+			<AuthProvider>
+				<SeoProvider>
+					<QueryProvider>
+						<ThemeProvider>
+							<TooltipProvider>
+								<Toaster />
+								<Sonner />
+								{children}
+							</TooltipProvider>
+						</ThemeProvider>
+					</QueryProvider>
+				</SeoProvider>
+			</AuthProvider>
+		</ApolloProvider>
 	);
 };
 

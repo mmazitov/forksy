@@ -26,3 +26,4 @@ dist-ssr
 docs
 scripts
 original.png
+.env.local
