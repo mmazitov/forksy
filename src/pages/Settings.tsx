@@ -56,14 +56,14 @@ const Settings = () => {
 							label="Email сповіщення"
 							subLabel="Отримуйте сповіщення про нові страви та оновлення"
 							checked={emailNotifications}
-							setChecked={setEmailNotifications}
+							onCheckedChange={(value) => setEmailNotifications(value === true)}
 						/>
 						<Separator />
 						<Checkbox
 							label="Нагадування про меню"
 							subLabel="Сповіщення про планування меню"
 							checked={menuReminders}
-							setChecked={setMenuReminders}
+							onCheckedChange={(value) => setMenuReminders(value === true)}
 						/>
 					</CardContent>
 				</Card>

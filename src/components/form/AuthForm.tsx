@@ -1,82 +1,105 @@
 import { Button, Input, Label } from '@/components';
-import { useAuthActions } from '@/hooks';
 import { modalsConfig } from '@/lib/config';
-import { useState } from 'react';
-import { CiLock, CiMail, CiUser } from 'react-icons/ci';
+import { AuthSchema } from '@/lib/utils/schemas/';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { useForm } from 'react-hook-form';
+import { LuLock, LuMail, LuUser } from 'react-icons/lu';
+import { z } from 'zod';
 
 interface AuthFormProps {
 	onOpenChange: (open: boolean) => void;
 	isLogin: boolean;
 }
 
+type AuthFormData = z.infer<typeof AuthSchema>;
+
 const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [name, setName] = useState('');
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<AuthFormData>({
+		resolver: zodResolver(AuthSchema),
+	});
 
-	const { handleLogin } = useAuthActions();
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		handleLogin(email, password);
+	const onSubmit = async (data: AuthFormData) => {
 		onOpenChange(false);
 	};
+
+	const iconClass = 'absolute left-3 z-10 top-3 h-4 w-4 text-muted-foreground';
 	return (
-		<form onSubmit={handleSubmit} className="space-y-4">
+		<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 			{!isLogin && (
 				<div className="space-y-2">
-					<Label htmlFor="name">Имя</Label>
+					<Label htmlFor="name">Ім'я</Label>
 					<div className="relative">
-						<CiUser className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+						<LuUser className={iconClass} />
 						<Input
 							id="name"
 							type="text"
-							placeholder="Введите ваше имя"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
+							{...register('name')}
+							placeholder="Введіть ваше ім'я"
 							className="pl-10"
-							required
 						/>
+						{errors.name && (
+							<div className="pt-1 text-xs text-red-600">
+								{errors.name.message}
+							</div>
+						)}
 					</div>
 				</div>
 			)}
 
 			<div className="space-y-2">
-				<Label htmlFor="email">Email</Label>
+				<Label htmlFor="email">Електронна пошта</Label>
 				<div className="relative">
-					<CiMail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+					<LuMail className={iconClass} />
 					<Input
 						id="email"
 						type="email"
+						{...register('email')}
 						placeholder="example@mail.com"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
 						className="pl-10"
-						required
 					/>
+					{errors.email && (
+						<div className="pt-1 text-xs text-red-600">
+							{errors.email.message}
+						</div>
+					)}
 				</div>
 			</div>
 
 			<div className="space-y-2">
 				<Label htmlFor="password">Пароль</Label>
 				<div className="relative">
-					<CiLock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+					<LuLock className={iconClass} />
 					<Input
 						id="password"
 						type="password"
+						{...register('password')}
 						placeholder="••••••••"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
 						className="pl-10"
-						required
+						showToggle
 					/>
+					{errors.password && (
+						<div className="pt-1 text-xs text-red-600">
+							{errors.password.message}
+						</div>
+					)}
 				</div>
 			</div>
 
-			<Button type="submit" className="w-full cursor-pointer">
-				{isLogin
-					? modalsConfig.AUTH_MODAL.LOGIN.btnText
-					: modalsConfig.AUTH_MODAL.REGISTER.btnText}
+			<Button
+				type="submit"
+				className="w-full cursor-pointer"
+				disabled={isSubmitting}
+			>
+				{isSubmitting
+					? 'Загрузка...'
+					: isLogin
+						? modalsConfig.AUTH_MODAL.LOGIN.btnText
+						: modalsConfig.AUTH_MODAL.REGISTER.btnText}
 			</Button>
 		</form>
 	);
