@@ -8,12 +8,14 @@ export interface Context {
 	userId?: string;
 }
 
-export const createContext = async ({
-	req,
-}: {
-	req: any;
-}): Promise<Context> => {
-	const token = req.headers.authorization || '';
+export const createContext = async (
+	contextArg?: any,
+): Promise<Context> => {
+	// Handle both Express req object and Next.js/Vercel request context
+	const req = contextArg?.req || contextArg;
+	const headers = req?.headers || {};
+	
+	const token = headers.authorization || '';
 	let userId: string | undefined;
 
 	if (token) {
