@@ -91,7 +91,9 @@ export const LOGIN_MUTATION = gql`
 ` as unknown as DocumentNode;
 
 export function useMeQuery(options?: any) {
-	return useQuery<MeQuery, MeQueryVariables>(ME_QUERY, options);
+	const result = useQuery<MeQuery, MeQueryVariables>(ME_QUERY, options);
+	console.log('[GraphQL] useMeQuery - skip:', options?.skip, 'loading:', result.loading, 'data:', result.data?.me);
+	return result;
 }
 
 export function useRegisterMutation(options?: any) {
