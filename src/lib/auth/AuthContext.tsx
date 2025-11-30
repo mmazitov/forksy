@@ -1,32 +1,22 @@
-import { gql } from '@apollo/client';
+import { useMeQuery } from '@/lib/graphql/auth.gen';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { client } from '../apollo';
 
 interface User {
 	id: string;
 	email: string;
-	name?: string;
+	name?: string | null;
 }
 
 interface AuthContextType {
 	user: User | null;
 	token: string | null;
-	login: (token: string, user: User) => void;
+	login: (token: string, user: Omit<User, '__typename'>) => void;
 	logout: () => void;
 	isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-const ME_QUERY = gql`
-	query Me {
-		me {
-			id
-			email
-			name
-		}
-	}
-`;
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
@@ -34,34 +24,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		localStorage.getItem('token'),
 	);
 	const [isLoading, setIsLoading] = useState(true);
+	const { data, loading: meLoading } = useMeQuery({
+		skip: !token,
+		fetchPolicy: 'network-only',
+	});
 
 	useEffect(() => {
-		const initAuth = async () => {
-			const storedToken = localStorage.getItem('token');
-			if (storedToken) {
-				try {
-					const { data } = await client.query<any>({
-						query: ME_QUERY,
-						fetchPolicy: 'network-only',
-					});
-					if (data.me) {
-						setUser(data.me);
-					} else {
-						// Token invalid or expired
-						logout();
-					}
-				} catch (error) {
-					console.error('Failed to fetch user', error);
-					logout();
-				}
+		if (!token) {
+			setIsLoading(false);
+			return;
+		}
+
+		if (!meLoading) {
+			if (data?.me) {
+				const { __typename, ...userData } = data.me;
+				setUser(userData as User);
+			} else {
+				// Token invalid or expired
+				logout();
 			}
 			setIsLoading(false);
-		};
+		}
+	}, [meLoading, data, token]);
 
-		initAuth();
-	}, []);
-
-	const login = (newToken: string, newUser: User) => {
+	const login = (newToken: string, newUser: Omit<User, '__typename'>) => {
 		localStorage.setItem('token', newToken);
 		setToken(newToken);
 		setUser(newUser);

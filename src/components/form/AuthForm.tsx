@@ -1,52 +1,28 @@
 import { Button, Input, Label } from '@/components';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { modalsConfig } from '@/lib/config';
-import { AuthSchema } from '@/lib/utils/schemas/';
-import { gql } from '@apollo/client';
-import { useMutation } from '@apollo/client/react';
+import { useLoginMutation, useRegisterMutation } from '@/lib/graphql/auth.gen';
+import { LoginSchema, RegisterSchema } from '@/lib/utils/schemas/';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LuLock, LuMail, LuUser } from 'react-icons/lu';
 import { z } from 'zod';
-
-const REGISTER_MUTATION = gql`
-	mutation Register($email: String!, $password: String!, $name: String) {
-		register(email: $email, password: $password, name: $name) {
-			token
-			user {
-				id
-				email
-				name
-			}
-		}
-	}
-`;
-
-const LOGIN_MUTATION = gql`
-	mutation Login($email: String!, $password: String!) {
-		login(email: $email, password: $password) {
-			token
-			user {
-				id
-				email
-			}
-		}
-	}
-`;
 
 interface AuthFormProps {
 	onOpenChange: (open: boolean) => void;
 	isLogin: boolean;
 }
 
-type AuthFormData = z.infer<typeof AuthSchema>;
+type LoginFormData = z.infer<typeof LoginSchema>;
+type RegisterFormData = z.infer<typeof RegisterSchema>;
+type AuthFormData = LoginFormData | RegisterFormData;
 
 const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 	const { login } = useAuth();
-	const [registerUser, { loading: registerLoading }] =
-		useMutation<any>(REGISTER_MUTATION);
-	const [loginUser, { loading: loginLoading }] =
-		useMutation<any>(LOGIN_MUTATION);
+	const [registerUser, { loading: registerLoading }] = useRegisterMutation();
+	const [loginUser, { loading: loginLoading }] = useLoginMutation();
+
+	const schema = isLogin ? LoginSchema : RegisterSchema;
 
 	const {
 		register,
@@ -54,41 +30,53 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 		setError,
 		formState: { errors, isSubmitting },
 	} = useForm<AuthFormData>({
-		resolver: zodResolver(AuthSchema),
+		resolver: zodResolver(schema),
 	});
 
-	const onSubmit = async (data: AuthFormData) => {
+	const onSubmit = async (data: any) => {
 		try {
+			console.log('Submitting auth form:', { isLogin, email: data.email });
 			if (isLogin) {
-				const { data: loginData } = await loginUser({
+				const result = await loginUser({
 					variables: {
 						email: data.email,
 						password: data.password,
 					},
 				});
-				login(loginData.login.token, loginData.login.user);
+				console.log('Login result:', result);
+				if (!result.data?.login) {
+					throw new Error('No login data returned');
+				}
+				login(result.data.login.token, result.data.login.user);
 			} else {
-				const { data: registerData } = await registerUser({
+				const result = await registerUser({
 					variables: {
 						email: data.email,
 						password: data.password,
-						name: data.name,
+						name: (data as RegisterFormData).name,
 					},
 				});
-				login(registerData.register.token, registerData.register.user);
+				console.log('Register result:', result);
+				if (!result.data?.register) {
+					throw new Error('No register data returned');
+				}
+				login(result.data.register.token, result.data.register.user);
 			}
+			console.log('Auth successful, closing modal');
 			onOpenChange(false);
 		} catch (error: any) {
-			console.error(error);
+			console.error('Auth error:', error);
 			setError('root', {
 				message: error.message || 'Something went wrong',
 			});
 		}
 	};
 
+	const handleFormSubmit = handleSubmit(onSubmit);
+
 	const iconClass = 'absolute left-3 z-10 top-3 h-4 w-4 text-muted-foreground';
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+		<form onSubmit={handleFormSubmit} className="space-y-4">
 			{!isLogin && (
 				<div className="space-y-2">
 					<Label htmlFor="name">Ім'я</Label>
@@ -101,9 +89,9 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 							placeholder="Введіть ваше ім'я"
 							className="pl-10"
 						/>
-						{errors.name && (
+						{(errors as any).name && (
 							<div className="pt-1 text-xs text-red-600">
-								{errors.name.message}
+								{(errors as any).name.message}
 							</div>
 						)}
 					</div>

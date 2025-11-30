@@ -1,8 +1,3 @@
-/**
- * Schema.org структуровані дані для SEO
- * Допомагають пошуковим системам краще розуміти контент
- */
-
 interface RecipeSchema {
 	name: string;
 	description: string;
@@ -26,9 +21,6 @@ interface ProductSchema {
 	carbs: number;
 }
 
-/**
- * Генерує Recipe schema.org JSON-LD
- */
 export const generateRecipeSchema = (recipe: RecipeSchema) => {
 	return {
 		'@context': 'https://schema.org/',
@@ -57,9 +49,6 @@ export const generateRecipeSchema = (recipe: RecipeSchema) => {
 	};
 };
 
-/**
- * Генерує Product schema.org JSON-LD
- */
 export const generateProductSchema = (product: ProductSchema) => {
 	return {
 		'@context': 'https://schema.org/',
@@ -81,9 +70,6 @@ export const generateProductSchema = (product: ProductSchema) => {
 	};
 };
 
-/**
- * Генерує Organization schema.org JSON-LD
- */
 export const generateOrganizationSchema = () => {
 	return {
 		'@context': 'https://schema.org',
@@ -105,9 +91,6 @@ export const generateOrganizationSchema = () => {
 	};
 };
 
-/**
- * Генерує BreadcrumbList schema.org JSON-LD
- */
 export const generateBreadcrumbSchema = (
 	breadcrumbs: Array<{ name: string; url: string }>,
 ) => {
@@ -122,30 +105,3 @@ export const generateBreadcrumbSchema = (
 		})),
 	};
 };
-
-// Приклади використання:
-
-/*
-// У компоненті DishDetail
-const recipeSchema = generateRecipeSchema({
-	name: dish.name,
-	description: dish.description,
-	image: dish.image,
-	prepTime: 'PT10M',
-	cookTime: `PT${dish.cookTime}M`,
-	servings: dish.servings,
-	calories: dish.calories,
-	ingredients: dish.ingredients.map(i => `${i.amount} ${i.name}`),
-	instructions: dish.instructions,
-});
-
-// У Helmet
-import { Helmet } from 'react-helmet-async';
-
-<Helmet>
-	<script
-		type="application/ld+json"
-		dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeSchema) }}
-	/>
-</Helmet>
-*/

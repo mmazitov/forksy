@@ -1,14 +1,27 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { createContext } from '../server/context.js';
+import { createContext, type Context } from '../server/context.js';
 import { resolvers } from '../server/resolvers.js';
 import { typeDefs } from '../server/schema.js';
 
-const server = new ApolloServer({
-	typeDefs,
-	resolvers,
-});
+let server: ApolloServer<Context> | null = null;
 
-export default startServerAndCreateNextHandler(server, {
-	context: async ({ req }) => createContext({ req }),
+function getServer(): ApolloServer<Context> {
+	if (!server) {
+		server = new ApolloServer<Context>({
+			typeDefs,
+			resolvers,
+		});
+	}
+	return server;
+}
+
+export default startServerAndCreateNextHandler(getServer(), {
+	context: async ({ req }: any) => {
+		return createContext({
+			req: {
+				headers: req?.headers || {},
+			},
+		});
+	},
 });

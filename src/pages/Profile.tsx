@@ -7,10 +7,12 @@ import {
 	CardTitle,
 	Input,
 	Label,
+	MetaData,
 	PageTitle,
 	Textarea,
 } from '@/components';
 import { useToast } from '@/hooks/useToast';
+import { METADATA_CONFIG } from '@/lib/config';
 
 const Profile = () => {
 	const { toast } = useToast();
@@ -25,6 +27,12 @@ const Profile = () => {
 	return (
 		<main className="container mx-auto px-4 py-8">
 			<div className="max-w-2xl mx-auto space-y-6">
+				<MetaData
+					title="Профіль користувача"
+					description={METADATA_CONFIG.descriptions.profile}
+					keywords={METADATA_CONFIG.keywords.profile}
+					type="website"
+				/>
 				<PageTitle
 					title="Профіль користувача"
 					subtitle="Керуйте своєю особистою інформацією та налаштуваннями"
