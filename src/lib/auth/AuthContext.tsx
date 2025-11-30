@@ -110,11 +110,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const login = useCallback(
 		(newToken: string, newUser: Omit<User, '__typename'>) => {
+			console.log('[AuthContext] login() called with:', { token: newToken.substring(0, 20) + '...', email: newUser.email });
+			
 			localStorage.setItem('token', newToken);
+			console.log('[AuthContext] Token written to localStorage, verify:', localStorage.getItem('token')?.substring(0, 20) + '...');
 
 			setUser(newUser as User);
+			console.log('[AuthContext] User state set to:', newUser.email);
 
 			setToken(newToken);
+			console.log('[AuthContext] Token state set');
 
 			client.cache.modify({
 				fields: {
@@ -126,6 +131,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					},
 				},
 			});
+			console.log('[AuthContext] Apollo cache updated');
 		},
 		[],
 	);
