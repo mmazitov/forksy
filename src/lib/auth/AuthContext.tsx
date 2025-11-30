@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		data,
 		loading: meLoading,
 		refetch,
+		error,
 	} = useMeQuery({
 		skip: !token,
 		fetchPolicy: 'network-only',
@@ -54,12 +55,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	useEffect(() => {
-		console.log('[Auth] useEffect triggered:', {
-			token: !!token,
-			meLoading,
-			data,
-		});
-
 		if (!token) {
 			setIsLoading(false);
 			setUser(null);
@@ -67,29 +62,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 
 		if (meLoading) {
-			console.log('[Auth] Still loading, setting isLoading to true');
 			setIsLoading(true);
+			return;
+		}
+
+		if (error) {
+			setIsLoading(false);
 			return;
 		}
 
 		if (data?.me) {
 			const { __typename, ...userData } = data.me;
-			console.log('[Auth] User data from query:', userData);
 			setUser(userData as User);
 			setIsLoading(false);
 			setShouldRefetch(false);
 		} else {
-			console.log('[Auth] No data, shouldRefetch:', shouldRefetch);
 			if (!shouldRefetch) {
-				console.log('[Auth] No user data, logging out');
 				logout();
 			}
 		}
-	}, [meLoading, data, token, logout, shouldRefetch]);
+	}, [meLoading, data, token, logout, shouldRefetch, error]);
 
 	useEffect(() => {
 		if (token && refetch) {
-			console.log('[Auth] Refetching user data after token change');
 			setShouldRefetch(true);
 			refetch();
 		}
@@ -97,7 +92,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const login = useCallback(
 		(newToken: string, newUser: Omit<User, '__typename'>) => {
-			console.log('[Auth] Login called with user:', newUser);
 			localStorage.setItem('token', newToken);
 
 			setUser(newUser as User);

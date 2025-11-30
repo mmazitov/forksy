@@ -35,7 +35,6 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 
 	const onSubmit = async (data: any) => {
 		try {
-			console.log('Submitting auth form:', { isLogin, email: data.email });
 			if (isLogin) {
 				const result = await loginUser({
 					variables: {
@@ -43,7 +42,6 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						password: data.password,
 					},
 				});
-				console.log('Login result:', result);
 				if (!result.data?.login) {
 					throw new Error('No login data returned');
 				}
@@ -56,16 +54,13 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						name: (data as RegisterFormData).name,
 					},
 				});
-				console.log('Register result:', result);
 				if (!result.data?.register) {
 					throw new Error('No register data returned');
 				}
 				login(result.data.register.token, result.data.register.user);
 			}
-			console.log('Auth successful, closing modal');
 			onOpenChange(false);
 		} catch (error: any) {
-			console.error('Auth error:', error);
 			setError('root', {
 				message: error.message || 'Something went wrong',
 			});
