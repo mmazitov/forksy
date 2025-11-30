@@ -30,6 +30,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		localStorage.getItem('token'),
 	);
 	const [isLoading, setIsLoading] = useState(true);
+	const [shouldRefetch, setShouldRefetch] = useState(false);
+
 	const {
 		data,
 		loading: meLoading,
@@ -52,29 +54,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	}, []);
 
 	useEffect(() => {
+		console.log('[Auth] useEffect triggered:', {
+			token: !!token,
+			meLoading,
+			data,
+		});
+
 		if (!token) {
 			setIsLoading(false);
 			setUser(null);
 			return;
 		}
 
-		if (!meLoading) {
-			if (data?.me) {
-				const { __typename, ...userData } = data.me;
-				console.log('[Auth] User data from query:', userData);
-				setUser(userData as User);
-			} else {
+		if (meLoading) {
+			console.log('[Auth] Still loading, setting isLoading to true');
+			setIsLoading(true);
+			return;
+		}
+
+		if (data?.me) {
+			const { __typename, ...userData } = data.me;
+			console.log('[Auth] User data from query:', userData);
+			setUser(userData as User);
+			setIsLoading(false);
+			setShouldRefetch(false);
+		} else {
+			console.log('[Auth] No data, shouldRefetch:', shouldRefetch);
+			if (!shouldRefetch) {
 				console.log('[Auth] No user data, logging out');
-				// Token invalid or expired
 				logout();
 			}
-			setIsLoading(false);
 		}
-	}, [meLoading, data, token, logout]);
+	}, [meLoading, data, token, logout, shouldRefetch]);
 
 	useEffect(() => {
-		if (token && refetch && !meLoading) {
+		if (token && refetch) {
 			console.log('[Auth] Refetching user data after token change');
+			setShouldRefetch(true);
 			refetch();
 		}
 	}, [token, refetch]);
@@ -83,8 +99,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		(newToken: string, newUser: Omit<User, '__typename'>) => {
 			console.log('[Auth] Login called with user:', newUser);
 			localStorage.setItem('token', newToken);
+
+			setUser(newUser as User);
+
 			setToken(newToken);
-			setUser(newUser);
 
 			client.cache.modify({
 				fields: {

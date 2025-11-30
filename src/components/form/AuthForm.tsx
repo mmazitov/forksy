@@ -63,8 +63,6 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 				login(result.data.register.token, result.data.register.user);
 			}
 			console.log('Auth successful, closing modal');
-
-			await new Promise((resolve) => setTimeout(resolve, 100));
 			onOpenChange(false);
 		} catch (error: any) {
 			console.error('Auth error:', error);
