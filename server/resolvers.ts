@@ -7,12 +7,23 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 export const resolvers = {
 	Query: {
 		me: async (_parent: any, _args: any, context: Context) => {
+			console.log('[Resolver] me called, userId:', context.userId);
+			
 			if (!context.userId) {
+				console.log('[Resolver] No userId in context, returning null');
 				return null;
 			}
-			return context.prisma.user.findUnique({
-				where: { id: context.userId },
-			});
+			
+			try {
+				const user = await context.prisma.user.findUnique({
+					where: { id: context.userId },
+				});
+				console.log('[Resolver] me resolved:', user?.email);
+				return user;
+			} catch (error) {
+				console.error('[Resolver] me error:', error);
+				throw error;
+			}
 		},
 	},
 	Mutation: {

@@ -38,6 +38,8 @@ const errorLink = onError(({ graphQLErrors, networkError }: any) => {
 const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
 	const token = localStorage.getItem('token');
+	console.log('[Apollo] authLink - token exists:', !!token);
+	
 	// return the headers to the context so httpLink can read them
 	return {
 		headers: {

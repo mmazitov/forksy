@@ -15,6 +15,11 @@ export const createContext = async (
 	const req = contextArg?.req || contextArg;
 	const headers = req?.headers || {};
 	
+	console.log('[Server Context] Headers:', {
+		authorization: headers.authorization?.substring(0, 50) + '...',
+		allHeaders: Object.keys(headers),
+	});
+
 	const token = headers.authorization || '';
 	let userId: string | undefined;
 
@@ -25,9 +30,12 @@ export const createContext = async (
 				process.env.JWT_SECRET || 'supersecret',
 			) as { userId: string };
 			userId = decoded.userId;
+			console.log('[Server Context] Token verified, userId:', userId);
 		} catch (e) {
-			// Invalid token
+			console.log('[Server Context] Token verification failed:', (e as Error).message);
 		}
+	} else {
+		console.log('[Server Context] No token in headers');
 	}
 
 	return {
