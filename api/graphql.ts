@@ -18,6 +18,18 @@ function getServer(): ApolloServer<Context> {
 
 export default startServerAndCreateNextHandler(getServer(), {
 	context: async ({ req }: any) => {
+		// Log all incoming headers for debugging
+		if (req?.headers) {
+			const authHeader = req.headers.authorization || req.headers['Authorization'];
+			console.error('[API/graphql] Incoming request:', {
+				path: req.url,
+				method: req.method,
+				hasAuthHeader: !!authHeader,
+				authHeaderLength: authHeader?.length,
+				headerKeys: Object.keys(req.headers || {}),
+			});
+		}
+		
 		return createContext({
 			req: {
 				headers: req?.headers || {},
