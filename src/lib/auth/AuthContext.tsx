@@ -1,5 +1,11 @@
 import { useMeQuery } from '@/lib/graphql/auth.gen';
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 import { client } from '../apollo';
 
 interface User {
@@ -24,41 +30,75 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		localStorage.getItem('token'),
 	);
 	const [isLoading, setIsLoading] = useState(true);
-	const { data, loading: meLoading } = useMeQuery({
+	const {
+		data,
+		loading: meLoading,
+		refetch,
+	} = useMeQuery({
 		skip: !token,
 		fetchPolicy: 'network-only',
+		context: {
+			headers: {
+				authorization: token ? `Bearer ${token}` : '',
+			},
+		},
 	});
+
+	const logout = useCallback(() => {
+		localStorage.removeItem('token');
+		setToken(null);
+		setUser(null);
+		client.clearStore();
+	}, []);
 
 	useEffect(() => {
 		if (!token) {
 			setIsLoading(false);
+			setUser(null);
 			return;
 		}
 
 		if (!meLoading) {
 			if (data?.me) {
 				const { __typename, ...userData } = data.me;
+				console.log('[Auth] User data from query:', userData);
 				setUser(userData as User);
 			} else {
+				console.log('[Auth] No user data, logging out');
 				// Token invalid or expired
 				logout();
 			}
 			setIsLoading(false);
 		}
-	}, [meLoading, data, token]);
+	}, [meLoading, data, token, logout]);
 
-	const login = (newToken: string, newUser: Omit<User, '__typename'>) => {
-		localStorage.setItem('token', newToken);
-		setToken(newToken);
-		setUser(newUser);
-	};
+	useEffect(() => {
+		if (token && refetch && !meLoading) {
+			console.log('[Auth] Refetching user data after token change');
+			refetch();
+		}
+	}, [token, refetch]);
 
-	const logout = () => {
-		localStorage.removeItem('token');
-		setToken(null);
-		setUser(null);
-		client.resetStore();
-	};
+	const login = useCallback(
+		(newToken: string, newUser: Omit<User, '__typename'>) => {
+			console.log('[Auth] Login called with user:', newUser);
+			localStorage.setItem('token', newToken);
+			setToken(newToken);
+			setUser(newUser);
+
+			client.cache.modify({
+				fields: {
+					me(existing) {
+						return {
+							...newUser,
+							__typename: 'User',
+						};
+					},
+				},
+			});
+		},
+		[],
+	);
 
 	return (
 		<AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
