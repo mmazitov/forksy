@@ -17,11 +17,16 @@ function getServer(): ApolloServer<Context> {
 }
 
 export default startServerAndCreateNextHandler(getServer(), {
-	context: async ({ req }: any) => {
+	context: async (req: any, res: any) => {
+		// Log to verify we are getting the request
+		console.log(
+			'[GraphQL Handler] Received request headers keys:',
+			Object.keys(req?.headers || {}),
+		);
+
 		return createContext({
-			req: {
-				headers: req?.headers || {},
-			},
+			req,
+			res,
 		});
 	},
 });
