@@ -7,10 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 export const resolvers = {
 	Query: {
 		me: async (_parent: any, _args: any, context: Context) => {
-			console.error('[Resolver/me] Called:', { userId: context.userId });
-
 			if (!context.userId) {
-				console.error('[Resolver/me] No userId, returning null');
 				return null;
 			}
 
@@ -18,7 +15,6 @@ export const resolvers = {
 				where: { id: context.userId },
 			});
 
-			console.error('[Resolver/me] User found:', user?.email);
 			return user;
 		},
 	},

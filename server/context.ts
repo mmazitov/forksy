@@ -14,29 +14,7 @@ export const createContext = async (contextArg?: any): Promise<Context> => {
 	const headers = req?.headers || {};
 
 	// Debug: log all headers
-	// Debug: log all headers safely
-	const debugHeaders: Record<string, string> = {};
-	try {
-		if (typeof headers.forEach === 'function') {
-			headers.forEach((v: any, k: any) => {
-				debugHeaders[k] = String(v);
-			});
-		} else if (typeof headers.keys === 'function') {
-			for (const key of headers.keys()) {
-				debugHeaders[key] = String(headers.get(key));
-			}
-		} else {
-			Object.keys(headers).forEach((key) => {
-				debugHeaders[key] = String(headers[key]);
-			});
-		}
-	} catch (e) {
-		console.error('[Context] Error parsing headers:', e);
-	}
-	console.error(
-		'[Context] All headers (stringified):',
-		JSON.stringify(debugHeaders),
-	);
+	// console.error('[Context] All headers:', JSON.stringify(headers));
 
 	// On Vercel, headers come in lowercase
 	let token = '';
@@ -46,14 +24,6 @@ export const createContext = async (contextArg?: any): Promise<Context> => {
 	} else {
 		token = headers.authorization || headers['Authorization'] || '';
 	}
-
-	console.error('[Context] Authorization check:', {
-		hasToken: !!token,
-		tokenLength: token.length,
-		firstChars: token.substring(0, 30),
-		headersType: typeof headers.get === 'function' ? 'Headers' : 'Object',
-		keys: typeof headers.get === 'function' ? [] : Object.keys(headers),
-	});
 
 	let userId: string | undefined;
 
@@ -65,12 +35,9 @@ export const createContext = async (contextArg?: any): Promise<Context> => {
 				process.env.JWT_SECRET || 'supersecret',
 			) as { userId: string };
 			userId = decoded.userId;
-			console.error('[Context] User authenticated:', userId);
 		} catch (e) {
 			console.error('[Context] Token invalid:', (e as Error).message);
 		}
-	} else {
-		console.error('[Context] No authorization token provided');
 	}
 
 	return {
