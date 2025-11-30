@@ -56,48 +56,57 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
 		const savedToken = localStorage.getItem('token');
 		if (savedToken) {
-			console.log('[AuthContext] Initializing with saved token');
+			console.log('[AuthContext] Initializing with saved token from localStorage');
 			setToken(savedToken);
+			setShouldRefetch(true);
 		} else {
+			console.log('[AuthContext] No saved token found');
 			setIsLoading(false);
 		}
 	}, []);
 
 	useEffect(() => {
 		if (!token) {
+			console.log('[AuthContext] No token, setting isLoading to false');
 			setIsLoading(false);
 			setUser(null);
 			return;
 		}
 
 		if (meLoading) {
+			console.log('[AuthContext] Me query is loading');
 			setIsLoading(true);
 			return;
 		}
 
 		if (error) {
+			console.error('[AuthContext] Me query error:', error.message);
 			setIsLoading(false);
 			return;
 		}
 
 		if (data?.me) {
+			console.log('[AuthContext] User data received:', data.me.email);
 			const { __typename, ...userData } = data.me;
 			setUser(userData as User);
 			setIsLoading(false);
 			setShouldRefetch(false);
 		} else {
 			if (!shouldRefetch) {
+				console.warn('[AuthContext] No user data and not refetching, logging out');
 				logout();
+			} else {
+				console.log('[AuthContext] Waiting for refetch...');
 			}
 		}
 	}, [meLoading, data, token, logout, shouldRefetch, error]);
 
 	useEffect(() => {
-		if (token && refetch) {
-			setShouldRefetch(true);
+		if (token && refetch && shouldRefetch) {
+			console.log('[AuthContext] Refetching me query after token change');
 			refetch();
 		}
-	}, [token, refetch]);
+	}, [token, refetch, shouldRefetch]);
 
 	const login = useCallback(
 		(newToken: string, newUser: Omit<User, '__typename'>) => {

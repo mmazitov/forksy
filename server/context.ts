@@ -18,6 +18,11 @@ export const createContext = async (
 	// On Vercel, headers come in lowercase
 	const token = headers.authorization || headers['Authorization'] || '';
 	
+	console.error('[Context] Authorization check:', {
+		hasToken: !!token,
+		headerKeys: Object.keys(headers),
+	});
+	
 	let userId: string | undefined;
 
 	if (token) {
@@ -28,9 +33,12 @@ export const createContext = async (
 				process.env.JWT_SECRET || 'supersecret',
 			) as { userId: string };
 			userId = decoded.userId;
+			console.error('[Context] User authenticated:', userId);
 		} catch (e) {
-			// Invalid token - just continue without userId
+			console.error('[Context] Token invalid:', (e as Error).message);
 		}
+	} else {
+		console.error('[Context] No authorization token provided');
 	}
 
 	return {
