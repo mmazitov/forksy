@@ -8,16 +8,16 @@ export const resolvers = {
 	Query: {
 		me: async (_parent: any, _args: any, context: Context) => {
 			console.error('[Resolver/me] Called:', { userId: context.userId });
-			
+
 			if (!context.userId) {
 				console.error('[Resolver/me] No userId, returning null');
 				return null;
 			}
-			
+
 			const user = await context.prisma.user.findUnique({
 				where: { id: context.userId },
 			});
-			
+
 			console.error('[Resolver/me] User found:', user?.email);
 			return user;
 		},

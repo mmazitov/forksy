@@ -8,25 +8,31 @@ export interface Context {
 	userId?: string;
 }
 
-export const createContext = async (
-	contextArg?: any,
-): Promise<Context> => {
+export const createContext = async (contextArg?: any): Promise<Context> => {
 	// Handle both Express req object and Next.js/Vercel request context
 	const req = contextArg?.req || contextArg;
 	const headers = req?.headers || {};
-	
+
 	// Debug: log all headers
 	console.error('[Context] All headers:', JSON.stringify(headers));
-	
+
 	// On Vercel, headers come in lowercase
-	const token = headers.authorization || headers['Authorization'] || '';
-	
+	let token = '';
+
+	if (typeof headers.get === 'function') {
+		token = headers.get('authorization') || headers.get('Authorization') || '';
+	} else {
+		token = headers.authorization || headers['Authorization'] || '';
+	}
+
 	console.error('[Context] Authorization check:', {
 		hasToken: !!token,
 		tokenLength: token.length,
 		firstChars: token.substring(0, 30),
+		headersType: typeof headers.get === 'function' ? 'Headers' : 'Object',
+		keys: typeof headers.get === 'function' ? [] : Object.keys(headers),
 	});
-	
+
 	let userId: string | undefined;
 
 	if (token) {

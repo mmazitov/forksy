@@ -56,7 +56,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
 		const savedToken = localStorage.getItem('token');
 		if (savedToken) {
-			console.log('[AuthContext] Initializing with saved token from localStorage');
+			console.log(
+				'[AuthContext] Initializing with saved token from localStorage',
+			);
 			setToken(savedToken);
 			setShouldRefetch(true);
 		} else {
@@ -104,7 +106,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			setShouldRefetch(false);
 		} else {
 			if (!shouldRefetch) {
-				console.warn('[AuthContext] No user data and not refetching, logging out');
+				console.warn(
+					'[AuthContext] No user data and not refetching, logging out',
+				);
 				logout();
 			} else {
 				console.log('[AuthContext] Waiting for refetch...');
@@ -121,10 +125,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const login = useCallback(
 		(newToken: string, newUser: Omit<User, '__typename'>) => {
-			console.log('[AuthContext] login() called with:', { token: newToken.substring(0, 20) + '...', email: newUser.email });
-			
+			console.log('[AuthContext] login() called with:', {
+				token: newToken.substring(0, 20) + '...',
+				email: newUser.email,
+			});
+
 			localStorage.setItem('token', newToken);
-			console.log('[AuthContext] Token written to localStorage, verify:', localStorage.getItem('token')?.substring(0, 20) + '...');
+			console.log(
+				'[AuthContext] Token written to localStorage, verify:',
+				localStorage.getItem('token')?.substring(0, 20) + '...',
+			);
 
 			setUser(newUser as User);
 			console.log('[AuthContext] User state set to:', newUser.email);
