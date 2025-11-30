@@ -26,9 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [token, setToken] = useState<string | null>(
-		localStorage.getItem('token'),
-	);
+	const [token, setToken] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [shouldRefetch, setShouldRefetch] = useState(false);
 
@@ -52,6 +50,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		setToken(null);
 		setUser(null);
 		client.clearStore();
+	}, []);
+
+	// Initialize token from localStorage only on client side
+	useEffect(() => {
+		const savedToken = localStorage.getItem('token');
+		if (savedToken) {
+			console.log('[AuthContext] Initializing with saved token');
+			setToken(savedToken);
+		} else {
+			setIsLoading(false);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -89,14 +98,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			refetch();
 		}
 	}, [token, refetch]);
-
-	// On mount, check if token exists in localStorage and fetch user
-	useEffect(() => {
-		const savedToken = localStorage.getItem('token');
-		if (savedToken && !token) {
-			setToken(savedToken);
-		}
-	}, [token]);
 
 	const login = useCallback(
 		(newToken: string, newUser: Omit<User, '__typename'>) => {
