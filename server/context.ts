@@ -15,12 +15,16 @@ export const createContext = async (
 	const req = contextArg?.req || contextArg;
 	const headers = req?.headers || {};
 	
+	// Debug: log all headers
+	console.error('[Context] All headers:', JSON.stringify(headers));
+	
 	// On Vercel, headers come in lowercase
 	const token = headers.authorization || headers['Authorization'] || '';
 	
 	console.error('[Context] Authorization check:', {
 		hasToken: !!token,
-		headerKeys: Object.keys(headers),
+		tokenLength: token.length,
+		firstChars: token.substring(0, 30),
 	});
 	
 	let userId: string | undefined;

@@ -65,6 +65,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 	}, []);
 
+	// Debug: Log when dependencies change
+	useEffect(() => {
+		console.log('[AuthContext] Dependencies changed:', {
+			token: token ? 'EXISTS' : 'NULL',
+			meLoading,
+			hasData: !!data?.me,
+			shouldRefetch,
+			error: error?.message,
+		});
+	}, [token, meLoading, data, shouldRefetch, error]);
+
 	useEffect(() => {
 		if (!token) {
 			console.log('[AuthContext] No token, setting isLoading to false');
