@@ -67,7 +67,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		}
 
 		if (error) {
-			console.warn('[Auth] Me query error:', error.message);
 			setIsLoading(false);
 			return;
 		}
@@ -77,10 +76,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			setUser(userData as User);
 			setIsLoading(false);
 			setShouldRefetch(false);
-			console.log('[Auth] User restored from Me query:', userData);
 		} else {
 			if (!shouldRefetch) {
-				console.warn('[Auth] No user data, logging out');
 				logout();
 			}
 		}
