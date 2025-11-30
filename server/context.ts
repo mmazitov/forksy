@@ -14,7 +14,29 @@ export const createContext = async (contextArg?: any): Promise<Context> => {
 	const headers = req?.headers || {};
 
 	// Debug: log all headers
-	console.error('[Context] All headers:', JSON.stringify(headers));
+	// Debug: log all headers safely
+	const debugHeaders: Record<string, string> = {};
+	try {
+		if (typeof headers.forEach === 'function') {
+			headers.forEach((v: any, k: any) => {
+				debugHeaders[k] = String(v);
+			});
+		} else if (typeof headers.keys === 'function') {
+			for (const key of headers.keys()) {
+				debugHeaders[key] = String(headers.get(key));
+			}
+		} else {
+			Object.keys(headers).forEach((key) => {
+				debugHeaders[key] = String(headers[key]);
+			});
+		}
+	} catch (e) {
+		console.error('[Context] Error parsing headers:', e);
+	}
+	console.error(
+		'[Context] All headers (stringified):',
+		JSON.stringify(debugHeaders),
+	);
 
 	// On Vercel, headers come in lowercase
 	let token = '';
