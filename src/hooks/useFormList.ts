@@ -21,8 +21,8 @@ export const useFormList = <T extends object | string>(initialItem: T) => {
 			const newItems = [...prev];
 			if (typeof updates === 'string' || typeof updates === 'number') {
 				newItems[index] = updates as T;
-			} else {
-				newItems[index] = { ...newItems[index], ...updates } as T;
+			} else if (typeof newItems[index] === 'object' && newItems[index] !== null) {
+				newItems[index] = { ...(newItems[index] as object), ...(updates as object) } as T;
 			}
 			return newItems;
 		});

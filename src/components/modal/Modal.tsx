@@ -73,10 +73,10 @@ const Modal = ({
 				const dishProps: AddDishModalProps = {
 					isOpen: open,
 					onOpenChange,
-					selectedMeal: selectedMeal || null,
-					searchQuery,
-					onSearchChange: onSearchChange || (() => {}),
-					onDishSelect: onDishSelect || (() => {}),
+					selectedMeal: (selectedMeal as string) || null,
+					searchQuery: (searchQuery as string) || '',
+					onSearchChange: (onSearchChange as (query: string) => void) || (() => {}),
+					onDishSelect: (onDishSelect as (dish: Dish) => void) || (() => {}),
 				};
 				return <AddDishModal {...dishProps} />;
 			}
