@@ -2,6 +2,22 @@ import { Button } from '@/components/ui';
 import { today } from '@/lib/utils';
 import { LuCalendar, LuChefHat, LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
+
+const HERO_BUTTONS = [
+	{
+		to: '/menu-planner',
+		icon: <LuPlus className="h-5 w-5" />,
+		label: 'Створити меню',
+		variant: 'default' as const,
+	},
+	{
+		to: '/dishes',
+		icon: <LuChefHat className="h-5 w-5" />,
+		label: 'Переглянути рецепти',
+		variant: 'outline' as const,
+	},
+];
+
 const Hero = () => {
 	return (
 		<div className="container mx-auto px-4 py-16 md:py-24">
@@ -21,18 +37,14 @@ const Hero = () => {
 				</p>
 
 				<div className="flex flex-wrap gap-4">
-					<Link to="/menu-planner">
-						<Button size="lg" className="gap-2">
-							<LuPlus className="h-5 w-5" />
-							Створити меню
-						</Button>
-					</Link>
-					<Link to="/dishes">
-						<Button size="lg" variant="outline" className="gap-2">
-							<LuChefHat className="h-5 w-5" />
-							Переглянути рецепти
-						</Button>
-					</Link>
+					{HERO_BUTTONS.map(({ to, icon, label, variant }) => (
+						<Link key={to} to={to}>
+							<Button size="lg" variant={variant} className="gap-2">
+								{icon}
+								{label}
+							</Button>
+						</Link>
+					))}
 				</div>
 			</div>
 		</div>

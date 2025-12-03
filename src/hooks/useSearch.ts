@@ -3,7 +3,8 @@ import { useState } from 'react';
 interface UseSearchOptions {
 	searchField?: string;
 }
-const useSearch = (options: UseSearchOptions = {}) => {
+
+export const useSearch = (options: UseSearchOptions = {}) => {
 	const { searchField = 'name' } = options;
 	const [searchQuery, setSearchQuery] = useState('');
 
@@ -13,5 +14,3 @@ const useSearch = (options: UseSearchOptions = {}) => {
 		searchField,
 	};
 };
-
-export default useSearch;

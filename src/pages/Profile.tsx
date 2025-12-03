@@ -11,18 +11,14 @@ import {
 	PageTitle,
 	Textarea,
 } from '@/components';
-import { useToast } from '@/hooks/useToast';
+import { useSettings } from '@/hooks/useSettings';
 import { METADATA_CONFIG } from '@/lib/config';
 
 const Profile = () => {
-	const { toast } = useToast();
-
-	const handleSave = () => {
-		toast({
-			title: 'Профіль оновлено',
-			description: 'Ваші дані успішно збережено',
-		});
-	};
+	const { handleSave } = useSettings({
+		emailNotifications: false,
+		menuReminders: false,
+	});
 
 	return (
 		<main className="container mx-auto px-4 py-8">

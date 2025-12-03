@@ -13,7 +13,7 @@ export { PwaManagement } from './pwaManagement';
 export { ScheduleMonth, ScheduleNavigation, ScheduleWeek } from './schedule';
 export { Search } from './search';
 export { SocialList } from './socialList';
-export { SplashScreen, useSplashScreen } from './splashScreen';
+export { SplashScreen } from './splashScreen';
 export { ThemeToggle } from './themeToggle';
 export { UserMenu } from './userMenu';
 

@@ -6,8 +6,8 @@ import {
 	PageTitle,
 	Search,
 } from '@/components';
-import { useFilter } from '@/components/filter';
 import { CATEGORIES_DISHES } from '@/constants';
+import { useFilter } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
 
 import { dishes } from '@/mock';

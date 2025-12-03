@@ -10,33 +10,29 @@ import {
 	Textarea,
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
-import { Plus, X } from 'lucide-react';
-import { useState } from 'react';
-import { LuPlus, LuX } from 'react-icons/lu';
+import { useFormList } from '@/hooks/useFormList';
+import { X } from 'lucide-react';
+import { LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 interface AddDishFormProps {
 	handleSubmit: (e: React.FormEvent) => void;
 }
+
 const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
-	const [ingredients, setIngredients] = useState([{ name: '', amount: '' }]);
-	const [steps, setSteps] = useState(['']);
+	const {
+		items: ingredients,
+		addItem: addIngredient,
+		removeItem: removeIngredient,
+		updateItem: updateIngredient,
+	} = useFormList({ name: '', amount: '' });
 
-	const addIngredient = () => {
-		setIngredients([...ingredients, { name: '', amount: '' }]);
-	};
-
-	const removeIngredient = (index: number) => {
-		setIngredients(ingredients.filter((_, i) => i !== index));
-	};
-
-	const addStep = () => {
-		setSteps([...steps, '']);
-	};
-
-	const removeStep = (index: number) => {
-		setSteps(steps.filter((_, i) => i !== index));
-	};
+	const {
+		items: steps,
+		addItem: addStep,
+		removeItem: removeStep,
+		updateItem: updateStep,
+	} = useFormList<string>('');
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-6">
@@ -105,7 +101,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 			{/* Ingredients */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
-					<Label>Ингредієнти</Label>
+					<Label>Інгредієнти</Label>
 					<Button
 						type="button"
 						variant="outline"
@@ -121,21 +117,17 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 						<Input
 							placeholder="Назва"
 							value={ingredient.name}
-							onChange={(e) => {
-								const newIngredients = [...ingredients];
-								newIngredients[index].name = e.target.value;
-								setIngredients(newIngredients);
-							}}
+							onChange={(e) =>
+								updateIngredient(index, { name: e.target.value })
+							}
 							className="flex-1"
 						/>
 						<Input
 							placeholder="Кількість"
 							value={ingredient.amount}
-							onChange={(e) => {
-								const newIngredients = [...ingredients];
-								newIngredients[index].amount = e.target.value;
-								setIngredients(newIngredients);
-							}}
+							onChange={(e) =>
+								updateIngredient(index, { amount: e.target.value })
+							}
 							className="w-32"
 						/>
 						{ingredients.length > 1 && (
@@ -145,7 +137,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 								size="icon"
 								onClick={() => removeIngredient(index)}
 							>
-								<LuX className="h-4 w-4" />
+								<LuPlus className="h-4 w-4" />
 							</Button>
 						)}
 					</div>
@@ -157,7 +149,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 				<div className="flex items-center justify-between">
 					<Label>Шаги приготування</Label>
 					<Button type="button" variant="outline" size="sm" onClick={addStep}>
-						<Plus className="h-4 w-4 mr-1" />
+						<LuPlus className="h-4 w-4 mr-1" />
 						Додати шаг
 					</Button>
 				</div>
@@ -168,12 +160,8 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 						</span>
 						<Textarea
 							placeholder="Опишіть крок приготування..."
-							value={step}
-							onChange={(e) => {
-								const newSteps = [...steps];
-								newSteps[index] = e.target.value;
-								setSteps(newSteps);
-							}}
+							value={step as string}
+							onChange={(e) => updateStep(index, e.target.value as never)}
 							rows={2}
 							className="flex-1"
 						/>

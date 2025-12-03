@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui';
+import { usePwaManagement } from '@/hooks';
 import { formatBytes } from '@/lib/utils/pwa-utils';
-import { usePwaManagment } from './usePwaManagment';
 
 const PwaManagement = () => {
 	const {
@@ -10,7 +10,7 @@ const PwaManagement = () => {
 		handleClearCache,
 		handleUnregisterSW,
 		handleFullReset,
-	} = usePwaManagment();
+	} = usePwaManagement();
 
 	return (
 		<div className="space-y-4 rounded-lg border border-border bg-card p-4">

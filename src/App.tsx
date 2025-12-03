@@ -1,9 +1,5 @@
-import {
-	Header,
-	PwaInstallPrompt,
-	SplashScreen,
-	useSplashScreen,
-} from '@/components';
+import { Header, PwaInstallPrompt, SplashScreen } from '@/components';
+import { useSplashScreen } from '@/hooks';
 import { Providers } from '@/lib/providers';
 import {
 	AddDish,

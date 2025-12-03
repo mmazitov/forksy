@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useSplashScreen = () => {
+export const useSplashScreen = () => {
 	const [showSplash, setShowSplash] = useState(false);
 	const [isPWA, setIsPWA] = useState(false);
 
@@ -10,7 +10,8 @@ const useSplashScreen = () => {
 			// Method 1: Check standalone mode (for mobile and iOS)
 			const isStandalone =
 				window.matchMedia('(display-mode: standalone)').matches ||
-				(window.navigator as any).standalone === true;
+				(window.navigator as unknown as { standalone?: boolean }).standalone ===
+					true;
 
 			// Method 2: Check localStorage (if set during PWA installation)
 			const isPWAInstalled = localStorage.getItem('pwa-installed') === 'true';
@@ -38,16 +39,15 @@ const useSplashScreen = () => {
 
 		// Listen for changes to display-mode
 		const mediaQuery = window.matchMedia('(display-mode: standalone)');
-		mediaQuery.addEventListener('change', (e) => {
+		const listener = (e: MediaQueryListEvent) => {
 			setIsPWA(e.matches);
 			if (e.matches) {
 				setShowSplash(true);
 			}
-		});
+		};
+		mediaQuery.addEventListener('change', listener);
 
-		return () => mediaQuery.removeEventListener('change', () => {});
+		return () => mediaQuery.removeEventListener('change', listener);
 	}, []);
 	return { showSplash, isPWA, setShowSplash };
 };
-
-export default useSplashScreen;

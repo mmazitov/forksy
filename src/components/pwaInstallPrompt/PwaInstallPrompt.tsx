@@ -1,5 +1,5 @@
+import { usePwaInstallPrompt } from '@/hooks';
 import { Button } from '../ui/button';
-import { usePwaInstallPrompt } from './usePwaInstallPrompt';
 
 const PwaInstallPrompt = () => {
 	const { canInstall, showPrompt, handleDismiss, handleInstall } =

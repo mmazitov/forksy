@@ -13,7 +13,7 @@ interface CacheInfo {
 	totalSize: number;
 }
 
-export const usePwaManagment = () => {
+export const usePwaManagement = () => {
 	const [cacheInfo, setCacheInfo] = useState<CacheInfo | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isServiceWorkerActive, setIsServiceWorkerActive] = useState(false);
@@ -54,32 +54,33 @@ export const usePwaManagment = () => {
 		}
 	};
 
-	const handleUnregisterSW = async () => {
+	const handleFullReset = async () => {
 		setIsLoading(true);
 		try {
+			await fullPwaReset();
 			await unregisterAllServiceWorkers();
-			setIsServiceWorkerActive(false);
-			toast.success('Service Worker видалено. Перезавантажте сторінку');
+			toast.success('PWA скинуто, сторінка буде перезавантажена');
+			setTimeout(() => {
+				window.location.href = '/';
+			}, 1500);
 		} catch (error) {
-			console.error('Failed to unregister SW:', error);
-			toast.error('Не вдалося видалити Service Worker');
+			console.error('Failed to reset PWA:', error);
+			toast.error('Не вдалося скинути PWA');
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
-	const handleFullReset = async () => {
-		const confirmed = window.confirm(
-			'Ви впевнені? Це повністю очистить PWA та перезавантажить програму.',
-		);
-		if (!confirmed) return;
-
+	const handleUnregisterSW = async () => {
 		setIsLoading(true);
 		try {
-			await fullPwaReset();
+			await unregisterAllServiceWorkers();
+			await checkServiceWorker();
+			toast.success('Service Worker видалено');
 		} catch (error) {
-			console.error('Failed full PWA reset:', error);
-			toast.error('Не вдалося виконати повний скидання PWA');
+			console.error('Failed to unregister service worker:', error);
+			toast.error('Не вдалося видалити Service Worker');
+		} finally {
 			setIsLoading(false);
 		}
 	};
@@ -89,7 +90,8 @@ export const usePwaManagment = () => {
 		isLoading,
 		isServiceWorkerActive,
 		handleClearCache,
-		handleUnregisterSW,
 		handleFullReset,
+		handleUnregisterSW,
+		loadCacheInfo,
 	};
 };

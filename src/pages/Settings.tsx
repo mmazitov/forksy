@@ -13,21 +13,14 @@ import {
 	PwaManagement,
 	Separator,
 } from '@/components';
-import { useToast } from '@/hooks/useToast';
+import { useSettings } from '@/hooks/useSettings';
 import { METADATA_CONFIG } from '@/lib/config/metaDataConfig';
-import { useState } from 'react';
 
 const Settings = () => {
-	const { toast } = useToast();
-	const [emailNotifications, setEmailNotifications] = useState(false);
-	const [menuReminders, setMenuReminders] = useState(false);
-
-	const handleSave = () => {
-		toast({
-			title: 'Налаштування збережено',
-			description: 'Ваші зміни успішно застосовано',
-		});
-	};
+	const { settings, updateSetting, handleSave } = useSettings({
+		emailNotifications: false,
+		menuReminders: false,
+	});
 
 	return (
 		<main className="container mx-auto px-4 py-8">
@@ -55,15 +48,19 @@ const Settings = () => {
 						<Checkbox
 							label="Email сповіщення"
 							subLabel="Отримуйте сповіщення про нові страви та оновлення"
-							checked={emailNotifications}
-							onCheckedChange={(value) => setEmailNotifications(value === true)}
+							checked={settings.emailNotifications}
+							onCheckedChange={(value) =>
+								updateSetting('emailNotifications', value === true)
+							}
 						/>
 						<Separator />
 						<Checkbox
 							label="Нагадування про меню"
 							subLabel="Сповіщення про планування меню"
-							checked={menuReminders}
-							onCheckedChange={(value) => setMenuReminders(value === true)}
+							checked={settings.menuReminders}
+							onCheckedChange={(value) =>
+								updateSetting('menuReminders', value === true)
+							}
 						/>
 					</CardContent>
 				</Card>

@@ -9,25 +9,36 @@ import {
 import { MODAL_TYPES } from '@/constants';
 import { modalsConfig } from '@/lib/config';
 import { useState } from 'react';
+import { AddDishModalProps, AuthModalProps, Dish } from './types';
 
 const { AUTH_MODAL, ADD_DISH_MODAL } = MODAL_TYPES;
 
-interface ModalProps {
+interface ModalPropsBase {
 	modalType: string;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
+}
+
+interface AuthModalPropsExtended extends ModalPropsBase {
+	modalType: typeof AUTH_MODAL;
+}
+
+interface AddDishModalPropsExtended extends ModalPropsBase {
+	modalType: typeof ADD_DISH_MODAL;
 	selectedMeal?: string | null;
 	searchQuery?: string;
 	onSearchChange?: (query: string) => void;
-	onDishSelect?: (dish: any) => void;
-	[key: string]: any;
+	onDishSelect?: (dish: Dish) => void;
 }
+
+type ModalProps = (AuthModalPropsExtended | AddDishModalPropsExtended) &
+	Record<string, unknown>;
 
 const Modal = ({
 	modalType,
 	open,
 	onOpenChange,
-	selectedMeal,
+	selectedMeal = null,
 	searchQuery = '',
 	onSearchChange,
 	onDishSelect,
@@ -35,7 +46,7 @@ const Modal = ({
 }: ModalProps) => {
 	const [isLogin, setIsLogin] = useState(true);
 
-	const getModalTitle = () => {
+	const getModalTitle = (): string => {
 		switch (modalType) {
 			case AUTH_MODAL:
 				const { LOGIN, REGISTER } = modalsConfig.AUTH_MODAL;
@@ -49,26 +60,26 @@ const Modal = ({
 
 	const getModalContent = () => {
 		switch (modalType) {
-			case AUTH_MODAL:
-				return (
-					<AuthModal
-						onOpenChange={onOpenChange}
-						isLogin={isLogin}
-						setIsLogin={setIsLogin}
-						{...restProps}
-					/>
-				);
-			case ADD_DISH_MODAL:
-				return (
-					<AddDishModal
-						isOpen={open}
-						onOpenChange={onOpenChange}
-						selectedMeal={selectedMeal || null}
-						searchQuery={searchQuery}
-						onSearchChange={onSearchChange || (() => {})}
-						onDishSelect={onDishSelect || (() => {})}
-					/>
-				);
+			case AUTH_MODAL: {
+				const authProps: AuthModalProps = {
+					onOpenChange,
+					isLogin,
+					setIsLogin,
+					...restProps,
+				};
+				return <AuthModal {...authProps} />;
+			}
+			case ADD_DISH_MODAL: {
+				const dishProps: AddDishModalProps = {
+					isOpen: open,
+					onOpenChange,
+					selectedMeal: selectedMeal || null,
+					searchQuery,
+					onSearchChange: onSearchChange || (() => {}),
+					onDishSelect: onDishSelect || (() => {}),
+				};
+				return <AddDishModal {...dishProps} />;
+			}
 			default:
 				return <div>Unknown modal type: {modalType}</div>;
 		}

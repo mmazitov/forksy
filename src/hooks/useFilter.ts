@@ -4,7 +4,7 @@ export interface FilterableItem {
 	id: string;
 	name: string;
 	category: string;
-	[key: string]: any;
+	[key: string]: unknown;
 }
 
 interface UseFilterOptions {
@@ -13,7 +13,7 @@ interface UseFilterOptions {
 	defaultCategory?: string;
 }
 
-const useFilter = <T extends FilterableItem>(
+export const useFilter = <T extends FilterableItem>(
 	items: Array<T>,
 	options: UseFilterOptions = {},
 ) => {
@@ -54,5 +54,3 @@ const useFilter = <T extends FilterableItem>(
 		filteredItems,
 	};
 };
-
-export default useFilter;

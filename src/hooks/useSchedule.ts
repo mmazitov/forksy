@@ -2,9 +2,11 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/uk';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { useState } from 'react';
+
 dayjs.extend(isoWeek);
 dayjs.locale('uk');
-const useSchedule = () => {
+
+export const useSchedule = () => {
 	const [currentWeek, setCurrentWeek] = useState(dayjs());
 
 	const startOfWeek = currentWeek.startOf('isoWeek');
@@ -32,5 +34,3 @@ const useSchedule = () => {
 		handleReset,
 	};
 };
-
-export default useSchedule;

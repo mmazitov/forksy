@@ -15,6 +15,7 @@ interface UserMenuProps {
 	userName?: string;
 	onLogout: () => void;
 	onOpenAuth: () => void;
+	isLoading?: boolean;
 }
 
 const UserMenu = ({
@@ -22,8 +23,18 @@ const UserMenu = ({
 	userName,
 	onLogout,
 	onOpenAuth,
+	isLoading = false,
 }: UserMenuProps) => {
 	const navigate = useNavigate();
+
+	if (isLoading) {
+		return (
+			<Button variant="outline" size="sm" disabled className="gap-2">
+				<div className="h-4 w-4 bg-muted rounded animate-pulse" />
+				<span className="hidden sm:inline w-16 h-4 bg-muted rounded animate-pulse" />
+			</Button>
+		);
+	}
 
 	if (!isLoggedIn) {
 		return (

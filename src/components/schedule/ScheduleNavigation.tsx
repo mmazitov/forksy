@@ -1,6 +1,6 @@
 import { Button, Card, CardContent } from '@/components';
+import { useSchedule } from '@/hooks';
 import { LuChevronLeft, LuChevronRight, LuRefreshCw } from 'react-icons/lu';
-import useSchedule from './useSchedule';
 
 const ScheduleNavigation = () => {
 	const { todayWeek, weekDiff, handlePrevious, handleNext, handleReset } =
