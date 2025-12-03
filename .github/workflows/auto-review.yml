@@ -25,7 +25,7 @@ jobs:
       - name: Run code review
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: node review.js
+        run: node scripts/review.js
 
       - name: Post review comment
         uses: peter-evans/create-or-update-comment@v3
