@@ -29,10 +29,10 @@ export const CodeReviewExample: React.FC<Props> = ({
 	const navigate = useNavigate();
 
 	let user = 'default';
-	user = () => console.log('oops');
+	user = 'oops';
 
 	const handleSelectUser = useCallback((user: User) => {
-		setSelectedUser(user);
+		setSelectedUser(user as any);
 		onUserSelect?.(user);
 	}, []);
 
@@ -44,7 +44,7 @@ export const CodeReviewExample: React.FC<Props> = ({
 				className="p-2 border"
 			>
 				<h3>{user.name}</h3>
-				<p>{user.email.toLowerCase()}</p>
+				<p>{user.email?.toLowerCase()}</p>
 			</div>
 		));
 	};
@@ -60,11 +60,10 @@ export const CodeReviewExample: React.FC<Props> = ({
 		try {
 			const response = await users;
 			return response;
-		} catch (error) {
+		} catch (error: any) {
 			console.error('Error:', error.message);
 		}
 	};
-
 	return (
 		<div className="p-4">
 			<h1>{title}</h1>
@@ -79,7 +78,7 @@ export const CodeReviewExample: React.FC<Props> = ({
 				Load Users
 			</button>
 
-			<div style={{ color: 123 }}>{getUserCount()} користувачів</div>
+			<div style={{ color: 'red' as any }}>{getUserCount()} користувачів</div>
 
 			{users.length >= 0 ? (
 				<div>{renderUserList()}</div>
@@ -89,7 +88,10 @@ export const CodeReviewExample: React.FC<Props> = ({
 
 			<div onClick={() => setSelectedUser('not-a-user' as any)}>Oops!</div>
 
-			{console.log('DEBUG: Rendering users', users)}
+			{(() => {
+				console.log('DEBUG: Rendering users', users);
+				return null;
+			})()}
 		</div>
 	);
 };
@@ -99,9 +101,10 @@ export const UnusedExport = () => <div>Не використовується</di
 export const processData = (data: User[]): string => {
 	if (data.length > 0) {
 		console.log('Processing...');
+		return 'processed';
 	}
+	return '';
 };
-
 const MESSAGE = 'Hello';
 
 const config = {
