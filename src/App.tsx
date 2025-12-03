@@ -16,6 +16,7 @@ import {
 	Settings,
 } from '@/pages';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ProtectedRoute } from './lib/hoc';
 
 const App = () => {
 	const { showSplash, setShowSplash } = useSplashScreen();
@@ -33,12 +34,40 @@ const App = () => {
 						<Route path="/menu-planner" element={<MenuPlanner />} />
 						<Route path="/products" element={<Products />} />
 						<Route path="/products/:id" element={<ProductDetail />} />
-						<Route path="/products/add" element={<AddProduct />} />
 						<Route path="/dishes" element={<Dishes />} />
 						<Route path="/dishes/:id" element={<DishDetail />} />
-						<Route path="/dishes/add" element={<AddDish />} />
-						<Route path="/settings" element={<Settings />} />
-						<Route path="/profile" element={<Profile />} />
+						<Route
+							path="/products/add"
+							element={
+								<ProtectedRoute>
+									<AddProduct />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/dishes/add"
+							element={
+								<ProtectedRoute>
+									<AddDish />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/settings"
+							element={
+								<ProtectedRoute>
+									<Settings />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/profile"
+							element={
+								<ProtectedRoute>
+									<Profile />
+								</ProtectedRoute>
+							}
+						/>
 						{/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 						<Route path="*" element={<NotFound />} />
 					</Routes>
