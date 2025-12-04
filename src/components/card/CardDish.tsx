@@ -35,6 +35,7 @@ const CardDish = ({
 					<div className="flex items-start justify-between gap-2 mb-2">
 						<h3 className="text-lg font-semibold text-foreground line-clamp-1">
 							{name}
+							sadads
 						</h3>
 						<Badge variant="secondary" className="shrink-0">
 							{category}
