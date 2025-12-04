@@ -27,8 +27,18 @@ const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
 });
 
 const data = await res.json();
-fs.writeFileSync(
-	'review.json',
-	JSON.stringify(JSON.parse(data.choices[0].message.content)),
-);
+
+// OpenRouter: текст может быть в data.completion.message.content
+let reviewText;
+if (data?.completion?.message?.content) {
+	reviewText = data.completion.message.content;
+} else if (data?.text) {
+	reviewText = data.text;
+} else {
+	throw new Error(
+		'Unexpected response from OpenRouter: ' + JSON.stringify(data),
+	);
+}
+
+fs.writeFileSync('review.json', reviewText);
 console.log('Review saved to review.json');
