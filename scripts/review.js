@@ -1,10 +1,14 @@
-import { execSync } from 'child_process';
 import fs from 'fs';
 import OpenAI from 'openai';
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const diff = execSync('git diff HEAD~1 HEAD', { encoding: 'utf-8' });
+const diff = process.env.DIFF;
+
+if (!diff || diff.trim() === '') {
+	console.error('No DIFF supplied');
+	process.exit(1);
+}
 
 const prompt = `
 You are a Senior Front-End Developer with expertise in React, TypeScript, and modern web development.
@@ -27,37 +31,28 @@ Response format:
   ]
 }
 
-Classification:
-- "major" — Critical issues that must be fixed:
-  * Potential bugs or runtime errors
-  * Logic errors or incorrect implementations
-  * Security vulnerabilities
-  * Performance bottlenecks
-  * Breaking changes
-  * Missing error handling
-  * Memory leaks or resource management issues
-
-- "minor" — Improvements and recommendations:
-  * Code style and consistency
-  * Best practices and patterns
-  * Readability improvements
-  * Type safety enhancements
-  * Accessibility improvements
-  * Testing suggestions
-  * Documentation gaps
-
 Rules:
-- Ignore lock files (package-lock.json, yarn.lock, pnpm-lock.yaml)
-- Ignore auto-generated files and formatting-only changes
-- Be constructive and specific in comments
-- Provide actionable suggestions when identifying issues
-- If no issues: return summary: "No issues found. Code changes look good." with empty issues array
-- Focus on substantive changes, not trivial style preferences
+- Ignore lock files
+- Ignore formatting-only changes
+- If no issues: return summary "No issues found. Code changes look good." and issues []
 `;
 
-const response = await client.chat.completions.create({
+const ai = await client.responses.create({
 	model: 'gpt-4.1-mini',
-	messages: [{ role: 'user', content: prompt }],
+	input: prompt,
 });
 
-fs.writeFileSync('review_output.md', response.choices[0].message.content);
+// Extract JSON safely
+const content = ai.output_text;
+
+// Validate JSON
+let parsed;
+try {
+	parsed = JSON.parse(content);
+} catch (e) {
+	console.error('AI returned invalid JSON:', content);
+	process.exit(1);
+}
+
+fs.writeFileSync('review.json', JSON.stringify(parsed, null, 2), 'utf-8');
+console.log('review.json saved');
