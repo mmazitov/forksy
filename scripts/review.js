@@ -17,21 +17,20 @@ if (!diff) {
 const prompt = `
 You are a Senior Front-End Developer. Review the following code changes:
 ${diff}
-
-Respond in strict JSON format:
-
+Return **only valid JSON** in this exact format:
 {
   "summary": "brief overview",
   "issues": [
     {
       "type": "major" | "minor",
       "file": "filename",
-      "line": 0,
-      "comment": "clear description",
-      "suggestion": "recommended fix"
+      "line": line_number,
+      "comment": "description",
+      "suggestion": "recommendation"
     }
   ]
 }
+Do not include any text outside of this JSON. No explanations, no extra links.
 `;
 
 async function runReview() {
