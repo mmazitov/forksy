@@ -42,7 +42,7 @@ async function runReview() {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			model: 'code-llama-7b', // бесплатная модель
+			model: 'alfredpros/codellama-7b-instruct-solidity', // бесплатная модель
 			messages: [{ role: 'user', content: prompt }],
 		}),
 	});
