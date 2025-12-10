@@ -8,15 +8,15 @@ export interface SocialItem {
 
 export const SOCIAL_ITEMS: SocialItem[] = [
 	{
-		name: 'Google',
+		name: 'google',
 		icon: FaGoogle,
 	},
 	{
-		name: 'Facebook',
+		name: 'facebook',
 		icon: FaFacebook,
 	},
 	{
-		name: 'Github',
+		name: 'github',
 		icon: FaGithub,
 	},
 ] as const;

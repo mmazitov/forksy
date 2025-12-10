@@ -8,7 +8,7 @@ export const resolvers = {
 	Query: {
 		me: async (_parent: any, _args: any, context: Context) => {
 			if (!context.userId) {
-				return null;
+				throw new Error('Not authenticated');
 			}
 
 			const user = await context.prisma.user.findUnique({

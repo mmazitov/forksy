@@ -11,7 +11,7 @@ const getGraphQLUrl = () => {
 		return '/api/graphql';
 	}
 	// For development, use the local server
-	return 'http://localhost:4000';
+	return 'http://localhost:4000/graphql';
 };
 
 const httpLink = createHttpLink({

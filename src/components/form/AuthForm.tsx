@@ -36,22 +36,17 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 	const onSubmit = async (data: any) => {
 		try {
 			if (isLogin) {
-				console.log('[AuthForm] Submitting login with email:', data.email);
 				const result = await loginUser({
 					variables: {
 						email: data.email,
 						password: data.password,
 					},
 				});
-				console.log('[AuthForm] Login result:', result.data?.login);
 				if (!result.data?.login) {
 					throw new Error('No login data returned');
 				}
-				console.log('[AuthForm] Calling login() with token and user');
 				login(result.data.login.token, result.data.login.user);
-				console.log('[AuthForm] login() completed');
 			} else {
-				console.log('[AuthForm] Submitting register with email:', data.email);
 				const result = await registerUser({
 					variables: {
 						email: data.email,
@@ -59,17 +54,13 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						name: (data as RegisterFormData).name,
 					},
 				});
-				console.log('[AuthForm] Register result:', result.data?.register);
 				if (!result.data?.register) {
 					throw new Error('No register data returned');
 				}
-				console.log('[AuthForm] Calling login() with token and user');
 				login(result.data.register.token, result.data.register.user);
-				console.log('[AuthForm] login() completed');
 			}
 			onOpenChange(false);
 		} catch (error: any) {
-			console.error('[AuthForm] Error:', error.message);
 			setError('root', {
 				message: error.message || 'Something went wrong',
 			});

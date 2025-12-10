@@ -3,8 +3,12 @@ import { gql } from 'graphql-tag';
 export const typeDefs = gql`
 	type User {
 		id: ID!
-		email: String!
+		email: String
 		name: String
+		avatar: String
+		googleId: String
+		githubId: String
+		facebookId: String
 		createdAt: String!
 		updatedAt: String!
 	}
@@ -21,5 +25,14 @@ export const typeDefs = gql`
 	type Mutation {
 		register(email: String!, password: String!, name: String): AuthPayload!
 		login(email: String!, password: String!): AuthPayload!
+	}
+
+	type SocialAuthPayload {
+		token: String!
+		user: User!
+	}
+
+	extend type Mutation {
+		handleOAuthCallback(provider: String!, code: String!): SocialAuthPayload!
 	}
 `;

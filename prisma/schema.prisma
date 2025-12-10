@@ -41,12 +41,19 @@ model Product {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  email     String    @unique
-  name      String?
-  password  String?
-  dishes    Dish[]
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  email      String?   @unique
+  name       String?
+  password   String?
+  // Auth provider
+  googleId   String?   @unique
+  facebookId String?   @unique
+  githubId   String?   @unique
+  // Avatar
+  avatar     String?
+  // Relations
+  dishes     Dish[]
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }

@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 export interface Context {
 	prisma: PrismaClient;
@@ -9,14 +9,9 @@ export interface Context {
 }
 
 export const createContext = async (contextArg?: any): Promise<Context> => {
-	// Handle both Express req object and Next.js/Vercel request context
 	const req = contextArg?.req || contextArg;
 	const headers = req?.headers || {};
 
-	// Debug: log all headers
-	// console.error('[Context] All headers:', JSON.stringify(headers));
-
-	// On Vercel, headers come in lowercase
 	let token = '';
 
 	if (typeof headers.get === 'function') {
@@ -36,7 +31,7 @@ export const createContext = async (contextArg?: any): Promise<Context> => {
 			) as { userId: string };
 			userId = decoded.userId;
 		} catch (e) {
-			console.error('[Context] Token invalid:', (e as Error).message);
+			// Invalid token
 		}
 	}
 
