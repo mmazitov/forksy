@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { prisma } from '../../server/context';
+import { prisma } from '../../server/context.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 
