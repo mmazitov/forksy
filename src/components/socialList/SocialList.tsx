@@ -9,8 +9,17 @@ interface SocialListProps {
 const SocialList = ({ onOpenChange }: SocialListProps) => {
 	const { login } = useAuth();
 
+	const getApiUrl = () => {
+		if (typeof window === 'undefined') return '';
+		if (!window.location.hostname.includes('localhost')) {
+			return window.location.origin;
+		}
+		return 'http://localhost:4000';
+	};
+
 	const handleSocialLogin = (provider: string) => {
-		const authUrl = `http://localhost:4000/auth/${provider}`;
+		const apiUrl = getApiUrl();
+		const authUrl = `${apiUrl}/auth/${provider}`;
 
 		const width = 500;
 		const height = 600;
@@ -24,25 +33,17 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 		);
 	};
 
-	// Слухаємо повідомлення від popup вікна
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
-			// Перевіряємо що повідомлення від нашого сервера
-			const allowedOrigins = [
-				window.location.origin,
-				'http://localhost:4000',
-				'http://localhost:5173',
-			];
-
-			if (!allowedOrigins.includes(event.origin)) {
+			if (event.origin !== window.location.origin) {
 				return;
 			}
 
 			if (event.data.type === 'OAUTH_SUCCESS' && event.data.token) {
 				const token = event.data.token;
+				const apiUrl = getApiUrl();
 
-				// Отримуємо дані користувача
-				fetch('http://localhost:4000/graphql', {
+				fetch(`${apiUrl}/graphql`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
@@ -61,33 +62,15 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 						`,
 					}),
 				})
-					.then((res) => {
-						console.log('[SocialList] Response status:', res.status);
-						return res.text();
-					})
-					.then((text) => {
-						console.log('[SocialList] Raw response:', text);
-						try {
-							const data = JSON.parse(text);
-							console.log('[SocialList] User data received:', data);
-
-							if (data.data?.me) {
-								console.log(
-									'[SocialList] Calling login with user:',
-									data.data.me,
-								);
-								login(token, data.data.me);
-								console.log('[SocialList] Closing modal...');
-								onOpenChange(false);
-							} else {
-								console.error('[SocialList] No user data in response');
-							}
-						} catch (e) {
-							console.error('[SocialList] Failed to parse response:', e);
+					.then((res) => res.json())
+					.then((data) => {
+						if (data.data?.me) {
+							login(token, data.data.me);
+							onOpenChange(false);
 						}
 					})
 					.catch((err) => {
-						console.error('[SocialList] OAuth error:', err);
+						console.error('OAuth error:', err);
 					});
 			}
 		};
