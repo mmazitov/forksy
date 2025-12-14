@@ -11,15 +11,17 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 
 	const getApiUrl = () => {
 		if (typeof window === 'undefined') return '';
+
 		if (!window.location.hostname.includes('localhost')) {
-			return window.location.origin;
+			return '/api';
 		}
+
 		return 'http://localhost:4000';
 	};
 
 	const handleSocialLogin = (provider: string) => {
 		const apiUrl = getApiUrl();
-		const authUrl = `${apiUrl}/auth/${provider}`;
+		const authUrl = `${apiUrl}/auth/${provider}-auth`;
 
 		const width = 500;
 		const height = 600;
@@ -35,10 +37,6 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
-			if (event.origin !== window.location.origin) {
-				return;
-			}
-
 			if (event.data.type === 'OAUTH_SUCCESS' && event.data.token) {
 				const token = event.data.token;
 				const apiUrl = getApiUrl();
