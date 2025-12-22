@@ -1,3 +1,5 @@
+import type { Exact, InputMaybe, Scalars } from './api';
+
 export type RegisterMutationVariables = Exact<{
 	email: Scalars['String']['input'];
 	password: Scalars['String']['input'];
