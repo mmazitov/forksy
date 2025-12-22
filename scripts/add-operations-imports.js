@@ -10,7 +10,8 @@ const operationsFile = path.join(
 	'../src/lib/graphql/types/operations.ts',
 );
 
-const importStatement = "import type { Exact, InputMaybe, Scalars } from './api';\n\n";
+const importStatement =
+	"import type { Exact, InputMaybe, Scalars } from './api';\n\n";
 
 let content = fs.readFileSync(operationsFile, 'utf8');
 
