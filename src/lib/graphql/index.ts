@@ -1,5 +1,7 @@
 // Re-export types
-export * from './generated/api';
+export * from './types/api';
+export * from './types/operations';
 
-// Re-export hooks and operations
-export * from './auth.gen';
+// Re-export hooks
+export * from './auth';
+export * from './profile';

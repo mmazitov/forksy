@@ -1,5 +1,4 @@
-export { default as useAuthActions } from './useAuthActions';
-
+export { useAuth } from './useAuth';
 export { useFilter } from './useFilter';
 export { useFormList } from './useFormList';
 export { useMenuPlanner } from './useMenuPlanner';

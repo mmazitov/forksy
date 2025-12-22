@@ -8,7 +8,8 @@ const config: CodegenConfig = {
 		afterOneFileWrite: ['prettier --write'],
 	},
 	generates: {
-		'src/lib/graphql/generated/api.ts': {
+		// Base types from schema
+		'src/lib/graphql/types/api.ts': {
 			plugins: ['typescript'],
 			config: {
 				noNamespaces: true,
@@ -20,24 +21,15 @@ const config: CodegenConfig = {
 				},
 			},
 		},
-		'src/lib/graphql/': {
+		// All operation types in one file (cleaner for v4)
+		'src/lib/graphql/types/operations.ts': {
 			documents: 'src/**/*.gql',
-			preset: 'near-operation-file',
-			presetConfig: {
-				extension: '.types.ts',
-				baseTypesPath: './generated/api',
-			},
 			plugins: ['typescript-operations'],
 			config: {
 				noNamespaces: true,
 				onlyOperationTypes: true,
 				inlineFragmentTypes: 'combine',
-				avoidOptionals: {
-					field: true,
-					inputValue: false,
-					object: false,
-					defaultValue: true,
-				},
+				preResolveTypes: true,
 			},
 		},
 	},

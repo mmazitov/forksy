@@ -57,5 +57,20 @@ export const resolvers = {
 				user,
 			};
 		},
+		updateProfile: async (_parent: any, args: any, context: Context) => {
+			if (!context.userId) {
+				throw new Error('Not authenticated');
+			}
+
+			const updatedUser = await context.prisma.user.update({
+				where: { id: context.userId },
+				data: {
+					...(args.name && { name: args.name }),
+					...(args.avatar && { avatar: args.avatar }),
+				},
+			});
+
+			return updatedUser;
+		},
 	},
 };

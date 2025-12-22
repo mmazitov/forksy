@@ -1,5 +1,5 @@
 import { Button } from '@/components';
-import { useAuth } from '@/lib/auth/AuthContext';
+import { useAuth } from '@/hooks';
 import { Link } from 'react-router-dom';
 
 interface PageTitleProps {

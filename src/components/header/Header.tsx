@@ -2,7 +2,7 @@ import { Logo } from '@/components';
 import { useState } from 'react';
 
 import { MODAL_TYPES } from '@/constants';
-import { useAuthActions } from '@/hooks';
+import { useAuth } from '@/hooks';
 
 import {
 	MenuButton,
@@ -15,7 +15,7 @@ const Header = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const [authModalOpen, setAuthModalOpen] = useState(false);
 
-	const { isLoggedIn, userName, handleLogout } = useAuthActions();
+	const { isLoggedIn, userName, handleLogout } = useAuth();
 
 	return (
 		<nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">

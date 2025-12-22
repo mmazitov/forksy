@@ -1,6 +1,6 @@
 import { Button } from '@/components';
 import { SOCIAL_ITEMS } from '@/constants';
-import { useAuth } from '@/lib/auth/AuthContext';
+import { useAuth } from '@/hooks';
 import { useEffect } from 'react';
 
 interface SocialListProps {

@@ -11,14 +11,65 @@ import {
 	PageTitle,
 	Textarea,
 } from '@/components';
-import { useSettings } from '@/hooks/useSettings';
+import { useToast } from '@/hooks/useToast';
 import { METADATA_CONFIG } from '@/lib/config';
+import { useMeQuery, useUpdateProfileMutation } from '@/lib/graphql';
+import { useState } from 'react';
 
 const Profile = () => {
-	const { handleSave } = useSettings({
-		emailNotifications: false,
-		menuReminders: false,
+	const { data, refetch } = useMeQuery();
+	const [updateProfile, { loading: updating }] = useUpdateProfileMutation();
+	const { toast } = useToast();
+	const [isEditMode, setIsEditMode] = useState(false);
+	const [formData, setFormData] = useState({
+		name: '',
+		avatar: '',
 	});
+
+	const user = data?.me;
+
+	const handleEdit = () => {
+		setIsEditMode(true);
+		setFormData({
+			name: user?.name || '',
+			avatar: user?.avatar || '',
+		});
+	};
+
+	const handleCancel = () => {
+		setIsEditMode(false);
+		setFormData({
+			name: '',
+			avatar: '',
+		});
+	};
+
+	const handleSave = async () => {
+		try {
+			await updateProfile({
+				variables: {
+					name: formData.name || undefined,
+					avatar: formData.avatar || undefined,
+				},
+			});
+
+			await refetch();
+
+			toast({
+				title: 'Профіль оновлено',
+				description: 'Ваші зміни успішно збережені',
+			});
+
+			setIsEditMode(false);
+		} catch (error) {
+			console.error('Failed to update profile:', error);
+			toast({
+				title: 'Помилка',
+				description: 'Не вдалося оновити профіль',
+				variant: 'destructive',
+			});
+		}
+	};
 
 	return (
 		<main className="container mx-auto px-4 py-8">
@@ -36,32 +87,51 @@ const Profile = () => {
 				/>
 
 				<Card>
-					<CardHeader>
+					<CardHeader className="flex justify-between items-center flex-row">
 						<CardTitle>Основна інформація</CardTitle>
-						<CardDescription>
-							Оновіть свою особисту інформацію та контактні дані
-						</CardDescription>
+						<Button variant="link" onClick={handleEdit}>
+							{' '}
+							Редагувати
+						</Button>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<div className="space-y-2">
-							<Label htmlFor="name">Ім'я</Label>
-							<Input id="name" placeholder="Введіть ваше ім'я" />
+							<Label htmlFor="name">Ім'я:</Label>
+							{isEditMode ? (
+								<Input
+									id="name"
+									type="text"
+									placeholder="Ваше ім'я"
+									value={formData.name}
+									onChange={(e) =>
+										setFormData({ ...formData, name: e.target.value })
+									}
+								/>
+							) : (
+								<h3>{user?.name}</h3>
+							)}
 						</div>
 						<div className="space-y-2">
-							<Label htmlFor="email">Email</Label>
-							<Input id="email" type="email" placeholder="your@email.com" />
+							<Label htmlFor="email">Email:</Label>
+							{isEditMode ? (
+								<Input
+									id="email"
+									type="email"
+									placeholder="Ваш email"
+									value={user?.email || ''}
+									disabled
+								/>
+							) : (
+								<h3>{user?.email}</h3>
+							)}
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="phone">Телефон</Label>
-							<Input id="phone" type="tel" placeholder="+7 (___) ___-__-__" />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="bio">Про себе</Label>
-							<Textarea
-								id="bio"
-								placeholder="Розкажіть трохи про себе..."
-								rows={4}
-							/>
+							{isEditMode ? (
+								<Input id="phone" type="tel" placeholder="+7 (___) ___-__-__" />
+							) : (
+								<h3>-</h3>
+							)}
 						</div>
 					</CardContent>
 				</Card>
@@ -69,26 +139,35 @@ const Profile = () => {
 				<Card>
 					<CardHeader>
 						<CardTitle>Дієтичні вподобання</CardTitle>
-						<CardDescription>
-							Вкажіть ваші харчові вподобання та обмеження
-						</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<div className="space-y-2">
-							<Label htmlFor="diet">Тип дієти</Label>
-							<Input id="diet" placeholder="Наприклад: вегетаріанська" />
+							<Label htmlFor="diet">Тип дієти:</Label>
+							{isEditMode ? (
+								<Input id="diet" placeholder="Вкажіть ваш тип дієти" />
+							) : (
+								<h3>-</h3>
+							)}
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="allergies">Алергії</Label>
-							<Input id="allergies" placeholder="Вкажіть продукти-алергени" />
+							{isEditMode ? (
+								<Input id="allergies" placeholder="Вкажіть продукти-алергени" />
+							) : (
+								<h3>-</h3>
+							)}
 						</div>
 						<div className="space-y-2">
-							<Label htmlFor="dislikes">Не подобається</Label>
-							<Textarea
-								id="dislikes"
-								placeholder="Продукти, які вам не подобаються..."
-								rows={3}
-							/>
+							<Label htmlFor="dislikes">Не подобається:</Label>
+							{isEditMode ? (
+								<Textarea
+									id="dislikes"
+									placeholder="Продукти, які вам не подобаються..."
+									rows={3}
+								/>
+							) : (
+								<h3>-</h3>
+							)}
 						</div>
 					</CardContent>
 				</Card>
@@ -117,8 +196,20 @@ const Profile = () => {
 				</Card>
 
 				<div className="flex justify-end gap-4">
-					<Button variant="outline">Скасувати</Button>
-					<Button onClick={handleSave}>Зберегти</Button>
+					{isEditMode && (
+						<>
+							<Button
+								variant="outline"
+								onClick={handleCancel}
+								disabled={updating}
+							>
+								Скасувати
+							</Button>
+							<Button onClick={handleSave} disabled={updating}>
+								{updating ? 'Збереження...' : 'Зберегти'}
+							</Button>
+						</>
+					)}
 				</div>
 			</div>
 		</main>

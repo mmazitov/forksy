@@ -1,0 +1,20 @@
+query Me {
+	me {
+		id
+		email
+		name
+		avatar
+		createdAt
+		updatedAt
+	}
+}
+mutation UpdateProfile($name: String, $avatar: String) {
+	updateProfile(name: $name, avatar: $avatar) {
+		id
+		email
+		name
+		avatar
+		createdAt
+		updatedAt
+	}
+}

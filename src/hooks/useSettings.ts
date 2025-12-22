@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
-
 export interface SettingsState {
 	emailNotifications: boolean;
 	menuReminders: boolean;
@@ -18,7 +17,6 @@ export const useSettings = (initialState: SettingsState) => {
 
 	const handleSave = useCallback(() => {
 		toast.success('Налаштування збережено!');
-		// TODO: Додати логіку для збереження на сервер
 	}, []);
 
 	const resetSettings = useCallback((state: SettingsState) => {

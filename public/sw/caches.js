@@ -1,7 +1,7 @@
-export const APP_VERSION = 'v1.2.0';
-export const DATA_VERSION = 'v1';
+const APP_VERSION = 'v1.2.0';
+const DATA_VERSION = 'v1';
 
-export const CACHES = {
+const CACHES = {
 	APP_SHELL: `app-shell-${APP_VERSION}`,
 	STATIC: `static-${APP_VERSION}`,
 	DISHES: `dishes-${DATA_VERSION}`,

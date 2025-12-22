@@ -1,5 +1,5 @@
 // Cache First - for App Shell and static resources
-export async function cacheFirst(request, cacheName) {
+async function cacheFirst(request, cacheName) {
 	const cache = await caches.open(cacheName);
 	const cached = await cache.match(request);
 
@@ -20,7 +20,7 @@ export async function cacheFirst(request, cacheName) {
 }
 
 // Stale While Revalidate - for dishes and products (show cache, update in background)
-export async function staleWhileRevalidate(request, cacheName) {
+async function staleWhileRevalidate(request, cacheName) {
 	const cache = await caches.open(cacheName);
 	const cached = await cache.match(request);
 
@@ -40,7 +40,7 @@ export async function staleWhileRevalidate(request, cacheName) {
 }
 
 // Network First - for meal plans (network priority, fallback to cache)
-export async function networkFirst(request, cacheName) {
+async function networkFirst(request, cacheName) {
 	const cache = await caches.open(cacheName);
 
 	try {
@@ -60,6 +60,6 @@ export async function networkFirst(request, cacheName) {
 }
 
 // Network Only - for auth requests
-export async function networkOnly(request) {
+async function networkOnly(request) {
 	return fetch(request);
 }

@@ -1,6 +1,4 @@
-import { CACHES } from './caches.js';
-
-export async function enqueueRequest(request) {
+async function enqueueRequest(request) {
 	const cache = await caches.open(CACHES.QUEUE);
 
 	try {
@@ -33,7 +31,7 @@ export async function enqueueRequest(request) {
 	}
 }
 
-export async function replayQueue() {
+async function replayQueue() {
 	const cache = await caches.open(CACHES.QUEUE);
 	const keys = await cache.keys();
 
@@ -71,7 +69,7 @@ export async function replayQueue() {
 	}
 }
 
-export async function getQueueSize() {
+async function getQueueSize() {
 	const cache = await caches.open(CACHES.QUEUE);
 	const keys = await cache.keys();
 	return keys.length;

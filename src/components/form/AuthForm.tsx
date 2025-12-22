@@ -1,7 +1,7 @@
 import { Button, Input, Label } from '@/components';
-import { useAuth } from '@/lib/auth/AuthContext';
+import { useAuth } from '@/hooks';
 import { modalsConfig } from '@/lib/config';
-import { useLoginMutation, useRegisterMutation } from '@/lib/graphql/auth.gen';
+import { useLoginMutation, useRegisterMutation } from '@/lib/graphql';
 import { LoginSchema, RegisterSchema } from '@/lib/utils/schemas/';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';

@@ -1,21 +1,3 @@
-import { CACHES } from './caches.js';
-import { enqueueRequest, replayQueue } from './queue.js';
-import {
-	cacheFirst,
-	networkFirst,
-	networkOnly,
-	staleWhileRevalidate,
-} from './strategies.js';
-import {
-	cleanupOldCaches,
-	isApiRequest,
-	isAuthRequest,
-	isDevServerRequest,
-	isGraphQLRequest,
-	isSupportedScheme,
-	shouldCacheAsset,
-} from './utils.js';
-
 // Install event - cache App Shell
 self.addEventListener('install', (event) => {
 	console.log('[Service Worker] Installing...');

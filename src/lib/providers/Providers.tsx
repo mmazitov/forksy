@@ -1,8 +1,8 @@
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { Toaster } from '@/components/ui/toaster';
 import { client } from '@/lib/apollo';
-import { AuthProvider } from '@/lib/auth/AuthContext';
 import { ApolloProvider } from '@apollo/client/react';
+import { AuthProvider } from './AuthProvider';
 import QueryProvider from './QueryProvider';
 import SeoProvider from './SeoProvider';
 import ThemeProvider from './ThemeProvider';

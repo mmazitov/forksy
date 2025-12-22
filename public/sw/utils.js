@@ -1,4 +1,4 @@
-export async function cleanupOldCaches(allowedCaches) {
+async function cleanupOldCaches(allowedCaches) {
 	const keys = await caches.keys();
 
 	await Promise.all(
@@ -11,27 +11,27 @@ export async function cleanupOldCaches(allowedCaches) {
 	);
 }
 
-export function isApiRequest(request) {
+function isApiRequest(request) {
 	return request.url.includes('/api/');
 }
 
-export function isGraphQLRequest(request) {
+function isGraphQLRequest(request) {
 	return request.url.includes('/api/graphql');
 }
 
-export function isAuthRequest(request) {
+function isAuthRequest(request) {
 	return request.url.includes('/api/auth/');
 }
 
-export function isSupportedScheme(url) {
+function isSupportedScheme(url) {
 	return url.startsWith('http://') || url.startsWith('https://');
 }
 
-export function isDevServerRequest(url) {
+function isDevServerRequest(url) {
 	return url.includes('@vite') || url.includes('@react-refresh');
 }
 
-export function shouldCacheAsset(url) {
+function shouldCacheAsset(url) {
 	const assetPatterns = [
 		/\.js$/,
 		/\.css$/,
