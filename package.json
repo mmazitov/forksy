@@ -11,7 +11,7 @@
 		"kill:ports": "lsof -ti:3000,4000,5173,5174,5175 | xargs kill -9 2>/dev/null || true",
 		"server": "npx tsx watch server/index.ts",
 		"dev": "concurrently \"npm run server\" \"npm run start\"",
-		"generate": "graphql-codegen"
+		"generate": "graphql-codegen && node scripts/add-operations-imports.js"
 	},
 	"dependencies": {
 		"@apollo/client": "^4.0.9",
