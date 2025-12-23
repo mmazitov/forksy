@@ -128,7 +128,7 @@ const Profile = () => {
 						<div className="space-y-2">
 							<Label htmlFor="phone">Телефон</Label>
 							{isEditMode ? (
-								<Input id="phone" type="tel" placeholder="+7 (___) ___-__-__" />
+								<Input id="phone" type="tel" placeholder="+3 (___) ___-__-__" />
 							) : (
 								<h3>-</h3>
 							)}

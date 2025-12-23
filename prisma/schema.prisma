@@ -45,15 +45,13 @@ model User {
   email      String?   @unique
   name       String?
   password   String?
+  phone      String?
   // Auth provider
-  googleId   String?   @unique
-  facebookId String?   @unique
-  githubId   String?   @unique
-  // Avatar
-  avatar     String?
-  // Relations
-  dishes     Dish[]
-  products   Product[]
+  googleId   String?
+  facebookId String?
+  githubId   String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+  dishes     Dish[]
+  products   Product[]
 }
