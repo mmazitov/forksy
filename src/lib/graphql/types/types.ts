@@ -1,9 +1,6 @@
 import type * as Types from './api';
 
-import type { DocumentNode } from 'graphql';
-import type * as Apollo from '@apollo/client';
-import * as ApolloReactHooks from '@apollo/client/react';
-const defaultOptions = {} as const;
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type RegisterMutationVariables = Types.Exact<{
 	email: Types.Scalars['String']['input'];
 	password: Types.Scalars['String']['input'];
@@ -195,27 +192,7 @@ export const RegisterDocument = {
 			},
 		},
 	],
-} as unknown as DocumentNode;
-export type RegisterMutationFn = Apollo.MutationFunction<
-	Types.RegisterMutation,
-	Types.RegisterMutationVariables
->;
-export function useRegisterMutation(
-	baseOptions?: ApolloReactHooks.MutationHookOptions<
-		Types.RegisterMutation,
-		Types.RegisterMutationVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useMutation<
-		Types.RegisterMutation,
-		Types.RegisterMutationVariables
-	>(RegisterDocument, options);
-}
-export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
-export type RegisterMutationResult =
-	Apollo.MutationResult<Types.RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<
+} as unknown as DocumentNode<
 	Types.RegisterMutation,
 	Types.RegisterMutationVariables
 >;
@@ -303,29 +280,7 @@ export const LoginDocument = {
 			},
 		},
 	],
-} as unknown as DocumentNode;
-export type LoginMutationFn = Apollo.MutationFunction<
-	Types.LoginMutation,
-	Types.LoginMutationVariables
->;
-export function useLoginMutation(
-	baseOptions?: ApolloReactHooks.MutationHookOptions<
-		Types.LoginMutation,
-		Types.LoginMutationVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useMutation<
-		Types.LoginMutation,
-		Types.LoginMutationVariables
-	>(LoginDocument, options);
-}
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = Apollo.MutationResult<Types.LoginMutation>;
-export type LoginMutationOptions = Apollo.BaseMutationOptions<
-	Types.LoginMutation,
-	Types.LoginMutationVariables
->;
+} as unknown as DocumentNode<Types.LoginMutation, Types.LoginMutationVariables>;
 export const MeDocument = {
 	kind: 'Document',
 	definitions: [
@@ -359,76 +314,7 @@ export const MeDocument = {
 			},
 		},
 	],
-} as unknown as DocumentNode;
-export function useMeQuery(
-	baseOptions?: ApolloReactHooks.QueryHookOptions<
-		Types.MeQuery,
-		Types.MeQueryVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useQuery<Types.MeQuery, Types.MeQueryVariables>(
-		MeDocument,
-		options,
-	);
-}
-export function useMeLazyQuery(
-	baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-		Types.MeQuery,
-		Types.MeQueryVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useLazyQuery<Types.MeQuery, Types.MeQueryVariables>(
-		MeDocument,
-		options,
-	);
-}
-// @ts-ignore
-export function useMeSuspenseQuery(
-	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
-		Types.MeQuery,
-		Types.MeQueryVariables
-	>,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	Types.MeQuery,
-	Types.MeQueryVariables
->;
-export function useMeSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<
-				Types.MeQuery,
-				Types.MeQueryVariables
-		  >,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	Types.MeQuery | undefined,
-	Types.MeQueryVariables
->;
-export function useMeSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<
-				Types.MeQuery,
-				Types.MeQueryVariables
-		  >,
-) {
-	const options =
-		baseOptions === ApolloReactHooks.skipToken
-			? baseOptions
-			: { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useSuspenseQuery<
-		Types.MeQuery,
-		Types.MeQueryVariables
-	>(MeDocument, options);
-}
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
-export type MeQueryResult = Apollo.QueryResult<
-	Types.MeQuery,
-	Types.MeQueryVariables
->;
+} as unknown as DocumentNode<Types.MeQuery, Types.MeQueryVariables>;
 export const UpdateProfileDocument = {
 	kind: 'Document',
 	definitions: [
@@ -574,29 +460,13 @@ export const UpdateProfileDocument = {
 			},
 		},
 	],
-} as unknown as DocumentNode;
-export type UpdateProfileMutationFn = Apollo.MutationFunction<
+} as unknown as DocumentNode<
 	Types.UpdateProfileMutation,
 	Types.UpdateProfileMutationVariables
 >;
-export function useUpdateProfileMutation(
-	baseOptions?: ApolloReactHooks.MutationHookOptions<
-		Types.UpdateProfileMutation,
-		Types.UpdateProfileMutationVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useMutation<
-		Types.UpdateProfileMutation,
-		Types.UpdateProfileMutationVariables
-	>(UpdateProfileDocument, options);
-}
-export type UpdateProfileMutationHookResult = ReturnType<
-	typeof useUpdateProfileMutation
->;
-export type UpdateProfileMutationResult =
-	Apollo.MutationResult<Types.UpdateProfileMutation>;
-export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<
-	Types.UpdateProfileMutation,
-	Types.UpdateProfileMutationVariables
->;
+
+// Document aliases for hooks
+export { RegisterDocument as Register };
+export { LoginDocument as Login };
+export { MeDocument as Me };
+export { UpdateProfileDocument as UpdateProfile };

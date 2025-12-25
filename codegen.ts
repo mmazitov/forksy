@@ -21,9 +21,9 @@ const config: CodegenConfig = {
 				},
 			},
 		},
-		// Generate operations types and hooks
-		'src/lib/graphql/types/operations.ts': {
-			plugins: ['typescript-operations', 'typescript-react-apollo'],
+		// Operation types and document nodes
+		'src/lib/graphql/types/types.ts': {
+			plugins: ['typescript-operations', 'typed-document-node'],
 			preset: 'import-types',
 			presetConfig: {
 				typesPath: './api',
@@ -33,6 +33,18 @@ const config: CodegenConfig = {
 				inlineFragmentTypes: 'combine',
 				preResolveTypes: true,
 				skipTypename: false,
+				useTypeImports: true,
+			},
+		},
+		// React Apollo hooks (separate file)
+		'src/lib/graphql/types/hooks.ts': {
+			plugins: ['typescript-react-apollo'],
+			preset: 'import-types',
+			presetConfig: {
+				typesPath: './types',
+			},
+			config: {
+				noNamespaces: true,
 				withHooks: true,
 				withHOC: false,
 				withComponent: false,
@@ -40,11 +52,19 @@ const config: CodegenConfig = {
 				// Apollo Client 4 specific settings
 				apolloClientVersion: 4,
 				addDocBlocks: false,
-				// Generate document nodes for operations
-				documentMode: 'documentNode',
-				gqlImport: '@apollo/client#gql',
-				// Apollo Client 4 uses /react subpath for hooks
+				documentMode: 'external',
+				importDocumentNodeExternallyFrom: './types',
+				// Match the document variable name suffix
+				documentVariableSuffix: 'Document',
+				// Apollo Client 4 uses /react subpath for hooks and types
 				apolloReactHooksImportFrom: '@apollo/client/react',
+				apolloReactCommonImportFrom: '@apollo/client/react',
+				// Skip result types that don't exist in Apollo 4
+				withResultType: false,
+				withMutationFn: false,
+				withMutationOptionsType: false,
+				// Skip Suspense hooks due to overload issues
+				withSuspenseQuery: false,
 			},
 		},
 	},
