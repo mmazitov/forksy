@@ -2,6 +2,7 @@ export { useAuth } from './useAuth';
 export { useFilter } from './useFilter';
 export { useFormList } from './useFormList';
 export { useMenuPlanner } from './useMenuPlanner';
+export { useProfile } from './useProfile';
 export { usePwaInstallPrompt } from './usePwaInstallPrompt';
 export { usePwaManagement } from './usePwaManagement';
 export { useSchedule } from './useSchedule';

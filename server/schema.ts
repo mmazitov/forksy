@@ -6,6 +6,10 @@ export const typeDefs = gql`
 		email: String
 		name: String
 		avatar: String
+		phone: String
+		diet: String
+		allergy: [String!]!
+		dislike: [String!]!
 		googleId: String
 		githubId: String
 		facebookId: String
@@ -25,7 +29,14 @@ export const typeDefs = gql`
 	type Mutation {
 		register(email: String!, password: String!, name: String): AuthPayload!
 		login(email: String!, password: String!): AuthPayload!
-		updateProfile(name: String, avatar: String): User!
+		updateProfile(
+			name: String
+			phone: String
+			avatar: String
+			diet: String
+			allergy: [String!]
+			dislike: [String!]
+		): User!
 	}
 
 	type SocialAuthPayload {

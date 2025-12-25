@@ -12,3 +12,4 @@ export {
 	generateProductSchema,
 	generateRecipeSchema,
 } from './schemaOrg';
+export { formatPhone, normalizePhone, phoneValidate } from './validate';

@@ -58,8 +58,12 @@ export type MutationRegisterArgs = {
 };
 
 export type MutationUpdateProfileArgs = {
+	allergy?: InputMaybe<Array<Scalars['String']['input']>>;
 	avatar?: InputMaybe<Scalars['String']['input']>;
+	diet?: InputMaybe<Scalars['String']['input']>;
+	dislike?: InputMaybe<Array<Scalars['String']['input']>>;
 	name?: InputMaybe<Scalars['String']['input']>;
+	phone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -75,13 +79,17 @@ export type SocialAuthPayload = {
 
 export type User = {
 	__typename?: 'User';
+	allergy: Array<Scalars['String']['output']>;
 	avatar: Maybe<Scalars['String']['output']>;
 	createdAt: Scalars['String']['output'];
+	diet: Maybe<Scalars['String']['output']>;
+	dislike: Array<Scalars['String']['output']>;
 	email: Maybe<Scalars['String']['output']>;
 	facebookId: Maybe<Scalars['String']['output']>;
 	githubId: Maybe<Scalars['String']['output']>;
 	googleId: Maybe<Scalars['String']['output']>;
 	id: Scalars['ID']['output'];
 	name: Maybe<Scalars['String']['output']>;
+	phone: Maybe<Scalars['String']['output']>;
 	updatedAt: Scalars['String']['output'];
 };

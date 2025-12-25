@@ -11,65 +11,21 @@ import {
 	PageTitle,
 	Textarea,
 } from '@/components';
-import { useToast } from '@/hooks/useToast';
+import { useProfile } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
-import { useMeQuery, useUpdateProfileMutation } from '@/lib/graphql';
-import { useState } from 'react';
+import { formatPhone } from '@/lib/utils';
 
 const Profile = () => {
-	const { data, refetch } = useMeQuery();
-	const [updateProfile, { loading: updating }] = useUpdateProfileMutation();
-	const { toast } = useToast();
-	const [isEditMode, setIsEditMode] = useState(false);
-	const [formData, setFormData] = useState({
-		name: '',
-		avatar: '',
-	});
-
-	const user = data?.me;
-
-	const handleEdit = () => {
-		setIsEditMode(true);
-		setFormData({
-			name: user?.name || '',
-			avatar: user?.avatar || '',
-		});
-	};
-
-	const handleCancel = () => {
-		setIsEditMode(false);
-		setFormData({
-			name: '',
-			avatar: '',
-		});
-	};
-
-	const handleSave = async () => {
-		try {
-			await updateProfile({
-				variables: {
-					name: formData.name || undefined,
-					avatar: formData.avatar || undefined,
-				},
-			});
-
-			await refetch();
-
-			toast({
-				title: 'Профіль оновлено',
-				description: 'Ваші зміни успішно збережені',
-			});
-
-			setIsEditMode(false);
-		} catch (error) {
-			console.error('Failed to update profile:', error);
-			toast({
-				title: 'Помилка',
-				description: 'Не вдалося оновити профіль',
-				variant: 'destructive',
-			});
-		}
-	};
+	const {
+		user,
+		formData,
+		isEditMode,
+		updating,
+		handleEdit,
+		handleCancel,
+		handleSave,
+		updateFormData,
+	} = useProfile();
 
 	return (
 		<main className="container mx-auto px-4 py-8">
@@ -103,9 +59,7 @@ const Profile = () => {
 									type="text"
 									placeholder="Ваше ім'я"
 									value={formData.name}
-									onChange={(e) =>
-										setFormData({ ...formData, name: e.target.value })
-									}
+									onChange={(e) => updateFormData('name', e.target.value)}
 								/>
 							) : (
 								<h3>{user?.name}</h3>
@@ -128,9 +82,15 @@ const Profile = () => {
 						<div className="space-y-2">
 							<Label htmlFor="phone">Телефон</Label>
 							{isEditMode ? (
-								<Input id="phone" type="tel" placeholder="+3 (___) ___-__-__" />
+								<Input
+									id="phone"
+									type="tel"
+									placeholder="+380 (XX) XXX-XX-XX"
+									value={formData.phone}
+									onChange={(e) => updateFormData('phone', e.target.value)}
+								/>
 							) : (
-								<h3>-</h3>
+								<h3>{user?.phone ? formatPhone(user.phone) : '-'}</h3>
 							)}
 						</div>
 					</CardContent>
@@ -144,17 +104,27 @@ const Profile = () => {
 						<div className="space-y-2">
 							<Label htmlFor="diet">Тип дієти:</Label>
 							{isEditMode ? (
-								<Input id="diet" placeholder="Вкажіть ваш тип дієти" />
+								<Input
+									id="diet"
+									placeholder="Вкажіть ваш тип дієти"
+									value={formData.diet}
+									onChange={(e) => updateFormData('diet', e.target.value)}
+								/>
 							) : (
-								<h3>-</h3>
+								<h3>{user?.diet || '-'}</h3>
 							)}
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="allergies">Алергії</Label>
 							{isEditMode ? (
-								<Input id="allergies" placeholder="Вкажіть продукти-алергени" />
+								<Input
+									id="allergies"
+									placeholder="Вкажіть продукти-алергени"
+									value={formData.allergy || ''}
+									onChange={(e) => updateFormData('allergy', e.target.value)}
+								/>
 							) : (
-								<h3>-</h3>
+								<h3>{user?.allergy?.length ? user.allergy.join(', ') : '-'}</h3>
 							)}
 						</div>
 						<div className="space-y-2">
@@ -164,9 +134,11 @@ const Profile = () => {
 									id="dislikes"
 									placeholder="Продукти, які вам не подобаються..."
 									rows={3}
+									value={formData.dislike || ''}
+									onChange={(e) => updateFormData('dislike', e.target.value)}
 								/>
 							) : (
-								<h3>-</h3>
+								<h3>{user?.dislike?.length ? user.dislike.join(', ') : '-'}</h3>
 							)}
 						</div>
 					</CardContent>

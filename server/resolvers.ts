@@ -65,8 +65,12 @@ export const resolvers = {
 			const updatedUser = await context.prisma.user.update({
 				where: { id: context.userId },
 				data: {
-					...(args.name && { name: args.name }),
-					...(args.avatar && { avatar: args.avatar }),
+					...(args.name !== undefined && { name: args.name }),
+					...(args.phone !== undefined && { phone: args.phone }),
+					...(args.avatar !== undefined && { avatar: args.avatar }),
+					...(args.diet !== undefined && { diet: args.diet }),
+					...(args.allergy !== undefined && { allergy: args.allergy }),
+					...(args.dislike !== undefined && { dislike: args.dislike }),
 				},
 			});
 

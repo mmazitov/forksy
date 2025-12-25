@@ -17,7 +17,7 @@ passport.use(
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			try {
-				let user = await prisma.user.findUnique({
+				let user = await prisma.user.findFirst({
 					where: { googleId: profile.id },
 				});
 
@@ -27,7 +27,9 @@ passport.use(
 							googleId: profile.id,
 							email: profile.emails?.[0]?.value,
 							name: profile.displayName,
-							avatar: profile.photos?.[0]?.value,
+							...(profile.photos?.[0]?.value && {
+								avatar: profile.photos[0].value,
+							}),
 						},
 					});
 				}

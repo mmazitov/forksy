@@ -49,6 +49,10 @@ export type MeQuery = {
 		email?: string | null;
 		name?: string | null;
 		avatar?: string | null;
+		phone?: string | null;
+		diet?: string | null;
+		allergy: Array<string>;
+		dislike: Array<string>;
 		createdAt: string;
 		updatedAt: string;
 	} | null;
@@ -56,7 +60,15 @@ export type MeQuery = {
 
 export type UpdateProfileMutationVariables = Exact<{
 	name?: InputMaybe<Scalars['String']['input']>;
+	phone?: InputMaybe<Scalars['String']['input']>;
 	avatar?: InputMaybe<Scalars['String']['input']>;
+	diet?: InputMaybe<Scalars['String']['input']>;
+	allergy?: InputMaybe<
+		Array<Scalars['String']['input']> | Scalars['String']['input']
+	>;
+	dislike?: InputMaybe<
+		Array<Scalars['String']['input']> | Scalars['String']['input']
+	>;
 }>;
 
 export type UpdateProfileMutation = {
@@ -67,6 +79,10 @@ export type UpdateProfileMutation = {
 		email?: string | null;
 		name?: string | null;
 		avatar?: string | null;
+		phone?: string | null;
+		diet?: string | null;
+		allergy: Array<string>;
+		dislike: Array<string>;
 		createdAt: string;
 		updatedAt: string;
 	};
