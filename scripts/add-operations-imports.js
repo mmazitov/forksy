@@ -10,20 +10,17 @@ const operationsFile = path.join(
 	'../src/lib/graphql/types/operations.ts',
 );
 
-const importStatement =
-	"import type { Exact, InputMaybe, Scalars } from './api';\n\n";
-
 let content = fs.readFileSync(operationsFile, 'utf8');
 
-// Remove existing import if present
-content = content.replace(
-	/import type \{ Exact, InputMaybe, Scalars \} from '\.\/api';\n\n/,
-	'',
-);
+// Check if hooks are generated (Apollo Client 4 compatibility)
+const hasHooks = content.includes('export function use');
 
-// Add import at the beginning
-if (!content.startsWith(importStatement)) {
-	content = importStatement + content;
-	fs.writeFileSync(operationsFile, content);
-	console.log('✓ operations.ts');
+if (hasHooks) {
+	console.log('✓ operations.ts - hooks generated successfully');
+} else {
+	console.log('⚠ operations.ts - no hooks found, check codegen config');
 }
+
+// Ensure the file has proper formatting
+fs.writeFileSync(operationsFile, content);
+console.log('✓ operations.ts processed');

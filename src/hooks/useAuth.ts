@@ -1,5 +1,5 @@
 import { client } from '@/lib/apollo';
-import { useMeQuery } from '@/lib/graphql/profile';
+import { useMeQuery } from '@/lib/graphql';
 import {
 	AuthContext,
 	type AuthContextType,

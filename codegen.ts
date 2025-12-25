@@ -21,15 +21,30 @@ const config: CodegenConfig = {
 				},
 			},
 		},
-		// All operation types in one file (cleaner for v4)
+		// Generate operations types and hooks
 		'src/lib/graphql/types/operations.ts': {
-			documents: 'src/**/*.gql',
-			plugins: ['typescript-operations'],
+			plugins: ['typescript-operations', 'typescript-react-apollo'],
+			preset: 'import-types',
+			presetConfig: {
+				typesPath: './api',
+			},
 			config: {
 				noNamespaces: true,
-				onlyOperationTypes: true,
 				inlineFragmentTypes: 'combine',
 				preResolveTypes: true,
+				skipTypename: false,
+				withHooks: true,
+				withHOC: false,
+				withComponent: false,
+				useTypeImports: true,
+				// Apollo Client 4 specific settings
+				apolloClientVersion: 4,
+				addDocBlocks: false,
+				// Generate document nodes for operations
+				documentMode: 'documentNode',
+				gqlImport: '@apollo/client#gql',
+				// Apollo Client 4 uses /react subpath for hooks
+				apolloReactHooksImportFrom: '@apollo/client/react',
 			},
 		},
 	},
