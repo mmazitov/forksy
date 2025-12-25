@@ -1,1 +1,3 @@
-export * from './types/hooks';
+// Re-export hooks from generated files
+export * from './auth';
+export * from './profile';

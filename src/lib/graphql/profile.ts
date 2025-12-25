@@ -1,45 +1,8 @@
-import type * as Types from './api';
+import type * as Types from '@/types/api';
 
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
-export type RegisterMutationVariables = Types.Exact<{
-	email: Types.Scalars['String']['input'];
-	password: Types.Scalars['String']['input'];
-	name: Types.Scalars['String']['input'];
-}>;
-
-export type RegisterMutation = {
-	__typename?: 'Mutation';
-	register: {
-		__typename?: 'AuthPayload';
-		token: string;
-		user: {
-			__typename?: 'User';
-			id: string;
-			email?: string | null;
-			name?: string | null;
-		};
-	};
-};
-
-export type LoginMutationVariables = Types.Exact<{
-	email: Types.Scalars['String']['input'];
-	password: Types.Scalars['String']['input'];
-}>;
-
-export type LoginMutation = {
-	__typename?: 'Mutation';
-	login: {
-		__typename?: 'AuthPayload';
-		token: string;
-		user: {
-			__typename?: 'User';
-			id: string;
-			email?: string | null;
-			name?: string | null;
-		};
-	};
-};
-
+import type { DocumentNode } from 'graphql';
+import * as ApolloReactHooks from '@apollo/client/react';
+const defaultOptions = {} as const;
 export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
@@ -89,198 +52,6 @@ export type UpdateProfileMutation = {
 	};
 };
 
-export const RegisterDocument = {
-	kind: 'Document',
-	definitions: [
-		{
-			kind: 'OperationDefinition',
-			operation: 'mutation',
-			name: { kind: 'Name', value: 'Register' },
-			variableDefinitions: [
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'email' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'password' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-				{
-					kind: 'VariableDefinition',
-					variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-			],
-			selectionSet: {
-				kind: 'SelectionSet',
-				selections: [
-					{
-						kind: 'Field',
-						name: { kind: 'Name', value: 'register' },
-						arguments: [
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'email' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'email' },
-								},
-							},
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'password' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'password' },
-								},
-							},
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'name' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'name' },
-								},
-							},
-						],
-						selectionSet: {
-							kind: 'SelectionSet',
-							selections: [
-								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'user' },
-									selectionSet: {
-										kind: 'SelectionSet',
-										selections: [
-											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
-										],
-									},
-								},
-							],
-						},
-					},
-				],
-			},
-		},
-	],
-} as unknown as DocumentNode<
-	Types.RegisterMutation,
-	Types.RegisterMutationVariables
->;
-export const LoginDocument = {
-	kind: 'Document',
-	definitions: [
-		{
-			kind: 'OperationDefinition',
-			operation: 'mutation',
-			name: { kind: 'Name', value: 'Login' },
-			variableDefinitions: [
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'email' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'password' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-			],
-			selectionSet: {
-				kind: 'SelectionSet',
-				selections: [
-					{
-						kind: 'Field',
-						name: { kind: 'Name', value: 'login' },
-						arguments: [
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'email' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'email' },
-								},
-							},
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'password' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'password' },
-								},
-							},
-						],
-						selectionSet: {
-							kind: 'SelectionSet',
-							selections: [
-								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'user' },
-									selectionSet: {
-										kind: 'SelectionSet',
-										selections: [
-											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
-										],
-									},
-								},
-							],
-						},
-					},
-				],
-			},
-		},
-	],
-} as unknown as DocumentNode<Types.LoginMutation, Types.LoginMutationVariables>;
 export const MeDocument = {
 	kind: 'Document',
 	definitions: [
@@ -314,7 +85,46 @@ export const MeDocument = {
 			},
 		},
 	],
-} as unknown as DocumentNode<Types.MeQuery, Types.MeQueryVariables>;
+} as unknown as DocumentNode;
+export function useMeQuery(
+	baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(
+		MeDocument,
+		options,
+	);
+}
+export function useMeLazyQuery(
+	baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+		MeQuery,
+		MeQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(
+		MeDocument,
+		options,
+	);
+}
+
+export function useMeSuspenseQuery(
+	baseOptions?:
+		| ApolloReactHooks.SkipToken
+		| ApolloReactHooks.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>,
+) {
+	const options =
+		baseOptions === ApolloReactHooks.skipToken
+			? baseOptions
+			: { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useSuspenseQuery<MeQuery, MeQueryVariables>(
+		MeDocument,
+		options,
+	);
+}
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
+export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export const UpdateProfileDocument = {
 	kind: 'Document',
 	definitions: [
@@ -460,13 +270,19 @@ export const UpdateProfileDocument = {
 			},
 		},
 	],
-} as unknown as DocumentNode<
-	Types.UpdateProfileMutation,
-	Types.UpdateProfileMutationVariables
+} as unknown as DocumentNode;
+export function useUpdateProfileMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		UpdateProfileMutation,
+		UpdateProfileMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		UpdateProfileMutation,
+		UpdateProfileMutationVariables
+	>(UpdateProfileDocument, options);
+}
+export type UpdateProfileMutationHookResult = ReturnType<
+	typeof useUpdateProfileMutation
 >;
-
-// Document aliases for hooks
-export { RegisterDocument as Register };
-export { LoginDocument as Login };
-export { MeDocument as Me };
-export { UpdateProfileDocument as UpdateProfile };
