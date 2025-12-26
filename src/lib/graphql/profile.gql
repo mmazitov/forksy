@@ -12,6 +12,7 @@ query Me {
 		updatedAt
 	}
 }
+
 mutation UpdateProfile(
 	$name: String
 	$phone: String

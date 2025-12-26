@@ -35,10 +35,28 @@ export type AuthPayload = {
 
 export type Mutation = {
 	__typename?: 'Mutation';
+	createProduct: Product;
+	deleteProduct: Product;
 	handleOAuthCallback: SocialAuthPayload;
 	login: AuthPayload;
 	register: AuthPayload;
+	updateProduct: Product;
 	updateProfile: User;
+};
+
+export type MutationCreateProductArgs = {
+	calories?: InputMaybe<Scalars['Int']['input']>;
+	carbs?: InputMaybe<Scalars['Float']['input']>;
+	category?: InputMaybe<Scalars['String']['input']>;
+	description?: InputMaybe<Scalars['String']['input']>;
+	fat?: InputMaybe<Scalars['Float']['input']>;
+	imageUrl?: InputMaybe<Scalars['String']['input']>;
+	name: Scalars['String']['input'];
+	protein?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationDeleteProductArgs = {
+	id: Scalars['ID']['input'];
 };
 
 export type MutationHandleOAuthCallbackArgs = {
@@ -57,6 +75,18 @@ export type MutationRegisterArgs = {
 	password: Scalars['String']['input'];
 };
 
+export type MutationUpdateProductArgs = {
+	calories?: InputMaybe<Scalars['Int']['input']>;
+	carbs?: InputMaybe<Scalars['Float']['input']>;
+	category?: InputMaybe<Scalars['String']['input']>;
+	description?: InputMaybe<Scalars['String']['input']>;
+	fat?: InputMaybe<Scalars['Float']['input']>;
+	id: Scalars['ID']['input'];
+	imageUrl?: InputMaybe<Scalars['String']['input']>;
+	name?: InputMaybe<Scalars['String']['input']>;
+	protein?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type MutationUpdateProfileArgs = {
 	allergy?: InputMaybe<Array<Scalars['String']['input']>>;
 	avatar?: InputMaybe<Scalars['String']['input']>;
@@ -66,9 +96,38 @@ export type MutationUpdateProfileArgs = {
 	phone?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Product = {
+	__typename?: 'Product';
+	calories: Maybe<Scalars['Int']['output']>;
+	carbs: Maybe<Scalars['Float']['output']>;
+	category: Maybe<Scalars['String']['output']>;
+	createdAt: Scalars['String']['output'];
+	description: Maybe<Scalars['String']['output']>;
+	fat: Maybe<Scalars['Float']['output']>;
+	id: Scalars['ID']['output'];
+	imageUrl: Maybe<Scalars['String']['output']>;
+	name: Scalars['String']['output'];
+	protein: Maybe<Scalars['Float']['output']>;
+	updatedAt: Scalars['String']['output'];
+	userId: Scalars['ID']['output'];
+};
+
 export type Query = {
 	__typename?: 'Query';
 	me: Maybe<User>;
+	product: Maybe<Product>;
+	products: Array<Product>;
+};
+
+export type QueryProductArgs = {
+	id: Scalars['ID']['input'];
+};
+
+export type QueryProductsArgs = {
+	category?: InputMaybe<Scalars['String']['input']>;
+	limit?: InputMaybe<Scalars['Int']['input']>;
+	offset?: InputMaybe<Scalars['Int']['input']>;
+	search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SocialAuthPayload = {

@@ -1,6 +1,7 @@
 import type * as Types from '@/types/api';
 
 import type { DocumentNode } from 'graphql';
+import type * as ApolloReactCommon from '@apollo/client/react';
 import * as ApolloReactHooks from '@apollo/client/react';
 const defaultOptions = {} as const;
 export type RegisterMutationVariables = Types.Exact<{

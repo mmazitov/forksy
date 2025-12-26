@@ -17,6 +17,21 @@ export const typeDefs = gql`
 		updatedAt: String!
 	}
 
+	type Product {
+		id: ID!
+		name: String!
+		category: String
+		imageUrl: String
+		calories: Int
+		fat: Float
+		carbs: Float
+		protein: Float
+		description: String
+		createdAt: String!
+		updatedAt: String!
+		userId: ID!
+	}
+
 	type AuthPayload {
 		token: String!
 		user: User!
@@ -24,6 +39,13 @@ export const typeDefs = gql`
 
 	type Query {
 		me: User
+		product(id: ID!): Product
+		products(
+			category: String
+			search: String
+			limit: Int
+			offset: Int
+		): [Product!]!
 	}
 
 	type Mutation {
@@ -37,6 +59,28 @@ export const typeDefs = gql`
 			allergy: [String!]
 			dislike: [String!]
 		): User!
+		createProduct(
+			name: String!
+			category: String
+			imageUrl: String
+			calories: Int
+			fat: Float
+			carbs: Float
+			protein: Float
+			description: String
+		): Product!
+		updateProduct(
+			id: ID!
+			name: String
+			category: String
+			imageUrl: String
+			calories: Int
+			fat: Float
+			carbs: Float
+			protein: Float
+			description: String
+		): Product!
+		deleteProduct(id: ID!): Product!
 	}
 
 	type SocialAuthPayload {
