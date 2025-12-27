@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import fs from 'fs';
-import { glob } from 'glob';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,12 +14,24 @@ if (fs.existsSync(apiFile)) {
 	console.log('⚠ types/api.ts not found');
 }
 
-// Find all generated .ts files next to .gql files
-const gqlFiles = glob.sync('src/**/*.gql', { cwd: path.join(__dirname, '..') });
+// Recursively find all .gql files
+function findGqlFiles(dir, fileList = []) {
+	const files = fs.readdirSync(dir);
+	files.forEach((file) => {
+		const filePath = path.join(dir, file);
+		if (fs.statSync(filePath).isDirectory()) {
+			findGqlFiles(filePath, fileList);
+		} else if (file.endsWith('.gql')) {
+			fileList.push(filePath);
+		}
+	});
+	return fileList;
+}
 
-gqlFiles.forEach((gqlFile) => {
-	const tsFile = gqlFile.replace('.gql', '.ts');
-	const tsPath = path.join(__dirname, '..', tsFile);
+const gqlFiles = findGqlFiles(path.join(__dirname, '../src'));
+
+gqlFiles.forEach((gqlPath) => {
+	const tsPath = gqlPath.replace('.gql', '.gen.ts');
 
 	if (fs.existsSync(tsPath)) {
 		let content = fs.readFileSync(tsPath, 'utf8');
@@ -61,6 +72,9 @@ gqlFiles.forEach((gqlFile) => {
 			fs.writeFileSync(tsPath, content);
 		}
 
-		console.log(`✓ ${tsFile} generated`);
+		const relativePath = path.relative(path.join(__dirname, '..'), tsPath);
+		console.log(`✓ ${relativePath} generated`);
 	}
 });
+
+console.log('✓ GraphQL generation completed');
