@@ -1,7 +1,6 @@
 import type * as Types from '@/types/api';
 
 import type { DocumentNode } from 'graphql';
-import type * as ApolloReactCommon from '@apollo/client/react';
 import * as ApolloReactHooks from '@apollo/client/react';
 const defaultOptions = {} as const;
 export type ProductFieldsFragment = {
@@ -209,23 +208,6 @@ export function useProductLazyQuery(
 	);
 }
 export function useProductSuspenseQuery(
-	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
-		ProductQuery,
-		ProductQueryVariables
-	>,
-): ApolloReactHooks.UseSuspenseQueryResult<ProductQuery, ProductQueryVariables>;
-export function useProductSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<
-				ProductQuery,
-				ProductQueryVariables
-		  >,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	ProductQuery | undefined,
-	ProductQueryVariables
->;
-export function useProductSuspenseQuery(
 	baseOptions?:
 		| ApolloReactHooks.SkipToken
 		| ApolloReactHooks.SuspenseQueryHookOptions<
@@ -391,26 +373,6 @@ export function useProductsLazyQuery(
 		options,
 	);
 }
-export function useProductsSuspenseQuery(
-	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
-		ProductsQuery,
-		ProductsQueryVariables
-	>,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	ProductsQuery,
-	ProductsQueryVariables
->;
-export function useProductsSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<
-				ProductsQuery,
-				ProductsQueryVariables
-		  >,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	ProductsQuery | undefined,
-	ProductsQueryVariables
->;
 export function useProductsSuspenseQuery(
 	baseOptions?:
 		| ApolloReactHooks.SkipToken

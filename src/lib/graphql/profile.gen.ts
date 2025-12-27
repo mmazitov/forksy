@@ -1,7 +1,6 @@
 import type * as Types from '@/types/api';
 
 import type { DocumentNode } from 'graphql';
-import type * as ApolloReactCommon from '@apollo/client/react';
 import * as ApolloReactHooks from '@apollo/client/react';
 const defaultOptions = {} as const;
 export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
@@ -108,20 +107,6 @@ export function useMeLazyQuery(
 		options,
 	);
 }
-export function useMeSuspenseQuery(
-	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
-		MeQuery,
-		MeQueryVariables
-	>,
-): ApolloReactHooks.UseSuspenseQueryResult<MeQuery, MeQueryVariables>;
-export function useMeSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	MeQuery | undefined,
-	MeQueryVariables
->;
 export function useMeSuspenseQuery(
 	baseOptions?:
 		| ApolloReactHooks.SkipToken
