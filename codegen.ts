@@ -2,7 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
 	overwrite: true,
-	schema: process.env.VERCEL ? 'server/schema.graphql' : 'server/schema.ts',
+	schema: 'server/schema.graphql',
 	documents: ['src/**/*.gql'],
 	hooks: {
 		afterOneFileWrite: ['prettier --write'],
