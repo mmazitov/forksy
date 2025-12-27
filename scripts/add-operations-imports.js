@@ -26,11 +26,20 @@ gqlFiles.forEach((gqlFile) => {
 		let content = fs.readFileSync(tsPath, 'utf8');
 		let modified = false;
 
-		// Remove @ts-ignore and problematic Suspense overloads
-		const suspensePattern =
-			/\/\/ @ts-ignore\nexport function use\w+SuspenseQuery\([^)]*\)[^;]+;\nexport function use\w+SuspenseQuery\([^)]*\)[^;]+;/g;
-		if (suspensePattern.test(content)) {
-			content = content.replace(suspensePattern, '');
+		// Remove problematic Suspense overload signatures (keep only implementation)
+		// Pattern 1: @ts-ignore followed by overloads
+		const suspensePattern1 =
+			/\/\/ @ts-ignore\s*\nexport function use\w+SuspenseQuery\([^)]*\)[^{;]*;[\s\S]*?(?=export function use\w+SuspenseQuery\([^)]*\)\s*{)/g;
+		if (suspensePattern1.test(content)) {
+			content = content.replace(suspensePattern1, '');
+			modified = true;
+		}
+
+		// Pattern 2: Multiple overload signatures before implementation
+		const suspensePattern2 =
+			/(export function use(\w+)SuspenseQuery\([^)]*\)[^{;]*;\s*){2,}(?=export function use\2SuspenseQuery\([^)]*\)\s*{)/g;
+		if (suspensePattern2.test(content)) {
+			content = content.replace(suspensePattern2, '');
 			modified = true;
 		}
 
