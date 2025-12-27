@@ -207,28 +207,9 @@ export function useProductLazyQuery(
 		options,
 	);
 }
-export function useProductSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<
-				ProductQuery,
-				ProductQueryVariables
-		  >,
-) {
-	const options =
-		baseOptions === ApolloReactHooks.skipToken
-			? baseOptions
-			: { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useSuspenseQuery<ProductQuery, ProductQueryVariables>(
-		ProductDocument,
-		options,
-	);
-}
+// @ts-ignore
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
-export type ProductSuspenseQueryHookResult = ReturnType<
-	typeof useProductSuspenseQuery
->;
 export const ProductsDocument = {
 	kind: 'Document',
 	definitions: [
@@ -373,29 +354,10 @@ export function useProductsLazyQuery(
 		options,
 	);
 }
-export function useProductsSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<
-				ProductsQuery,
-				ProductsQueryVariables
-		  >,
-) {
-	const options =
-		baseOptions === ApolloReactHooks.skipToken
-			? baseOptions
-			: { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useSuspenseQuery<
-		ProductsQuery,
-		ProductsQueryVariables
-	>(ProductsDocument, options);
-}
+// @ts-ignore
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<
 	typeof useProductsLazyQuery
->;
-export type ProductsSuspenseQueryHookResult = ReturnType<
-	typeof useProductsSuspenseQuery
 >;
 export const CreateProductDocument = {
 	kind: 'Document',

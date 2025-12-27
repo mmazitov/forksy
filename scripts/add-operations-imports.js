@@ -37,24 +37,24 @@ gqlFiles.forEach((gqlPath) => {
 		let content = fs.readFileSync(tsPath, 'utf8');
 		let modified = false;
 
-		// Remove problematic Suspense overload signatures (keep only implementation)
-		// Pattern 1: @ts-ignore followed by overloads
-		const suspensePattern1 =
-			/\/\/ @ts-ignore\s*\nexport function use\w+SuspenseQuery\([^)]*\)[^{;]*;[\s\S]*?(?=export function use\w+SuspenseQuery\([^)]*\)\s*{)/g;
-		if (suspensePattern1.test(content)) {
-			content = content.replace(suspensePattern1, '');
+		// Remove all Suspense-related code
+		// 1. Remove Suspense query functions
+		const suspenseFunctionPattern =
+			/export function use\w+SuspenseQuery\([^)]*\)[^{]*\{[\s\S]*?\n\}\n/g;
+		if (suspenseFunctionPattern.test(content)) {
+			content = content.replace(suspenseFunctionPattern, '');
 			modified = true;
 		}
 
-		// Pattern 2: Multiple overload signatures before implementation
-		const suspensePattern2 =
-			/(export function use(\w+)SuspenseQuery\([^)]*\)[^{;]*;\s*){2,}(?=export function use\2SuspenseQuery\([^)]*\)\s*{)/g;
-		if (suspensePattern2.test(content)) {
-			content = content.replace(suspensePattern2, '');
+		// 2. Remove Suspense type exports
+		const suspenseTypePattern =
+			/export type \w+SuspenseQueryHookResult = ReturnType<[\s\S]*?typeof use\w+SuspenseQuery[\s\S]*?>;\n/g;
+		if (suspenseTypePattern.test(content)) {
+			content = content.replace(suspenseTypePattern, '');
 			modified = true;
 		}
 
-		// Remove unused ApolloReactCommon import
+		// 3. Remove unused ApolloReactCommon import
 		if (
 			!content.includes('ApolloReactCommon.') &&
 			content.includes(
