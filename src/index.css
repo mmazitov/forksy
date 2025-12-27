@@ -48,6 +48,22 @@
 	--color-sidebar-border: hsl(220 13% 91%);
 	--color-sidebar-ring: hsl(217.2 91.2% 59.8%);
 
+	/* badge colors */
+	--badge-meat: hsl(0 65% 60%);
+	--badge-meat-foreground: hsl(0 0% 100%);
+	--badge-vegetables: hsl(140 55% 45%);
+	--badge-vegetables-foreground: hsl(0 0% 100%);
+	--badge-fruits: hsl(25 85% 60%);
+	--badge-fruits-foreground: hsl(0 0% 100%);
+	--badge-dairy: hsl(210 30% 92%);
+	--badge-dairy-foreground: hsl(220 15% 25%);
+	--badge-grains: hsl(45 70% 70%);
+	--badge-grains-foreground: hsl(220 15% 25%);
+	--badge-drinks: hsl(200 70% 55%);
+	--badge-drinks-foreground: hsl(0 0% 100%);
+	--badge-other: hsl(220 10% 70%);
+	--badge-other-foreground: hsl(0 0% 100%);
+
 	/* Анимации */
 	--animate-accordion-down: accordion-down 0.2s ease-out;
 	--animate-accordion-up: accordion-up 0.2s ease-out;
@@ -93,6 +109,21 @@
 	--color-sidebar-accent-foreground: hsl(240 4.8% 95.9%);
 	--color-sidebar-border: hsl(240 3.7% 15.9%);
 	--color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+	--badge-meat: hsl(0 55% 45%);
+	--badge-meat-fg: hsl(0 0% 100%);
+	--badge-vegetables: hsl(140 45% 40%);
+	--badge-vegetables-fg: hsl(0 0% 100%);
+	--badge-fruits: hsl(25 75% 55%);
+	--badge-fruits-fg: hsl(0 0% 100%);
+	--badge-dairy: hsl(0 0% 100%);
+	--badge-dairy-fg: hsl(210 40% 95%);
+	--badge-grains: hsl(45 60% 55%);
+	--badge-grains-fg: hsl(220 15% 15%);
+	--badge-drinks: hsl(200 65% 45%);
+	--badge-drinks-fg: hsl(0 0% 100%);
+	--badge-other: hsl(220 10% 35%);
+	--badge-other-fg: hsl(210 40% 95%);
 }
 
 /* Кастомные CSS переменные */

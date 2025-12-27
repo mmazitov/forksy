@@ -1,0 +1,47 @@
+import { Input, Label, Textarea } from '@/components';
+import type { ComponentProps } from 'react';
+import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+
+interface FormItemProps {
+	itemType?: string;
+	type?: string;
+	id?: string;
+	label?: string;
+	step?: number;
+	error?: FieldError;
+	registration?: UseFormRegisterReturn;
+	inputProps?: Omit<ComponentProps<typeof Input>, 'id'>;
+	textareaProps?: Omit<ComponentProps<typeof Textarea>, 'id'>;
+}
+
+const FormItem = ({
+	itemType = 'input',
+	type = 'text',
+	id,
+	label,
+	step,
+	error,
+	registration,
+	inputProps,
+	textareaProps,
+}: FormItemProps) => {
+	return (
+		<div className="space-y-2">
+			<Label htmlFor={id}>{label}</Label>
+			{itemType === 'textarea' ? (
+				<Textarea id={id} {...registration} {...textareaProps} />
+			) : (
+				<Input
+					id={id}
+					{...registration}
+					{...inputProps}
+					type={type}
+					step={step}
+				/>
+			)}
+			{error && <p className="text-sm text-destructive">{error.message}</p>}
+		</div>
+	);
+};
+
+export default FormItem;

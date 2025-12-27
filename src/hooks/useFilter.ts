@@ -1,40 +1,40 @@
 import { useMemo, useState } from 'react';
 
-export interface FilterableItem {
-	id: string;
-	name: string;
-	category: string;
-	[key: string]: unknown;
+interface FilterableItem {
+	[key: string]: string | number | null | undefined;
 }
 
 interface UseFilterOptions {
-	searchField?: string;
-	categoryField?: string;
-	defaultCategory?: string;
+	searchField: string;
+	categoryField: string;
+	defaultCategory: string;
 }
 
 export const useFilter = <T extends FilterableItem>(
-	items: Array<T>,
-	options: UseFilterOptions = {},
+	items: T[],
+	options: UseFilterOptions,
 ) => {
-	const {
-		searchField = 'name',
-		categoryField = 'category',
-		defaultCategory = 'Усі',
-	} = options;
+	const { searchField, categoryField, defaultCategory } = options;
 
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
 
-	// Memoize filtered items for performance
 	const filteredItems = useMemo(() => {
 		return items.filter((item) => {
-			const matchesSearch = (item[searchField] as string)
-				.toLowerCase()
-				.includes(searchQuery.toLowerCase());
+			const searchValue = item[searchField];
+			const categoryValue = item[categoryField];
+
+			const matchesSearch = searchQuery
+				? String(searchValue ?? '')
+						.toLowerCase()
+						.includes(searchQuery.toLowerCase())
+				: true;
+
 			const matchesCategory =
-				selectedCategory === defaultCategory ||
-				(item[categoryField] as string) === selectedCategory;
+				selectedCategory === defaultCategory
+					? true
+					: categoryValue === selectedCategory;
+
 			return matchesSearch && matchesCategory;
 		});
 	}, [

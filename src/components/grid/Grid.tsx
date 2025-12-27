@@ -15,14 +15,12 @@ const Grid = ({
 }: GridProps) => {
 	return (
 		<>
-			{/* Grid */}
-			<div className="grid items-stretch grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+			<div className="grid items-stretch grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
 				{items.map((item) => (
 					<div key={item.id}>{renderItem(item)}</div>
 				))}
 			</div>
 
-			{/* Empty State */}
 			{showEmpty && items.length === 0 && (
 				<div className="py-12 text-center">
 					<p className="text-muted-foreground">{emptyMessage}</p>
