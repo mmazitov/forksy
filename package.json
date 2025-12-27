@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"start": "vite --port 5173",
-		"build": "tsc -b && vite build",
+		"build": "yarn generate && tsc -b && vite build",
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"preview": "vite preview",
 		"kill:ports": "lsof -ti:3000,4000,5173,5174,5175 | xargs kill -9 2>/dev/null || true",

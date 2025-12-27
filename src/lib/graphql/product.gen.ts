@@ -208,7 +208,6 @@ export function useProductLazyQuery(
 		options,
 	);
 }
-// @ts-ignore
 export function useProductSuspenseQuery(
 	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
 		ProductQuery,
@@ -392,7 +391,6 @@ export function useProductsLazyQuery(
 		options,
 	);
 }
-// @ts-ignore
 export function useProductsSuspenseQuery(
 	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
 		ProductsQuery,

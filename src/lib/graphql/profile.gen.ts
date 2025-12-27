@@ -108,7 +108,6 @@ export function useMeLazyQuery(
 		options,
 	);
 }
-// @ts-ignore
 export function useMeSuspenseQuery(
 	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
 		MeQuery,
