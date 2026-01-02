@@ -5,6 +5,7 @@ query Me {
 		name
 		avatar
 		phone
+		role
 		diet
 		allergy
 		dislike

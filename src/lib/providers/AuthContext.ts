@@ -5,6 +5,7 @@ export interface User {
 	email?: string | null;
 	name?: string | null;
 	avatar?: string | null;
+	role?: string | null;
 	createdAt?: string;
 	updatedAt?: string;
 }
@@ -16,6 +17,7 @@ export interface AuthContextType {
 	logout: () => void;
 	isLoading: boolean;
 	isAuthenticated: boolean;
+	isAdmin: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(

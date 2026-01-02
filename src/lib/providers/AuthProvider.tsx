@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 				logout: authState.logout,
 				isLoading: authState.isLoading,
 				isAuthenticated: authState.isAuthenticated,
+				isAdmin: authState.isAdmin,
 			}}
 		>
 			{children}

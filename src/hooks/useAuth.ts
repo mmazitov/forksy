@@ -124,6 +124,7 @@ export const useAuth = (): UseAuthReturn => {
 	}, [token, refetch, shouldRefetch]);
 
 	const isAuthenticated = !!token && !!user;
+	const isAdmin = user?.role === 'admin';
 
 	const isLoggedIn = !!user;
 	const userName = user?.name || user?.email?.split('@')[0] || '';
@@ -140,6 +141,7 @@ export const useAuth = (): UseAuthReturn => {
 			logout,
 			isLoading,
 			isAuthenticated,
+			isAdmin,
 			isLoggedIn,
 			userName,
 			handleLogout,
@@ -151,6 +153,7 @@ export const useAuth = (): UseAuthReturn => {
 			logout,
 			isLoading,
 			isAuthenticated,
+			isAdmin,
 			isLoggedIn,
 			userName,
 			handleLogout,
