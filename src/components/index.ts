@@ -1,13 +1,15 @@
 export { BackButton } from './backButton';
-export { CardDish, CardProduct } from './card';
+export { CardDish, CardProductCompact, CardProductFull } from './card';
 export { Filter } from './filter';
 export { AddDishForm, AddProductForm, AuthForm } from './form';
 export { Grid } from './grid';
 export { Header } from './header';
+export { Loader } from './loader';
 export { Logo } from './logo';
 export { MetaData } from './metaData';
 export { AddDishModal, AuthModal, Modal } from './modal';
 export { MenuButton, NavigationDesktop, NavigationMobile } from './navigation';
+export { NutritionCard, NutritionCompact } from './nutrition';
 export { PageTitle } from './pageTitle';
 export { PwaManagement } from './pwaManagement';
 export { ScheduleMonth, ScheduleNavigation, ScheduleWeek } from './schedule';

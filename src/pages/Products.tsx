@@ -1,7 +1,11 @@
+import { useEffect, useMemo, useState } from 'react';
+import { LuPlus } from 'react-icons/lu';
+
 import {
-	CardProduct,
+	CardProductCompact,
 	Filter,
 	Grid,
+	Loader,
 	MetaData,
 	PageTitle,
 	Pagination,
@@ -11,8 +15,6 @@ import { CATEGORIES_PRODUCTS } from '@/constants';
 import { useFilter } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
 import { useProductsQuery } from '@/lib/graphql';
-import { useEffect, useMemo, useState } from 'react';
-import { LuPlus } from 'react-icons/lu';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -53,13 +55,13 @@ const Products = () => {
 	};
 
 	if (loading) {
-		return <div className="container px-4 py-8 mx-auto">Завантаження...</div>;
+		return <Loader />;
 	}
 
 	if (error) {
 		return (
-			<div className="container px-4 py-8 mx-auto">
-				<div className="p-4 text-red-600 bg-red-50 rounded-lg">
+			<div className="container mx-auto px-4 py-8">
+				<div className="rounded-lg bg-red-50 p-4 text-red-600">
 					Помилка завантаження продуктів: {error.message}
 				</div>
 			</div>
@@ -67,7 +69,7 @@ const Products = () => {
 	}
 
 	return (
-		<div className="container px-4 py-8 mx-auto">
+		<div className="container mx-auto px-4 py-8">
 			<MetaData
 				title="Продукти"
 				description={METADATA_CONFIG.descriptions.products}
@@ -99,7 +101,7 @@ const Products = () => {
 
 			<Grid
 				items={paginatedItems}
-				renderItem={(product) => <CardProduct {...product} />}
+				renderItem={(product) => <CardProductCompact {...product} />}
 				emptyMessage="Продукти не знайдено"
 				showEmpty={true}
 			/>
