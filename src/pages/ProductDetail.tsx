@@ -1,3 +1,7 @@
+import { ArrowLeft } from 'lucide-react';
+import { LuFlame } from 'react-icons/lu';
+import { Link, useParams } from 'react-router-dom';
+
 import {
 	Badge,
 	Button,
@@ -7,12 +11,11 @@ import {
 	CardTitle,
 	MetaData,
 } from '@/components';
+import { useAuth } from '@/hooks/useAuth';
 import { useProductQuery } from '@/lib/graphql';
-import { ArrowLeft } from 'lucide-react';
-import { LuFlame } from 'react-icons/lu';
-import { Link, useParams } from 'react-router-dom';
 
 const ProductDetail = () => {
+	const { isAdmin } = useAuth();
 	const { id } = useParams<{ id: string }>();
 	const { data, loading, error } = useProductQuery({
 		variables: { id: id! },
@@ -60,9 +63,22 @@ const ProductDetail = () => {
 				</Button>
 			</Link>
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
+				{isAdmin && (
+					<div className="absolute top-0 right-0">
+						<Link to={`/products/edit/${product.id}`}>
+							<Button variant="outline" size="sm">
+								Редагувати продукт
+							</Button>
+						</Link>
+						<Button variant="destructive" size="sm">
+							Видалити продукт
+						</Button>
+					</div>
+				)}
+
 				{/* Image */}
-				<div className="aspect-square rounded-2xl overflow-hidden bg-muted">
+				<div className="rounded-2xl overflow-hidden bg-muted">
 					{product.imageUrl ? (
 						<img
 							src={product.imageUrl}

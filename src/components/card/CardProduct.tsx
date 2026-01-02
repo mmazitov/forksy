@@ -31,7 +31,7 @@ const CardProduct = ({
 	return (
 		<Link to={`/products/${id}`}>
 			<Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer">
-				<div className="overflow-hidden h-[177px] bg-muted">
+				<div className="overflow-hidden h-44.25 bg-muted">
 					{imageUrl ? (
 						<img
 							src={imageUrl}
