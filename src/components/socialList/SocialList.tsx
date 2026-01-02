@@ -10,13 +10,8 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 	const { login } = useAuth();
 
 	const getApiUrl = () => {
-		if (typeof window === 'undefined') return '';
-
-		if (!window.location.hostname.includes('localhost')) {
-			return '/api';
-		}
-
-		return 'http://localhost:4000';
+		// Use environment variable for API URL
+		return import.meta.env.VITE_API_URL?.replace('/graphql', '') || 'http://localhost:4000';
 	};
 
 	const handleSocialLogin = (provider: string) => {
