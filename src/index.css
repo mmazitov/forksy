@@ -1,0 +1,283 @@
+@import 'tailwindcss';
+
+@theme {
+	/* Шрифты */
+	--font-family-sans: 'Inter', system-ui, sans-serif;
+
+	/* Радиус */
+	--radius: 1rem;
+	--radius-lg: var(--radius);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-sm: calc(var(--radius) - 4px);
+
+	/* Цвета по умолчанию (светлая тема) */
+	--color-background: hsl(210 40% 98%);
+	--color-foreground: hsl(220 15% 25%);
+
+	--color-card: hsl(0 0% 100%);
+	--color-card-foreground: hsl(220 15% 25%);
+
+	--color-popover: hsl(0 0% 100%);
+	--color-popover-foreground: hsl(220 15% 25%);
+
+	--color-primary: hsl(175 60% 50%);
+	--color-primary-foreground: hsl(0 0% 100%);
+
+	--color-secondary: hsl(20 85% 75%);
+	--color-secondary-foreground: hsl(220 15% 25%);
+
+	--color-muted: hsl(210 30% 92%);
+	--color-muted-foreground: hsl(220 10% 50%);
+
+	--color-accent: hsl(270 60% 70%);
+	--color-accent-foreground: hsl(0 0% 100%);
+
+	--color-destructive: hsl(0 72% 55%);
+	--color-destructive-foreground: hsl(0 0% 100%);
+
+	--color-border: hsl(210 25% 88%);
+	--color-input: hsl(210 25% 88%);
+	--color-ring: hsl(175 60% 50%);
+
+	--color-sidebar-background: hsl(0 0% 98%);
+	--color-sidebar-foreground: hsl(240 5.3% 26.1%);
+	--color-sidebar-primary: hsl(240 5.9% 10%);
+	--color-sidebar-primary-foreground: hsl(0 0% 98%);
+	--color-sidebar-accent: hsl(240 4.8% 95.9%);
+	--color-sidebar-accent-foreground: hsl(240 5.9% 10%);
+	--color-sidebar-border: hsl(220 13% 91%);
+	--color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+	/* badge colors */
+	--badge-meat: hsl(0 65% 60%);
+	--badge-meat-fg: hsl(0 0% 100%);
+
+	--badge-fish: hsl(195 70% 55%);
+	--badge-fish-fg: hsl(0 0% 100%);
+
+	--badge-vegetables: hsl(140 55% 45%);
+	--badge-vegetables-fg: hsl(0 0% 100%);
+
+	--badge-fruits: hsl(25 85% 60%);
+	--badge-fruits-fg: hsl(0 0% 100%);
+
+	--badge-dairy: hsl(210 30% 92%);
+	--badge-dairy-fg: hsl(220 15% 25%);
+
+	--badge-grains: hsl(45 70% 70%);
+	--badge-grains-fg: hsl(220 15% 25%);
+
+	--badge-drinks: hsl(200 70% 55%);
+	--badge-drinks-fg: hsl(0 0% 100%);
+
+	--badge-canned: hsl(30 60% 65%);
+	--badge-canned-fg: hsl(220 15% 20%);
+
+	--badge-addons: hsl(270 60% 70%);
+	--badge-addons-fg: hsl(0 0% 100%);
+
+	--badge-other: hsl(220 10% 70%);
+	--badge-other-fg: hsl(0 0% 100%);
+
+	/* Анимации */
+	--animate-accordion-down: accordion-down 0.2s ease-out;
+	--animate-accordion-up: accordion-up 0.2s ease-out;
+	--animate-fade-in: fade-in 0.3s ease-out;
+	--animate-scale-in: scale-in 0.2s ease-out;
+}
+
+/* Темная тема */
+.dark {
+	--color-background: hsl(220 20% 12%);
+	--color-foreground: hsl(210 40% 95%);
+
+	--color-card: hsl(220 18% 15%);
+	--color-card-foreground: hsl(210 40% 95%);
+
+	--color-popover: hsl(220 18% 15%);
+	--color-popover-foreground: hsl(210 40% 95%);
+
+	--color-primary: hsl(175 60% 45%);
+	--color-primary-foreground: hsl(0 0% 100%);
+
+	--color-secondary: hsl(20 70% 60%);
+	--color-secondary-foreground: hsl(0 0% 100%);
+
+	--color-muted: hsl(220 15% 20%);
+	--color-muted-foreground: hsl(220 10% 60%);
+
+	--color-accent: hsl(270 55% 60%);
+	--color-accent-foreground: hsl(0 0% 100%);
+
+	--color-destructive: hsl(0 65% 50%);
+	--color-destructive-foreground: hsl(0 0% 100%);
+
+	--color-border: hsl(220 15% 25%);
+	--color-input: hsl(220 15% 25%);
+	--color-ring: hsl(175 60% 45%);
+
+	--color-sidebar-background: hsl(240 5.9% 10%);
+	--color-sidebar-foreground: hsl(240 4.8% 95.9%);
+	--color-sidebar-primary: hsl(224.3 76.3% 48%);
+	--color-sidebar-primary-foreground: hsl(0 0% 100%);
+	--color-sidebar-accent: hsl(240 3.7% 15.9%);
+	--color-sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+	--color-sidebar-border: hsl(240 3.7% 15.9%);
+	--color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+	--badge-meat: hsl(0 55% 45%);
+	--badge-meat-fg: hsl(0 0% 100%);
+
+	--badge-fish: hsl(195 60% 45%);
+	--badge-fish-fg: hsl(0 0% 100%);
+
+	--badge-vegetables: hsl(140 45% 40%);
+	--badge-vegetables-fg: hsl(0 0% 100%);
+
+	--badge-fruits: hsl(25 75% 55%);
+	--badge-fruits-fg: hsl(0 0% 100%);
+
+	--badge-dairy: hsl(220 15% 25%);
+	--badge-dairy-fg: hsl(210 40% 95%);
+
+	--badge-grains: hsl(45 60% 55%);
+	--badge-grains-fg: hsl(220 15% 15%);
+
+	--badge-drinks: hsl(200 65% 45%);
+	--badge-drinks-fg: hsl(0 0% 100%);
+
+	--badge-canned: hsl(30 55% 45%);
+	--badge-canned-fg: hsl(0 0% 100%);
+
+	--badge-addons: hsl(270 55% 55%);
+	--badge-addons-fg: hsl(0 0% 100%);
+
+	--badge-other: hsl(220 10% 35%);
+	--badge-other-fg: hsl(210 40% 95%);
+}
+
+/* Кастомные CSS переменные */
+:root {
+	--gradient-hero: linear-gradient(
+		135deg,
+		hsl(175 60% 50% / 0.1),
+		hsl(270 60% 70% / 0.1)
+	);
+	--gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 40% 99%));
+
+	--shadow-sm: 0 2px 8px hsl(220 15% 25% / 0.05);
+	--shadow-md: 0 4px 16px hsl(220 15% 25% / 0.08);
+	--shadow-lg: 0 8px 24px hsl(220 15% 25% / 0.12);
+
+	--transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+	--gradient-hero: linear-gradient(
+		135deg,
+		hsl(175 60% 45% / 0.15),
+		hsl(270 55% 60% / 0.15)
+	);
+	--gradient-card: linear-gradient(180deg, hsl(220 18% 15%), hsl(220 18% 16%));
+
+	--shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.2);
+	--shadow-md: 0 4px 16px hsl(0 0% 0% / 0.3);
+	--shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.4);
+}
+
+/* Ключевые кадры анимаций */
+@keyframes accordion-down {
+	from {
+		height: 0;
+		opacity: 0;
+	}
+	to {
+		height: var(--radix-accordion-content-height);
+		opacity: 1;
+	}
+}
+
+@keyframes accordion-up {
+	from {
+		height: var(--radix-accordion-content-height);
+		opacity: 1;
+	}
+	to {
+		height: 0;
+		opacity: 0;
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes scale-in {
+	0% {
+		transform: scale(0.95);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+/* Базовые стили */
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans;
+	}
+}
+
+/* Хелпер */
+.hover-scale {
+	@apply transition-transform duration-200 hover:scale-105;
+}
+
+@keyframes drawLine {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes fillLogo {
+	0% {
+		fill: transparent;
+	}
+	80% {
+		fill: transparent;
+	}
+	100% {
+		fill: #33ccbf;
+	}
+}
+
+@keyframes slideUp {
+	0% {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.path {
+	animation:
+		drawLine 2s ease forwards,
+		fillLogo 1s ease 2s forwards,
+		slideUp 1s ease-out 2.5s forwards;
+}

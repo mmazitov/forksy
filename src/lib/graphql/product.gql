@@ -1,0 +1,86 @@
+fragment ProductFields on Product {
+	id
+	name
+	category
+	imageUrl
+	calories
+	fat
+	carbs
+	protein
+	description
+	createdAt
+	updatedAt
+}
+
+query Product($id: ID!) {
+	product(id: $id) {
+		...ProductFields
+	}
+}
+
+query Products($category: String, $search: String, $limit: Int, $offset: Int) {
+	products(
+		category: $category
+		search: $search
+		limit: $limit
+		offset: $offset
+	) {
+		...ProductFields
+	}
+}
+
+mutation CreateProduct(
+	$name: String!
+	$category: String
+	$imageUrl: String
+	$calories: Int
+	$fat: Float
+	$carbs: Float
+	$protein: Float
+	$description: String
+) {
+	createProduct(
+		name: $name
+		category: $category
+		imageUrl: $imageUrl
+		calories: $calories
+		fat: $fat
+		carbs: $carbs
+		protein: $protein
+		description: $description
+	) {
+		...ProductFields
+	}
+}
+
+mutation UpdateProduct(
+	$id: ID!
+	$name: String
+	$category: String
+	$imageUrl: String
+	$calories: Int
+	$fat: Float
+	$carbs: Float
+	$protein: Float
+	$description: String
+) {
+	updateProduct(
+		id: $id
+		name: $name
+		category: $category
+		imageUrl: $imageUrl
+		calories: $calories
+		fat: $fat
+		carbs: $carbs
+		protein: $protein
+		description: $description
+	) {
+		...ProductFields
+	}
+}
+
+mutation DeleteProduct($id: ID!) {
+	deleteProduct(id: $id) {
+		id
+	}
+}

@@ -1,0 +1,43 @@
+query Me {
+	me {
+		id
+		email
+		name
+		avatar
+		phone
+		diet
+		allergy
+		dislike
+		createdAt
+		updatedAt
+	}
+}
+
+mutation UpdateProfile(
+	$name: String
+	$phone: String
+	$avatar: String
+	$diet: String
+	$allergy: [String!]
+	$dislike: [String!]
+) {
+	updateProfile(
+		name: $name
+		phone: $phone
+		avatar: $avatar
+		diet: $diet
+		allergy: $allergy
+		dislike: $dislike
+	) {
+		id
+		email
+		name
+		avatar
+		phone
+		diet
+		allergy
+		dislike
+		createdAt
+		updatedAt
+	}
+}

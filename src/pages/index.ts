@@ -1,0 +1,12 @@
+export { default as AddDish } from './AddDish';
+export { default as AddProduct } from './AddProduct';
+export { default as DishDetail } from './DishDetail';
+export { default as Dishes } from './Dishes';
+export { default as Home } from './Home';
+export { default as MenuPlanner } from './MenuPlanner';
+export { default as NotFound } from './NotFound';
+export { default as ProductDetail } from './ProductDetail';
+export { default as Products } from './Products';
+export { default as Profile } from './Profile';
+export { default as Schedule } from './Schedule';
+export { default as Settings } from './Settings';
