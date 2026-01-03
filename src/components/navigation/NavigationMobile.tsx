@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
+
+import { useIsActive } from './utils';
+
 import { Button } from '@/components';
 import { NAVIGATION_ITEMS } from '@/constants';
-import { Link } from 'react-router-dom';
-import { useIsActive } from './utils';
 
 interface NavigationMobileProps {
 	mobileMenuOpen: boolean;
@@ -17,7 +19,7 @@ const NavigationMobile = ({
 	return (
 		<>
 			{mobileMenuOpen && (
-				<div className="md:hidden py-4 animate-fade-in absolute left-0 right-0 top-[65px] bg-card/95 z-50 p-4 h-auto">
+				<div className="animate-fade-in bg-card/95 absolute top-16.25 right-0 left-0 z-50 h-auto p-4 py-4 lg:hidden">
 					<div className="flex flex-col gap-2">
 						{NAVIGATION_ITEMS.map((item) => (
 							<Link

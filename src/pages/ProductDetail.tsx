@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useProductQuery } from '@/lib/graphql';
 
 const ProductDetail = () => {
-	const { isAdmin } = useAuth();
+	const { isAdmin, user } = useAuth();
 	const { id } = useParams<{ id: string }>();
 	const { data, loading, error } = useProductQuery({
 		variables: { id: id! },
@@ -61,6 +61,8 @@ const ProductDetail = () => {
 				fat={product.fat}
 				carbs={product.carbs}
 				isAdmin={isAdmin}
+				userId={product.userId}
+				currentUserId={user?.id}
 			/>
 		</div>
 	);

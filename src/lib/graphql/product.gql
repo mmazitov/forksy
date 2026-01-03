@@ -8,6 +8,7 @@ fragment ProductFields on Product {
 	carbs
 	protein
 	description
+	userId
 	createdAt
 	updatedAt
 }

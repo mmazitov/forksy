@@ -1,5 +1,6 @@
-import { Button, UserMenu } from '@/components';
 import { Menu, X } from 'lucide-react';
+
+import { Button, UserMenu } from '@/components';
 
 interface MenuButtonProps {
 	mobileMenuOpen: boolean;
@@ -19,7 +20,7 @@ const MenuButton = ({
 	setAuthModalOpen,
 }: MenuButtonProps) => {
 	return (
-		<div className="flex md:hidden items-center gap-2">
+		<div className="flex items-center gap-2 lg:hidden">
 			<UserMenu
 				isLoggedIn={isLoggedIn}
 				userName={userName}
@@ -27,7 +28,7 @@ const MenuButton = ({
 				onOpenAuth={() => setAuthModalOpen(true)}
 			/>
 			<Button
-				className="p-2 hover:bg-muted rounded-md transition-colors"
+				className="hover:bg-muted rounded-md p-2 transition-colors"
 				onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
 				variant={'ghost'}
 			>

@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
+
+import { useIsActive } from './utils';
+
 import { Button, ThemeToggle, UserMenu } from '@/components';
 import { NAVIGATION_ITEMS } from '@/constants';
-import { Link } from 'react-router-dom';
-import { useIsActive } from './utils';
 
 interface NavigationDesktopProps {
 	isLoggedIn: boolean;
@@ -19,7 +21,7 @@ const NavigationDesktop = ({
 	const isActive = useIsActive();
 
 	return (
-		<div className="hidden md:flex items-center gap-1">
+		<div className="hidden items-center gap-1 lg:flex">
 			{NAVIGATION_ITEMS.map((item) => (
 				<Link key={item.href} to={item.href}>
 					<Button

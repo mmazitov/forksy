@@ -23,6 +23,8 @@ interface CardProductFullProps {
 	fat?: number | null;
 	carbs?: number | null;
 	isAdmin?: boolean;
+	userId?: string | null;
+	currentUserId?: string;
 }
 
 const CardProductFull = ({
@@ -36,10 +38,15 @@ const CardProductFull = ({
 	fat,
 	carbs,
 	isAdmin = false,
+	userId,
+	currentUserId,
 }: CardProductFullProps) => {
+	const canEdit =
+		isAdmin || (userId && currentUserId && userId === currentUserId);
+
 	return (
 		<div className="relative grid grid-cols-1 gap-8 lg:grid-cols-2">
-			{isAdmin && (
+			{canEdit && (
 				<div className="absolute top-2 left-2 z-10 flex flex-col gap-2 md:flex-row lg:top-0 lg:right-0 lg:left-auto">
 					<Link to={`/products/edit/${id}`}>
 						<Button variant="outline" size="sm">
