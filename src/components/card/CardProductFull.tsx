@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { LuFlame } from 'react-icons/lu';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -44,6 +45,12 @@ const CardProductFull = ({
 	const canEdit =
 		isAdmin || (userId && currentUserId && userId === currentUserId);
 
+	const [favoriteProduct, setFavoriteProduct] = useState(false);
+
+	const toggleFavorite = () => {
+		setFavoriteProduct(!favoriteProduct);
+	};
+
 	return (
 		<div className="relative grid grid-cols-1 gap-8 lg:grid-cols-2">
 			{canEdit && (
@@ -64,8 +71,13 @@ const CardProductFull = ({
 				<Button
 					variant="ghost"
 					className="absolute top-2 right-2 bg-white shadow-md"
+					onClick={toggleFavorite}
 				>
-					<MdOutlineFavoriteBorder size={24} />
+					<MdOutlineFavoriteBorder
+						className={`h-6 w-6 transition-colors ${
+							favoriteProduct ? 'text-red-500' : 'text-gray-400'
+						}`}
+					/>
 				</Button>
 				{imageUrl ? (
 					<img
