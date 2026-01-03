@@ -150,8 +150,8 @@ const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
 				}}
 			/>
 
-			<div className="flex gap-4">
-				<Button type="submit" size="lg" className="flex-1" disabled={loading}>
+			<div className="flex flex-col gap-4 md:flex-row">
+				<Button type="submit" size="lg" className="w-full" disabled={loading}>
 					{loading
 						? isEditMode
 							? 'Оновлення...'
@@ -160,7 +160,7 @@ const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
 							? 'Оновити продукт'
 							: 'Додати продукт'}
 				</Button>
-				<Link to="/products" className="flex-1">
+				<Link to="/products" className="w-full">
 					<Button type="button" variant="outline" size="lg" className="w-full">
 						Скасувати
 					</Button>
