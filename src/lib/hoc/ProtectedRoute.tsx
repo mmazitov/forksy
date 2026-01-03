@@ -1,4 +1,4 @@
-import { useAuth } from '@/hooks';
+import { useAuthContext } from '@/hooks';
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
@@ -8,12 +8,12 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, fallback }: ProtectedRouteProps) => {
-	const { user, isLoading } = useAuth();
+	const { user, isLoading } = useAuthContext();
 
 	if (isLoading) {
 		return (
 			fallback || (
-				<div className="flex items-center justify-center min-h-screen">
+				<div className="flex min-h-screen items-center justify-center">
 					Завантаження...
 				</div>
 			)

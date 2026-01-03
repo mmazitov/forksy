@@ -9,6 +9,7 @@ fragment ProductFields on Product {
 	protein
 	description
 	userId
+	isFavorite
 	createdAt
 	updatedAt
 }
@@ -26,6 +27,12 @@ query Products($category: String, $search: String, $limit: Int, $offset: Int) {
 		limit: $limit
 		offset: $offset
 	) {
+		...ProductFields
+	}
+}
+
+query FavoriteProducts {
+	favoriteProducts {
 		...ProductFields
 	}
 }
@@ -83,5 +90,18 @@ mutation UpdateProduct(
 mutation DeleteProduct($id: ID!) {
 	deleteProduct(id: $id) {
 		id
+	}
+}
+
+mutation addToFavorites($productId: ID!) {
+	addToFavorites(productId: $productId) {
+		id
+		name
+	}
+}
+mutation removeFromFavorites($productId: ID!) {
+	removeFromFavorites(productId: $productId) {
+		id
+		name
 	}
 }

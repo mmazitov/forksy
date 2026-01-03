@@ -1,3 +1,7 @@
+import { X } from 'lucide-react';
+import { LuPlus } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
+
 import {
 	Button,
 	Input,
@@ -11,9 +15,6 @@ import {
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
 import { useFormList } from '@/hooks/useFormList';
-import { X } from 'lucide-react';
-import { LuPlus } from 'react-icons/lu';
-import { Link } from 'react-router-dom';
 
 interface AddDishFormProps {
 	handleSubmit: (e: React.FormEvent) => void;
@@ -37,7 +38,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 	return (
 		<form onSubmit={handleSubmit} className="space-y-6">
 			{/* Basic Info */}
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<div className="space-y-2">
 					<Label htmlFor="name">Назва страви *</Label>
 					<Input id="name" placeholder="Наприклад: Вівсяна каша" required />
@@ -75,7 +76,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 			</div>
 
 			{/* Nutrition & Time */}
-			<div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+			<div className="grid grid-cols-2 gap-4 md:grid-cols-5">
 				<div className="space-y-2">
 					<Label htmlFor="calories">Калорії</Label>
 					<Input id="calories" type="number" placeholder="0" />
@@ -108,7 +109,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 						size="sm"
 						onClick={addIngredient}
 					>
-						<LuPlus className="h-4 w-4 mr-1" />
+						<LuPlus className="mr-1 h-4 w-4" />
 						Додати
 					</Button>
 				</div>
@@ -149,13 +150,13 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 				<div className="flex items-center justify-between">
 					<Label>Шаги приготування</Label>
 					<Button type="button" variant="outline" size="sm" onClick={addStep}>
-						<LuPlus className="h-4 w-4 mr-1" />
+						<LuPlus className="mr-1 h-4 w-4" />
 						Додати шаг
 					</Button>
 				</div>
 				{steps.map((step, index) => (
-					<div key={index} className="flex gap-2 items-start">
-						<span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm mt-2">
+					<div key={index} className="flex items-start gap-2">
+						<span className="bg-primary text-primary-foreground mt-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold">
 							{index + 1}
 						</span>
 						<Textarea

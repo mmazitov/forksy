@@ -1,3 +1,8 @@
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+
+import { ProtectedRoute } from './lib/hoc';
+
 import { Header, PwaInstallPrompt, SplashScreen } from '@/components';
 import { useSplashScreen } from '@/hooks';
 import { Providers } from '@/lib/providers';
@@ -15,9 +20,6 @@ import {
 	Schedule,
 	Settings,
 } from '@/pages';
-import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { ProtectedRoute } from './lib/hoc';
 
 const AppRoutes = () => {
 	const { pathname } = useLocation();
@@ -27,7 +29,7 @@ const AppRoutes = () => {
 	}, [pathname]);
 
 	return (
-		<div className="min-h-screen bg-background">
+		<div className="bg-background min-h-screen">
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />
@@ -35,8 +37,6 @@ const AppRoutes = () => {
 				<Route path="/menu-planner" element={<MenuPlanner />} />
 				<Route path="/products" element={<Products />} />
 				<Route path="/products/:id" element={<ProductDetail />} />
-				<Route path="/dishes" element={<Dishes />} />
-				<Route path="/dishes/:id" element={<DishDetail />} />
 				<Route
 					path="/products/add"
 					element={
@@ -45,6 +45,16 @@ const AppRoutes = () => {
 						</ProtectedRoute>
 					}
 				/>
+				<Route
+					path="/products/edit/:id"
+					element={
+						<ProtectedRoute>
+							<AddProduct />
+						</ProtectedRoute>
+					}
+				/>
+				<Route path="/dishes" element={<Dishes />} />
+				<Route path="/dishes/:id" element={<DishDetail />} />
 				<Route
 					path="/dishes/add"
 					element={

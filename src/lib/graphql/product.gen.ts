@@ -16,6 +16,7 @@ export type ProductFieldsFragment = {
 	protein?: number | null;
 	description?: string | null;
 	userId: string;
+	isFavorite?: boolean | null;
 	createdAt: string;
 	updatedAt: string;
 };
@@ -39,6 +40,15 @@ export type ProductsQueryVariables = Types.Exact<{
 export type ProductsQuery = {
 	__typename?: 'Query';
 	products: Array<{ __typename?: 'Product' } & ProductFieldsFragment>;
+};
+
+export type FavoriteProductsQueryVariables = Types.Exact<{
+	[key: string]: never;
+}>;
+
+export type FavoriteProductsQuery = {
+	__typename?: 'Query';
+	favoriteProducts: Array<{ __typename?: 'Product' } & ProductFieldsFragment>;
 };
 
 export type CreateProductMutationVariables = Types.Exact<{
@@ -83,6 +93,28 @@ export type DeleteProductMutation = {
 	deleteProduct: { __typename?: 'Product'; id: string };
 };
 
+export type AddToFavoritesMutationVariables = Types.Exact<{
+	productId: Types.Scalars['ID']['input'];
+}>;
+
+export type AddToFavoritesMutation = {
+	__typename?: 'Mutation';
+	addToFavorites: { __typename?: 'User'; id: string; name?: string | null };
+};
+
+export type RemoveFromFavoritesMutationVariables = Types.Exact<{
+	productId: Types.Scalars['ID']['input'];
+}>;
+
+export type RemoveFromFavoritesMutation = {
+	__typename?: 'Mutation';
+	removeFromFavorites: {
+		__typename?: 'User';
+		id: string;
+		name?: string | null;
+	};
+};
+
 export const ProductFieldsFragmentDoc = {
 	kind: 'Document',
 	definitions: [
@@ -106,6 +138,7 @@ export const ProductFieldsFragmentDoc = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 				],
@@ -179,6 +212,7 @@ export const ProductDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 				],
@@ -328,6 +362,7 @@ export const ProductsDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 				],
@@ -363,6 +398,91 @@ export function useProductsLazyQuery(
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<
 	typeof useProductsLazyQuery
+>;
+export const FavoriteProductsDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'FavoriteProducts' },
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'favoriteProducts' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{
+									kind: 'FragmentSpread',
+									name: { kind: 'Name', value: 'ProductFields' },
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+		{
+			kind: 'FragmentDefinition',
+			name: { kind: 'Name', value: 'ProductFields' },
+			typeCondition: {
+				kind: 'NamedType',
+				name: { kind: 'Name', value: 'Product' },
+			},
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'category' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'imageUrl' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useFavoriteProductsQuery(
+	baseOptions?: ApolloReactHooks.QueryHookOptions<
+		FavoriteProductsQuery,
+		FavoriteProductsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useQuery<
+		FavoriteProductsQuery,
+		FavoriteProductsQueryVariables
+	>(FavoriteProductsDocument, options);
+}
+export function useFavoriteProductsLazyQuery(
+	baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+		FavoriteProductsQuery,
+		FavoriteProductsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useLazyQuery<
+		FavoriteProductsQuery,
+		FavoriteProductsQueryVariables
+	>(FavoriteProductsDocument, options);
+}
+// @ts-ignore
+export type FavoriteProductsQueryHookResult = ReturnType<
+	typeof useFavoriteProductsQuery
+>;
+export type FavoriteProductsLazyQueryHookResult = ReturnType<
+	typeof useFavoriteProductsLazyQuery
 >;
 export const CreateProductDocument = {
 	kind: 'Document',
@@ -542,6 +662,7 @@ export const CreateProductDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 				],
@@ -752,6 +873,7 @@ export const UpdateProductDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 				],
@@ -833,4 +955,132 @@ export function useDeleteProductMutation(
 }
 export type DeleteProductMutationHookResult = ReturnType<
 	typeof useDeleteProductMutation
+>;
+export const AddToFavoritesDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'addToFavorites' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'productId' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'addToFavorites' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'productId' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'productId' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useAddToFavoritesMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		AddToFavoritesMutation,
+		AddToFavoritesMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		AddToFavoritesMutation,
+		AddToFavoritesMutationVariables
+	>(AddToFavoritesDocument, options);
+}
+export type AddToFavoritesMutationHookResult = ReturnType<
+	typeof useAddToFavoritesMutation
+>;
+export const RemoveFromFavoritesDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'removeFromFavorites' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'productId' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'removeFromFavorites' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'productId' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'productId' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useRemoveFromFavoritesMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		RemoveFromFavoritesMutation,
+		RemoveFromFavoritesMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		RemoveFromFavoritesMutation,
+		RemoveFromFavoritesMutationVariables
+	>(RemoveFromFavoritesDocument, options);
+}
+export type RemoveFromFavoritesMutationHookResult = ReturnType<
+	typeof useRemoveFromFavoritesMutation
 >;

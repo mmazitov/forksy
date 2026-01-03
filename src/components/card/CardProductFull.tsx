@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { LuFlame } from 'react-icons/lu';
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import {
@@ -10,8 +8,12 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
+	FavoriteButton,
 	NutritionCard,
 } from '@/components';
+import { useFavoriteProduct } from '@/hooks';
+import { useDeleteProduct } from '@/hooks/';
+import { categoryBadgeMap } from '@/lib/utils/categoryBadge';
 
 interface CardProductFullProps {
 	id: string;
@@ -26,6 +28,7 @@ interface CardProductFullProps {
 	isAdmin?: boolean;
 	userId?: string | null;
 	currentUserId?: string;
+	isFavorite?: boolean | null;
 }
 
 const CardProductFull = ({
@@ -41,15 +44,22 @@ const CardProductFull = ({
 	isAdmin = false,
 	userId,
 	currentUserId,
+	isFavorite: initialIsFavorite = false,
 }: CardProductFullProps) => {
 	const canEdit =
 		isAdmin || (userId && currentUserId && userId === currentUserId);
 
-	const [favoriteProduct, setFavoriteProduct] = useState(false);
+	const { isFavorite, toggleFavorite } = useFavoriteProduct(
+		id,
+		initialIsFavorite || false,
+	);
 
-	const toggleFavorite = () => {
-		setFavoriteProduct(!favoriteProduct);
-	};
+	const { handleDelete, loading: deleteLoading } = useDeleteProduct(id);
+
+	const badgeClass =
+		category && categoryBadgeMap[category]
+			? categoryBadgeMap[category]
+			: 'bg-muted text-muted-foreground';
 
 	return (
 		<div className="relative grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -60,7 +70,12 @@ const CardProductFull = ({
 							Редагувати продукт
 						</Button>
 					</Link>
-					<Button variant="destructive" size="sm">
+					<Button
+						variant="destructive"
+						onClick={handleDelete}
+						size="sm"
+						disabled={deleteLoading}
+					>
 						Видалити продукт
 					</Button>
 				</div>
@@ -68,17 +83,7 @@ const CardProductFull = ({
 
 			{/* Image */}
 			<div className="bg-muted relative overflow-hidden rounded-2xl">
-				<Button
-					variant="ghost"
-					className="absolute top-2 right-2 bg-white shadow-md"
-					onClick={toggleFavorite}
-				>
-					{favoriteProduct ? (
-						<MdOutlineFavoriteBorder />
-					) : (
-						<MdOutlineFavorite />
-					)}
-				</Button>
+				<FavoriteButton isFavorite={isFavorite} onClick={toggleFavorite} />
 				{imageUrl ? (
 					<img
 						src={imageUrl}
@@ -95,7 +100,9 @@ const CardProductFull = ({
 			{/* Info */}
 			<div className="space-y-6">
 				<div>
-					{category && <Badge className="mb-3">{category}</Badge>}
+					{category && (
+						<Badge className={`mb-3 ${badgeClass}`}>{category}</Badge>
+					)}
 					<h1 className="text-foreground mb-4 text-4xl font-bold">{name}</h1>
 					{description && (
 						<p className="text-muted-foreground text-lg">{description}</p>

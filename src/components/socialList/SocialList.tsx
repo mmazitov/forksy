@@ -1,17 +1,20 @@
 import { Button } from '@/components';
 import { SOCIAL_ITEMS } from '@/constants';
-import { useAuth } from '@/hooks';
+import { useAuthContext } from '@/hooks';
 import { useEffect } from 'react';
 
 interface SocialListProps {
 	onOpenChange: (open: boolean) => void;
 }
 const SocialList = ({ onOpenChange }: SocialListProps) => {
-	const { login } = useAuth();
+	const { login } = useAuthContext();
 
 	const getApiUrl = () => {
 		// Use environment variable for API URL
-		return import.meta.env.VITE_API_URL?.replace('/graphql', '') || 'http://localhost:4000';
+		return (
+			import.meta.env.VITE_API_URL?.replace('/graphql', '') ||
+			'http://localhost:4000'
+		);
 	};
 
 	const handleSocialLogin = (provider: string) => {

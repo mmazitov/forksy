@@ -1,12 +1,12 @@
-import { Button, Input, Label } from '@/components';
-import { useAuth } from '@/hooks';
-import { modalsConfig } from '@/lib/config';
-import { useLoginMutation, useRegisterMutation } from '@/lib/graphql';
-import { LoginSchema, RegisterSchema } from '@/lib/utils/schemas/';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LuLock, LuMail, LuUser } from 'react-icons/lu';
 import { z } from 'zod';
+
+import { Button, Input, Label } from '@/components';
+import { useAuthForm } from '@/hooks';
+import { modalsConfig } from '@/lib/config';
+import { LoginSchema, RegisterSchema } from '@/lib/utils/schemas/';
 
 interface AuthFormProps {
 	onOpenChange: (open: boolean) => void;
@@ -18,52 +18,25 @@ type RegisterFormData = z.infer<typeof RegisterSchema>;
 type AuthFormData = LoginFormData | RegisterFormData;
 
 const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
-	const { login } = useAuth();
-	const [registerUser, { loading: registerLoading }] = useRegisterMutation();
-	const [loginUser, { loading: loginLoading }] = useLoginMutation();
+	const { handleLogin, handleRegister, isLoading } = useAuthForm();
 
 	const schema = isLogin ? LoginSchema : RegisterSchema;
 
 	const {
 		register,
 		handleSubmit,
-		setError,
 		formState: { errors, isSubmitting },
 	} = useForm<AuthFormData>({
 		resolver: zodResolver(schema),
 	});
 
-	const onSubmit = async (data: any) => {
-		try {
-			if (isLogin) {
-				const result = await loginUser({
-					variables: {
-						email: data.email,
-						password: data.password,
-					},
-				});
-				if (!result.data?.login) {
-					throw new Error('No login data returned');
-				}
-				login(result.data.login.token, result.data.login.user);
-			} else {
-				const result = await registerUser({
-					variables: {
-						email: data.email,
-						password: data.password,
-						name: (data as RegisterFormData).name,
-					},
-				});
-				if (!result.data?.register) {
-					throw new Error('No register data returned');
-				}
-				login(result.data.register.token, result.data.register.user);
-			}
+	const onSubmit = async (data: AuthFormData) => {
+		const success = isLogin
+			? await handleLogin(data as LoginFormData)
+			: await handleRegister(data as RegisterFormData);
+
+		if (success) {
 			onOpenChange(false);
-		} catch (error: any) {
-			setError('root', {
-				message: error.message || 'Something went wrong',
-			});
 		}
 	};
 
@@ -74,7 +47,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 		<form onSubmit={handleFormSubmit} className="space-y-4">
 			{!isLogin && (
 				<div className="space-y-2">
-					<Label htmlFor="name">Ім'я</Label>
+					<Label htmlFor="name">Ім&aposя</Label>
 					<div className="relative">
 						<LuUser className={iconClass} />
 						<Input
@@ -84,9 +57,9 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 							placeholder="Введіть ваше ім'я"
 							className="pl-10"
 						/>
-						{(errors as any).name && (
+						{'name' in errors && errors.name && (
 							<div className="pt-1 text-xs text-red-600">
-								{(errors as any).name.message}
+								{errors.name.message}
 							</div>
 						)}
 					</div>
@@ -132,18 +105,12 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 				</div>
 			</div>
 
-			{errors.root && (
-				<div className="text-sm text-red-600 text-center">
-					{errors.root.message}
-				</div>
-			)}
-
 			<Button
 				type="submit"
 				className="w-full cursor-pointer"
-				disabled={isSubmitting || registerLoading || loginLoading}
+				disabled={isSubmitting || isLoading}
 			>
-				{isSubmitting || registerLoading || loginLoading
+				{isSubmitting || isLoading
 					? 'Загрузка...'
 					: isLogin
 						? modalsConfig.AUTH_MODAL.LOGIN.btnText

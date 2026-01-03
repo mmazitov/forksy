@@ -1,35 +1,10 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { client } from '@/lib/apollo';
 import { useMeQuery } from '@/lib/graphql';
-import {
-	AuthContext,
-	type AuthContextType,
-	type User,
-} from '@/lib/providers/AuthContext';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { type User } from '@/lib/providers/AuthContext';
 
-interface UseAuthReturn extends AuthContextType {
-	isLoggedIn: boolean;
-	userName: string;
-	handleLogout: () => void;
-}
-
-export const useAuth = (): UseAuthReturn => {
-	const contextValue = useContext(AuthContext);
-
-	if (contextValue !== undefined) {
-		const isLoggedIn = !!contextValue.user;
-		const userName =
-			contextValue.user?.name || contextValue.user?.email?.split('@')[0] || '';
-		const handleLogout = () => contextValue.logout();
-
-		return {
-			...contextValue,
-			isLoggedIn,
-			userName,
-			handleLogout,
-		};
-	}
-
+export const useAuth = () => {
 	const [user, setUser] = useState<User | null>(null);
 	const [token, setToken] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +29,7 @@ export const useAuth = (): UseAuthReturn => {
 		localStorage.removeItem('token');
 		setToken(null);
 		setUser(null);
-		client.clearStore();
+		client.resetStore();
 	}, []);
 
 	const login = useCallback(
@@ -63,15 +38,8 @@ export const useAuth = (): UseAuthReturn => {
 			setUser(newUser as User);
 			setToken(newToken);
 
-			client.cache.modify({
-				fields: {
-					me(existing) {
-						return {
-							...newUser,
-							__typename: 'User',
-						};
-					},
-				},
+			client.refetchQueries({
+				include: 'active',
 			});
 		},
 		[],
@@ -125,7 +93,6 @@ export const useAuth = (): UseAuthReturn => {
 
 	const isAuthenticated = !!token && !!user;
 	const isAdmin = user?.role === 'admin';
-
 	const isLoggedIn = !!user;
 	const userName = user?.name || user?.email?.split('@')[0] || '';
 

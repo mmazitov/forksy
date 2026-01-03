@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
 
-import { Badge, Card, CardContent, NutritionCompact } from '@/components';
+import {
+	Badge,
+	Card,
+	CardContent,
+	FavoriteButton,
+	NutritionCompact,
+} from '@/components';
+import { useFavoriteProduct } from '@/hooks/useProduct';
 import { categoryBadgeMap } from '@/lib/utils/categoryBadge';
 
 interface CardProductCompactProps {
@@ -12,6 +19,9 @@ interface CardProductCompactProps {
 	protein?: number | null;
 	fat?: number | null;
 	carbs?: number | null;
+	userId?: string | null;
+	currentUserId?: string;
+	isFavorite?: boolean | null;
 }
 
 const CardProductCompact = ({
@@ -23,15 +33,32 @@ const CardProductCompact = ({
 	protein,
 	fat,
 	carbs,
+	isFavorite: initialIsFavorite = false,
 }: CardProductCompactProps) => {
 	const badgeClass =
 		category && categoryBadgeMap[category]
 			? categoryBadgeMap[category]
 			: 'bg-muted text-muted-foreground';
+
+	const { isFavorite, toggleFavorite } = useFavoriteProduct(
+		id,
+		initialIsFavorite || false,
+	);
+
+	const handleFavoriteClick = (e?: React.MouseEvent) => {
+		e?.preventDefault();
+		e?.stopPropagation();
+		toggleFavorite();
+	};
+
 	return (
 		<Link to={`/products/${id}`}>
 			<Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-				<div className="bg-muted h-44.25 overflow-hidden">
+				<div className="bg-muted relative h-44.25 overflow-hidden">
+					<FavoriteButton
+						isFavorite={isFavorite}
+						onClick={handleFavoriteClick}
+					/>
 					{imageUrl ? (
 						<img
 							src={imageUrl}

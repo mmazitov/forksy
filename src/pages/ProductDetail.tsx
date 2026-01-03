@@ -2,11 +2,11 @@ import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 
 import { Button, CardProductFull, Loader, MetaData } from '@/components';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthContext } from '@/hooks';
 import { useProductQuery } from '@/lib/graphql';
 
 const ProductDetail = () => {
-	const { isAdmin, user } = useAuth();
+	const { isAdmin, user } = useAuthContext();
 	const { id } = useParams<{ id: string }>();
 	const { data, loading, error } = useProductQuery({
 		variables: { id: id! },
@@ -63,6 +63,7 @@ const ProductDetail = () => {
 				isAdmin={isAdmin}
 				userId={product.userId}
 				currentUserId={user?.id}
+				isFavorite={product.isFavorite}
 			/>
 		</div>
 	);

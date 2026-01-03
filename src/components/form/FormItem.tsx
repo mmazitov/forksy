@@ -1,6 +1,7 @@
-import { Input, Label, Textarea } from '@/components';
 import type { ComponentProps } from 'react';
 import type { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+
+import { Input, Label, Textarea } from '@/components';
 
 interface FormItemProps {
 	itemType?: string;
@@ -39,7 +40,7 @@ const FormItem = ({
 					step={step}
 				/>
 			)}
-			{error && <p className="text-sm text-destructive">{error.message}</p>}
+			{error && <p className="text-destructive text-sm">{error.message}</p>}
 		</div>
 	);
 };

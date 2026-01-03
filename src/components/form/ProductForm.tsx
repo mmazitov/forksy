@@ -1,3 +1,8 @@
+import { Controller } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+
+import FormItem from './FormItem';
+
 import {
 	Button,
 	Label,
@@ -8,15 +13,34 @@ import {
 	SelectValue,
 } from '@/components';
 import { CATEGORIES_PRODUCTS } from '@/constants';
-import { Controller } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useAddProduct, useEditProduct } from '@/hooks';
+import type { ProductFieldsFragment } from '@/lib/graphql';
 
-import { useAddProduct } from '@/hooks';
-import FormItem from './FormItem';
+interface ProductFormProps {
+	product?: ProductFieldsFragment | null;
+	isEditMode?: boolean;
+}
 
-const AddProductForm = () => {
+const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
+	const addProductHook = useAddProduct();
+	const editProductHook = useEditProduct(
+		product?.id || '',
+		product
+			? {
+					name: product.name,
+					category: product.category || '',
+					imageUrl: product.imageUrl || '',
+					calories: product.calories || 0,
+					protein: product.protein || 0,
+					fat: product.fat || 0,
+					carbs: product.carbs || 0,
+					description: product.description || '',
+				}
+			: undefined,
+	);
+
 	const { register, handleSubmit, control, errors, onSubmit, loading } =
-		useAddProduct();
+		isEditMode ? editProductHook : addProductHook;
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -51,7 +75,7 @@ const AddProductForm = () => {
 					)}
 				/>
 				{errors.category && (
-					<p className="text-sm text-destructive">{errors.category.message}</p>
+					<p className="text-destructive text-sm">{errors.category.message}</p>
 				)}
 			</div>
 
@@ -66,7 +90,7 @@ const AddProductForm = () => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<FormItem
 					id="calories"
 					label="Калорійність (на 100г) *"
@@ -128,7 +152,13 @@ const AddProductForm = () => {
 
 			<div className="flex gap-4">
 				<Button type="submit" size="lg" className="flex-1" disabled={loading}>
-					{loading ? 'Додавання...' : 'Додати продукт'}
+					{loading
+						? isEditMode
+							? 'Оновлення...'
+							: 'Додавання...'
+						: isEditMode
+							? 'Оновити продукт'
+							: 'Додати продукт'}
 				</Button>
 				<Link to="/products" className="flex-1">
 					<Button type="button" variant="outline" size="lg" className="w-full">
@@ -140,4 +170,4 @@ const AddProductForm = () => {
 	);
 };
 
-export default AddProductForm;
+export default ProductForm;

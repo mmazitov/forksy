@@ -35,13 +35,19 @@ export type AuthPayload = {
 
 export type Mutation = {
 	__typename?: 'Mutation';
+	addToFavorites: User;
 	createProduct: Product;
 	deleteProduct: Product;
 	handleOAuthCallback: SocialAuthPayload;
 	login: AuthPayload;
 	register: AuthPayload;
+	removeFromFavorites: User;
 	updateProduct: Product;
 	updateProfile: User;
+};
+
+export type MutationAddToFavoritesArgs = {
+	productId: Scalars['ID']['input'];
 };
 
 export type MutationCreateProductArgs = {
@@ -75,6 +81,10 @@ export type MutationRegisterArgs = {
 	password: Scalars['String']['input'];
 };
 
+export type MutationRemoveFromFavoritesArgs = {
+	productId: Scalars['ID']['input'];
+};
+
 export type MutationUpdateProductArgs = {
 	calories?: InputMaybe<Scalars['Int']['input']>;
 	carbs?: InputMaybe<Scalars['Float']['input']>;
@@ -106,6 +116,7 @@ export type Product = {
 	fat: Maybe<Scalars['Float']['output']>;
 	id: Scalars['ID']['output'];
 	imageUrl: Maybe<Scalars['String']['output']>;
+	isFavorite: Maybe<Scalars['Boolean']['output']>;
 	name: Scalars['String']['output'];
 	protein: Maybe<Scalars['Float']['output']>;
 	updatedAt: Scalars['String']['output'];
@@ -114,6 +125,7 @@ export type Product = {
 
 export type Query = {
 	__typename?: 'Query';
+	favoriteProducts: Array<Product>;
 	me: Maybe<User>;
 	product: Maybe<Product>;
 	products: Array<Product>;
@@ -145,6 +157,7 @@ export type User = {
 	dislike: Array<Scalars['String']['output']>;
 	email: Maybe<Scalars['String']['output']>;
 	facebookId: Maybe<Scalars['String']['output']>;
+	favoriteProducts: Array<Product>;
 	githubId: Maybe<Scalars['String']['output']>;
 	googleId: Maybe<Scalars['String']['output']>;
 	id: Scalars['ID']['output'];

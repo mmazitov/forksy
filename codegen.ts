@@ -6,7 +6,10 @@ dotenv.config({ path: '.env.local' });
 
 const config: CodegenConfig = {
 	overwrite: true,
-	schema: process.env.API_URL || process.env.VITE_API_URL || 'http://localhost:4000/graphql',
+	schema:
+		process.env.API_URL ||
+		process.env.VITE_API_URL ||
+		'http://localhost:4000/graphql',
 	documents: ['src/**/*.gql'],
 	hooks: {
 		afterOneFileWrite: ['prettier --write'],
