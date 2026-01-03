@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { LuFlame } from 'react-icons/lu';
-import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import {
@@ -73,11 +73,11 @@ const CardProductFull = ({
 					className="absolute top-2 right-2 bg-white shadow-md"
 					onClick={toggleFavorite}
 				>
-					<MdOutlineFavoriteBorder
-						className={`h-6 w-6 transition-colors ${
-							favoriteProduct ? 'text-red-500' : 'text-gray-400'
-						}`}
-					/>
+					{favoriteProduct ? (
+						<MdOutlineFavoriteBorder />
+					) : (
+						<MdOutlineFavorite />
+					)}
 				</Button>
 				{imageUrl ? (
 					<img
