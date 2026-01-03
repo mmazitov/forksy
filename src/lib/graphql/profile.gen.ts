@@ -111,37 +111,8 @@ export function useMeLazyQuery(
 	);
 }
 // @ts-ignore
-export function useMeSuspenseQuery(
-	baseOptions?: ApolloReactHooks.SuspenseQueryHookOptions<
-		MeQuery,
-		MeQueryVariables
-	>,
-): ApolloReactHooks.UseSuspenseQueryResult<MeQuery, MeQueryVariables>;
-export function useMeSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>,
-): ApolloReactHooks.UseSuspenseQueryResult<
-	MeQuery | undefined,
-	MeQueryVariables
->;
-export function useMeSuspenseQuery(
-	baseOptions?:
-		| ApolloReactHooks.SkipToken
-		| ApolloReactHooks.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>,
-) {
-	const options =
-		baseOptions === ApolloReactHooks.skipToken
-			? baseOptions
-			: { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useSuspenseQuery<MeQuery, MeQueryVariables>(
-		MeDocument,
-		options,
-	);
-}
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export const UpdateProfileDocument = {
 	kind: 'Document',
 	definitions: [

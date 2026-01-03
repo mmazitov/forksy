@@ -48,7 +48,7 @@ const config: CodegenConfig = {
 				withResultType: false,
 				withMutationFn: false,
 				withMutationOptionsType: false,
-				withSuspenseQuery: false,
+				skipDocumentsValidation: true,
 				// Generate gql documents
 				documentMode: 'documentNode',
 				gqlImport: '@apollo/client#gql',
