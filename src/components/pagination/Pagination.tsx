@@ -74,13 +74,14 @@ const Pagination = ({
 				Показано {startItem}-{endItem} з {totalItems}
 			</div>
 
-			<div className="flex items-center gap-1">
+			<div className="flex w-full items-center justify-center gap-1">
 				<Button
 					variant="outline"
 					size="icon"
 					onClick={() => onPageChange(1)}
 					disabled={currentPage === 1}
 					aria-label="Перша сторінка"
+					className="hidden sm:inline-flex"
 				>
 					<LuChevronsLeft />
 				</Button>
@@ -141,6 +142,7 @@ const Pagination = ({
 					onClick={() => onPageChange(totalPages)}
 					disabled={currentPage === totalPages}
 					aria-label="Остання сторінка"
+					className="hidden sm:inline-flex"
 				>
 					<LuChevronsRight />
 				</Button>
