@@ -36,7 +36,10 @@ const AddProduct = () => {
 				keywords={METADATA_CONFIG.keywords.products}
 				type="website"
 			/>
-			<BackButton title="До списку продуктів" href="/products" />
+			<BackButton
+			title={isEditMode ? 'До продукту' : 'До списку продуктів'}
+			href={isEditMode ? `/products/${id}` : '/products'}
+		/>
 
 			<Card>
 				<CardHeader>
