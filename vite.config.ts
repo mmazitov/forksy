@@ -33,50 +33,55 @@ const swBuildHashPlugin = (): Plugin => {
 		apply: 'build',
 		async generateBundle() {
 			const buildHash = buildTimestamp.slice(0, 10).replace(/-/g, '');
-			
+
 			// Replace hash in sw.js
 			const swDistPath = path.resolve(__dirname, './dist/sw.js');
 			if (fs.existsSync(swDistPath)) {
 				let swContent = fs.readFileSync(swDistPath, 'utf-8');
-				swContent = swContent.replace(/VITE_BUILD_HASH_PLACEHOLDER|BUILD_HASH_PLACEHOLDER/g, buildHash);
+				swContent = swContent.replace(
+					/VITE_BUILD_HASH_PLACEHOLDER|BUILD_HASH_PLACEHOLDER/g,
+					buildHash,
+				);
 				fs.writeFileSync(swDistPath, swContent);
 			}
-			
+
 			// Replace hash in sw/caches.js
 			const cachesDistPath = path.resolve(__dirname, './dist/sw/caches.js');
 			if (fs.existsSync(cachesDistPath)) {
 				let cachesContent = fs.readFileSync(cachesDistPath, 'utf-8');
-				cachesContent = cachesContent.replace(/BUILD_HASH_PLACEHOLDER/g, buildHash);
+				cachesContent = cachesContent.replace(
+					/BUILD_HASH_PLACEHOLDER/g,
+					buildHash,
+				);
 				fs.writeFileSync(cachesDistPath, cachesContent);
 			}
 		},
 		async closeBundle() {
 			// Generate precache manifest
 			const distPath = path.resolve(__dirname, './dist');
-			const precacheFiles = [
-				'/',
-				'/index.html',
-			];
-			
+			const precacheFiles = ['/', '/index.html'];
+
 			// Find all JS and CSS files in assets
 			const assetsPath = path.join(distPath, 'assets');
 			if (fs.existsSync(assetsPath)) {
 				const files = fs.readdirSync(assetsPath);
-				files.forEach(file => {
+				files.forEach((file) => {
 					if (file.match(/\.(js|css)$/)) {
 						precacheFiles.push(`/assets/${file}`);
 					}
 				});
 			}
-			
+
 			// Create precache-manifest.js
 			const manifestContent = `self.__PRECACHE_MANIFEST = ${JSON.stringify(precacheFiles, null, 2)};`;
 			fs.writeFileSync(
 				path.join(distPath, 'precache-manifest.js'),
-				manifestContent
+				manifestContent,
 			);
-			
-			console.log(`[PWA] Generated precache manifest with ${precacheFiles.length} files`);
+
+			console.log(
+				`[PWA] Generated precache manifest with ${precacheFiles.length} files`,
+			);
 		},
 	};
 };
