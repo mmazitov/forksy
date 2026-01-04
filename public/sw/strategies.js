@@ -14,7 +14,17 @@ async function cacheFirst(request, cacheName) {
 		}
 		return response;
 	} catch (error) {
-		console.error('[Strategy] Cache First failed:', error);
+		console.error('[Strategy] Cache First failed, trying any cache:', error);
+		// Try to find in any cache as fallback
+		const cacheMatch = await caches.match(request);
+		if (cacheMatch) {
+			return cacheMatch;
+		}
+		// Return offline page for navigation
+		if (request.mode === 'navigate') {
+			const offlineCache = await caches.match('/index.html');
+			if (offlineCache) return offlineCache;
+		}
 		throw error;
 	}
 }

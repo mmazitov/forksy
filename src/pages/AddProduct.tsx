@@ -37,9 +37,9 @@ const AddProduct = () => {
 				type="website"
 			/>
 			<BackButton
-			title={isEditMode ? 'До продукту' : 'До списку продуктів'}
-			href={isEditMode ? `/products/${id}` : '/products'}
-		/>
+				title={isEditMode ? 'До продукту' : 'До списку продуктів'}
+				href={isEditMode ? `/products/${id}` : '/products'}
+			/>
 
 			<Card>
 				<CardHeader>

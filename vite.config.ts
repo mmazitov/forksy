@@ -51,7 +51,32 @@ const swBuildHashPlugin = (): Plugin => {
 			}
 		},
 		async closeBundle() {
-			// Keep placeholder in src for git
+			// Generate precache manifest
+			const distPath = path.resolve(__dirname, './dist');
+			const precacheFiles = [
+				'/',
+				'/index.html',
+			];
+			
+			// Find all JS and CSS files in assets
+			const assetsPath = path.join(distPath, 'assets');
+			if (fs.existsSync(assetsPath)) {
+				const files = fs.readdirSync(assetsPath);
+				files.forEach(file => {
+					if (file.match(/\.(js|css)$/)) {
+						precacheFiles.push(`/assets/${file}`);
+					}
+				});
+			}
+			
+			// Create precache-manifest.js
+			const manifestContent = `self.__PRECACHE_MANIFEST = ${JSON.stringify(precacheFiles, null, 2)};`;
+			fs.writeFileSync(
+				path.join(distPath, 'precache-manifest.js'),
+				manifestContent
+			);
+			
+			console.log(`[PWA] Generated precache manifest with ${precacheFiles.length} files`);
 		},
 	};
 };

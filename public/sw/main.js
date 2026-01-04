@@ -5,7 +5,9 @@ self.addEventListener('install', (event) => {
 	event.waitUntil(
 		caches.open(CACHES.APP_SHELL).then((cache) => {
 			console.log('[Service Worker] Caching App Shell');
-			return cache.addAll(['/', '/index.html', '/manifest.json']);
+			const precacheUrls = self.__PRECACHE_MANIFEST || ['/', '/index.html'];
+			console.log('[Service Worker] Precaching:', precacheUrls);
+			return cache.addAll(precacheUrls);
 		}),
 	);
 
