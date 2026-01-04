@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
+import { LocalStorageWrapper, persistCache } from 'apollo3-cache-persist';
 
 const getGraphQLUrl = () => {
 	// Use environment variable or fallback to localhost
@@ -24,7 +24,9 @@ const errorLink = onError(({ graphQLErrors, networkError }: any) => {
 	if (networkError) {
 		console.error(`[Network error]: ${networkError}`);
 		if ((networkError as any).message?.includes('Failed to fetch')) {
-			console.warn('GraphQL server is not available. Check your VITE_API_URL environment variable.');
+			console.warn(
+				'GraphQL server is not available. Check your VITE_API_URL environment variable.',
+			);
 		}
 	}
 });

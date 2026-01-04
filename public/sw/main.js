@@ -38,22 +38,31 @@ self.addEventListener('fetch', (event) => {
 		event.respondWith(
 			(async () => {
 				const operation = await getGraphQLOperation(request);
-				
+
 				// Products queries
-				if (operation?.operationName === 'Products' || operation?.query?.includes('query Products')) {
+				if (
+					operation?.operationName === 'Products' ||
+					operation?.query?.includes('query Products')
+				) {
 					return staleWhileRevalidate(request, CACHES.PRODUCTS);
 				}
-				
+
 				// Product detail query
-				if (operation?.operationName === 'Product' || operation?.query?.includes('query Product')) {
+				if (
+					operation?.operationName === 'Product' ||
+					operation?.query?.includes('query Product')
+				) {
 					return staleWhileRevalidate(request, CACHES.PRODUCTS);
 				}
-				
+
 				// Dishes queries
-				if (operation?.operationName?.includes('Dish') || operation?.query?.includes('dishes')) {
+				if (
+					operation?.operationName?.includes('Dish') ||
+					operation?.query?.includes('dishes')
+				) {
 					return staleWhileRevalidate(request, CACHES.DISHES);
 				}
-				
+
 				// Mutations - Network First with offline queue
 				if (operation?.query?.includes('mutation')) {
 					try {
@@ -73,7 +82,7 @@ self.addEventListener('fetch', (event) => {
 						);
 					}
 				}
-				
+
 				// Default - Network First
 				return networkFirst(request, CACHES.PLANS);
 			})(),
