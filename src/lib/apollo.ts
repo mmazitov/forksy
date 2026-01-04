@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
+import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 
 const getGraphQLUrl = () => {
 	// Use environment variable or fallback to localhost
@@ -46,7 +47,21 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
+const cache = new InMemoryCache();
+
+// Persist cache to localStorage for offline support
+if (typeof window !== 'undefined') {
+	persistCache({
+		cache,
+		storage: new LocalStorageWrapper(window.localStorage),
+		maxSize: 5242880, // 5MB
+		debug: import.meta.env.DEV,
+	}).catch((error) => {
+		console.error('[Apollo] Cache persistence error:', error);
+	});
+}
+
 export const client = new ApolloClient({
 	link: errorLink.concat(authLink).concat(httpLink),
-	cache: new InMemoryCache(),
+	cache,
 });

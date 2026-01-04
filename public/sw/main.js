@@ -33,6 +33,54 @@ self.addEventListener('fetch', (event) => {
 		return;
 	}
 
+	// GraphQL POST requests - need special handling
+	if (request.method === 'POST' && isGraphQLRequest(request)) {
+		event.respondWith(
+			(async () => {
+				const operation = await getGraphQLOperation(request);
+				
+				// Products queries
+				if (operation?.operationName === 'Products' || operation?.query?.includes('query Products')) {
+					return staleWhileRevalidate(request, CACHES.PRODUCTS);
+				}
+				
+				// Product detail query
+				if (operation?.operationName === 'Product' || operation?.query?.includes('query Product')) {
+					return staleWhileRevalidate(request, CACHES.PRODUCTS);
+				}
+				
+				// Dishes queries
+				if (operation?.operationName?.includes('Dish') || operation?.query?.includes('dishes')) {
+					return staleWhileRevalidate(request, CACHES.DISHES);
+				}
+				
+				// Mutations - Network First with offline queue
+				if (operation?.query?.includes('mutation')) {
+					try {
+						const response = await fetch(request);
+						return response;
+					} catch (error) {
+						await enqueueRequest(request);
+						return new Response(
+							JSON.stringify({
+								offline: true,
+								message: 'Mutation queued for sync',
+							}),
+							{
+								status: 202,
+								headers: { 'Content-Type': 'application/json' },
+							},
+						);
+					}
+				}
+				
+				// Default - Network First
+				return networkFirst(request, CACHES.PLANS);
+			})(),
+		);
+		return;
+	}
+
 	// GET requests only for caching
 	if (request.method === 'GET') {
 		// App Shell - navigation requests
@@ -53,59 +101,11 @@ self.addEventListener('fetch', (event) => {
 			return;
 		}
 
-		// GraphQL API requests
-		if (isGraphQLRequest(request)) {
-			// Dishes - Stale While Revalidate
-			if (url.searchParams.get('operationName') === 'GetDishes') {
-				event.respondWith(staleWhileRevalidate(request, CACHES.DISHES));
-				return;
-			}
-
-			// Products - Stale While Revalidate
-			if (url.searchParams.get('operationName') === 'GetProducts') {
-				event.respondWith(staleWhileRevalidate(request, CACHES.PRODUCTS));
-				return;
-			}
-
-			// Meal Plans - Network First
-			if (url.searchParams.get('operationName')?.includes('Plan')) {
-				event.respondWith(networkFirst(request, CACHES.PLANS));
-				return;
-			}
-
-			// Default for GraphQL - Network First
-			event.respondWith(networkFirst(request, CACHES.PLANS));
-			return;
-		}
-
 		// Images - Cache First with long TTL
 		if (url.href.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) {
 			event.respondWith(cacheFirst(request, CACHES.IMAGES));
 			return;
 		}
-	}
-
-	// POST / PUT / DELETE - offline queue
-	if (
-		['POST', 'PUT', 'DELETE'].includes(request.method) &&
-		isApiRequest(request)
-	) {
-		event.respondWith(
-			fetch(request).catch(async () => {
-				await enqueueRequest(request);
-				return new Response(
-					JSON.stringify({
-						offline: true,
-						message: 'Request queued for sync',
-					}),
-					{
-						status: 202,
-						headers: { 'Content-Type': 'application/json' },
-					},
-				);
-			}),
-		);
-		return;
 	}
 });
 

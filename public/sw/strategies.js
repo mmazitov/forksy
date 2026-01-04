@@ -32,12 +32,28 @@ async function cacheFirst(request, cacheName) {
 // Stale While Revalidate - for dishes and products (show cache, update in background)
 async function staleWhileRevalidate(request, cacheName) {
 	const cache = await caches.open(cacheName);
-	const cached = await cache.match(request);
+	
+	// For POST requests, create cache key from URL + body hash
+	let cacheKey = request.url;
+	if (request.method === 'POST' && request.clone) {
+		try {
+			const clonedRequest = request.clone();
+			const body = await clonedRequest.text();
+			const bodyHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(body));
+			const hashArray = Array.from(new Uint8Array(bodyHash));
+			const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+			cacheKey = `${request.url}-${hashHex.slice(0, 16)}`;
+		} catch (error) {
+			console.error('[Strategy] Failed to hash POST body:', error);
+		}
+	}
+	
+	const cached = await cache.match(cacheKey);
 
-	const networkFetch = fetch(request)
+	const networkFetch = fetch(request.clone())
 		.then((response) => {
 			if (response && response.status === 200) {
-				cache.put(request, response.clone());
+				cache.put(cacheKey, response.clone());
 			}
 			return response;
 		})

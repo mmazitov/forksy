@@ -16,7 +16,24 @@ function isApiRequest(request) {
 }
 
 function isGraphQLRequest(request) {
-	return request.url.includes('/api/graphql');
+	return request.url.includes('/graphql');
+}
+
+// Parse GraphQL operation from POST body
+async function getGraphQLOperation(request) {
+	try {
+		if (request.method === 'POST' && request.clone) {
+			const clonedRequest = request.clone();
+			const body = await clonedRequest.json();
+			return {
+				operationName: body.operationName,
+				query: body.query,
+			};
+		}
+	} catch (error) {
+		console.error('[SW Utils] Failed to parse GraphQL operation:', error);
+	}
+	return null;
 }
 
 function isAuthRequest(request) {
