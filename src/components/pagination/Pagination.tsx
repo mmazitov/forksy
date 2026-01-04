@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui';
-import { cn } from '@/lib/utils/cn';
 import { JSX } from 'react';
 import {
 	LuChevronLeft,
@@ -7,6 +5,9 @@ import {
 	LuChevronsLeft,
 	LuChevronsRight,
 } from 'react-icons/lu';
+
+import { Button } from '@/components/ui';
+import { cn } from '@/lib/utils/cn';
 
 interface PaginationProps {
 	currentPage: number;
@@ -69,7 +70,7 @@ const Pagination = ({
 
 	return (
 		<div className={cn('flex items-center justify-between gap-4', className)}>
-			<div className="text-sm text-muted-foreground">
+			<div className="text-muted-foreground hidden text-sm sm:block">
 				Показано {startItem}-{endItem} з {totalItems}
 			</div>
 
@@ -100,7 +101,7 @@ const Pagination = ({
 							return (
 								<span
 									key={`ellipsis-${index}`}
-									className="px-3 text-muted-foreground"
+									className="text-muted-foreground px-3"
 								>
 									...
 								</span>

@@ -82,7 +82,7 @@ const CardProductFull = ({
 			)}
 
 			{/* Image */}
-			<div className="bg-muted relative overflow-hidden rounded-2xl">
+			<div className="bg-muted relative h-75 overflow-hidden rounded-2xl lg:h-full">
 				<FavoriteButton isFavorite={isFavorite} onClick={toggleFavorite} />
 				{imageUrl ? (
 					<img
