@@ -32,24 +32,26 @@ const swBuildHashPlugin = (): Plugin => {
 		name: 'sw-build-hash',
 		apply: 'build',
 		async generateBundle() {
-			// Read sw.js after it's been processed
+			const buildHash = buildTimestamp.slice(0, 10).replace(/-/g, '');
+			
+			// Replace hash in sw.js
 			const swDistPath = path.resolve(__dirname, './dist/sw.js');
 			if (fs.existsSync(swDistPath)) {
 				let swContent = fs.readFileSync(swDistPath, 'utf-8');
-				swContent = swContent.replace(
-					'VITE_BUILD_HASH_PLACEHOLDER',
-					buildTimestamp.slice(0, 10).replace(/-/g, ''),
-				);
+				swContent = swContent.replace(/VITE_BUILD_HASH_PLACEHOLDER|BUILD_HASH_PLACEHOLDER/g, buildHash);
 				fs.writeFileSync(swDistPath, swContent);
+			}
+			
+			// Replace hash in sw/caches.js
+			const cachesDistPath = path.resolve(__dirname, './dist/sw/caches.js');
+			if (fs.existsSync(cachesDistPath)) {
+				let cachesContent = fs.readFileSync(cachesDistPath, 'utf-8');
+				cachesContent = cachesContent.replace(/BUILD_HASH_PLACEHOLDER/g, buildHash);
+				fs.writeFileSync(cachesDistPath, cachesContent);
 			}
 		},
 		async closeBundle() {
-			// Also ensure src version is updated for development
-			const swSrcPath = path.resolve(__dirname, './public/sw.js');
-			const swContent = fs.readFileSync(swSrcPath, 'utf-8');
-			if (swContent.includes('VITE_BUILD_HASH_PLACEHOLDER')) {
-				// Keep placeholder in src for git
-			}
+			// Keep placeholder in src for git
 		},
 	};
 };

@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 import { ProtectedRoute } from './lib/hoc';
 
-import { Header, PwaInstallPrompt, SplashScreen } from '@/components';
+import { Header, PwaInstallPrompt, PwaUpdatePrompt, SplashScreen } from '@/components';
 import { useSplashScreen } from '@/hooks';
 import { Providers } from '@/lib/providers';
 import {
@@ -93,6 +93,7 @@ const App = () => {
 		<Providers>
 			{showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
 			<PwaInstallPrompt />
+			<PwaUpdatePrompt />
 			<BrowserRouter>
 				<AppRoutes />
 			</BrowserRouter>

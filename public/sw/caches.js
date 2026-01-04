@@ -1,4 +1,4 @@
-const APP_VERSION = 'v1.2.0';
+const APP_VERSION = 'BUILD_HASH_PLACEHOLDER';
 const DATA_VERSION = 'v1';
 
 const CACHES = {
