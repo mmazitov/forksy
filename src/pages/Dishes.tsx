@@ -1,3 +1,5 @@
+import { LuPlus } from 'react-icons/lu';
+
 import {
 	CardDish,
 	Filter,
@@ -9,9 +11,7 @@ import {
 import { CATEGORIES_DISHES } from '@/constants';
 import { useFilter } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
-
 import { dishes } from '@/mock';
-import { LuPlus } from 'react-icons/lu';
 
 const Dishes = () => {
 	const {
@@ -27,7 +27,7 @@ const Dishes = () => {
 	});
 
 	return (
-		<div className="container px-4 py-8 mx-auto">
+		<div className="container mx-auto px-4 py-8">
 			<MetaData
 				title="Страви та рецепти"
 				description={METADATA_CONFIG.descriptions.dishes}

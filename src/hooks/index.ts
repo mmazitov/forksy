@@ -1,9 +1,13 @@
 export { useAuth } from './useAuth';
 export { useAuthContext } from './useAuthContext';
 export { useAuthForm } from './useAuthForm';
+export { useDebounce } from './useDebounce';
 export { useFilter } from './useFilter';
 export { useFormList } from './useFormList';
+export { useLocalStorage } from './useLocalStorage';
 export { useMenuPlanner } from './useMenuPlanner';
+export { useModal } from './useModal';
+export { usePagination } from './usePagination';
 export {
 	useAddProduct,
 	useDeleteProduct,
@@ -23,3 +27,4 @@ export {
 export { useSettings } from './useSettings';
 export { useSplashScreen } from './useSplashScreen';
 export { useToast } from './useToast';
+export { useToggle } from './useToggle';

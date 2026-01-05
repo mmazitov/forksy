@@ -1,8 +1,7 @@
 import { Logo } from '@/components';
-import { useState } from 'react';
 
 import { MODAL_TYPES } from '@/constants';
-import { useAuthContext } from '@/hooks';
+import { useAuthContext, useModal, useToggle } from '@/hooks';
 
 import {
 	MenuButton,
@@ -12,8 +11,8 @@ import {
 } from '@/components';
 
 const Header = () => {
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-	const [authModalOpen, setAuthModalOpen] = useState(false);
+	const [mobileMenuOpen, toggleMobileMenu, setMobileMenuOpen] = useToggle();
+	const { isOpen: authModalOpen, setIsOpen: setAuthModalOpen } = useModal();
 
 	const { isLoggedIn, userName, handleLogout } = useAuthContext();
 

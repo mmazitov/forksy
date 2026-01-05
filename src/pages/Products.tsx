@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
 
 import {
@@ -12,7 +11,7 @@ import {
 	Search,
 } from '@/components';
 import { CATEGORIES_PRODUCTS } from '@/constants';
-import { useFilter } from '@/hooks';
+import { useFilter, usePagination } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
 import { useProductsQuery } from '@/lib/graphql';
 
@@ -20,7 +19,6 @@ const ITEMS_PER_PAGE = 10;
 
 const Products = () => {
 	const { data, loading, error } = useProductsQuery();
-	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const productsData = data?.products || [];
 
@@ -36,23 +34,12 @@ const Products = () => {
 		defaultCategory: 'Усі',
 	});
 
-	// Reset to first page when filters change
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [searchQuery, selectedCategory]);
-
-	const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
-
-	const paginatedItems = useMemo(() => {
-		const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-		const endIndex = startIndex + ITEMS_PER_PAGE;
-		return filteredItems.slice(startIndex, endIndex);
-	}, [filteredItems, currentPage]);
-
-	const handlePageChange = (page: number): void => {
-		setCurrentPage(page);
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	};
+	const { currentPage, totalPages, paginatedItems, handlePageChange } =
+		usePagination({
+			items: filteredItems,
+			itemsPerPage: ITEMS_PER_PAGE,
+			resetDependencies: [searchQuery, selectedCategory],
+		});
 
 	if (loading) {
 		return <Loader />;
