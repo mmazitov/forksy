@@ -74,7 +74,7 @@ const Pagination = ({
 				Показано {startItem}-{endItem} з {totalItems}
 			</div>
 
-			<div className="flex w-full items-center justify-center gap-1">
+			<div className="flex items-center justify-center gap-1">
 				<Button
 					variant="outline"
 					size="icon"

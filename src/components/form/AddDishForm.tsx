@@ -1,5 +1,6 @@
-import { X } from 'lucide-react';
-import { LuPlus } from 'react-icons/lu';
+import { Check, ChevronsUpDown, X } from 'lucide-react';
+import { useState } from 'react';
+import { LuMinus, LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import {
@@ -15,12 +16,15 @@ import {
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
 import { useFormList } from '@/hooks/useFormList';
+import { cn } from '@/lib/utils/cn';
+import { Product } from '@/types';
 
 interface AddDishFormProps {
 	handleSubmit: (e: React.FormEvent) => void;
+	products?: Product[];
 }
 
-const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
+const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
 	const {
 		items: ingredients,
 		addItem: addIngredient,
@@ -34,6 +38,22 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 		removeItem: removeStep,
 		updateItem: updateStep,
 	} = useFormList<string>('');
+
+	const [searchQueries, setSearchQueries] = useState<Record<number, string>>(
+		{},
+	);
+
+	const handleSearchChange = (index: number, value: string) => {
+		setSearchQueries((prev) => ({ ...prev, [index]: value }));
+	};
+
+	const getFilteredProducts = (index: number) => {
+		const query = searchQueries[index]?.toLowerCase() || '';
+		if (!query) return products;
+		return products.filter((product) =>
+			product.name.toLowerCase().includes(query),
+		);
+	};
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-6">
@@ -76,7 +96,7 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 			</div>
 
 			{/* Nutrition & Time */}
-			<div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-5">
 				<div className="space-y-2">
 					<Label htmlFor="calories">Калорії</Label>
 					<Input id="calories" type="number" placeholder="0" />
@@ -114,32 +134,66 @@ const AddDishForm = ({ handleSubmit }: AddDishFormProps) => {
 					</Button>
 				</div>
 				{ingredients.map((ingredient, index) => (
-					<div key={index} className="flex gap-2">
-						<Input
-							placeholder="Назва"
+					<div
+						key={index}
+						className="grid gap-2"
+						style={{
+							gridTemplateColumns: '1fr 128px 40px',
+						}}
+					>
+						<Select
 							value={ingredient.name}
-							onChange={(e) =>
-								updateIngredient(index, { name: e.target.value })
-							}
-							className="flex-1"
-						/>
+							onValueChange={(value) => {
+								updateIngredient(index, { name: value });
+								setSearchQueries((prev) => ({ ...prev, [index]: '' }));
+							}}
+						>
+							<SelectTrigger>
+								<SelectValue placeholder="Виберіть продукт" />
+							</SelectTrigger>
+							<SelectContent>
+								<div className="px-2 pb-2">
+									<Input
+										placeholder="Пошук продукту..."
+										value={searchQueries[index] || ''}
+										onChange={(e) => handleSearchChange(index, e.target.value)}
+										className="h-8"
+										onClick={(e) => e.stopPropagation()}
+									/>
+								</div>
+								<div className="max-h-[200px] overflow-y-auto">
+									{getFilteredProducts(index).length > 0 ? (
+										getFilteredProducts(index).map((product) => (
+											<SelectItem key={product.id} value={product.name}>
+												{product.name}
+											</SelectItem>
+										))
+									) : (
+										<div className="px-2 py-6 text-center text-sm text-muted-foreground">
+											Продукт не знайдено
+										</div>
+									)}
+								</div>
+							</SelectContent>
+						</Select>
 						<Input
 							placeholder="Кількість"
 							value={ingredient.amount}
 							onChange={(e) =>
 								updateIngredient(index, { amount: e.target.value })
 							}
-							className="w-32"
 						/>
-						{ingredients.length > 1 && (
+						{ingredients.length > 1 ? (
 							<Button
 								type="button"
 								variant="ghost"
 								size="icon"
 								onClick={() => removeIngredient(index)}
 							>
-								<LuPlus className="h-4 w-4" />
+								<LuMinus className="h-4 w-4" />
 							</Button>
+						) : (
+							<div />
 						)}
 					</div>
 				))}
