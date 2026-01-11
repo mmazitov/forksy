@@ -1,4 +1,4 @@
-import { Check, ChevronsUpDown, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useState } from 'react';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
@@ -16,12 +16,11 @@ import {
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
 import { useFormList } from '@/hooks/useFormList';
-import { cn } from '@/lib/utils/cn';
-import { Product } from '@/types';
+import { ProductFieldsFragment } from '@/lib/graphql';
 
 interface AddDishFormProps {
 	handleSubmit: (e: React.FormEvent) => void;
-	products?: Product[];
+	products?: ProductFieldsFragment[];
 }
 
 const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
@@ -169,7 +168,7 @@ const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
 											</SelectItem>
 										))
 									) : (
-										<div className="px-2 py-6 text-center text-sm text-muted-foreground">
+										<div className="text-muted-foreground px-2 py-6 text-center text-sm">
 											Продукт не знайдено
 										</div>
 									)}
