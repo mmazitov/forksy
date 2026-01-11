@@ -9,7 +9,7 @@ const Home = () => {
 	return (
 		<>
 			<MetaData
-				title="Головна"
+				title={METADATA_CONFIG.titles.home}
 				description={METADATA_CONFIG.descriptions.home}
 				keywords={METADATA_CONFIG.keywords.home}
 				type="website"

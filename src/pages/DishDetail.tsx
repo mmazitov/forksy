@@ -19,7 +19,7 @@ const DishDetail = () => {
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
 				title={dish.name}
-				description={`${dish.description}`}
+				description={dish.description}
 				keywords={['recipe', 'dish', 'cooking', dish.name, dish.category]}
 				type="article"
 			/>
@@ -31,7 +31,7 @@ const DishDetail = () => {
 			</Link>
 
 			{/* Header Image */}
-			<div className="bg-muted mb-8 aspect-[21/9] overflow-hidden rounded-2xl">
+			<div className="bg-muted mb-8 aspect-21/9 overflow-hidden rounded-2xl">
 				<img
 					src={dish.image}
 					alt={dish.name}
@@ -96,7 +96,7 @@ const DishDetail = () => {
 							<ol className="space-y-4">
 								{dish.instructions.map((step, index) => (
 									<li key={index} className="flex gap-4">
-										<span className="bg-primary text-primary-foreground flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold">
+										<span className="bg-primary text-primary-foreground flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
 											{index + 1}
 										</span>
 										<p className="text-muted-foreground pt-1">{step}</p>

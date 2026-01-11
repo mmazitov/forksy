@@ -29,7 +29,7 @@ const Dishes = () => {
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
-				title="Страви та рецепти"
+				title={METADATA_CONFIG.titles.dishes}
 				description={METADATA_CONFIG.descriptions.dishes}
 				keywords={METADATA_CONFIG.keywords.dishes}
 				type="website"

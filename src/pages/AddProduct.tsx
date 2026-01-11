@@ -31,7 +31,11 @@ const AddProduct = () => {
 	return (
 		<div className="container mx-auto max-w-3xl px-4 py-8">
 			<MetaData
-				title={isEditMode ? 'Редагувати продукт' : 'Додати продукт'}
+				title={
+					isEditMode
+						? METADATA_CONFIG.titles.editProduct
+						: METADATA_CONFIG.titles.addProduct
+				}
 				description={METADATA_CONFIG.descriptions.addProduct}
 				keywords={METADATA_CONFIG.keywords.products}
 				type="website"

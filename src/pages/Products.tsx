@@ -58,7 +58,7 @@ const Products = () => {
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
-				title="Продукти"
+				title={METADATA_CONFIG.titles.products}
 				description={METADATA_CONFIG.descriptions.products}
 				keywords={METADATA_CONFIG.keywords.products}
 				type="website"

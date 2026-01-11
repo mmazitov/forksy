@@ -24,9 +24,9 @@ const Settings = () => {
 
 	return (
 		<main className="container mx-auto px-4 py-8">
-			<div className="max-w-2xl mx-auto space-y-6">
+			<div className="mx-auto max-w-2xl space-y-6">
 				<MetaData
-					title="Налаштування"
+					title={METADATA_CONFIG.titles.settings}
 					description={METADATA_CONFIG.descriptions.settings}
 					keywords={METADATA_CONFIG.keywords.settings}
 					type="website"

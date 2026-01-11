@@ -12,9 +12,9 @@ import { METADATA_CONFIG } from '@/lib/config';
 
 const Schedule = () => {
 	return (
-		<div className="container px-4 py-8 mx-auto">
+		<div className="container mx-auto px-4 py-8">
 			<MetaData
-				title="Розклад харчування"
+				title={METADATA_CONFIG.titles.schedule}
 				description={METADATA_CONFIG.descriptions.schedule}
 				keywords={METADATA_CONFIG.keywords.schedule}
 				type="website"

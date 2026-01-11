@@ -160,7 +160,7 @@ const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
 										onClick={(e) => e.stopPropagation()}
 									/>
 								</div>
-								<div className="max-h-[200px] overflow-y-auto">
+								<div className="max-h-50 overflow-y-auto">
 									{getFilteredProducts(index).length > 0 ? (
 										getFilteredProducts(index).map((product) => (
 											<SelectItem key={product.id} value={product.name}>

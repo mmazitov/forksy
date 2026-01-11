@@ -1,3 +1,5 @@
+import { LuSave } from 'react-icons/lu';
+
 import {
 	Card,
 	CardContent,
@@ -11,7 +13,6 @@ import DaySummary from '@/components/daySummary/DaySummary';
 import { MODAL_TYPES } from '@/constants';
 import { useMenuPlanner } from '@/hooks/useMenuPlanner';
 import { METADATA_CONFIG } from '@/lib/config';
-import { LuSave } from 'react-icons/lu';
 
 const MenuPlanner = () => {
 	const {
@@ -35,9 +36,9 @@ const MenuPlanner = () => {
 	const dailyStats = getDailyStats();
 
 	return (
-		<div className="container px-4 py-8 mx-auto">
+		<div className="container mx-auto px-4 py-8">
 			<MetaData
-				title="Планувальник меню"
+				title={METADATA_CONFIG.titles.menu}
 				description={METADATA_CONFIG.descriptions.menu}
 				keywords={METADATA_CONFIG.keywords.menu}
 				type="website"

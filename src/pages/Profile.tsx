@@ -29,9 +29,9 @@ const Profile = () => {
 
 	return (
 		<main className="container mx-auto px-4 py-8">
-			<div className="max-w-2xl mx-auto space-y-6">
+			<div className="mx-auto max-w-2xl space-y-6">
 				<MetaData
-					title="Профіль користувача"
+					title={METADATA_CONFIG.titles.profile}
 					description={METADATA_CONFIG.descriptions.profile}
 					keywords={METADATA_CONFIG.keywords.profile}
 					type="website"
@@ -43,7 +43,7 @@ const Profile = () => {
 				/>
 
 				<Card>
-					<CardHeader className="flex justify-between items-center flex-row">
+					<CardHeader className="flex flex-row items-center justify-between">
 						<CardTitle>Основна інформація</CardTitle>
 						<Button variant="link" onClick={handleEdit}>
 							{' '}
@@ -52,7 +52,7 @@ const Profile = () => {
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<div className="space-y-2">
-							<Label htmlFor="name">Ім'я:</Label>
+							<Label htmlFor="name">Ім&apos;я:</Label>
 							{isEditMode ? (
 								<Input
 									id="name"
@@ -152,16 +152,16 @@ const Profile = () => {
 					<CardContent>
 						<div className="grid grid-cols-3 gap-4 text-center">
 							<div>
-								<div className="text-2xl font-bold text-primary">24</div>
-								<div className="text-sm text-muted-foreground">Блюд</div>
+								<div className="text-primary text-2xl font-bold">24</div>
+								<div className="text-muted-foreground text-sm">Блюд</div>
 							</div>
 							<div>
-								<div className="text-2xl font-bold text-primary">156</div>
-								<div className="text-sm text-muted-foreground">Продуктів</div>
+								<div className="text-primary text-2xl font-bold">156</div>
+								<div className="text-muted-foreground text-sm">Продуктів</div>
 							</div>
 							<div>
-								<div className="text-2xl font-bold text-primary">12</div>
-								<div className="text-sm text-muted-foreground">Меню</div>
+								<div className="text-primary text-2xl font-bold">12</div>
+								<div className="text-muted-foreground text-sm">Меню</div>
 							</div>
 						</div>
 					</CardContent>
