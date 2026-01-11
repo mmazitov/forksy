@@ -158,6 +158,9 @@ const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
 										onChange={(e) => handleSearchChange(index, e.target.value)}
 										className="h-8"
 										onClick={(e) => e.stopPropagation()}
+										onKeyDown={(e) => e.stopPropagation()}
+										onKeyUp={(e) => e.stopPropagation()}
+										autoFocus
 									/>
 								</div>
 								<div className="max-h-50 overflow-y-auto">
