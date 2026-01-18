@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 import {
 	ProductsDocument,
-	useAddToFavoritesMutation,
+	useaddToFavoritesProductMutation,
 	useCreateProductMutation,
 	useDeleteProductMutation,
 	useRemoveFromFavoritesMutation,
@@ -172,7 +172,7 @@ export const useDeleteProduct = (productId: string) => {
 
 export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 	const [isFav, setIsFav] = useState(isFavorite);
-	const [addToFavorites] = useAddToFavoritesMutation();
+	const [addToFavoritesProduct] = useaddToFavoritesProductMutation();
 	const [removeFromFavorites] = useRemoveFromFavoritesMutation();
 
 	const toggleFavorite = async () => {
@@ -182,7 +182,7 @@ export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 		try {
 			setIsFav(newState);
 
-			const mutation = isFav ? removeFromFavorites : addToFavorites;
+			const mutation = isFav ? removeFromFavorites : addToFavoritesProduct;
 
 			await mutation({
 				variables: { productId },

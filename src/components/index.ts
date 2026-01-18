@@ -31,7 +31,7 @@ export {
 	CardDescription,
 	CardFooter,
 	CardHeader,
-	CardTitle
+	CardTitle,
 } from './ui/card';
 
 export {
@@ -44,7 +44,7 @@ export {
 	DialogOverlay,
 	DialogPortal,
 	DialogTitle,
-	DialogTrigger
+	DialogTrigger,
 } from './ui/dialog';
 
 // Dropdown Menu
@@ -63,7 +63,7 @@ export {
 	DropdownMenuSub,
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
-	DropdownMenuTrigger
+	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
 export { Input } from './ui/input';
@@ -80,7 +80,7 @@ export {
 	SelectScrollUpButton,
 	SelectSeparator,
 	SelectTrigger,
-	SelectValue
+	SelectValue,
 } from './ui/select';
 
 export { Separator } from './ui/separator';
@@ -100,7 +100,7 @@ export {
 	ToastTitle,
 	ToastViewport,
 	type ToastActionElement,
-	type ToastProps
+	type ToastProps,
 } from './ui/toast';
 
 export { Toaster } from './ui/toaster';

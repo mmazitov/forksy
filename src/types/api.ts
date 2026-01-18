@@ -35,7 +35,7 @@ export type AuthPayload = {
 
 export type Mutation = {
 	__typename?: 'Mutation';
-	addToFavorites: User;
+	addToFavoritesProduct: User;
 	createProduct: Product;
 	deleteProduct: Product;
 	handleOAuthCallback: SocialAuthPayload;
@@ -46,7 +46,7 @@ export type Mutation = {
 	updateProfile: User;
 };
 
-export type MutationAddToFavoritesArgs = {
+export type MutationaddToFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
 };
 

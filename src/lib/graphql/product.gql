@@ -93,8 +93,8 @@ mutation DeleteProduct($id: ID!) {
 	}
 }
 
-mutation addToFavorites($productId: ID!) {
-	addToFavorites(productId: $productId) {
+mutation addToFavoritesProduct($productId: ID!) {
+	addToFavoritesProduct(productId: $productId) {
 		id
 		name
 	}
