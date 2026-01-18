@@ -93,14 +93,14 @@ mutation DeleteProduct($id: ID!) {
 	}
 }
 
-mutation addToFavoritesProduct($productId: ID!) {
+mutation AddToFavoritesProduct($productId: ID!) {
 	addToFavoritesProduct(productId: $productId) {
 		id
 		name
 	}
 }
-mutation removeFromFavorites($productId: ID!) {
-	removeFromFavorites(productId: $productId) {
+mutation RemoveFromFavoritesProduct($productId: ID!) {
+	removeFromFavoritesProduct(productId: $productId) {
 		id
 		name
 	}

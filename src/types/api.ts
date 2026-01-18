@@ -33,21 +33,60 @@ export type AuthPayload = {
 	user: User;
 };
 
+export type Dish = {
+	__typename?: 'Dish';
+	calories: Maybe<Scalars['Int']['output']>;
+	category: Maybe<Scalars['String']['output']>;
+	createdAt: Scalars['String']['output'];
+	description: Maybe<Scalars['String']['output']>;
+	id: Scalars['ID']['output'];
+	image: Maybe<Scalars['String']['output']>;
+	ingredients: Array<Scalars['String']['output']>;
+	instructions: Array<Scalars['String']['output']>;
+	isFavorite: Maybe<Scalars['Boolean']['output']>;
+	name: Scalars['String']['output'];
+	prepTime: Maybe<Scalars['Int']['output']>;
+	servings: Maybe<Scalars['Int']['output']>;
+	updatedAt: Scalars['String']['output'];
+	userId: Scalars['ID']['output'];
+};
+
 export type Mutation = {
 	__typename?: 'Mutation';
+	addToFavoritesDish: User;
 	addToFavoritesProduct: User;
+	createDish: Dish;
 	createProduct: Product;
+	deleteDish: Dish;
 	deleteProduct: Product;
 	handleOAuthCallback: SocialAuthPayload;
 	login: AuthPayload;
 	register: AuthPayload;
-	removeFromFavorites: User;
+	removeFromFavoritesDish: User;
+	removeFromFavoritesProduct: User;
+	updateDish: Dish;
 	updateProduct: Product;
 	updateProfile: User;
 };
 
-export type MutationaddToFavoritesProductArgs = {
+export type MutationAddToFavoritesDishArgs = {
+	dishId: Scalars['ID']['input'];
+};
+
+export type MutationAddToFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
+};
+
+export type MutationCreateDishArgs = {
+	calories?: InputMaybe<Scalars['Int']['input']>;
+	category?: InputMaybe<Scalars['String']['input']>;
+	description?: InputMaybe<Scalars['String']['input']>;
+	image?: InputMaybe<Scalars['String']['input']>;
+	ingredients: Array<Scalars['String']['input']>;
+	instructions: Array<Scalars['String']['input']>;
+	name: Scalars['String']['input'];
+	prepTime?: InputMaybe<Scalars['Int']['input']>;
+	servings?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MutationCreateProductArgs = {
@@ -59,6 +98,10 @@ export type MutationCreateProductArgs = {
 	imageUrl?: InputMaybe<Scalars['String']['input']>;
 	name: Scalars['String']['input'];
 	protein?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationDeleteDishArgs = {
+	id: Scalars['ID']['input'];
 };
 
 export type MutationDeleteProductArgs = {
@@ -81,8 +124,25 @@ export type MutationRegisterArgs = {
 	password: Scalars['String']['input'];
 };
 
-export type MutationRemoveFromFavoritesArgs = {
+export type MutationRemoveFromFavoritesDishArgs = {
+	dishId: Scalars['ID']['input'];
+};
+
+export type MutationRemoveFromFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
+};
+
+export type MutationUpdateDishArgs = {
+	calories?: InputMaybe<Scalars['Int']['input']>;
+	category?: InputMaybe<Scalars['String']['input']>;
+	description?: InputMaybe<Scalars['String']['input']>;
+	id: Scalars['ID']['input'];
+	image?: InputMaybe<Scalars['String']['input']>;
+	ingredients?: InputMaybe<Array<Scalars['String']['input']>>;
+	instructions?: InputMaybe<Array<Scalars['String']['input']>>;
+	name?: InputMaybe<Scalars['String']['input']>;
+	prepTime?: InputMaybe<Scalars['Int']['input']>;
+	servings?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MutationUpdateProductArgs = {
@@ -125,10 +185,24 @@ export type Product = {
 
 export type Query = {
 	__typename?: 'Query';
+	dish: Maybe<Dish>;
+	dishes: Array<Dish>;
+	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
 	me: Maybe<User>;
 	product: Maybe<Product>;
 	products: Array<Product>;
+};
+
+export type QueryDishArgs = {
+	id: Scalars['ID']['input'];
+};
+
+export type QueryDishesArgs = {
+	category?: InputMaybe<Scalars['String']['input']>;
+	limit?: InputMaybe<Scalars['Int']['input']>;
+	offset?: InputMaybe<Scalars['Int']['input']>;
+	search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryProductArgs = {
@@ -157,6 +231,7 @@ export type User = {
 	dislike: Array<Scalars['String']['output']>;
 	email: Maybe<Scalars['String']['output']>;
 	facebookId: Maybe<Scalars['String']['output']>;
+	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
 	githubId: Maybe<Scalars['String']['output']>;
 	googleId: Maybe<Scalars['String']['output']>;

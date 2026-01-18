@@ -7,10 +7,10 @@ import { toast } from 'sonner';
 
 import {
 	ProductsDocument,
-	useaddToFavoritesProductMutation,
+	useAddToFavoritesProductMutation,
 	useCreateProductMutation,
 	useDeleteProductMutation,
-	useRemoveFromFavoritesMutation,
+	useRemoveFromFavoritesProductMutation,
 	useUpdateProductMutation,
 } from '@/lib/graphql';
 import { ProductSchema } from '@/lib/utils/schemas';
@@ -172,8 +172,8 @@ export const useDeleteProduct = (productId: string) => {
 
 export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 	const [isFav, setIsFav] = useState(isFavorite);
-	const [addToFavoritesProduct] = useaddToFavoritesProductMutation();
-	const [removeFromFavorites] = useRemoveFromFavoritesMutation();
+	const [addToFavoritesProduct] = useAddToFavoritesProductMutation();
+	const [removeFromFavoritesProduct] = useRemoveFromFavoritesProductMutation();
 
 	const toggleFavorite = async () => {
 		const previousState = isFav;
@@ -182,7 +182,9 @@ export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 		try {
 			setIsFav(newState);
 
-			const mutation = isFav ? removeFromFavorites : addToFavoritesProduct;
+			const mutation = isFav
+				? removeFromFavoritesProduct
+				: addToFavoritesProduct;
 
 			await mutation({
 				variables: { productId },

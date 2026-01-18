@@ -93,22 +93,26 @@ export type DeleteProductMutation = {
 	deleteProduct: { __typename?: 'Product'; id: string };
 };
 
-export type AddToFavoritesMutationVariables = Types.Exact<{
+export type AddToFavoritesProductMutationVariables = Types.Exact<{
 	productId: Types.Scalars['ID']['input'];
 }>;
 
-export type AddToFavoritesMutation = {
+export type AddToFavoritesProductMutation = {
 	__typename?: 'Mutation';
-	addToFavorites: { __typename?: 'User'; id: string; name?: string | null };
+	addToFavoritesProduct: {
+		__typename?: 'User';
+		id: string;
+		name?: string | null;
+	};
 };
 
-export type RemoveFromFavoritesMutationVariables = Types.Exact<{
+export type RemoveFromFavoritesProductMutationVariables = Types.Exact<{
 	productId: Types.Scalars['ID']['input'];
 }>;
 
-export type RemoveFromFavoritesMutation = {
+export type RemoveFromFavoritesProductMutation = {
 	__typename?: 'Mutation';
-	removeFromFavorites: {
+	removeFromFavoritesProduct: {
 		__typename?: 'User';
 		id: string;
 		name?: string | null;
@@ -956,13 +960,13 @@ export function useDeleteProductMutation(
 export type DeleteProductMutationHookResult = ReturnType<
 	typeof useDeleteProductMutation
 >;
-export const AddToFavoritesDocument = {
+export const AddToFavoritesProductDocument = {
 	kind: 'Document',
 	definitions: [
 		{
 			kind: 'OperationDefinition',
 			operation: 'mutation',
-			name: { kind: 'Name', value: 'addToFavorites' },
+			name: { kind: 'Name', value: 'AddToFavoritesProduct' },
 			variableDefinitions: [
 				{
 					kind: 'VariableDefinition',
@@ -981,7 +985,7 @@ export const AddToFavoritesDocument = {
 				selections: [
 					{
 						kind: 'Field',
-						name: { kind: 'Name', value: 'addToFavorites' },
+						name: { kind: 'Name', value: 'addToFavoritesProduct' },
 						arguments: [
 							{
 								kind: 'Argument',
@@ -1005,28 +1009,28 @@ export const AddToFavoritesDocument = {
 		},
 	],
 } as unknown as DocumentNode;
-export function useAddToFavoritesMutation(
+export function useAddToFavoritesProductMutation(
 	baseOptions?: ApolloReactHooks.MutationHookOptions<
-		AddToFavoritesMutation,
-		AddToFavoritesMutationVariables
+		AddToFavoritesProductMutation,
+		AddToFavoritesProductMutationVariables
 	>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return ApolloReactHooks.useMutation<
-		AddToFavoritesMutation,
-		AddToFavoritesMutationVariables
-	>(AddToFavoritesDocument, options);
+		AddToFavoritesProductMutation,
+		AddToFavoritesProductMutationVariables
+	>(AddToFavoritesProductDocument, options);
 }
-export type AddToFavoritesMutationHookResult = ReturnType<
-	typeof useAddToFavoritesMutation
+export type AddToFavoritesProductMutationHookResult = ReturnType<
+	typeof useAddToFavoritesProductMutation
 >;
-export const RemoveFromFavoritesDocument = {
+export const RemoveFromFavoritesProductDocument = {
 	kind: 'Document',
 	definitions: [
 		{
 			kind: 'OperationDefinition',
 			operation: 'mutation',
-			name: { kind: 'Name', value: 'removeFromFavorites' },
+			name: { kind: 'Name', value: 'RemoveFromFavoritesProduct' },
 			variableDefinitions: [
 				{
 					kind: 'VariableDefinition',
@@ -1045,7 +1049,7 @@ export const RemoveFromFavoritesDocument = {
 				selections: [
 					{
 						kind: 'Field',
-						name: { kind: 'Name', value: 'removeFromFavorites' },
+						name: { kind: 'Name', value: 'removeFromFavoritesProduct' },
 						arguments: [
 							{
 								kind: 'Argument',
@@ -1069,18 +1073,18 @@ export const RemoveFromFavoritesDocument = {
 		},
 	],
 } as unknown as DocumentNode;
-export function useRemoveFromFavoritesMutation(
+export function useRemoveFromFavoritesProductMutation(
 	baseOptions?: ApolloReactHooks.MutationHookOptions<
-		RemoveFromFavoritesMutation,
-		RemoveFromFavoritesMutationVariables
+		RemoveFromFavoritesProductMutation,
+		RemoveFromFavoritesProductMutationVariables
 	>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return ApolloReactHooks.useMutation<
-		RemoveFromFavoritesMutation,
-		RemoveFromFavoritesMutationVariables
-	>(RemoveFromFavoritesDocument, options);
+		RemoveFromFavoritesProductMutation,
+		RemoveFromFavoritesProductMutationVariables
+	>(RemoveFromFavoritesProductDocument, options);
 }
-export type RemoveFromFavoritesMutationHookResult = ReturnType<
-	typeof useRemoveFromFavoritesMutation
+export type RemoveFromFavoritesProductMutationHookResult = ReturnType<
+	typeof useRemoveFromFavoritesProductMutation
 >;
