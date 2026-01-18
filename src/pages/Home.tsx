@@ -1,9 +1,11 @@
-import { MetaData } from '@/components';
+import {
+	FeaturedDishes,
+	Hero,
+	MetaData,
+	QuickActions,
+	Stats,
+} from '@/components';
 import { METADATA_CONFIG } from '@/lib/config';
-import { FeaturedDishes } from '@/modules/featuredDishes';
-import { Hero } from '@/modules/hero';
-import { QuickActions } from '@/modules/quickActions';
-import { Stats } from '@/modules/stats';
 
 const Home = () => {
 	return (

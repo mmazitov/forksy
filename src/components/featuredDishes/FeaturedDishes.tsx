@@ -1,16 +1,17 @@
+import { LuTrendingUp } from 'react-icons/lu';
+import { Link } from 'react-router-dom';
+
 import CardDish from '@/components/card/CardDish';
 import { Grid } from '@/components/grid';
 import { Button } from '@/components/ui';
 import { dishes } from '@/mock';
-import { LuTrendingUp } from 'react-icons/lu';
-import { Link } from 'react-router-dom';
 
 const FeaturedDishes = () => {
 	return (
 		<>
-			<div className="flex items-center justify-between mb-8">
+			<div className="mb-8 flex items-center justify-between">
 				<div>
-					<h2 className="mb-2 text-3xl font-bold text-foreground">
+					<h2 className="text-foreground mb-2 text-3xl font-bold">
 						Популярні рецепти
 					</h2>
 					<p className="text-muted-foreground">
@@ -20,7 +21,7 @@ const FeaturedDishes = () => {
 				<Link to="/dishes">
 					<Button variant="ghost" className="gap-2">
 						Всі рецепти
-						<LuTrendingUp className="w-4 h-4" />
+						<LuTrendingUp className="h-4 w-4" />
 					</Button>
 				</Link>
 			</div>

@@ -23,7 +23,7 @@ const Dishes = () => {
 	} = useFilter(dishes, {
 		searchField: 'name',
 		categoryField: 'category',
-		defaultCategory: 'all',
+		defaultCategory: 'Усі',
 	});
 
 	return (

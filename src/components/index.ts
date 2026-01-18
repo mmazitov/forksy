@@ -112,3 +112,8 @@ export { Checkbox } from './ui/checkbox';
 export { PwaInstallPrompt } from './pwaInstallPrompt';
 
 export { Pagination } from './pagination';
+
+export { FeaturedDishes } from './featuredDishes';
+export { Hero } from './hero';
+export { QuickActions } from './quickActions';
+export { Stats } from './stats';
