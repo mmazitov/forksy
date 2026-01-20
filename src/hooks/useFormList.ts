@@ -5,8 +5,13 @@ export interface Ingredient {
 	amount: string;
 }
 
-export const useFormList = <T extends object | string>(initialItem: T) => {
-	const [items, setItems] = useState<T[]>([initialItem]);
+export const useFormList = <T extends object | string>(
+	initialItem: T,
+	initialItems?: T[],
+) => {
+	const [items, setItems] = useState<T[]>(
+		initialItems && initialItems.length > 0 ? initialItems : [initialItem],
+	);
 
 	const addItem = useCallback(() => {
 		setItems((prev) => [...prev, initialItem]);
@@ -21,8 +26,14 @@ export const useFormList = <T extends object | string>(initialItem: T) => {
 			const newItems = [...prev];
 			if (typeof updates === 'string' || typeof updates === 'number') {
 				newItems[index] = updates as T;
-			} else if (typeof newItems[index] === 'object' && newItems[index] !== null) {
-				newItems[index] = { ...(newItems[index] as object), ...(updates as object) } as T;
+			} else if (
+				typeof newItems[index] === 'object' &&
+				newItems[index] !== null
+			) {
+				newItems[index] = {
+					...(newItems[index] as object),
+					...(updates as object),
+				} as T;
 			}
 			return newItems;
 		});

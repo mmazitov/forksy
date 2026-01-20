@@ -1,5 +1,3 @@
-import { toast } from 'sonner';
-
 import {
 	BackButton,
 	Card,
@@ -15,11 +13,6 @@ import { useProductsQuery } from '@/lib/graphql';
 
 const AddDish = () => {
 	const { data, loading } = useProductsQuery();
-
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		toast.success('Страва успішно додана!');
-	};
 
 	return (
 		<div className="container mx-auto max-w-4xl px-4 py-8">
@@ -37,14 +30,7 @@ const AddDish = () => {
 					<CardTitle className="text-3xl">Додати нову страву</CardTitle>
 				</CardHeader>
 				<CardContent>
-					{loading ? (
-						<Loader />
-					) : (
-						<DishForm
-							handleSubmit={handleSubmit}
-							products={data?.products || []}
-						/>
-					)}
+					{loading ? <Loader /> : <DishForm products={data?.products || []} />}
 				</CardContent>
 			</Card>
 		</div>

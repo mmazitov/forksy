@@ -1,7 +1,10 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { Controller } from 'react-hook-form';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
+
+import FormItem from './FormItem';
 
 import {
 	Button,
@@ -15,29 +18,79 @@ import {
 	Textarea,
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
-import { useFormList } from '@/hooks/useFormList';
-import { ProductFieldsFragment } from '@/lib/graphql';
+import { useAddDish, useEditDish } from '@/hooks';
+import { Ingredient } from '@/hooks/useFormList';
+import { DishFieldsFragment, ProductFieldsFragment } from '@/lib/graphql';
+
+// Helper to parse ingredient string "name - amount" back to object
+const parseIngredient = (str: string): Ingredient => {
+	const parts = str.split(' - ');
+	return {
+		name: parts[0] || '',
+		amount: parts[1] || '',
+	};
+};
 
 interface DishFormProps {
-	handleSubmit: (e: React.FormEvent) => void;
-	products?: ProductFieldsFragment[];
+	dish?: DishFieldsFragment | null;
+	products: ProductFieldsFragment[];
+	isEditMode?: boolean;
 }
 
-const DishForm = ({ handleSubmit, products = [] }: DishFormProps) => {
+const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
+	// Parse existing ingredients and instructions for edit mode
+	const existingIngredients = dish?.ingredients?.map(parseIngredient);
+	const existingInstructions = dish?.instructions;
+
+	const addDishHook = useAddDish();
+	const editDishHook = useEditDish(
+		dish?.id || '',
+		dish
+			? {
+					name: dish.name,
+					category: dish.category || '',
+					imageUrl: dish.imageUrl || '',
+					calories: dish.calories || 0,
+					description: dish.description || '',
+					prepTime: dish.prepTime || 0,
+					servings: dish.servings || 0,
+				}
+			: undefined,
+		dish
+			? {
+					ingredients: existingIngredients,
+					instructions: existingInstructions,
+				}
+			: undefined,
+	);
+
+	const {
+		register,
+		handleSubmit,
+		control,
+		errors,
+		onSubmit,
+		loading,
+		ingredientsList,
+		instructionsList,
+	} = isEditMode ? editDishHook : addDishHook;
+
+	// Destructure list helpers
 	const {
 		items: ingredients,
 		addItem: addIngredient,
 		removeItem: removeIngredient,
 		updateItem: updateIngredient,
-	} = useFormList({ name: '', amount: '' });
+	} = ingredientsList;
 
 	const {
-		items: steps,
-		addItem: addStep,
-		removeItem: removeStep,
-		updateItem: updateStep,
-	} = useFormList<string>('');
+		items: instructions,
+		addItem: addInstruction,
+		removeItem: removeInstruction,
+		updateItem: updateInstruction,
+	} = instructionsList;
 
+	// Search state for product selection
 	const [searchQueries, setSearchQueries] = useState<Record<number, string>>(
 		{},
 	);
@@ -49,54 +102,76 @@ const DishForm = ({ handleSubmit, products = [] }: DishFormProps) => {
 	const getFilteredProducts = (index: number) => {
 		const query = searchQueries[index]?.toLowerCase() || '';
 		if (!query) return products;
-		return products.filter((product) =>
-			product.name.toLowerCase().includes(query),
-		);
+		return products.filter((p) => p.name.toLowerCase().includes(query));
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-6">
+		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 			{/* Basic Info */}
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-				<div className="space-y-2">
-					<Label htmlFor="name">Назва страви *</Label>
-					<Input id="name" placeholder="Наприклад: Вівсяна каша" required />
-				</div>
+				<FormItem
+					id="name"
+					label="Назва страви *"
+					error={errors.name}
+					registration={register('name')}
+					inputProps={{
+						placeholder: 'Наприклад: Вівсяна каша',
+					}}
+				/>
 
 				<div className="space-y-2">
 					<Label htmlFor="category">Категорія *</Label>
-					<Select required>
-						<SelectTrigger>
-							<SelectValue placeholder="Виберіть категорію" />
-						</SelectTrigger>
-						<SelectContent>
-							{CATEGORIES_DISHES.slice(1).map((category) => (
-								<SelectItem key={category.id} value={category.name}>
-									{category.name}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+					<Controller
+						name="category"
+						control={control}
+						render={({ field }) => (
+							<Select onValueChange={field.onChange} value={field.value}>
+								<SelectTrigger>
+									<SelectValue placeholder="Виберіть категорію" />
+								</SelectTrigger>
+								<SelectContent>
+									{CATEGORIES_DISHES.slice(1).map((category) => (
+										<SelectItem key={category.id} value={category.name}>
+											{category.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						)}
+					/>
+					{errors.category && (
+						<p className="text-destructive text-sm">
+							{errors.category.message}
+						</p>
+					)}
 				</div>
 			</div>
 
-			<div className="space-y-2">
-				<Label htmlFor="image">URL зображення</Label>
-				<Input id="image" type="url" placeholder="https://..." />
-			</div>
+			<FormItem
+				id="imageUrl"
+				label="URL зображення"
+				type="url"
+				error={errors.imageUrl}
+				registration={register('imageUrl')}
+				inputProps={{
+					placeholder: 'https://...',
+				}}
+			/>
 
-			<div className="space-y-2">
-				<Label htmlFor="description">Опис</Label>
-				<Textarea
-					id="description"
-					placeholder="Короткий опис страви."
-					rows={3}
-				/>
-			</div>
+			<FormItem
+				itemType="textarea"
+				id="description"
+				label="Опис"
+				error={errors.description}
+				registration={register('description')}
+				textareaProps={{
+					placeholder: 'Короткий опис страви...',
+				}}
+			/>
 
 			{/* Nutrition & Time */}
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-				<div className="space-y-2">
+				{/* <div className="space-y-2">
 					<Label htmlFor="calories">Калорії</Label>
 					<Input id="calories" type="number" placeholder="0" />
 				</div>
@@ -111,11 +186,17 @@ const DishForm = ({ handleSubmit, products = [] }: DishFormProps) => {
 				<div className="space-y-2">
 					<Label htmlFor="carbs">Вуглеводи (г)</Label>
 					<Input id="carbs" type="number" step="0.1" placeholder="0" />
-				</div>
-				<div className="space-y-2">
-					<Label htmlFor="time">Час (хв)</Label>
-					<Input id="time" type="number" placeholder="0" />
-				</div>
+				</div> */}
+				<FormItem
+					id="prepTime"
+					label="Час приготування (хв) *"
+					type="number"
+					error={errors.prepTime}
+					registration={register('prepTime', { valueAsNumber: true })}
+					inputProps={{
+						placeholder: '0',
+					}}
+				/>
 			</div>
 
 			{/* Ingredients */}
@@ -204,30 +285,35 @@ const DishForm = ({ handleSubmit, products = [] }: DishFormProps) => {
 			{/* Instructions */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
-					<Label>Шаги приготування</Label>
-					<Button type="button" variant="outline" size="sm" onClick={addStep}>
+					<Label>Кроки приготування</Label>
+					<Button
+						type="button"
+						variant="outline"
+						size="sm"
+						onClick={addInstruction}
+					>
 						<LuPlus className="mr-1 h-4 w-4" />
-						Додати шаг
+						Додати крок
 					</Button>
 				</div>
-				{steps.map((step, index) => (
+				{instructions.map((instruction, index) => (
 					<div key={index} className="flex items-start gap-2">
-						<span className="bg-primary text-primary-foreground mt-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-sm font-semibold">
+						<span className="bg-primary text-primary-foreground mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
 							{index + 1}
 						</span>
 						<Textarea
 							placeholder="Опишіть крок приготування..."
-							value={step as string}
-							onChange={(e) => updateStep(index, e.target.value as never)}
+							value={instruction}
+							onChange={(e) => updateInstruction(index, e.target.value)}
 							rows={2}
 							className="flex-1"
 						/>
-						{steps.length > 1 && (
+						{instructions.length > 1 && (
 							<Button
 								type="button"
 								variant="ghost"
 								size="icon"
-								onClick={() => removeStep(index)}
+								onClick={() => removeInstruction(index)}
 								className="mt-2"
 							>
 								<X className="h-4 w-4" />
@@ -237,11 +323,17 @@ const DishForm = ({ handleSubmit, products = [] }: DishFormProps) => {
 				))}
 			</div>
 
-			<div className="flex gap-4">
-				<Button type="submit" size="lg" className="flex-1">
-					Додати страву
+			<div className="flex flex-col gap-4 md:flex-row">
+				<Button type="submit" size="lg" className="w-full" disabled={loading}>
+					{loading
+						? isEditMode
+							? 'Оновлення...'
+							: 'Додавання...'
+						: isEditMode
+							? 'Оновити страву'
+							: 'Додати страву'}
 				</Button>
-				<Link to="/dishes" className="flex-1">
+				<Link to="/dishes" className="w-full">
 					<Button type="button" variant="outline" size="lg" className="w-full">
 						Скасувати
 					</Button>

@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { Ingredient, useFormList } from './useFormList';
+
 import {
 	DishesDocument,
 	useAddToFavoritesDishMutation,
@@ -29,6 +31,21 @@ interface DishFormData {
 	instructions: string[];
 }
 
+const defaultDishValues: DishFormData = {
+	name: '',
+	category: '',
+	imageUrl: '',
+	calories: 0,
+	protein: 0,
+	fat: 0,
+	carbs: 0,
+	description: '',
+	prepTime: 0,
+	servings: 0,
+	ingredients: [''],
+	instructions: [''],
+};
+
 export const useAddDish = () => {
 	const navigate = useNavigate();
 	const [createDish, { loading }] = useCreateDishMutation({
@@ -43,23 +60,31 @@ export const useAddDish = () => {
 		formState: { errors },
 	} = useForm<DishFormData>({
 		resolver: zodResolver(DishSchema),
-		defaultValues: {
-			name: '',
-			category: '',
-			imageUrl: '',
-			calories: 0,
-			protein: 0,
-			fat: 0,
-			carbs: 0,
-			description: '',
-			prepTime: 0,
-			servings: 0,
-			ingredients: [''],
-			instructions: [''],
-		},
+		defaultValues: defaultDishValues,
 	});
 
+	// Lists for ingredients and instructions
+	const ingredientsList = useFormList<Ingredient>({ name: '', amount: '' });
+	const instructionsList = useFormList<string>('');
+
 	const onSubmit = async (data: DishFormData) => {
+		// Filter out empty values
+		const filteredIngredients = ingredientsList.items
+			.filter((i) => i.name.trim())
+			.map((i) => `${i.name}${i.amount ? ` - ${i.amount}` : ''}`);
+
+		const filteredInstructions = instructionsList.items.filter((i) => i.trim());
+
+		if (filteredIngredients.length === 0) {
+			toast.error('Додайте хоча б один інгредієнт');
+			return;
+		}
+
+		if (filteredInstructions.length === 0) {
+			toast.error('Додайте хоча б один крок приготування');
+			return;
+		}
+
 		try {
 			await createDish({
 				variables: {
@@ -70,8 +95,8 @@ export const useAddDish = () => {
 					prepTime: data.prepTime,
 					servings: data.servings,
 					description: data.description || undefined,
-					ingredients: data.ingredients,
-					instructions: data.instructions,
+					ingredients: filteredIngredients,
+					instructions: filteredInstructions,
 				},
 			});
 			toast.success('Страву успішно додано!');
@@ -89,12 +114,20 @@ export const useAddDish = () => {
 		errors,
 		onSubmit,
 		loading,
+		ingredientsList,
+		instructionsList,
 	};
 };
+
+interface UseEditDishOptions {
+	ingredients?: Ingredient[];
+	instructions?: string[];
+}
 
 export const useEditDish = (
 	dishId: string,
 	initialData?: Partial<DishFormData>,
+	options?: UseEditDishOptions,
 ) => {
 	const navigate = useNavigate();
 	const [updateDish, { loading }] = useUpdateDishMutation({
@@ -109,23 +142,34 @@ export const useEditDish = (
 		formState: { errors },
 	} = useForm<DishFormData>({
 		resolver: zodResolver(DishSchema),
-		defaultValues: initialData || {
-			name: '',
-			category: '',
-			imageUrl: '',
-			calories: 0,
-			protein: 0,
-			fat: 0,
-			carbs: 0,
-			description: '',
-			prepTime: 0,
-			servings: 0,
-			ingredients: [''],
-			instructions: [''],
-		},
+		defaultValues: initialData || defaultDishValues,
 	});
 
+	// Lists for ingredients and instructions with initial values
+	const ingredientsList = useFormList<Ingredient>(
+		{ name: '', amount: '' },
+		options?.ingredients,
+	);
+	const instructionsList = useFormList<string>('', options?.instructions);
+
 	const onSubmit = async (data: DishFormData) => {
+		// Filter out empty values
+		const filteredIngredients = ingredientsList.items
+			.filter((i) => i.name.trim())
+			.map((i) => `${i.name}${i.amount ? ` - ${i.amount}` : ''}`);
+
+		const filteredInstructions = instructionsList.items.filter((i) => i.trim());
+
+		if (filteredIngredients.length === 0) {
+			toast.error('Додайте хоча б один інгредієнт');
+			return;
+		}
+
+		if (filteredInstructions.length === 0) {
+			toast.error('Додайте хоча б один крок приготування');
+			return;
+		}
+
 		try {
 			await updateDish({
 				variables: {
@@ -137,8 +181,8 @@ export const useEditDish = (
 					prepTime: data.prepTime,
 					servings: data.servings,
 					description: data.description || undefined,
-					ingredients: data.ingredients,
-					instructions: data.instructions,
+					ingredients: filteredIngredients,
+					instructions: filteredInstructions,
 				},
 			});
 			toast.success('Страву успішно оновлено!');
@@ -156,6 +200,8 @@ export const useEditDish = (
 		errors,
 		onSubmit,
 		loading,
+		ingredientsList,
+		instructionsList,
 	};
 };
 
