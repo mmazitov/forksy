@@ -2,6 +2,12 @@ export { useAuth } from './useAuth';
 export { useAuthContext } from './useAuthContext';
 export { useAuthForm } from './useAuthForm';
 export { useDebounce } from './useDebounce';
+export {
+	useAddDish,
+	useDeleteDish,
+	useEditDish,
+	useFavoriteDish,
+} from './useDish';
 export { useFilter } from './useFilter';
 export { useFormList } from './useFormList';
 export { useLocalStorage } from './useLocalStorage';

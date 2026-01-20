@@ -40,7 +40,7 @@ export type Dish = {
 	createdAt: Scalars['String']['output'];
 	description: Maybe<Scalars['String']['output']>;
 	id: Scalars['ID']['output'];
-	image: Maybe<Scalars['String']['output']>;
+	imageUrl: Maybe<Scalars['String']['output']>;
 	ingredients: Array<Scalars['String']['output']>;
 	instructions: Array<Scalars['String']['output']>;
 	isFavorite: Maybe<Scalars['Boolean']['output']>;
@@ -81,7 +81,7 @@ export type MutationCreateDishArgs = {
 	calories?: InputMaybe<Scalars['Int']['input']>;
 	category?: InputMaybe<Scalars['String']['input']>;
 	description?: InputMaybe<Scalars['String']['input']>;
-	image?: InputMaybe<Scalars['String']['input']>;
+	imageUrl?: InputMaybe<Scalars['String']['input']>;
 	ingredients: Array<Scalars['String']['input']>;
 	instructions: Array<Scalars['String']['input']>;
 	name: Scalars['String']['input'];
@@ -137,7 +137,7 @@ export type MutationUpdateDishArgs = {
 	category?: InputMaybe<Scalars['String']['input']>;
 	description?: InputMaybe<Scalars['String']['input']>;
 	id: Scalars['ID']['input'];
-	image?: InputMaybe<Scalars['String']['input']>;
+	imageUrl?: InputMaybe<Scalars['String']['input']>;
 	ingredients?: InputMaybe<Array<Scalars['String']['input']>>;
 	instructions?: InputMaybe<Array<Scalars['String']['input']>>;
 	name?: InputMaybe<Scalars['String']['input']>;

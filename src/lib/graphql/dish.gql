@@ -1,0 +1,107 @@
+fragment DishFields on Dish {
+	id
+	name
+	description
+	imageUrl
+	category
+	prepTime
+	servings
+	calories
+	ingredients
+	instructions
+	createdAt
+	updatedAt
+	userId
+	isFavorite
+}
+
+query Dish($id: ID!) {
+	dish(id: $id) {
+		...DishFields
+	}
+}
+
+query Dishes($category: String, $search: String, $limit: Int, $offset: Int) {
+	dishes(category: $category, search: $search, limit: $limit, offset: $offset) {
+		...DishFields
+	}
+}
+
+query FavoriteDishes {
+	favoriteDishes {
+		...DishFields
+	}
+}
+
+mutation CreateDish(
+	$name: String!
+	$description: String
+	$imageUrl: String
+	$category: String
+	$prepTime: Int
+	$servings: Int
+	$calories: Int
+	$ingredients: [String!]!
+	$instructions: [String!]!
+) {
+	createDish(
+		name: $name
+		description: $description
+		imageUrl: $imageUrl
+		category: $category
+		prepTime: $prepTime
+		servings: $servings
+		calories: $calories
+		ingredients: $ingredients
+		instructions: $instructions
+	) {
+		...DishFields
+	}
+}
+
+mutation UpdateDish(
+	$id: ID!
+	$name: String
+	$description: String
+	$imageUrl: String
+	$category: String
+	$prepTime: Int
+	$servings: Int
+	$calories: Int
+	$ingredients: [String!]!
+	$instructions: [String!]!
+) {
+	updateDish(
+		id: $id
+		name: $name
+		description: $description
+		imageUrl: $imageUrl
+		category: $category
+		prepTime: $prepTime
+		servings: $servings
+		calories: $calories
+		ingredients: $ingredients
+		instructions: $instructions
+	) {
+		...DishFields
+	}
+}
+
+mutation DeleteDish($id: ID!) {
+	deleteDish(id: $id) {
+		id
+	}
+}
+
+mutation AddToFavoritesDish($dishId: ID!) {
+	addToFavoritesDish(dishId: $dishId) {
+		id
+		name
+	}
+}
+mutation RemoveFromFavoritesDish($dishId: ID!) {
+	removeFromFavoritesDish(dishId: $dishId) {
+		id
+		name
+	}
+}

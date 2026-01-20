@@ -18,12 +18,12 @@ import { CATEGORIES_DISHES } from '@/constants';
 import { useFormList } from '@/hooks/useFormList';
 import { ProductFieldsFragment } from '@/lib/graphql';
 
-interface AddDishFormProps {
+interface DishFormProps {
 	handleSubmit: (e: React.FormEvent) => void;
 	products?: ProductFieldsFragment[];
 }
 
-const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
+const DishForm = ({ handleSubmit, products = [] }: DishFormProps) => {
 	const {
 		items: ingredients,
 		addItem: addIngredient,
@@ -251,4 +251,4 @@ const AddDishForm = ({ handleSubmit, products = [] }: AddDishFormProps) => {
 	);
 };
 
-export default AddDishForm;
+export default DishForm;

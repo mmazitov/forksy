@@ -1,12 +1,12 @@
 import { toast } from 'sonner';
 
 import {
-	AddDishForm,
 	BackButton,
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
+	DishForm,
 	Loader,
 	MetaData,
 } from '@/components';
@@ -40,7 +40,7 @@ const AddDish = () => {
 					{loading ? (
 						<Loader />
 					) : (
-						<AddDishForm
+						<DishForm
 							handleSubmit={handleSubmit}
 							products={data?.products || []}
 						/>

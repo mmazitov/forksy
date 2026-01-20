@@ -2,7 +2,7 @@ export { BackButton } from './backButton';
 export { CardDish, CardProductCompact, CardProductFull } from './card';
 export { FavoriteButton } from './favoriteButton';
 export { Filter } from './filter';
-export { AddDishForm, AuthForm, ProductForm } from './form';
+export { AuthForm, DishForm, ProductForm } from './form';
 export { Grid } from './grid';
 export { Header } from './header';
 export { Loader } from './loader';
