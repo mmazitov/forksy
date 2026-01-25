@@ -20,6 +20,7 @@ export {
 	useEditProduct,
 	useFavoriteProduct,
 } from './useProduct';
+export { useProductSearch } from './useProductSearch';
 export { useProfile } from './useProfile';
 export { usePwaInstallPrompt } from './usePwaInstallPrompt';
 export { usePwaManagement } from './usePwaManagement';

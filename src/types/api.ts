@@ -36,19 +36,33 @@ export type AuthPayload = {
 export type Dish = {
 	__typename?: 'Dish';
 	calories: Maybe<Scalars['Int']['output']>;
+	carbs: Maybe<Scalars['Float']['output']>;
 	category: Maybe<Scalars['String']['output']>;
 	createdAt: Scalars['String']['output'];
 	description: Maybe<Scalars['String']['output']>;
+	fat: Maybe<Scalars['Float']['output']>;
 	id: Scalars['ID']['output'];
 	imageUrl: Maybe<Scalars['String']['output']>;
-	ingredients: Array<Scalars['String']['output']>;
+	ingredients: Array<Ingredient>;
 	instructions: Array<Scalars['String']['output']>;
 	isFavorite: Maybe<Scalars['Boolean']['output']>;
 	name: Scalars['String']['output'];
 	prepTime: Maybe<Scalars['Int']['output']>;
+	protein: Maybe<Scalars['Float']['output']>;
 	servings: Maybe<Scalars['Int']['output']>;
 	updatedAt: Scalars['String']['output'];
 	userId: Scalars['ID']['output'];
+};
+
+export type Ingredient = {
+	__typename?: 'Ingredient';
+	amount: Scalars['String']['output'];
+	name: Scalars['String']['output'];
+};
+
+export type IngredientInput = {
+	amount: Scalars['String']['input'];
+	name: Scalars['String']['input'];
 };
 
 export type Mutation = {
@@ -79,13 +93,16 @@ export type MutationAddToFavoritesProductArgs = {
 
 export type MutationCreateDishArgs = {
 	calories?: InputMaybe<Scalars['Int']['input']>;
+	carbs?: InputMaybe<Scalars['Float']['input']>;
 	category?: InputMaybe<Scalars['String']['input']>;
 	description?: InputMaybe<Scalars['String']['input']>;
+	fat?: InputMaybe<Scalars['Float']['input']>;
 	imageUrl?: InputMaybe<Scalars['String']['input']>;
-	ingredients: Array<Scalars['String']['input']>;
+	ingredients: Array<IngredientInput>;
 	instructions: Array<Scalars['String']['input']>;
 	name: Scalars['String']['input'];
 	prepTime?: InputMaybe<Scalars['Int']['input']>;
+	protein?: InputMaybe<Scalars['Float']['input']>;
 	servings?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -134,14 +151,17 @@ export type MutationRemoveFromFavoritesProductArgs = {
 
 export type MutationUpdateDishArgs = {
 	calories?: InputMaybe<Scalars['Int']['input']>;
+	carbs?: InputMaybe<Scalars['Float']['input']>;
 	category?: InputMaybe<Scalars['String']['input']>;
 	description?: InputMaybe<Scalars['String']['input']>;
+	fat?: InputMaybe<Scalars['Float']['input']>;
 	id: Scalars['ID']['input'];
 	imageUrl?: InputMaybe<Scalars['String']['input']>;
-	ingredients?: InputMaybe<Array<Scalars['String']['input']>>;
+	ingredients?: InputMaybe<Array<IngredientInput>>;
 	instructions?: InputMaybe<Array<Scalars['String']['input']>>;
 	name?: InputMaybe<Scalars['String']['input']>;
 	prepTime?: InputMaybe<Scalars['Int']['input']>;
+	protein?: InputMaybe<Scalars['Float']['input']>;
 	servings?: InputMaybe<Scalars['Int']['input']>;
 };
 

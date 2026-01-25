@@ -79,6 +79,22 @@
 	--badge-other: hsl(220 10% 70%);
 	--badge-other-fg: hsl(0 0% 100%);
 
+	/* Meal categories */
+	--badge-breakfast: hsl(42 90% 65%);
+	--badge-breakfast-fg: hsl(220 15% 20%);
+
+	--badge-lunch: hsl(155 55% 50%);
+	--badge-lunch-fg: hsl(0 0% 100%);
+
+	--badge-dinner: hsl(255 55% 65%);
+	--badge-dinner-fg: hsl(0 0% 100%);
+
+	--badge-snack: hsl(175 60% 55%);
+	--badge-snack-fg: hsl(0 0% 100%);
+
+	--badge-dessert: hsl(330 70% 65%);
+	--badge-dessert-fg: hsl(0 0% 100%);
+
 	/* Анимации */
 	--animate-accordion-down: accordion-down 0.2s ease-out;
 	--animate-accordion-up: accordion-up 0.2s ease-out;
@@ -154,6 +170,21 @@
 
 	--badge-other: hsl(220 10% 35%);
 	--badge-other-fg: hsl(210 40% 95%);
+
+	--badge-breakfast: hsl(42 80% 55%);
+	--badge-breakfast-fg: hsl(0 0% 100%);
+
+	--badge-lunch: hsl(155 45% 40%);
+	--badge-lunch-fg: hsl(0 0% 100%);
+
+	--badge-dinner: hsl(255 45% 50%);
+	--badge-dinner-fg: hsl(0 0% 100%);
+
+	--badge-snack: hsl(175 50% 45%);
+	--badge-snack-fg: hsl(0 0% 100%);
+
+	--badge-dessert: hsl(330 60% 55%);
+	--badge-dessert-fg: hsl(0 0% 100%);
 }
 
 /* Кастомные CSS переменные */

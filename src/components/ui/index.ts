@@ -99,3 +99,5 @@ export { Toaster } from './toaster';
 export { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 
 export { Checkbox } from './checkbox';
+
+export { Counter } from './counter';

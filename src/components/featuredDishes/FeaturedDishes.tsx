@@ -1,7 +1,8 @@
 import { LuTrendingUp } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
-import CardDish from '@/components/card/CardDish';
+import { CardDishCompact } from '../card';
+
 import { Grid } from '@/components/grid';
 import { Button } from '@/components/ui';
 import { dishes } from '@/mock';
@@ -28,7 +29,7 @@ const FeaturedDishes = () => {
 
 			<Grid
 				items={dishes.slice(0, 4)}
-				renderItem={(item) => <CardDish {...item} />}
+				renderItem={(item) => <CardDishCompact {...item} />}
 				showEmpty={false}
 			/>
 		</>

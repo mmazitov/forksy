@@ -1,5 +1,10 @@
 export { BackButton } from './backButton';
-export { CardDish, CardProductCompact, CardProductFull } from './card';
+export {
+	CardDishCompact,
+	CardDishFull,
+	CardProductCompact,
+	CardProductFull,
+} from './card';
 export { FavoriteButton } from './favoriteButton';
 export { Filter } from './filter';
 export { AuthForm, DishForm, ProductForm } from './form';
@@ -117,3 +122,5 @@ export { FeaturedDishes } from './featuredDishes';
 export { Hero } from './hero';
 export { QuickActions } from './quickActions';
 export { Stats } from './stats';
+
+export { Counter } from './ui/counter';

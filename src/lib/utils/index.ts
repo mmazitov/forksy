@@ -1,4 +1,6 @@
 export { today, todayWeek, weekDays } from './day';
+export { createProductsMap, parseIngredient, parseIngredients } from './dish';
+export { calculateNutrition, parseAmountToGrams } from './nutrition';
 export {
 	clearAllCaches,
 	formatBytes,

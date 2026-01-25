@@ -13,6 +13,7 @@ interface FormItemProps {
 	registration?: UseFormRegisterReturn;
 	inputProps?: Omit<ComponentProps<typeof Input>, 'id'>;
 	textareaProps?: Omit<ComponentProps<typeof Textarea>, 'id'>;
+	className?: string;
 }
 
 const FormItem = ({
@@ -25,9 +26,10 @@ const FormItem = ({
 	registration,
 	inputProps,
 	textareaProps,
+	className,
 }: FormItemProps) => {
 	return (
-		<div className="space-y-2">
+		<div className={`space-y-2 ${className}`}>
 			<Label htmlFor={id}>{label}</Label>
 			{itemType === 'textarea' ? (
 				<Textarea id={id} {...registration} {...textareaProps} />

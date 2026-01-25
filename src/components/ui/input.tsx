@@ -1,8 +1,8 @@
 import * as React from 'react';
-
-import { cn } from '@/lib/utils/cn';
 import { useState } from 'react';
 import { LuEye, LuEyeOff } from 'react-icons/lu';
+
+import { cn } from '@/lib/utils/cn';
 
 interface InputProps extends React.ComponentProps<'input'> {
 	showToggle?: boolean;
@@ -23,7 +23,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 				<input
 					type={showToggle ? (showPassword ? 'text' : 'password') : type}
 					className={cn(
-						'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm hover:border-ring transition-colors',
+						'border-input bg-background ring-offset-background file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring hover:border-ring flex h-10 w-full rounded-md border px-3 py-2 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
 						className,
 					)}
 					placeholder={placeholder}
@@ -34,13 +34,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					<button
 						type="button"
 						onClick={() => setShowPassword(!showPassword)}
-						className="right-[10px] absolute inset-y-0 flex justify-center items-center w-[40px] text-[var(--input-color)] cursor-pointer"
+						className="absolute inset-y-0 right-[10px] flex w-[40px] cursor-pointer items-center justify-center text-[var(--input-color)]"
 					>
 						{showPassword ? <LuEye size={20} /> : <LuEyeOff size={20} />}
 					</button>
 				)}
 				{showIcon && (
-					<div className="top-1/2 right-4 absolute text-inherit -translate-y-1/2 transform">
+					<div className="absolute top-1/2 right-4 -translate-y-1/2 transform text-inherit">
 						{icon}
 					</div>
 				)}

@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -57,6 +58,7 @@ export const useAddDish = () => {
 		register,
 		handleSubmit,
 		control,
+		setValue,
 		formState: { errors },
 	} = useForm<DishFormData>({
 		resolver: zodResolver(DishSchema),
@@ -71,7 +73,7 @@ export const useAddDish = () => {
 		// Filter out empty values
 		const filteredIngredients = ingredientsList.items
 			.filter((i) => i.name.trim())
-			.map((i) => `${i.name}${i.amount ? ` - ${i.amount}` : ''}`);
+			.map((i) => ({ name: i.name, amount: i.amount || '' }));
 
 		const filteredInstructions = instructionsList.items.filter((i) => i.trim());
 
@@ -92,6 +94,9 @@ export const useAddDish = () => {
 					category: data.category,
 					imageUrl: data.imageUrl || undefined,
 					calories: data.calories,
+					protein: data.protein,
+					fat: data.fat,
+					carbs: data.carbs,
 					prepTime: data.prepTime,
 					servings: data.servings,
 					description: data.description || undefined,
@@ -116,6 +121,7 @@ export const useAddDish = () => {
 		loading,
 		ingredientsList,
 		instructionsList,
+		setValue,
 	};
 };
 
@@ -139,6 +145,7 @@ export const useEditDish = (
 		register,
 		handleSubmit,
 		control,
+		setValue,
 		formState: { errors },
 	} = useForm<DishFormData>({
 		resolver: zodResolver(DishSchema),
@@ -156,7 +163,7 @@ export const useEditDish = (
 		// Filter out empty values
 		const filteredIngredients = ingredientsList.items
 			.filter((i) => i.name.trim())
-			.map((i) => `${i.name}${i.amount ? ` - ${i.amount}` : ''}`);
+			.map((i) => ({ name: i.name, amount: i.amount || '' }));
 
 		const filteredInstructions = instructionsList.items.filter((i) => i.trim());
 
@@ -178,6 +185,9 @@ export const useEditDish = (
 					category: data.category,
 					imageUrl: data.imageUrl || undefined,
 					calories: data.calories,
+					protein: data.protein,
+					fat: data.fat,
+					carbs: data.carbs,
 					prepTime: data.prepTime,
 					servings: data.servings,
 					description: data.description || undefined,
@@ -202,6 +212,7 @@ export const useEditDish = (
 		loading,
 		ingredientsList,
 		instructionsList,
+		setValue,
 	};
 };
 
@@ -240,24 +251,37 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 		const previousState = isFav;
 		const newState = !isFav;
 
-		// Optimistic update
-		setIsFav(newState);
-
 		try {
-			if (newState) {
-				await addToFavoritesDish({ variables: { dishId } });
-				toast.success('Додано до обраного!');
-			} else {
-				await removeFromFavoritesDish({ variables: { dishId } });
-				toast.success('Видалено з обраного!');
-			}
+			setIsFav(newState);
+
+			const mutation = isFav ? removeFromFavoritesDish : addToFavoritesDish;
+
+			await mutation({
+				variables: { dishId },
+				update: (cache) => {
+					cache.writeFragment({
+						id: cache.identify({ __typename: 'Dish', id: dishId }),
+						fragment: gql`
+							fragment UpdateFavorite on Dish {
+								isFavorite
+							}
+						`,
+						data: { isFavorite: newState },
+					});
+				},
+			});
+
+			toast.success(
+				isFav ? 'Страву видалено з улюблених' : 'Страву додано до улюблених',
+			);
 		} catch (error) {
-			// Revert on error
 			setIsFav(previousState);
-			toast.error('Помилка при зміні обраного');
+			toast.error(
+				'Помилка при оновленні улюблених страв, лише авторизовані користувачі можуть додавати улюблені страви',
+			);
 			console.error(error);
 		}
 	};
 
-	return { isFav, toggleFavorite };
+	return { isFavorite: isFav, toggleFavorite };
 };

@@ -1,30 +1,59 @@
 import { LuPlus } from 'react-icons/lu';
 
 import {
-	CardDish,
+	CardDishCompact,
 	Filter,
 	Grid,
+	Loader,
 	MetaData,
 	PageTitle,
+	Pagination,
 	Search,
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
-import { useFilter } from '@/hooks';
+import { useFilter, usePagination } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
-import { dishes } from '@/mock';
+import { useDishesQuery } from '@/lib/graphql/dish.gen';
+
+const ITEMS_PER_PAGE = 10;
 
 const Dishes = () => {
+	const { data, loading, error } = useDishesQuery();
+
+	const dishesData = data?.dishes || [];
+
 	const {
 		searchQuery,
 		setSearchQuery,
 		selectedCategory,
 		setSelectedCategory,
 		filteredItems,
-	} = useFilter(dishes, {
+	} = useFilter(dishesData, {
 		searchField: 'name',
 		categoryField: 'category',
 		defaultCategory: 'Усі',
 	});
+
+	const { currentPage, totalPages, paginatedItems, handlePageChange } =
+		usePagination({
+			items: filteredItems,
+			itemsPerPage: ITEMS_PER_PAGE,
+			resetDependencies: [searchQuery, selectedCategory],
+		});
+
+	if (loading) {
+		return <Loader />;
+	}
+
+	if (error) {
+		return (
+			<div className="container mx-auto px-4 py-8">
+				<div className="rounded-lg bg-red-50 p-4 text-red-600">
+					Помилка завантаження продуктів: {error.message}
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="container mx-auto px-4 py-8">
@@ -58,11 +87,22 @@ const Dishes = () => {
 			</div>
 
 			<Grid
-				items={filteredItems}
-				renderItem={(item) => <CardDish {...item} />}
+				items={paginatedItems}
+				renderItem={(dish) => <CardDishCompact {...dish} />}
 				emptyMessage="Продукти не знайдено"
 				showEmpty={true}
 			/>
+
+			{filteredItems.length > 0 && (
+				<Pagination
+					currentPage={currentPage}
+					totalPages={totalPages}
+					onPageChange={handlePageChange}
+					itemsPerPage={ITEMS_PER_PAGE}
+					totalItems={filteredItems.length}
+					className="mt-8"
+				/>
+			)}
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Controller } from 'react-hook-form';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,10 @@ import FormItem from './FormItem';
 
 import {
 	Button,
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
 	Input,
 	Label,
 	Select,
@@ -18,18 +22,13 @@ import {
 	Textarea,
 } from '@/components';
 import { CATEGORIES_DISHES } from '@/constants';
-import { useAddDish, useEditDish } from '@/hooks';
-import { Ingredient } from '@/hooks/useFormList';
+import { useAddDish, useEditDish, useProductSearch } from '@/hooks';
 import { DishFieldsFragment, ProductFieldsFragment } from '@/lib/graphql';
-
-// Helper to parse ingredient string "name - amount" back to object
-const parseIngredient = (str: string): Ingredient => {
-	const parts = str.split(' - ');
-	return {
-		name: parts[0] || '',
-		amount: parts[1] || '',
-	};
-};
+import {
+	calculateNutrition,
+	createProductsMap,
+	parseIngredients,
+} from '@/lib/utils';
 
 interface DishFormProps {
 	dish?: DishFieldsFragment | null;
@@ -38,8 +37,15 @@ interface DishFormProps {
 }
 
 const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
-	// Parse existing ingredients and instructions for edit mode
-	const existingIngredients = dish?.ingredients?.map(parseIngredient);
+	// Create a map of product names to products for quick lookup
+	const productsByName = useMemo(() => createProductsMap(products), [products]);
+
+	// Parse existing ingredients for edit mode
+	const existingIngredients = useMemo(() => {
+		if (!dish?.ingredients) return undefined;
+		return parseIngredients(dish.ingredients, productsByName);
+	}, [dish?.ingredients, productsByName]);
+
 	const existingInstructions = dish?.instructions;
 
 	const addDishHook = useAddDish();
@@ -51,6 +57,9 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 					category: dish.category || '',
 					imageUrl: dish.imageUrl || '',
 					calories: dish.calories || 0,
+					protein: dish.protein || 0,
+					fat: dish.fat || 0,
+					carbs: dish.carbs || 0,
 					description: dish.description || '',
 					prepTime: dish.prepTime || 0,
 					servings: dish.servings || 0,
@@ -73,6 +82,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 		loading,
 		ingredientsList,
 		instructionsList,
+		setValue,
 	} = isEditMode ? editDishHook : addDishHook;
 
 	// Destructure list helpers
@@ -90,30 +100,56 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 		updateItem: updateInstruction,
 	} = instructionsList;
 
-	// Search state for product selection
-	const [searchQueries, setSearchQueries] = useState<Record<number, string>>(
-		{},
-	);
+	// Calculate nutrition based on ingredients
+	const calculatedNutrition = useMemo(() => {
+		// Map ingredients with their product nutrition data
+		const ingredientsWithNutrition = ingredients.map((ingredient) => {
+			const product = productsByName.get(ingredient.name);
+			return {
+				amount: ingredient.amount,
+				nutrition: product
+					? {
+							calories: product.calories ?? 0,
+							protein: product.protein ?? 0,
+							fat: product.fat ?? 0,
+							carbs: product.carbs ?? 0,
+						}
+					: null,
+			};
+		});
 
-	const handleSearchChange = (index: number, value: string) => {
-		setSearchQueries((prev) => ({ ...prev, [index]: value }));
-	};
+		return calculateNutrition(ingredientsWithNutrition);
+	}, [ingredients, productsByName]);
 
-	const getFilteredProducts = (index: number) => {
-		const query = searchQueries[index]?.toLowerCase() || '';
-		if (!query) return products;
-		return products.filter((p) => p.name.toLowerCase().includes(query));
-	};
+	// Update form values when nutrition changes
+	useEffect(() => {
+		setValue('calories', calculatedNutrition.calories);
+		setValue('protein', calculatedNutrition.protein);
+		setValue('fat', calculatedNutrition.fat);
+		setValue('carbs', calculatedNutrition.carbs);
+	}, [calculatedNutrition, setValue]);
+
+	// Product search and selection
+	const {
+		handleSearchChange,
+		getFilteredProducts,
+		handleProductSelect,
+		getSearchQuery,
+	} = useProductSearch({
+		products,
+		updateIngredient,
+	});
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 			{/* Basic Info */}
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+			<div className="grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-4 md:grid-cols-[1fr_260px_170px] md:grid-rows-[auto]">
 				<FormItem
 					id="name"
 					label="Назва страви *"
 					error={errors.name}
 					registration={register('name')}
+					className="col-span-2 md:col-span-1"
 					inputProps={{
 						placeholder: 'Наприклад: Вівсяна каша',
 					}}
@@ -145,6 +181,16 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 						</p>
 					)}
 				</div>
+				<FormItem
+					id="prepTime"
+					label="Час приготування (хв) *"
+					type="number"
+					error={errors.prepTime}
+					registration={register('prepTime', { valueAsNumber: true })}
+					inputProps={{
+						placeholder: '0',
+					}}
+				/>
 			</div>
 
 			<FormItem
@@ -169,35 +215,46 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 				}}
 			/>
 
-			{/* Nutrition & Time */}
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-				{/* <div className="space-y-2">
-					<Label htmlFor="calories">Калорії</Label>
-					<Input id="calories" type="number" placeholder="0" />
-				</div>
-				<div className="space-y-2">
-					<Label htmlFor="protein">Білки (г)</Label>
-					<Input id="protein" type="number" step="0.1" placeholder="0" />
-				</div>
-				<div className="space-y-2">
-					<Label htmlFor="fat">Жири (г)</Label>
-					<Input id="fat" type="number" step="0.1" placeholder="0" />
-				</div>
-				<div className="space-y-2">
-					<Label htmlFor="carbs">Вуглеводи (г)</Label>
-					<Input id="carbs" type="number" step="0.1" placeholder="0" />
-				</div> */}
-				<FormItem
-					id="prepTime"
-					label="Час приготування (хв) *"
-					type="number"
-					error={errors.prepTime}
-					registration={register('prepTime', { valueAsNumber: true })}
-					inputProps={{
-						placeholder: '0',
-					}}
-				/>
-			</div>
+			{/* Calculated Nutrition */}
+			<Card>
+				<CardHeader className="pb-3">
+					<CardTitle className="text-base">
+						Поживна цінність (розраховується автоматично)
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+						<div className="bg-muted rounded-lg p-3 text-center">
+							<div className="text-primary text-2xl font-bold">
+								{calculatedNutrition.calories}
+							</div>
+							<div className="text-muted-foreground text-xs">Калорії</div>
+						</div>
+						<div className="bg-muted rounded-lg p-3 text-center">
+							<div className="text-secondary text-2xl font-bold">
+								{calculatedNutrition.protein}г
+							</div>
+							<div className="text-muted-foreground text-xs">Білки</div>
+						</div>
+						<div className="bg-muted rounded-lg p-3 text-center">
+							<div className="text-accent text-2xl font-bold">
+								{calculatedNutrition.fat}г
+							</div>
+							<div className="text-muted-foreground text-xs">Жири</div>
+						</div>
+						<div className="bg-muted rounded-lg p-3 text-center">
+							<div className="text-primary text-2xl font-bold">
+								{calculatedNutrition.carbs}г
+							</div>
+							<div className="text-muted-foreground text-xs">Вуглеводи</div>
+						</div>
+					</div>
+					<p className="text-muted-foreground mt-3 text-xs">
+						💡 Підтримувані одиниці: г, шт, ст.л., ч.л., склянка, мл, кг
+						(наприклад: 100г, 2 шт, 1 ст.л.)
+					</p>
+				</CardContent>
+			</Card>
 
 			{/* Ingredients */}
 			<div className="space-y-4">
@@ -223,10 +280,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 					>
 						<Select
 							value={ingredient.name}
-							onValueChange={(value) => {
-								updateIngredient(index, { name: value });
-								setSearchQueries((prev) => ({ ...prev, [index]: '' }));
-							}}
+							onValueChange={(value) => handleProductSelect(index, value)}
 						>
 							<SelectTrigger>
 								<SelectValue placeholder="Виберіть продукт" />
@@ -235,7 +289,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 								<div className="px-2 pb-2">
 									<Input
 										placeholder="Пошук продукту..."
-										value={searchQueries[index] || ''}
+										value={getSearchQuery(index)}
 										onChange={(e) => handleSearchChange(index, e.target.value)}
 										className="h-8"
 										onClick={(e) => e.stopPropagation()}

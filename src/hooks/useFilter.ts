@@ -2,7 +2,15 @@ import { useMemo, useState } from 'react';
 
 interface FilterableItem {
 	id: string;
-	[key: string]: string | number | boolean | null | undefined;
+	[key: string]:
+		| string
+		| number
+		| boolean
+		| null
+		| undefined
+		| string[]
+		| Record<string, unknown>
+		| Record<string, unknown>[];
 }
 
 interface UseFilterOptions {

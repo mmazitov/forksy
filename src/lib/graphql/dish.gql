@@ -7,7 +7,13 @@ fragment DishFields on Dish {
 	prepTime
 	servings
 	calories
-	ingredients
+	protein
+	fat
+	carbs
+	ingredients {
+		name
+		amount
+	}
 	instructions
 	createdAt
 	updatedAt
@@ -41,7 +47,10 @@ mutation CreateDish(
 	$prepTime: Int
 	$servings: Int
 	$calories: Int
-	$ingredients: [String!]!
+	$protein: Float
+	$fat: Float
+	$carbs: Float
+	$ingredients: [IngredientInput!]!
 	$instructions: [String!]!
 ) {
 	createDish(
@@ -52,6 +61,9 @@ mutation CreateDish(
 		prepTime: $prepTime
 		servings: $servings
 		calories: $calories
+		protein: $protein
+		fat: $fat
+		carbs: $carbs
 		ingredients: $ingredients
 		instructions: $instructions
 	) {
@@ -68,8 +80,11 @@ mutation UpdateDish(
 	$prepTime: Int
 	$servings: Int
 	$calories: Int
-	$ingredients: [String!]!
-	$instructions: [String!]!
+	$protein: Float
+	$fat: Float
+	$carbs: Float
+	$ingredients: [IngredientInput!]
+	$instructions: [String!]
 ) {
 	updateDish(
 		id: $id
@@ -80,6 +95,9 @@ mutation UpdateDish(
 		prepTime: $prepTime
 		servings: $servings
 		calories: $calories
+		protein: $protein
+		fat: $fat
+		carbs: $carbs
 		ingredients: $ingredients
 		instructions: $instructions
 	) {

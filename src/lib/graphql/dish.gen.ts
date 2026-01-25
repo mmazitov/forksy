@@ -14,12 +14,19 @@ export type DishFieldsFragment = {
 	prepTime?: number | null;
 	servings?: number | null;
 	calories?: number | null;
-	ingredients: Array<string>;
+	protein?: number | null;
+	fat?: number | null;
+	carbs?: number | null;
 	instructions: Array<string>;
 	createdAt: string;
 	updatedAt: string;
 	userId: string;
 	isFavorite?: boolean | null;
+	ingredients: Array<{
+		__typename?: 'Ingredient';
+		name: string;
+		amount: string;
+	}>;
 };
 
 export type DishQueryVariables = Types.Exact<{
@@ -60,9 +67,10 @@ export type CreateDishMutationVariables = Types.Exact<{
 	prepTime?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 	servings?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 	calories?: Types.InputMaybe<Types.Scalars['Int']['input']>;
-	ingredients:
-		| Array<Types.Scalars['String']['input']>
-		| Types.Scalars['String']['input'];
+	protein?: Types.InputMaybe<Types.Scalars['Float']['input']>;
+	fat?: Types.InputMaybe<Types.Scalars['Float']['input']>;
+	carbs?: Types.InputMaybe<Types.Scalars['Float']['input']>;
+	ingredients: Array<Types.IngredientInput> | Types.IngredientInput;
 	instructions:
 		| Array<Types.Scalars['String']['input']>
 		| Types.Scalars['String']['input'];
@@ -82,12 +90,15 @@ export type UpdateDishMutationVariables = Types.Exact<{
 	prepTime?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 	servings?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 	calories?: Types.InputMaybe<Types.Scalars['Int']['input']>;
-	ingredients:
-		| Array<Types.Scalars['String']['input']>
-		| Types.Scalars['String']['input'];
-	instructions:
-		| Array<Types.Scalars['String']['input']>
-		| Types.Scalars['String']['input'];
+	protein?: Types.InputMaybe<Types.Scalars['Float']['input']>;
+	fat?: Types.InputMaybe<Types.Scalars['Float']['input']>;
+	carbs?: Types.InputMaybe<Types.Scalars['Float']['input']>;
+	ingredients?: Types.InputMaybe<
+		Array<Types.IngredientInput> | Types.IngredientInput
+	>;
+	instructions?: Types.InputMaybe<
+		Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']
+	>;
 }>;
 
 export type UpdateDishMutation = {
@@ -147,7 +158,20 @@ export const DishFieldsFragmentDoc = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'ingredients' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
 					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
@@ -222,7 +246,20 @@ export const DishDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'ingredients' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
 					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
@@ -373,7 +410,20 @@ export const DishesDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'ingredients' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
 					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
@@ -455,7 +505,20 @@ export const FavoriteDishesDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'ingredients' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
 					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
@@ -568,6 +631,27 @@ export const CreateDishDocument = {
 					kind: 'VariableDefinition',
 					variable: {
 						kind: 'Variable',
+						name: { kind: 'Name', value: 'protein' },
+					},
+					type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: { kind: 'Variable', name: { kind: 'Name', value: 'fat' } },
+					type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'carbs' },
+					},
+					type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
 						name: { kind: 'Name', value: 'ingredients' },
 					},
 					type: {
@@ -578,7 +662,7 @@ export const CreateDishDocument = {
 								kind: 'NonNullType',
 								type: {
 									kind: 'NamedType',
-									name: { kind: 'Name', value: 'String' },
+									name: { kind: 'Name', value: 'IngredientInput' },
 								},
 							},
 						},
@@ -670,6 +754,30 @@ export const CreateDishDocument = {
 							},
 							{
 								kind: 'Argument',
+								name: { kind: 'Name', value: 'protein' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'protein' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'fat' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'fat' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'carbs' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'carbs' },
+								},
+							},
+							{
+								kind: 'Argument',
 								name: { kind: 'Name', value: 'ingredients' },
 								value: {
 									kind: 'Variable',
@@ -716,7 +824,20 @@ export const CreateDishDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'ingredients' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
 					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
@@ -815,18 +936,36 @@ export const UpdateDishDocument = {
 					kind: 'VariableDefinition',
 					variable: {
 						kind: 'Variable',
+						name: { kind: 'Name', value: 'protein' },
+					},
+					type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: { kind: 'Variable', name: { kind: 'Name', value: 'fat' } },
+					type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'carbs' },
+					},
+					type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
 						name: { kind: 'Name', value: 'ingredients' },
 					},
 					type: {
-						kind: 'NonNullType',
+						kind: 'ListType',
 						type: {
-							kind: 'ListType',
+							kind: 'NonNullType',
 							type: {
-								kind: 'NonNullType',
-								type: {
-									kind: 'NamedType',
-									name: { kind: 'Name', value: 'String' },
-								},
+								kind: 'NamedType',
+								name: { kind: 'Name', value: 'IngredientInput' },
 							},
 						},
 					},
@@ -838,15 +977,12 @@ export const UpdateDishDocument = {
 						name: { kind: 'Name', value: 'instructions' },
 					},
 					type: {
-						kind: 'NonNullType',
+						kind: 'ListType',
 						type: {
-							kind: 'ListType',
+							kind: 'NonNullType',
 							type: {
-								kind: 'NonNullType',
-								type: {
-									kind: 'NamedType',
-									name: { kind: 'Name', value: 'String' },
-								},
+								kind: 'NamedType',
+								name: { kind: 'Name', value: 'String' },
 							},
 						},
 					},
@@ -925,6 +1061,30 @@ export const UpdateDishDocument = {
 							},
 							{
 								kind: 'Argument',
+								name: { kind: 'Name', value: 'protein' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'protein' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'fat' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'fat' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'carbs' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'carbs' },
+								},
+							},
+							{
+								kind: 'Argument',
 								name: { kind: 'Name', value: 'ingredients' },
 								value: {
 									kind: 'Variable',
@@ -971,7 +1131,20 @@ export const UpdateDishDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'ingredients' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
 					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },

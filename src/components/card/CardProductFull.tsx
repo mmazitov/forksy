@@ -63,24 +63,6 @@ const CardProductFull = ({
 
 	return (
 		<div className="relative grid grid-cols-1 gap-8 lg:grid-cols-2">
-			{canEdit && (
-				<div className="absolute top-2 left-2 z-10 flex flex-col gap-2 md:flex-row lg:top-0 lg:right-0 lg:left-auto">
-					<Link to={`/products/edit/${id}`}>
-						<Button variant="outline" size="sm">
-							Редагувати продукт
-						</Button>
-					</Link>
-					<Button
-						variant="destructive"
-						onClick={handleDelete}
-						size="sm"
-						disabled={deleteLoading}
-					>
-						Видалити продукт
-					</Button>
-				</div>
-			)}
-
 			{/* Image */}
 			<div className="bg-muted relative h-75 overflow-hidden rounded-2xl lg:h-full">
 				<FavoriteButton isFavorite={isFavorite} onClick={toggleFavorite} />
@@ -100,6 +82,23 @@ const CardProductFull = ({
 			{/* Info */}
 			<div className="space-y-6">
 				<div>
+					{canEdit && (
+						<div className="absolute top-2 left-2 z-10 flex flex-col gap-2 md:flex-row lg:top-0 lg:right-0 lg:left-auto">
+							<Link to={`/products/edit/${id}`}>
+								<Button variant="outline" size="sm">
+									Редагувати продукт
+								</Button>
+							</Link>
+							<Button
+								variant="destructive"
+								onClick={handleDelete}
+								size="sm"
+								disabled={deleteLoading}
+							>
+								Видалити продукт
+							</Button>
+						</div>
+					)}
 					{category && (
 						<Badge className={`mb-3 ${badgeClass}`}>{category}</Badge>
 					)}
