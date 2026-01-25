@@ -58,7 +58,6 @@ export const useProfile = () => {
 				? normalizePhone(formData.phone)
 				: undefined;
 
-
 			const allergyArray =
 				typeof formData.allergy === 'string'
 					? formData.allergy

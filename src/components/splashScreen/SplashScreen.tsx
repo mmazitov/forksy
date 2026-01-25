@@ -39,7 +39,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="118.745 60 221.8937 280"
-				className="w-72 h-72 mx-auto"
+				className="mx-auto h-72 w-72"
 			>
 				{/* Calendar outline (draws first) */}
 				<path

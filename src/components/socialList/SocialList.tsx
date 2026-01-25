@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
+
 import { Button } from '@/components';
 import { SOCIAL_ITEMS } from '@/constants';
 import { useAuthContext } from '@/hooks';
-import { useEffect } from 'react';
 
 interface SocialListProps {
 	onOpenChange: (open: boolean) => void;

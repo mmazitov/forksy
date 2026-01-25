@@ -15,7 +15,7 @@ const ScheduleWeek = () => {
 			<div className="grid gap-4">
 				{weekDays.map((day) => (
 					<Card key={day} className="overflow-hidden">
-						<CardHeader className="pb-3 bg-muted/50">
+						<CardHeader className="bg-muted/50 pb-3">
 							<CardTitle className="text-lg">{day}</CardTitle>
 						</CardHeader>
 						<CardContent className="p-4">
@@ -25,9 +25,9 @@ const ScheduleWeek = () => {
 									return (
 										<div
 											key={item.id}
-											className="p-3 transition-colors border rounded-lg cursor-pointer border-border hover:border-primary"
+											className="border-border hover:border-primary cursor-pointer rounded-lg border p-3 transition-colors"
 										>
-											<div className="mb-1 text-xs text-muted-foreground">
+											<div className="text-muted-foreground mb-1 text-xs">
 												{item.name}
 											</div>
 											{mealData ? (
@@ -35,12 +35,12 @@ const ScheduleWeek = () => {
 													<div className="mb-1 text-sm font-medium">
 														{mealData}
 													</div>
-													<div className="text-xs text-muted-foreground">
+													<div className="text-muted-foreground text-xs">
 														{mealData} ккал
 													</div>
 												</>
 											) : (
-												<div className="text-sm text-muted-foreground">
+												<div className="text-muted-foreground text-sm">
 													Не заплановано
 												</div>
 											)}
