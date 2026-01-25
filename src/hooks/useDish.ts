@@ -51,12 +51,10 @@ export const useAddDish = () => {
 		defaultValues: defaultDishValues,
 	});
 
-	// Lists for ingredients and instructions
 	const ingredientsList = useFormList<FormIngredient>({ name: '', amount: '' });
 	const instructionsList = useFormList<string>('');
 
 	const onSubmit = async (data: DishFormData) => {
-		// Filter out empty values
 		const filteredIngredients = ingredientsList.items
 			.filter((i) => i.name.trim())
 			.map((i) => ({ name: i.name, amount: i.amount || '' }));
@@ -138,7 +136,6 @@ export const useEditDish = (
 		defaultValues: initialData || defaultDishValues,
 	});
 
-	// Lists for ingredients and instructions with initial values
 	const ingredientsList = useFormList<FormIngredient>(
 		{ name: '', amount: '' },
 		options?.ingredients,
@@ -146,7 +143,6 @@ export const useEditDish = (
 	const instructionsList = useFormList<string>('', options?.instructions);
 
 	const onSubmit = async (data: DishFormData) => {
-		// Filter out empty values
 		const filteredIngredients = ingredientsList.items
 			.filter((i) => i.name.trim())
 			.map((i) => ({ name: i.name, amount: i.amount || '' }));

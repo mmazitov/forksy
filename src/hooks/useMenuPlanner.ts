@@ -92,7 +92,6 @@ export const useMenuPlanner = () => {
 
 	const handleSave = useCallback(() => {
 		toast.success('Меню успішно збережено!');
-		// TODO: Додати логіку для збереження на сервер
 	}, []);
 
 	const weekDaysForFilter = weekDays.map((day, index) => ({

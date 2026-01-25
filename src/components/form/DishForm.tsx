@@ -37,10 +37,8 @@ interface DishFormProps {
 }
 
 const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
-	// Create a map of product names to products for quick lookup
 	const productsByName = useMemo(() => createProductsMap(products), [products]);
 
-	// Parse existing ingredients for edit mode
 	const existingIngredients = useMemo(() => {
 		if (!dish?.ingredients) return undefined;
 		return parseIngredients(dish.ingredients, productsByName);
@@ -85,7 +83,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 		setValue,
 	} = isEditMode ? editDishHook : addDishHook;
 
-	// Destructure list helpers
 	const {
 		items: ingredients,
 		addItem: addIngredient,
@@ -100,9 +97,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 		updateItem: updateInstruction,
 	} = instructionsList;
 
-	// Calculate nutrition based on ingredients
 	const calculatedNutrition = useMemo(() => {
-		// Map ingredients with their product nutrition data
 		const ingredientsWithNutrition = ingredients.map((ingredient) => {
 			const product = productsByName.get(ingredient.name);
 			return {
@@ -121,7 +116,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 		return calculateNutrition(ingredientsWithNutrition);
 	}, [ingredients, productsByName]);
 
-	// Update form values when nutrition changes
 	useEffect(() => {
 		setValue('calories', calculatedNutrition.calories);
 		setValue('protein', calculatedNutrition.protein);
@@ -129,7 +123,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 		setValue('carbs', calculatedNutrition.carbs);
 	}, [calculatedNutrition, setValue]);
 
-	// Product search and selection
 	const {
 		handleSearchChange,
 		getFilteredProducts,

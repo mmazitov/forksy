@@ -1,5 +1,3 @@
-// Clear all PWA caches
-// Useful for debugging or forcing a fresh install
 const clearAllCaches = async (): Promise<void> => {
 	if (!('caches' in window)) {
 		console.warn('[PWA] Caches API not available');
@@ -21,7 +19,6 @@ const clearAllCaches = async (): Promise<void> => {
 	console.log('[PWA] All caches cleared');
 };
 
-// Unregister all service workers
 const unregisterAllServiceWorkers = async (): Promise<void> => {
 	if (!('serviceWorker' in navigator)) {
 		console.warn('[PWA] Service Worker API not available');
@@ -41,8 +38,6 @@ const unregisterAllServiceWorkers = async (): Promise<void> => {
 	console.log('[PWA] All service workers unregistered');
 };
 
-// Full PWA reset - clears caches and unregisters service workers
-// Call this to do a complete fresh install
 const fullPwaReset = async (): Promise<void> => {
 	console.log('[PWA] Starting full PWA reset...');
 
@@ -50,12 +45,10 @@ const fullPwaReset = async (): Promise<void> => {
 		await clearAllCaches();
 		await unregisterAllServiceWorkers();
 
-		// Clear PWA markers from localStorage
 		localStorage.removeItem('pwa-installed');
 
 		console.log('[PWA] Full reset complete. Reload the page to reinstall PWA');
 
-		// Reload after a short delay
 		setTimeout(() => {
 			window.location.reload();
 		}, 1000);
@@ -64,7 +57,6 @@ const fullPwaReset = async (): Promise<void> => {
 	}
 };
 
-// Get current PWA cache information
 const getPwaCacheInfo = async (): Promise<{
 	cacheCount: number;
 	cacheNames: string[];
@@ -103,7 +95,6 @@ const getPwaCacheInfo = async (): Promise<{
 	};
 };
 
-// Format bytes to human-readable size
 const formatBytes = (bytes: number, decimals = 2): string => {
 	if (bytes === 0) return '0 Bytes';
 

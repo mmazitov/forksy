@@ -1,10 +1,5 @@
-// Badge
 export { Badge, badgeVariants } from './badge';
-
-// Button
 export { Button, buttonVariants } from './button';
-
-// Card
 export {
 	Card,
 	CardContent,
@@ -13,8 +8,6 @@ export {
 	CardHeader,
 	CardTitle,
 } from './card';
-
-// Dialog
 export {
 	Dialog,
 	DialogClose,
@@ -27,8 +20,6 @@ export {
 	DialogTitle,
 	DialogTrigger,
 } from './dialog';
-
-// Dropdown Menu
 export {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -46,14 +37,8 @@ export {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from './dropdown-menu';
-
-// Input
 export { Input } from './input';
-
-// Label
 export { Label } from './label';
-
-// Select
 export {
 	Select,
 	SelectContent,
@@ -66,20 +51,10 @@ export {
 	SelectTrigger,
 	SelectValue,
 } from './select';
-
-// Separator
 export { Separator } from './separator';
-
-// Sonner
 export { Toaster as Sonner, toast } from './sonner';
-
-// Tabs
 export { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
-
-// Textarea
 export { Textarea } from './textarea';
-
-// Toast
 export {
 	Toast,
 	ToastAction,
@@ -91,11 +66,7 @@ export {
 	type ToastActionElement,
 	type ToastProps,
 } from './toast';
-
-// Toaster
 export { Toaster } from './toaster';
-
-// Tooltip
 export { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 
 export { Checkbox } from './checkbox';

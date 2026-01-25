@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [isInitialized, setIsInitialized] = useState(false);
 	const authState = useAuth();
 
-	// Initialize on client side only
 	useEffect(() => {
 		setIsInitialized(true);
 	}, []);

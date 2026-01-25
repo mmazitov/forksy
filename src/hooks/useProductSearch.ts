@@ -16,24 +16,20 @@ export const useProductSearch = <T extends Product>({
 	products,
 	updateIngredient,
 }: UseProductSearchProps<T>) => {
-	// Map of products by name for quick lookup
 	const productsByName = useMemo(() => {
 		const map = new Map<string, T>();
 		products.forEach((p) => map.set(p.name, p));
 		return map;
 	}, [products]);
 
-	// Search state for each ingredient row
 	const [searchQueries, setSearchQueries] = useState<Record<number, string>>(
 		{},
 	);
 
-	// Handle search input change
 	const handleSearchChange = useCallback((index: number, value: string) => {
 		setSearchQueries((prev) => ({ ...prev, [index]: value }));
 	}, []);
 
-	// Get filtered products for a specific ingredient row
 	const getFilteredProducts = useCallback(
 		(index: number): T[] => {
 			const query = searchQueries[index]?.toLowerCase() || '';
@@ -43,7 +39,6 @@ export const useProductSearch = <T extends Product>({
 		[products, searchQueries],
 	);
 
-	// Handle product selection
 	const handleProductSelect = useCallback(
 		(index: number, productName: string) => {
 			const product = productsByName.get(productName);
@@ -56,7 +51,6 @@ export const useProductSearch = <T extends Product>({
 		[productsByName, updateIngredient],
 	);
 
-	// Get search query for a specific index
 	const getSearchQuery = useCallback(
 		(index: number): string => {
 			return searchQueries[index] || '';
@@ -64,7 +58,6 @@ export const useProductSearch = <T extends Product>({
 		[searchQueries],
 	);
 
-	// Clear search query for a specific index
 	const clearSearchQuery = useCallback((index: number) => {
 		setSearchQueries((prev) => ({ ...prev, [index]: '' }));
 	}, []);

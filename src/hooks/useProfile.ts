@@ -58,7 +58,7 @@ export const useProfile = () => {
 				? normalizePhone(formData.phone)
 				: undefined;
 
-			// Конвертуємо рядки в масиви
+
 			const allergyArray =
 				typeof formData.allergy === 'string'
 					? formData.allergy

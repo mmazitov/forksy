@@ -1,6 +1,4 @@
-// Register and manage Service Worker for PWA
 const initServiceWorker = () => {
-	// Only register Service Worker in production
 	if ('serviceWorker' in navigator && import.meta.env.PROD) {
 		window.addEventListener('load', () => {
 			navigator.serviceWorker
@@ -8,7 +6,6 @@ const initServiceWorker = () => {
 				.then((registration) => {
 					console.log('[PWA] Service Worker registered:', registration);
 
-					// Check for updates every 5 minutes
 					const updateIntervalId = setInterval(
 						() => {
 							registration.update();
@@ -16,11 +13,10 @@ const initServiceWorker = () => {
 						5 * 60 * 1000,
 					);
 
-					// Clear update interval when the page is about to be unloaded
 					window.addEventListener('beforeunload', () => {
 						clearInterval(updateIntervalId);
 					});
-					// Listen for updates
+
 					registration.addEventListener('updatefound', () => {
 						const newWorker = registration.installing;
 
@@ -30,10 +26,8 @@ const initServiceWorker = () => {
 									newWorker.state === 'installed' &&
 									navigator.serviceWorker.controller
 								) {
-									// New service worker is ready for activation
 									console.log('[PWA] New Service Worker update available');
 
-									// Notify user about available update
 									window.dispatchEvent(
 										new CustomEvent('pwa-update-available', {
 											detail: { registration },
@@ -44,13 +38,10 @@ const initServiceWorker = () => {
 						}
 					});
 
-					// Listen for messages from Service Worker
 					navigator.serviceWorker.addEventListener('message', (event) => {
 						if (event.data.type === 'PWA_INSTALLED') {
 							localStorage.setItem('pwa-installed', 'true');
 							console.log('[PWA] PWA installation marker set');
-
-							// Dispatch custom event for app components to react to
 							window.dispatchEvent(new CustomEvent('pwa-installed'));
 						}
 					});
@@ -62,7 +53,6 @@ const initServiceWorker = () => {
 	}
 };
 
-// Hook to listen for PWA update events
 const usePwaUpdateListener = (callback?: () => void) => {
 	if (typeof window !== 'undefined') {
 		window.addEventListener('pwa-update-available', () => {
@@ -74,7 +64,6 @@ const usePwaUpdateListener = (callback?: () => void) => {
 	}
 };
 
-// Handle PWA update by reloading the page
 const skipWaitingAndReload = () => {
 	if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
 		navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });

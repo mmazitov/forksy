@@ -52,7 +52,6 @@ export {
 	DialogTrigger,
 } from './ui/dialog';
 
-// Dropdown Menu
 export {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,

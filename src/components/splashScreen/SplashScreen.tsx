@@ -11,12 +11,10 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 	const [shouldRender, setShouldRender] = useState(true);
 
 	useEffect(() => {
-		// Start fade out after the animation is complete
 		const fadeOutTimer = setTimeout(() => {
 			setIsVisible(false);
 		}, ANIMATION_DURATION.splash);
 
-		// Remove the splash screen from the DOM after fade out
 		const removeTimer = setTimeout(() => {
 			setShouldRender(false);
 			onComplete?.();

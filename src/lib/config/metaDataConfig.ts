@@ -1,9 +1,4 @@
-/**
- * SEO Configuration
- */
-
 export const METADATA_CONFIG = {
-	// Main information about the site
 	site: {
 		name: 'Forksy',
 		fullName: 'Forksy - Планувальник харчування та менеджер рецептів',
@@ -15,14 +10,12 @@ export const METADATA_CONFIG = {
 		type: 'website',
 	},
 
-	// Social media
 	social: {
 		twitter: '@forksy',
 		facebook: 'forksy',
 		instagram: '@forksy_app',
 	},
 
-	// Keywords for different pages
 	keywords: {
 		home: [
 			'планувальник харчування',
@@ -85,7 +78,7 @@ export const METADATA_CONFIG = {
 		settings: 'Налаштування',
 		notFound: 'Сторінка не знайдена',
 	},
-	// Descriptions for different pages
+
 	descriptions: {
 		home: 'Forksy — ваш особистий планувальник харчування та менеджер рецептів. Плануйте свої страви, керуйте рецептами та відкривайте нові страви з детальною інформацією про поживні речовини.',
 		products:

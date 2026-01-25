@@ -21,7 +21,7 @@ const ScheduleWeek = () => {
 						<CardContent className="p-4">
 							<div className="grid grid-cols-1 gap-3 md:grid-cols-4">
 								{CATEGORIES_DISHES.slice(1, 5).map((item) => {
-									const mealData = null; // Replace with actual data fetching logic
+									const mealData = null;
 									return (
 										<div
 											key={item.id}
