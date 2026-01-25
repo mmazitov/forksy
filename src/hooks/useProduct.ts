@@ -14,17 +14,7 @@ import {
 	useUpdateProductMutation,
 } from '@/lib/graphql';
 import { ProductSchema } from '@/lib/utils/schemas';
-
-interface ProductFormData {
-	name: string;
-	category: string;
-	imageUrl?: string;
-	calories: number;
-	protein: number;
-	fat: number;
-	carbs: number;
-	description?: string;
-}
+import { ProductFormData } from '@/types';
 
 export const useAddProduct = () => {
 	const navigate = useNavigate();

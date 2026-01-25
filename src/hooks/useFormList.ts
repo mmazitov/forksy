@@ -1,11 +1,5 @@
 import { useCallback, useState } from 'react';
 
-export interface Ingredient {
-	name: string;
-	amount: string;
-	productId?: string;
-}
-
 export const useFormList = <T extends object | string>(
 	initialItem: T,
 	initialItems?: T[],

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { Ingredient } from './useFormList';
+import { FormIngredient } from '@/types';
 
 interface Product {
 	id: string;
@@ -9,7 +9,7 @@ interface Product {
 
 interface UseProductSearchProps<T extends Product> {
 	products: T[];
-	updateIngredient: (index: number, updates: Partial<Ingredient>) => void;
+	updateIngredient: (index: number, updates: Partial<FormIngredient>) => void;
 }
 
 export const useProductSearch = <T extends Product>({

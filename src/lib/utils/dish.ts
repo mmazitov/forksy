@@ -1,9 +1,9 @@
-import { Ingredient } from '@/hooks/useFormList';
+import { FormIngredient } from '@/types';
 
 export const parseIngredient = (ingredient: {
 	name: string;
 	amount: string;
-}): Ingredient => ({
+}): FormIngredient => ({
 	name: ingredient.name,
 	amount: ingredient.amount,
 	productId: undefined,
@@ -12,7 +12,7 @@ export const parseIngredient = (ingredient: {
 export const parseIngredients = <T extends { id: string; name: string }>(
 	ingredients: Array<{ name: string; amount: string }>,
 	productsByName: Map<string, T>,
-): Ingredient[] => {
+): FormIngredient[] => {
 	return ingredients.map((ingredient) => {
 		const product = productsByName.get(ingredient.name);
 		return {

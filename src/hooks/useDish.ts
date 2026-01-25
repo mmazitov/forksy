@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { Ingredient, useFormList } from './useFormList';
+import { useFormList } from './useFormList';
 
 import {
 	DishesDocument,
@@ -16,21 +16,7 @@ import {
 	useUpdateDishMutation,
 } from '@/lib/graphql';
 import { DishSchema } from '@/lib/utils/schemas';
-
-interface DishFormData {
-	name: string;
-	category: string;
-	imageUrl?: string;
-	description?: string;
-	calories: number;
-	protein: number;
-	fat: number;
-	carbs: number;
-	prepTime: number;
-	servings: number;
-	ingredients: string[];
-	instructions: string[];
-}
+import { DishFormData, FormIngredient } from '@/types';
 
 const defaultDishValues: DishFormData = {
 	name: '',
@@ -66,7 +52,7 @@ export const useAddDish = () => {
 	});
 
 	// Lists for ingredients and instructions
-	const ingredientsList = useFormList<Ingredient>({ name: '', amount: '' });
+	const ingredientsList = useFormList<FormIngredient>({ name: '', amount: '' });
 	const instructionsList = useFormList<string>('');
 
 	const onSubmit = async (data: DishFormData) => {
@@ -126,7 +112,7 @@ export const useAddDish = () => {
 };
 
 interface UseEditDishOptions {
-	ingredients?: Ingredient[];
+	ingredients?: FormIngredient[];
 	instructions?: string[];
 }
 
@@ -153,7 +139,7 @@ export const useEditDish = (
 	});
 
 	// Lists for ingredients and instructions with initial values
-	const ingredientsList = useFormList<Ingredient>(
+	const ingredientsList = useFormList<FormIngredient>(
 		{ name: '', amount: '' },
 		options?.ingredients,
 	);
