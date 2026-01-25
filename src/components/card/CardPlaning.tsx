@@ -7,16 +7,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui';
-
-interface Dish {
-	id: string;
-	name: string;
-	calories: number;
-}
+import { PlanningDish } from '@/types';
 
 interface CardPlaningProps {
 	meal: string;
-	mealDishes: Dish[];
+	mealDishes: PlanningDish[];
 	mealCalories: number;
 	onAddDish: (meal: string) => void;
 	onRemoveDish: (meal: string, dishId: string) => void;

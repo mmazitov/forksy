@@ -1,15 +1,10 @@
-import { useMeQuery, useUpdateProfileMutation } from '@/lib/graphql';
-import { normalizePhone, phoneValidate } from '@/lib/utils';
 import { useState } from 'react';
+
 import { useToast } from './useToast';
 
-interface ProfileFormData {
-	name: string;
-	phone: string;
-	diet?: string;
-	allergy?: string[] | string;
-	dislike?: string[] | string;
-}
+import { useMeQuery, useUpdateProfileMutation } from '@/lib/graphql';
+import { normalizePhone, phoneValidate } from '@/lib/utils';
+import { ProfileFormData } from '@/types';
 
 export const useProfile = () => {
 	const { data, refetch } = useMeQuery();

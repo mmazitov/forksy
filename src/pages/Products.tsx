@@ -10,12 +10,10 @@ import {
 	Pagination,
 	Search,
 } from '@/components';
-import { CATEGORIES_PRODUCTS } from '@/constants';
+import { CATEGORIES_PRODUCTS, ITEMS_PER_PAGE } from '@/constants';
 import { useFilter, usePagination } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
 import { useProductsQuery } from '@/lib/graphql';
-
-const ITEMS_PER_PAGE = 10;
 
 const Products = () => {
 	const { data, loading, error } = useProductsQuery();

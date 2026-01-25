@@ -9,9 +9,12 @@ const initServiceWorker = () => {
 					console.log('[PWA] Service Worker registered:', registration);
 
 					// Check for updates every 5 minutes
-					const updateIntervalId = setInterval(() => {
-						registration.update();
-					}, 5 * 60 * 1000);
+					const updateIntervalId = setInterval(
+						() => {
+							registration.update();
+						},
+						5 * 60 * 1000,
+					);
 
 					// Clear update interval when the page is about to be unloaded
 					window.addEventListener('beforeunload', () => {

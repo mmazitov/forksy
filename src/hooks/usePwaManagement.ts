@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+
 import {
 	clearAllCaches,
 	fullPwaReset,
 	getPwaCacheInfo,
 	unregisterAllServiceWorkers,
 } from '@/lib/utils/pwa-utils';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
 interface CacheInfo {
 	cacheCount: number;

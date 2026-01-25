@@ -1,6 +1,7 @@
-import { Button } from '@/components';
 import { LuArrowBigLeft } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
+
+import { Button } from '@/components';
 
 interface BackButtonProps {
 	title: string;

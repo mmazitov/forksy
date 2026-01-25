@@ -48,3 +48,28 @@ export interface ProductFormData {
 	carbs: number;
 	description?: string;
 }
+
+export interface AuthLoginData {
+	email: string;
+	password: string;
+}
+
+export interface AuthRegisterData {
+	email: string;
+	password: string;
+	name: string;
+}
+
+export interface ProfileFormData {
+	name: string;
+	phone: string;
+	diet?: string;
+	allergy?: string[] | string;
+	dislike?: string[] | string;
+}
+
+export interface PlanningDish {
+	id: string;
+	name: string;
+	calories: number;
+}

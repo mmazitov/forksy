@@ -1,8 +1,9 @@
+import { useCallback, useState } from 'react';
+import { toast } from 'sonner';
+
 import { CATEGORIES_DISHES } from '@/constants';
 import { weekDays } from '@/lib/utils/';
 import { dishes } from '@/mock';
-import { useCallback, useState } from 'react';
-import { toast } from 'sonner';
 
 export interface DayMenuType {
 	[day: string]: {

@@ -29,3 +29,7 @@ export const BREAKPOINTS = {
 	xl: 1280,
 	'2xl': 1536,
 } as const;
+
+export const ITEMS_PER_PAGE = 10;
+
+export const DEBOUNCE_DELAY = 500;

@@ -4,17 +4,7 @@ import { toast } from 'sonner';
 import { useAuthContext } from './useAuthContext';
 
 import { useLoginMutation, useRegisterMutation } from '@/lib/graphql';
-
-interface LoginData {
-	email: string;
-	password: string;
-}
-
-interface RegisterData {
-	email: string;
-	password: string;
-	name: string;
-}
+import { AuthLoginData, AuthRegisterData } from '@/types';
 
 export const useAuthForm = () => {
 	const { login } = useAuthContext();
@@ -22,7 +12,7 @@ export const useAuthForm = () => {
 	const [loginUser, { loading: loginLoading }] = useLoginMutation();
 	const [error, setError] = useState<string | null>(null);
 
-	const handleLogin = async (data: LoginData) => {
+	const handleLogin = async (data: AuthLoginData) => {
 		try {
 			setError(null);
 			const result = await loginUser({
@@ -48,7 +38,7 @@ export const useAuthForm = () => {
 		}
 	};
 
-	const handleRegister = async (data: RegisterData) => {
+	const handleRegister = async (data: AuthRegisterData) => {
 		try {
 			setError(null);
 			const result = await registerUser({

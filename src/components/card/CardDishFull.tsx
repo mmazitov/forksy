@@ -14,11 +14,7 @@ import {
 } from '@/components';
 import { useDeleteDish, useFavoriteDish } from '@/hooks/useDish';
 import { categoryBadgeMap } from '@/lib/utils/categoryBadge';
-
-interface Ingredient {
-	name: string;
-	amount: string;
-}
+import { Ingredient } from '@/types';
 
 interface CardDishFullProps {
 	id: string;

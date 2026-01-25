@@ -4,7 +4,7 @@ export {
 	type Category,
 } from './categories';
 
-export { ANIMATION_DURATION, APP_CONFIG, BREAKPOINTS } from './app';
+export * from './app';
 export { MODAL_TYPES, type ModalTypes } from './modals';
 export { NAVIGATION_ITEMS, type NavigationItem } from './navigation';
 export { NUTRITION_UNITS_HINT, UNIT_WEIGHTS } from './nutrition';

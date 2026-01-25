@@ -10,12 +10,10 @@ import {
 	Pagination,
 	Search,
 } from '@/components';
-import { CATEGORIES_DISHES } from '@/constants';
+import { CATEGORIES_DISHES, ITEMS_PER_PAGE } from '@/constants';
 import { useFilter, usePagination } from '@/hooks';
 import { METADATA_CONFIG } from '@/lib/config';
 import { useDishesQuery } from '@/lib/graphql/dish.gen';
-
-const ITEMS_PER_PAGE = 10;
 
 const Dishes = () => {
 	const { data, loading, error } = useDishesQuery();
