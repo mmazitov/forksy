@@ -52,7 +52,7 @@ const CardProductCompact = ({
 	};
 
 	return (
-		<Link to={`/products/${id}`}>
+		<Link to={`/product/${id}`}>
 			<Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<div className="bg-muted relative h-44.25 overflow-hidden">
 					<FavoriteButton

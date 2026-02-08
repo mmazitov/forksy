@@ -3,7 +3,12 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 
 import { ProtectedRoute } from './lib/hoc';
 
-import { Header, PwaInstallPrompt, PwaUpdatePrompt, SplashScreen } from '@/components';
+import {
+	Header,
+	PwaInstallPrompt,
+	PwaUpdatePrompt,
+	SplashScreen,
+} from '@/components';
 import { useSplashScreen } from '@/hooks';
 import { Providers } from '@/lib/providers';
 import {
@@ -36,7 +41,7 @@ const AppRoutes = () => {
 				<Route path="/schedule" element={<Schedule />} />
 				<Route path="/menu-planner" element={<MenuPlanner />} />
 				<Route path="/products" element={<Products />} />
-				<Route path="/products/:id" element={<ProductDetail />} />
+				<Route path="/product/:id" element={<ProductDetail />} />
 				<Route
 					path="/products/add"
 					element={
@@ -46,7 +51,7 @@ const AppRoutes = () => {
 					}
 				/>
 				<Route
-					path="/products/edit/:id"
+					path="/product/edit/:id"
 					element={
 						<ProtectedRoute>
 							<AddProduct />
@@ -54,9 +59,17 @@ const AppRoutes = () => {
 					}
 				/>
 				<Route path="/dishes" element={<Dishes />} />
-				<Route path="/dishes/:id" element={<DishDetail />} />
+				<Route path="/dish/:id" element={<DishDetail />} />
 				<Route
 					path="/dishes/add"
+					element={
+						<ProtectedRoute>
+							<AddDish />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/dish/edit/:id"
 					element={
 						<ProtectedRoute>
 							<AddDish />

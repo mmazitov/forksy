@@ -84,7 +84,7 @@ const CardProductFull = ({
 				<div>
 					{canEdit && (
 						<div className="absolute top-2 left-2 z-10 flex flex-col gap-2 md:flex-row lg:top-0 lg:right-0 lg:left-auto">
-							<Link to={`/products/edit/${id}`}>
+							<Link to={`/product/edit/${id}`}>
 								<Button variant="outline" size="sm">
 									Редагувати продукт
 								</Button>

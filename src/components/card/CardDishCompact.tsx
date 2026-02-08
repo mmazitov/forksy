@@ -51,7 +51,7 @@ const CardDishCompact = ({
 	};
 
 	return (
-		<Link to={`/dishes/${id}`}>
+		<Link to={`/dish/${id}`}>
 			<Card className="group h-full cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<div className="bg-muted relative aspect-video overflow-hidden">
 					<FavoriteButton

@@ -43,7 +43,6 @@ const CardDishFull = ({
 	category,
 	imageUrl,
 	prepTime,
-	servings,
 	calories,
 	protein,
 	fat,
@@ -92,7 +91,7 @@ const CardDishFull = ({
 						<Badge className={`mb-3 ${badgeClass}`}>{category}</Badge>
 						{canEdit && (
 							<div className="flex flex-col gap-2 md:flex-row">
-								<Link to={`/dishes/edit/${id}`}>
+								<Link to={`/dish/edit/${id}`}>
 									<Button variant="outline" size="sm">
 										Редагувати страву
 									</Button>

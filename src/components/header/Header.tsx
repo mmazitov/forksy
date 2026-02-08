@@ -1,23 +1,21 @@
-import { Logo } from '@/components';
-
-import { MODAL_TYPES } from '@/constants';
-import { useAuthContext, useModal, useToggle } from '@/hooks';
-
 import {
+	Logo,
 	MenuButton,
 	Modal,
 	NavigationDesktop,
 	NavigationMobile,
 } from '@/components';
+import { MODAL_TYPES } from '@/constants';
+import { useAuthContext, useModal, useToggle } from '@/hooks';
 
 const Header = () => {
-	const [mobileMenuOpen, toggleMobileMenu, setMobileMenuOpen] = useToggle();
+	const [mobileMenuOpen, setMobileMenuOpen] = useToggle();
 	const { isOpen: authModalOpen, setIsOpen: setAuthModalOpen } = useModal();
 
 	const { isLoggedIn, userName, handleLogout } = useAuthContext();
 
 	return (
-		<nav className="border-border bg-card/95 supports-[backdrop-filter]:bg-card/80 sticky top-0 z-50 w-full border-b backdrop-blur">
+		<nav className="border-border bg-card/95 supports-backdrop-filter:bg-card/80 sticky top-0 z-50 w-full border-b backdrop-blur">
 			<div className="container mx-auto px-4">
 				<div className="flex h-16 items-center justify-between">
 					{/* Logo */}
