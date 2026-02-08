@@ -1,10 +1,9 @@
-import { gql } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { useFavorite } from './useFavorite';
 import { useFormList } from './useFormList';
 
 import {
@@ -225,45 +224,15 @@ export const useDeleteDish = (dishId: string) => {
 };
 
 export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
-	const [isFav, setIsFav] = useState(isFavorite);
 	const [addToFavoritesDish] = useAddToFavoritesDishMutation();
 	const [removeFromFavoritesDish] = useRemoveFromFavoritesDishMutation();
 
-	const toggleFavorite = async () => {
-		const previousState = isFav;
-		const newState = !isFav;
-
-		try {
-			setIsFav(newState);
-
-			const mutation = isFav ? removeFromFavoritesDish : addToFavoritesDish;
-
-			await mutation({
-				variables: { dishId },
-				update: (cache) => {
-					cache.writeFragment({
-						id: cache.identify({ __typename: 'Dish', id: dishId }),
-						fragment: gql`
-							fragment UpdateFavorite on Dish {
-								isFavorite
-							}
-						`,
-						data: { isFavorite: newState },
-					});
-				},
-			});
-
-			toast.success(
-				isFav ? 'Страву видалено з улюблених' : 'Страву додано до улюблених',
-			);
-		} catch (error) {
-			setIsFav(previousState);
-			toast.error(
-				'Помилка при оновленні улюблених страв, лише авторизовані користувачі можуть додавати улюблені страви',
-			);
-			console.error(error);
-		}
-	};
-
-	return { isFavorite: isFav, toggleFavorite };
+	return useFavorite({
+		entityType: 'Dish',
+		entityId: dishId,
+		isFavorite,
+		addMutation: addToFavoritesDish,
+		removeMutation: removeFromFavoritesDish,
+		queryName: 'favoriteDishes',
+	});
 };

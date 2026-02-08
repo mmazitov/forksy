@@ -17,7 +17,8 @@ export const useAuth = () => {
 		error,
 	} = useMeQuery({
 		skip: !token,
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-first',
+		notifyOnNetworkStatusChange: true,
 		context: {
 			headers: {
 				authorization: token ? `Bearer ${token}` : '',
@@ -25,22 +26,38 @@ export const useAuth = () => {
 		},
 	});
 
-	const logout = useCallback(() => {
+	const logout = useCallback(async () => {
 		localStorage.removeItem('token');
 		setToken(null);
 		setUser(null);
-		client.resetStore();
+
+		try {
+			await client.clearStore();
+			if (typeof window !== 'undefined' && window.localStorage) {
+				Object.keys(localStorage).forEach((key) => {
+					if (key.startsWith('apollo-cache-persist')) {
+						localStorage.removeItem(key);
+					}
+				});
+			}
+		} catch (error) {
+			console.error('Error clearing cache:', error);
+		}
 	}, []);
 
 	const login = useCallback(
-		(newToken: string, newUser: Omit<User, '__typename'>) => {
+		async (newToken: string, newUser: Omit<User, '__typename'>) => {
 			localStorage.setItem('token', newToken);
 			setUser(newUser as User);
 			setToken(newToken);
 
-			client.refetchQueries({
-				include: 'active',
-			});
+			try {
+				await client.refetchQueries({
+					include: ['FavoriteProducts', 'FavoriteDishes', 'Me'],
+				});
+			} catch (error) {
+				console.error('Error refetching queries after login:', error);
+			}
 		},
 		[],
 	);

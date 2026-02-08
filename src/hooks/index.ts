@@ -8,6 +8,7 @@ export {
 	useEditDish,
 	useFavoriteDish,
 } from './useDish';
+export { useFavorite } from './useFavorite';
 export { useFilter } from './useFilter';
 export { useFormList } from './useFormList';
 export { useLocalStorage } from './useLocalStorage';

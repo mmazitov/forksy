@@ -1,9 +1,9 @@
-import { gql } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+
+import { useFavorite } from './useFavorite';
 
 import {
 	ProductsDocument,
@@ -161,47 +161,15 @@ export const useDeleteProduct = (productId: string) => {
 };
 
 export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
-	const [isFav, setIsFav] = useState(isFavorite);
 	const [addToFavoritesProduct] = useAddToFavoritesProductMutation();
 	const [removeFromFavoritesProduct] = useRemoveFromFavoritesProductMutation();
 
-	const toggleFavorite = async () => {
-		const previousState = isFav;
-		const newState = !isFav;
-
-		try {
-			setIsFav(newState);
-
-			const mutation = isFav
-				? removeFromFavoritesProduct
-				: addToFavoritesProduct;
-
-			await mutation({
-				variables: { productId },
-				update: (cache) => {
-					cache.writeFragment({
-						id: cache.identify({ __typename: 'Product', id: productId }),
-						fragment: gql`
-							fragment UpdateFavorite on Product {
-								isFavorite
-							}
-						`,
-						data: { isFavorite: newState },
-					});
-				},
-			});
-
-			toast.success(
-				isFav ? 'Продукт видалено з улюблених' : 'Продукт додано до улюблених',
-			);
-		} catch (error) {
-			setIsFav(previousState);
-			toast.error(
-				'Помилка при оновленні улюблених продуктів, лише авторизовані користувачі можуть додавати улюблені продукти',
-			);
-			console.error(error);
-		}
-	};
-
-	return { isFavorite: isFav, toggleFavorite };
+	return useFavorite({
+		entityType: 'Product',
+		entityId: productId,
+		isFavorite,
+		addMutation: addToFavoritesProduct,
+		removeMutation: removeFromFavoritesProduct,
+		queryName: 'favoriteProducts',
+	});
 };

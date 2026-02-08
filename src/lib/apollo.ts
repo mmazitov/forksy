@@ -11,19 +11,24 @@ const getGraphQLUrl = () => {
 const httpLink = createHttpLink({
 	uri: getGraphQLUrl(),
 	credentials: 'include', // Important for cookies/sessions
+	fetchOptions: {
+		mode: 'cors',
+	},
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const errorLink = onError(({ graphQLErrors, networkError }: any) => {
 	if (graphQLErrors) {
-		graphQLErrors.forEach(({ message, locations, path }: any) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		graphQLErrors.forEach((error: any) => {
 			console.error(
-				`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+				`[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`,
 			);
 		});
 	}
 	if (networkError) {
 		console.error(`[Network error]: ${networkError}`);
-		if ((networkError as any).message?.includes('Failed to fetch')) {
+		if (networkError.message?.includes('Failed to fetch')) {
 			console.warn(
 				'GraphQL server is not available. Check your VITE_API_URL environment variable.',
 			);
@@ -49,7 +54,37 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+	typePolicies: {
+		Query: {
+			fields: {
+				favoriteProducts: {
+					merge: false,
+				},
+				favoriteDishes: {
+					merge: false,
+				},
+			},
+		},
+		Product: {
+			fields: {
+				isFavorite: {
+					merge: false,
+				},
+			},
+		},
+		Dish: {
+			fields: {
+				isFavorite: {
+					merge: false,
+				},
+			},
+		},
+	},
+	// Более агрессивная сборка мусора
+	possibleTypes: {},
+	resultCaching: true,
+});
 
 // Persist cache to localStorage for offline support
 if (typeof window !== 'undefined') {
