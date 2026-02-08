@@ -33,32 +33,17 @@ async function cacheFirst(request, cacheName) {
 async function staleWhileRevalidate(request, cacheName) {
 	const cache = await caches.open(cacheName);
 
-	// For POST requests, create cache key from URL + body hash
-	let cacheKey = request.url;
-	if (request.method === 'POST' && request.clone) {
-		try {
-			const clonedRequest = request.clone();
-			const body = await clonedRequest.text();
-			const bodyHash = await crypto.subtle.digest(
-				'SHA-256',
-				new TextEncoder().encode(body),
-			);
-			const hashArray = Array.from(new Uint8Array(bodyHash));
-			const hashHex = hashArray
-				.map((b) => b.toString(16).padStart(2, '0'))
-				.join('');
-			cacheKey = `${request.url}-${hashHex.slice(0, 16)}`;
-		} catch (error) {
-			console.error('[Strategy] Failed to hash POST body:', error);
-		}
+	// Only cache GET requests
+	if (request.method !== 'GET') {
+		return fetch(request);
 	}
 
-	const cached = await cache.match(cacheKey);
+	const cached = await cache.match(request);
 
 	const networkFetch = fetch(request.clone())
 		.then((response) => {
 			if (response && response.status === 200) {
-				cache.put(cacheKey, response.clone());
+				cache.put(request, response.clone());
 			}
 			return response;
 		})
@@ -76,15 +61,19 @@ async function networkFirst(request, cacheName) {
 
 	try {
 		const response = await fetch(request);
-		if (response && response.status === 200) {
+		// Only cache GET requests, not POST requests
+		if (response && response.status === 200 && request.method === 'GET') {
 			cache.put(request, response.clone());
 		}
 		return response;
 	} catch (error) {
 		console.error('[Strategy] Network First fallback to cache:', error);
-		const cached = await cache.match(request);
-		if (cached) {
-			return cached;
+		// Only try to match GET requests from cache
+		if (request.method === 'GET') {
+			const cached = await cache.match(request);
+			if (cached) {
+				return cached;
+			}
 		}
 		throw error;
 	}

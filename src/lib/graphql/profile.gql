@@ -11,6 +11,12 @@ query Me {
 		dislike
 		createdAt
 		updatedAt
+		favoriteProducts {
+			id
+		}
+		favoriteDishes {
+			id
+		}
 	}
 }
 

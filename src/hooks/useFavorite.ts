@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 import { toast } from 'sonner';
 
 interface UseFavoriteOptions {
@@ -26,18 +25,11 @@ export const useFavorite = ({
 			await mutation({
 				variables: { [variableName]: entityId },
 				refetchQueries: [
-					{ query: gql`query Me { me { id favoriteProducts { id } favoriteDishes { id } } }` },
-					{
-						query: gql`
-							query ${entityType}Query($id: ID!) {
-								${entityType.toLowerCase()}(id: $id) {
-									id
-									isFavorite
-								}
-							}
-						`,
-						variables: { id: entityId },
-					},
+					'Me',
+					'FavoriteProducts',
+					'FavoriteDishes',
+					'Products',
+					'Dishes'
 				],
 				awaitRefetchQueries: true,
 			});
