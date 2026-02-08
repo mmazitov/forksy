@@ -233,6 +233,5 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 		isFavorite,
 		addMutation: addToFavoritesDish,
 		removeMutation: removeFromFavoritesDish,
-		queryName: 'favoriteDishes',
 	});
 };

@@ -1,7 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import { LocalStorageWrapper, persistCache } from 'apollo3-cache-persist';
 
 const getGraphQLUrl = () => {
 	// Use environment variable or fallback to localhost
@@ -59,9 +58,15 @@ const cache = new InMemoryCache({
 		Query: {
 			fields: {
 				favoriteProducts: {
+					read() {
+						return undefined;
+					},
 					merge: false,
 				},
 				favoriteDishes: {
+					read() {
+						return undefined;
+					},
 					merge: false,
 				},
 			},
@@ -69,6 +74,9 @@ const cache = new InMemoryCache({
 		Product: {
 			fields: {
 				isFavorite: {
+					read() {
+						return undefined;
+					},
 					merge: false,
 				},
 			},
@@ -76,29 +84,25 @@ const cache = new InMemoryCache({
 		Dish: {
 			fields: {
 				isFavorite: {
+					read() {
+						return undefined;
+					},
 					merge: false,
 				},
 			},
 		},
 	},
-	// Более агрессивная сборка мусора
-	possibleTypes: {},
-	resultCaching: true,
 });
-
-// Persist cache to localStorage for offline support
-if (typeof window !== 'undefined') {
-	persistCache({
-		cache,
-		storage: new LocalStorageWrapper(window.localStorage),
-		maxSize: 5242880, // 5MB
-		debug: import.meta.env.DEV,
-	}).catch((error) => {
-		console.error('[Apollo] Cache persistence error:', error);
-	});
-}
 
 export const client = new ApolloClient({
 	link: errorLink.concat(authLink).concat(httpLink),
 	cache,
+	defaultOptions: {
+		query: {
+			fetchPolicy: 'cache-first',
+		},
+		watchQuery: {
+			fetchPolicy: 'cache-first',
+		},
+	},
 });

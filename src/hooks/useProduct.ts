@@ -170,6 +170,5 @@ export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 		isFavorite,
 		addMutation: addToFavoritesProduct,
 		removeMutation: removeFromFavoritesProduct,
-		queryName: 'favoriteProducts',
 	});
 };

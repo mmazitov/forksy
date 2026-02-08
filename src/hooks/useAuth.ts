@@ -17,7 +17,7 @@ export const useAuth = () => {
 		error,
 	} = useMeQuery({
 		skip: !token,
-		fetchPolicy: 'cache-first',
+		fetchPolicy: 'network-only',
 		notifyOnNetworkStatusChange: true,
 		context: {
 			headers: {
@@ -33,13 +33,6 @@ export const useAuth = () => {
 
 		try {
 			await client.clearStore();
-			if (typeof window !== 'undefined' && window.localStorage) {
-				Object.keys(localStorage).forEach((key) => {
-					if (key.startsWith('apollo-cache-persist')) {
-						localStorage.removeItem(key);
-					}
-				});
-			}
 		} catch (error) {
 			console.error('Error clearing cache:', error);
 		}
