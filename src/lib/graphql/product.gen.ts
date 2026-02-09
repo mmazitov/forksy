@@ -30,6 +30,15 @@ export type ProductQuery = {
 	product?: ({ __typename?: 'Product' } & ProductFieldsFragment) | null;
 };
 
+export type ProductByNameQueryVariables = Types.Exact<{
+	name: Types.Scalars['String']['input'];
+}>;
+
+export type ProductByNameQuery = {
+	__typename?: 'Query';
+	productByName?: ({ __typename?: 'Product' } & ProductFieldsFragment) | null;
+};
+
 export type ProductsQueryVariables = Types.Exact<{
 	category?: Types.InputMaybe<Types.Scalars['String']['input']>;
 	search?: Types.InputMaybe<Types.Scalars['String']['input']>;
@@ -252,6 +261,118 @@ export function useProductLazyQuery(
 // @ts-ignore
 export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
 export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
+export const ProductByNameDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'ProductByName' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'productByName' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'name' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'name' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{
+									kind: 'FragmentSpread',
+									name: { kind: 'Name', value: 'ProductFields' },
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+		{
+			kind: 'FragmentDefinition',
+			name: { kind: 'Name', value: 'ProductFields' },
+			typeCondition: {
+				kind: 'NamedType',
+				name: { kind: 'Name', value: 'Product' },
+			},
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'category' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'imageUrl' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useProductByNameQuery(
+	baseOptions: ApolloReactHooks.QueryHookOptions<
+		ProductByNameQuery,
+		ProductByNameQueryVariables
+	> &
+		(
+			| { variables: ProductByNameQueryVariables; skip?: boolean }
+			| { skip: boolean }
+		),
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useQuery<
+		ProductByNameQuery,
+		ProductByNameQueryVariables
+	>(ProductByNameDocument, options);
+}
+export function useProductByNameLazyQuery(
+	baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+		ProductByNameQuery,
+		ProductByNameQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useLazyQuery<
+		ProductByNameQuery,
+		ProductByNameQueryVariables
+	>(ProductByNameDocument, options);
+}
+// @ts-ignore
+export type ProductByNameQueryHookResult = ReturnType<
+	typeof useProductByNameQuery
+>;
+export type ProductByNameLazyQueryHookResult = ReturnType<
+	typeof useProductByNameLazyQuery
+>;
 export const ProductsDocument = {
 	kind: 'Document',
 	definitions: [

@@ -15,3 +15,4 @@ export {
 	generateRecipeSchema,
 } from './schemaOrg';
 export { formatPhone, normalizePhone, phoneValidate } from './validate';
+export { createSlug, fromSlug } from './slug';

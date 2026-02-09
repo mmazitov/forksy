@@ -67,6 +67,7 @@ export type IngredientInput = {
 
 export type Mutation = {
 	__typename?: 'Mutation';
+	_empty: Maybe<Scalars['String']['output']>;
 	addToFavoritesDish: User;
 	addToFavoritesProduct: User;
 	createDish: Dish;
@@ -205,17 +206,24 @@ export type Product = {
 
 export type Query = {
 	__typename?: 'Query';
+	_empty: Maybe<Scalars['String']['output']>;
 	dish: Maybe<Dish>;
+	dishByName: Maybe<Dish>;
 	dishes: Array<Dish>;
 	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
 	me: Maybe<User>;
 	product: Maybe<Product>;
+	productByName: Maybe<Product>;
 	products: Array<Product>;
 };
 
 export type QueryDishArgs = {
 	id: Scalars['ID']['input'];
+};
+
+export type QueryDishByNameArgs = {
+	name: Scalars['String']['input'];
 };
 
 export type QueryDishesArgs = {
@@ -227,6 +235,10 @@ export type QueryDishesArgs = {
 
 export type QueryProductArgs = {
 	id: Scalars['ID']['input'];
+};
+
+export type QueryProductByNameArgs = {
+	name: Scalars['String']['input'];
 };
 
 export type QueryProductsArgs = {

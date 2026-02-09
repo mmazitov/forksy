@@ -21,6 +21,8 @@ export type MeQuery = {
 		dislike: Array<string>;
 		createdAt: string;
 		updatedAt: string;
+		favoriteProducts: Array<{ __typename?: 'Product'; id: string }>;
+		favoriteDishes: Array<{ __typename?: 'Dish'; id: string }>;
 	} | null;
 };
 
@@ -81,6 +83,26 @@ export const MeDocument = {
 								{ kind: 'Field', name: { kind: 'Name', value: 'dislike' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'favoriteProducts' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+										],
+									},
+								},
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'favoriteDishes' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+										],
+									},
+								},
 							],
 						},
 					},

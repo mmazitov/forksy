@@ -20,6 +20,12 @@ query Product($id: ID!) {
 	}
 }
 
+query ProductByName($name: String!) {
+	productByName(name: $name) {
+		...ProductFields
+	}
+}
+
 query Products($category: String, $search: String, $limit: Int, $offset: Int) {
 	products(
 		category: $category

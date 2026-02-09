@@ -3,21 +3,24 @@ import { Link, useParams } from 'react-router-dom';
 
 import { Button, CardDishFull, Loader, MetaData } from '@/components';
 import { useAuthContext } from '@/hooks';
-import { useDishQuery } from '@/lib/graphql';
+import { useDishByNameQuery } from '@/lib/graphql';
+import { fromSlug } from '@/lib/utils/slug';
 
 const DishDetail = () => {
 	const { isAdmin, user } = useAuthContext();
 	const { id } = useParams<{ id: string }>();
-	const { data, loading, error } = useDishQuery({
-		variables: { id: id! },
-		skip: !id,
+	const dishName = id ? fromSlug(id) : '';
+
+	const { data, loading, error } = useDishByNameQuery({
+		variables: { name: dishName },
+		skip: !dishName,
 	});
 
 	if (loading) {
 		return <Loader />;
 	}
 
-	if (error || !data?.dish) {
+	if (error || !data?.dishByName) {
 		return (
 			<div className="container mx-auto px-4 py-8">
 				<div className="rounded-lg bg-red-50 p-4 text-red-600">
@@ -27,7 +30,7 @@ const DishDetail = () => {
 		);
 	}
 
-	const dish = data.dish;
+	const dish = data.dishByName;
 
 	return (
 		<div className="container mx-auto px-4 py-8">

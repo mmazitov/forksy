@@ -9,6 +9,13 @@ export const useIsActive = () => {
 		}
 
 		if (path !== '/') {
+			if (path === '/products' && location.pathname.startsWith('/product/')) {
+				return true;
+			}
+			if (path === '/dishes' && location.pathname.startsWith('/dish/')) {
+				return true;
+			}
+
 			return (
 				location.pathname === path ||
 				(location.pathname.startsWith(path) &&

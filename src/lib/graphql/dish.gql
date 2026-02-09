@@ -27,6 +27,12 @@ query Dish($id: ID!) {
 	}
 }
 
+query DishByName($name: String!) {
+	dishByName(name: $name) {
+		...DishFields
+	}
+}
+
 query Dishes($category: String, $search: String, $limit: Int, $offset: Int) {
 	dishes(category: $category, search: $search, limit: $limit, offset: $offset) {
 		...DishFields

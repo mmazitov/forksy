@@ -38,6 +38,15 @@ export type DishQuery = {
 	dish?: ({ __typename?: 'Dish' } & DishFieldsFragment) | null;
 };
 
+export type DishByNameQueryVariables = Types.Exact<{
+	name: Types.Scalars['String']['input'];
+}>;
+
+export type DishByNameQuery = {
+	__typename?: 'Query';
+	dishByName?: ({ __typename?: 'Dish' } & DishFieldsFragment) | null;
+};
+
 export type DishesQueryVariables = Types.Exact<{
 	category?: Types.InputMaybe<Types.Scalars['String']['input']>;
 	search?: Types.InputMaybe<Types.Scalars['String']['input']>;
@@ -298,6 +307,130 @@ export function useDishLazyQuery(
 // @ts-ignore
 export type DishQueryHookResult = ReturnType<typeof useDishQuery>;
 export type DishLazyQueryHookResult = ReturnType<typeof useDishLazyQuery>;
+export const DishByNameDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'DishByName' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'dishByName' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'name' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'name' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{
+									kind: 'FragmentSpread',
+									name: { kind: 'Name', value: 'DishFields' },
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+		{
+			kind: 'FragmentDefinition',
+			name: { kind: 'Name', value: 'DishFields' },
+			typeCondition: {
+				kind: 'NamedType',
+				name: { kind: 'Name', value: 'Dish' },
+			},
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'description' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'imageUrl' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'category' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'prepTime' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'servings' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'calories' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'protein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'ingredients' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+							],
+						},
+					},
+					{ kind: 'Field', name: { kind: 'Name', value: 'instructions' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'userId' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useDishByNameQuery(
+	baseOptions: ApolloReactHooks.QueryHookOptions<
+		DishByNameQuery,
+		DishByNameQueryVariables
+	> &
+		(
+			| { variables: DishByNameQueryVariables; skip?: boolean }
+			| { skip: boolean }
+		),
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useQuery<DishByNameQuery, DishByNameQueryVariables>(
+		DishByNameDocument,
+		options,
+	);
+}
+export function useDishByNameLazyQuery(
+	baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+		DishByNameQuery,
+		DishByNameQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useLazyQuery<
+		DishByNameQuery,
+		DishByNameQueryVariables
+	>(DishByNameDocument, options);
+}
+// @ts-ignore
+export type DishByNameQueryHookResult = ReturnType<typeof useDishByNameQuery>;
+export type DishByNameLazyQueryHookResult = ReturnType<
+	typeof useDishByNameLazyQuery
+>;
 export const DishesDocument = {
 	kind: 'Document',
 	definitions: [

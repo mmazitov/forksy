@@ -5,6 +5,7 @@ import Image from './Image';
 import Title from './Title';
 
 import { Card, CardContent, CardFooter } from '@/components';
+import { createSlug } from '@/lib/utils';
 
 interface CardDishCompactProps {
 	id: string;
@@ -23,14 +24,15 @@ const CardDishCompact = ({
 	id,
 	name,
 	category,
+	description,
 	imageUrl,
 	calories,
 	prepTime,
 	isFavorite: initialIsFavorite = false,
 }: CardDishCompactProps) => {
 	return (
-		<Link to={`/dish/${id}`}>
-			<Card className="group flex h-full cursor-pointer flex-col gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+		<Link to={`/dish/${createSlug(name)}`}>
+			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<CardContent className="flex flex-col gap-4 p-0">
 					<Image
 						id={id}
@@ -38,7 +40,7 @@ const CardDishCompact = ({
 						imageUrl={imageUrl}
 						isFavorite={initialIsFavorite}
 					/>
-					<Title name={name} category={category} />
+					<Title name={name} category={category} description={description} />
 				</CardContent>
 				<CardFooter className="text-muted-foreground flex gap-4 px-4 text-sm">
 					<Footer calories={calories} prepTime={prepTime} footerType="dish" />
