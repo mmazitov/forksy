@@ -15,11 +15,19 @@ const httpLink = createHttpLink({
 	},
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const errorLink = onError(({ graphQLErrors, networkError }: any) => {
+const errorLink = onError((errorOptions) => {
+	// Type assertion for backward compatibility
+	const { graphQLErrors, networkError } = errorOptions as {
+		graphQLErrors?: Array<{
+			message: string;
+			locations?: unknown;
+			path?: unknown;
+		}>;
+		networkError?: { message?: string };
+	};
+
 	if (graphQLErrors) {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		graphQLErrors.forEach((error: any) => {
+		graphQLErrors.forEach((error) => {
 			console.error(
 				`[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`,
 			);
@@ -53,46 +61,7 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
-const cache = new InMemoryCache({
-	typePolicies: {
-		Query: {
-			fields: {
-				favoriteProducts: {
-					read() {
-						return undefined;
-					},
-					merge: false,
-				},
-				favoriteDishes: {
-					read() {
-						return undefined;
-					},
-					merge: false,
-				},
-			},
-		},
-		Product: {
-			fields: {
-				isFavorite: {
-					read() {
-						return undefined;
-					},
-					merge: false,
-				},
-			},
-		},
-		Dish: {
-			fields: {
-				isFavorite: {
-					read() {
-						return undefined;
-					},
-					merge: false,
-				},
-			},
-		},
-	},
-});
+const cache = new InMemoryCache();
 
 export const client = new ApolloClient({
 	link: errorLink.concat(authLink).concat(httpLink),

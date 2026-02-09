@@ -1,13 +1,13 @@
 import { toast } from 'sonner';
 
+type MutationFunction = (options?: Record<string, unknown>) => Promise<unknown>;
+
 interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	addMutation: any;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	removeMutation: any;
+	addMutation: MutationFunction;
+	removeMutation: MutationFunction;
 }
 
 export const useFavorite = ({
@@ -24,14 +24,35 @@ export const useFavorite = ({
 
 			await mutation({
 				variables: { [variableName]: entityId },
-				refetchQueries: [
-					'Me',
-					'FavoriteProducts',
-					'FavoriteDishes',
-					'Products',
-					'Dishes'
-				],
-				awaitRefetchQueries: true,
+				optimisticResponse: {
+					[isFavorite
+						? entityType === 'Product'
+							? 'removeFromFavoritesProduct'
+							: 'removeFromFavoritesDish'
+						: entityType === 'Product'
+							? 'addToFavoritesProduct'
+							: 'addToFavoritesDish']: {
+						id: entityId,
+						name: 'Optimistic Update',
+					},
+				},
+				update: (cache: unknown) => {
+					const apolloCache = cache as {
+						modify: (options: {
+							id: string;
+							fields: Record<string, () => unknown>;
+						}) => void;
+						identify: (obj: { __typename: string; id: string }) => string;
+					};
+					apolloCache.modify({
+						id: apolloCache.identify({ __typename: entityType, id: entityId }),
+						fields: {
+							isFavorite() {
+								return !isFavorite;
+							},
+						},
+					});
+				},
 			});
 
 			const entityName = entityType === 'Product' ? 'продукт' : 'страву';

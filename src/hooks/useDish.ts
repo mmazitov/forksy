@@ -17,6 +17,8 @@ import {
 import { DishSchema } from '@/lib/utils/schemas';
 import { DishFormData, FormIngredient } from '@/types';
 
+type MutationFunction = (options?: Record<string, unknown>) => Promise<unknown>;
+
 const defaultDishValues: DishFormData = {
 	name: '',
 	category: '',
@@ -231,7 +233,7 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 		entityType: 'Dish',
 		entityId: dishId,
 		isFavorite,
-		addMutation: addToFavoritesDish,
-		removeMutation: removeFromFavoritesDish,
+		addMutation: addToFavoritesDish as unknown as MutationFunction,
+		removeMutation: removeFromFavoritesDish as unknown as MutationFunction,
 	});
 };
