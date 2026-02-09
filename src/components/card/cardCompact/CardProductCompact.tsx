@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import CardCompactFooter from './CardCompactFooter';
-import CardCompactImage from './CardCompactImage';
-import CardCompactTitle from './CardCompactTitle';
+import Footer from './Footer';
+import Image from './Image';
+import Title from './Title';
 
 import { Card, CardContent, CardFooter } from '@/components';
 
@@ -35,16 +35,16 @@ const CardProductCompact = ({
 		<Link to={`/product/${id}`}>
 			<Card className="group flex h-full cursor-pointer flex-col gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<CardContent className="flex flex-col gap-4 p-0">
-					<CardCompactImage
+					<Image
 						id={id}
 						name={name}
 						imageUrl={imageUrl}
 						isFavorite={initialIsFavorite}
 					/>
-					<CardCompactTitle name={name} category={category} />
+					<Title name={name} category={category} />
 				</CardContent>
 				<CardFooter className="p-4 pt-0">
-					<CardCompactFooter
+					<Footer
 						calories={calories}
 						protein={protein}
 						fat={fat}

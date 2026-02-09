@@ -1,5 +1,3 @@
-export { default as CardDishCompact } from './CardDishCompact';
-export { default as CardDishFull } from './CardDishFull';
-export { default as CardPlaning } from './CardPlaning';
-export { default as CardProductCompact } from './CardProductCompact';
+export { CardDishCompact, CardProductCompact } from './cardCompact';
+export { CardDishFull, CardPlaning } from './cardFull';
 export { default as CardProductFull } from './CardProductFull';
