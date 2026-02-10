@@ -12,10 +12,10 @@ interface CardProductCompactProps {
 	name: string;
 	category?: string | null;
 	imageUrl?: string | null;
-	calories?: number;
-	protein?: number;
-	fat?: number;
-	carbs?: number;
+	calories?: number | null;
+	protein?: number | null;
+	fat?: number | null;
+	carbs?: number | null;
 	userId?: string;
 	currentUserId?: string;
 	isFavorite?: boolean | null;

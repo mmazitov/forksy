@@ -3,7 +3,7 @@ import { Clock, Flame } from 'lucide-react';
 import { NutritionCompact } from '@/components/nutrition';
 
 interface CardCompactFooterProps {
-	prepTime?: number;
+	prepTime?: number | null;
 	footerType?: string;
 	calories?: number | null;
 	protein?: number | null;

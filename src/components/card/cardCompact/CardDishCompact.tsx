@@ -10,11 +10,11 @@ import { createSlug } from '@/lib/utils';
 interface CardDishCompactProps {
 	id: string;
 	name: string;
-	category: string;
-	imageUrl?: string;
-	calories?: number;
-	prepTime?: number;
-	description?: string;
+	category?: string | null;
+	imageUrl?: string | null;
+	calories?: number | null;
+	prepTime?: number | null;
+	description?: string | null;
 	userId?: string | null;
 	currentUserId?: string;
 	isFavorite?: boolean | null;
