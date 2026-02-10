@@ -1,3 +1,6 @@
+import { LogOut, Settings, User, UserCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 import {
 	Button,
 	DropdownMenu,
@@ -7,8 +10,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components';
-import { LogOut, Settings, User, UserCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 interface UserMenuProps {
 	isLoggedIn: boolean;
@@ -30,8 +31,8 @@ const UserMenu = ({
 	if (isLoading) {
 		return (
 			<Button variant="outline" size="sm" disabled className="gap-2">
-				<div className="h-4 w-4 bg-muted rounded animate-pulse" />
-				<span className="hidden sm:inline w-16 h-4 bg-muted rounded animate-pulse" />
+				<div className="bg-muted h-4 w-4 animate-pulse rounded" />
+				<span className="bg-muted hidden h-4 w-16 animate-pulse rounded sm:inline" />
 			</Button>
 		);
 	}
@@ -57,6 +58,13 @@ const UserMenu = ({
 				<DropdownMenuLabel>Аккаунт</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
+					onClick={() => navigate('/favorites')}
+					className="cursor-pointer"
+				>
+					Обране
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem
 					onClick={() => navigate('/profile')}
 					className="cursor-pointer"
 				>
@@ -73,7 +81,7 @@ const UserMenu = ({
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					onClick={onLogout}
-					className="cursor-pointer text-destructive"
+					className="text-destructive cursor-pointer"
 				>
 					<LogOut className="mr-2 h-4 w-4" />
 					Вийти

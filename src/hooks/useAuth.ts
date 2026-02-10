@@ -71,9 +71,11 @@ export const useAuth = () => {
 			setUser(null);
 			return;
 		}
+	}, [token]);
 
-		if (meLoading) {
-			setIsLoading(true);
+	useEffect(() => {
+		if (!token || meLoading) {
+			setIsLoading(meLoading);
 			return;
 		}
 
@@ -88,12 +90,10 @@ export const useAuth = () => {
 			setUser(userData as User);
 			setIsLoading(false);
 			setShouldRefetch(false);
-		} else {
-			if (!shouldRefetch) {
-				logout();
-			}
+		} else if (!shouldRefetch) {
+			logout();
 		}
-	}, [meLoading, data, token, logout, shouldRefetch, error]);
+	}, [token, meLoading, data, error, shouldRefetch, logout]);
 
 	useEffect(() => {
 		if (token && refetch && shouldRefetch) {
@@ -101,10 +101,15 @@ export const useAuth = () => {
 		}
 	}, [token, refetch, shouldRefetch]);
 
-	const isAuthenticated = !!token && !!user;
-	const isAdmin = user?.role === 'admin';
-	const isLoggedIn = !!user;
-	const userName = user?.name || user?.email?.split('@')[0] || '';
+	const derivedState = useMemo(
+		() => ({
+			isAuthenticated: !!token && !!user,
+			isAdmin: user?.role === 'admin',
+			isLoggedIn: !!user,
+			userName: user?.name || user?.email?.split('@')[0] || '',
+		}),
+		[token, user],
+	);
 
 	const handleLogout = useCallback(() => {
 		logout();
@@ -117,23 +122,9 @@ export const useAuth = () => {
 			login,
 			logout,
 			isLoading,
-			isAuthenticated,
-			isAdmin,
-			isLoggedIn,
-			userName,
+			...derivedState,
 			handleLogout,
 		}),
-		[
-			user,
-			token,
-			login,
-			logout,
-			isLoading,
-			isAuthenticated,
-			isAdmin,
-			isLoggedIn,
-			userName,
-			handleLogout,
-		],
+		[user, token, login, logout, isLoading, derivedState, handleLogout],
 	);
 };

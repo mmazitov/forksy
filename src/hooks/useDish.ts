@@ -14,6 +14,7 @@ import {
 	useRemoveFromFavoritesDishMutation,
 	useUpdateDishMutation,
 } from '@/lib/graphql';
+import { prepareDishFormData } from '@/lib/utils/dishHelpers';
 import { DishSchema } from '@/lib/utils/schemas';
 import { DishFormData, FormIngredient } from '@/types';
 
@@ -56,21 +57,10 @@ export const useAddDish = () => {
 	const instructionsList = useFormList<string>('');
 
 	const onSubmit = async (data: DishFormData) => {
-		const filteredIngredients = ingredientsList.items
-			.filter((i) => i.name.trim())
-			.map((i) => ({ name: i.name, amount: i.amount || '' }));
+		const preparedData = prepareDishFormData(ingredientsList, instructionsList);
+		if (!preparedData) return;
 
-		const filteredInstructions = instructionsList.items.filter((i) => i.trim());
-
-		if (filteredIngredients.length === 0) {
-			toast.error('Додайте хоча б один інгредієнт');
-			return;
-		}
-
-		if (filteredInstructions.length === 0) {
-			toast.error('Додайте хоча б один крок приготування');
-			return;
-		}
+		const { filteredIngredients, filteredInstructions } = preparedData;
 
 		try {
 			await createDish({
@@ -144,21 +134,10 @@ export const useEditDish = (
 	const instructionsList = useFormList<string>('', options?.instructions);
 
 	const onSubmit = async (data: DishFormData) => {
-		const filteredIngredients = ingredientsList.items
-			.filter((i) => i.name.trim())
-			.map((i) => ({ name: i.name, amount: i.amount || '' }));
+		const preparedData = prepareDishFormData(ingredientsList, instructionsList);
+		if (!preparedData) return;
 
-		const filteredInstructions = instructionsList.items.filter((i) => i.trim());
-
-		if (filteredIngredients.length === 0) {
-			toast.error('Додайте хоча б один інгредієнт');
-			return;
-		}
-
-		if (filteredInstructions.length === 0) {
-			toast.error('Додайте хоча б один крок приготування');
-			return;
-		}
+		const { filteredIngredients, filteredInstructions } = preparedData;
 
 		try {
 			await updateDish({

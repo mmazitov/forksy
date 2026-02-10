@@ -15,18 +15,12 @@ const httpLink = createHttpLink({
 	},
 });
 
-const errorLink = onError((errorOptions) => {
-	// Type assertion for backward compatibility
-	const { graphQLErrors, networkError } = errorOptions as {
-		graphQLErrors?: Array<{
-			message: string;
-			locations?: unknown;
-			path?: unknown;
-		}>;
-		networkError?: { message?: string };
-	};
+const errorLink = onError((errorResponse) => {
+	// @ts-expect-error - Apollo Client 4.0.9 doesn't properly export ErrorResponse types
+	const { graphQLErrors, networkError } = errorResponse;
 
 	if (graphQLErrors) {
+		// @ts-expect-error - graphQLErrors type inference issue in Apollo Client
 		graphQLErrors.forEach((error) => {
 			console.error(
 				`[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`,
@@ -35,7 +29,10 @@ const errorLink = onError((errorOptions) => {
 	}
 	if (networkError) {
 		console.error(`[Network error]: ${networkError}`);
-		if (networkError.message?.includes('Failed to fetch')) {
+		if (
+			'message' in networkError &&
+			networkError.message?.includes('Failed to fetch')
+		) {
 			console.warn(
 				'GraphQL server is not available. Check your VITE_API_URL environment variable.',
 			);

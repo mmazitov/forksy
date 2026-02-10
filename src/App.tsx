@@ -16,6 +16,7 @@ import {
 	AddProduct,
 	DishDetail,
 	Dishes,
+	Favorites,
 	Home,
 	MenuPlanner,
 	NotFound,
@@ -89,6 +90,14 @@ const AppRoutes = () => {
 					element={
 						<ProtectedRoute>
 							<Profile />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/favorites"
+					element={
+						<ProtectedRoute>
+							<Favorites />
 						</ProtectedRoute>
 					}
 				/>
