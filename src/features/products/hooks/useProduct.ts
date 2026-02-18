@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 import { useFavorite } from '@/features/favorites';
 import {
+	FavoriteProductsDocument,
 	ProductsDocument,
 	useAddToFavoritesProductMutation,
 	useCreateProductMutation,
@@ -171,5 +172,6 @@ export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 		isFavorite,
 		addMutation: addToFavoritesProduct as unknown as MutationFunction,
 		removeMutation: removeFromFavoritesProduct as unknown as MutationFunction,
+		refetchQueries: [{ query: FavoriteProductsDocument }],
 	});
 };

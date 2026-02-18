@@ -6,15 +6,16 @@ import { toast } from 'sonner';
 import { prepareDishFormData } from '../lib/dishHelpers';
 
 import { useFavorite } from '@/features/favorites';
-import { useFormList } from '@/shared/hooks';
 import {
 	DishesDocument,
+	FavoriteDishesDocument,
 	useAddToFavoritesDishMutation,
 	useCreateDishMutation,
 	useDeleteDishMutation,
 	useRemoveFromFavoritesDishMutation,
 	useUpdateDishMutation,
 } from '@/shared/api/graphql';
+import { useFormList } from '@/shared/hooks';
 import { DishSchema } from '@/shared/lib/utils/schemas';
 import { DishFormData, FormIngredient } from '@/shared/types';
 
@@ -214,5 +215,6 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 		isFavorite,
 		addMutation: addToFavoritesDish as unknown as MutationFunction,
 		removeMutation: removeFromFavoritesDish as unknown as MutationFunction,
+		refetchQueries: [{ query: FavoriteDishesDocument }],
 	});
 };

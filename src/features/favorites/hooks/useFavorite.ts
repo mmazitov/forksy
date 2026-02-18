@@ -8,6 +8,7 @@ interface UseFavoriteOptions {
 	isFavorite: boolean;
 	addMutation: MutationFunction;
 	removeMutation: MutationFunction;
+	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 }
 
 export const useFavorite = ({
@@ -16,6 +17,7 @@ export const useFavorite = ({
 	isFavorite,
 	addMutation,
 	removeMutation,
+	refetchQueries,
 }: UseFavoriteOptions) => {
 	const toggleFavorite = async () => {
 		try {
@@ -24,6 +26,7 @@ export const useFavorite = ({
 
 			await mutation({
 				variables: { [variableName]: entityId },
+				refetchQueries,
 				optimisticResponse: {
 					[isFavorite
 						? entityType === 'Product'
