@@ -1,3 +1,5 @@
+import { FavoriteDishList } from '@/features/dishes';
+import { FavoriteProductList } from '@/features/products';
 import {
 	MetaData,
 	PageTitle,
@@ -29,10 +31,10 @@ const Favorites = () => {
 					<TabsTrigger value="products">Продукти</TabsTrigger>
 				</TabsList>
 				<TabsContent value="dishes">
-					<p>Страви</p>
+					<FavoriteDishList />
 				</TabsContent>
 				<TabsContent value="products">
-					<p>Продукти</p>
+					<FavoriteProductList />
 				</TabsContent>
 			</Tabs>
 		</div>
