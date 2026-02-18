@@ -1,8 +1,9 @@
-import App from '@/App';
-import initServiceWorker from '@/hooks/useServiceWorker';
-import '@/index.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+
+import App from '@/app/App';
+import '@/index.css';
+import { initServiceWorker } from '@/shared/hooks';
 
 // Initialize Service Worker for PWA
 initServiceWorker();

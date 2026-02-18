@@ -1,14 +1,13 @@
+import { ScheduleMonth, ScheduleWeek } from '@/features/schedule';
 import {
 	MetaData,
 	PageTitle,
-	ScheduleMonth,
-	ScheduleWeek,
 	Tabs,
 	TabsContent,
 	TabsList,
 	TabsTrigger,
-} from '@/components';
-import { METADATA_CONFIG } from '@/lib/config';
+} from '@/shared/components';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Schedule = () => {
 	return (

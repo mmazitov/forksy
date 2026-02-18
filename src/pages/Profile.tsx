@@ -1,3 +1,4 @@
+import { useProfile } from '@/features/profile';
 import {
 	Button,
 	Card,
@@ -10,10 +11,9 @@ import {
 	MetaData,
 	PageTitle,
 	Textarea,
-} from '@/components';
-import { useProfile } from '@/hooks';
-import { METADATA_CONFIG } from '@/lib/config';
-import { formatPhone } from '@/lib/utils';
+} from '@/shared/components';
+import { METADATA_CONFIG } from '@/shared/lib/config';
+import { formatPhone } from '@/shared/lib/utils';
 
 const Profile = () => {
 	const {

@@ -1,7 +1,8 @@
 import { LuPlus } from 'react-icons/lu';
 
+import { DishCardCompact as CardDishCompact } from '@/features/dishes';
+import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
 import {
-	CardDishCompact,
 	Filter,
 	Grid,
 	Loader,
@@ -9,11 +10,10 @@ import {
 	PageTitle,
 	Pagination,
 	Search,
-} from '@/components';
-import { CATEGORIES_DISHES, ITEMS_PER_PAGE } from '@/constants';
-import { useFilter, usePagination } from '@/hooks';
-import { METADATA_CONFIG } from '@/lib/config';
-import { useDishesQuery } from '@/lib/graphql/dish.gen';
+} from '@/shared/components';
+import { CATEGORIES_DISHES, ITEMS_PER_PAGE } from '@/shared/constants';
+import { useFilter, usePagination } from '@/shared/hooks';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Dishes = () => {
 	const { data, loading, error } = useDishesQuery();

@@ -1,7 +1,8 @@
 import { LuPlus } from 'react-icons/lu';
 
+import { CardProductCompact } from '@/features/products';
+import { useProductsQuery } from '@/shared/api/graphql';
 import {
-	CardProductCompact,
 	Filter,
 	Grid,
 	Loader,
@@ -9,11 +10,10 @@ import {
 	PageTitle,
 	Pagination,
 	Search,
-} from '@/components';
-import { CATEGORIES_PRODUCTS, ITEMS_PER_PAGE } from '@/constants';
-import { useFilter, usePagination } from '@/hooks';
-import { METADATA_CONFIG } from '@/lib/config';
-import { useProductsQuery } from '@/lib/graphql';
+} from '@/shared/components';
+import { CATEGORIES_PRODUCTS, ITEMS_PER_PAGE } from '@/shared/constants';
+import { useFilter, usePagination } from '@/shared/hooks';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Products = () => {
 	const { data, loading, error } = useProductsQuery();

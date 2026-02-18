@@ -16,7 +16,7 @@ const config: CodegenConfig = {
 	},
 	generates: {
 		// Base types from schema
-		'src/types/api.ts': {
+		'src/shared/types/api.ts': {
 			plugins: ['typescript'],
 			config: {
 				noNamespaces: true,
@@ -33,7 +33,7 @@ const config: CodegenConfig = {
 			preset: 'near-operation-file',
 			presetConfig: {
 				extension: '.gen.ts',
-				baseTypesPath: '~@/types/api',
+				baseTypesPath: '~@/shared/types/api',
 			},
 			plugins: ['typescript-operations', 'typescript-react-apollo'],
 			config: {

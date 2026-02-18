@@ -1,15 +1,15 @@
+import { DishForm } from '@/features/dishes';
+import { useProductsQuery } from '@/shared/api/graphql';
 import {
 	BackButton,
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
-	DishForm,
 	Loader,
 	MetaData,
-} from '@/components';
-import { METADATA_CONFIG } from '@/lib/config';
-import { useProductsQuery } from '@/lib/graphql';
+} from '@/shared/components';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const AddDish = () => {
 	const { data, loading } = useProductsQuery();

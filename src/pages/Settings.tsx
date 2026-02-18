@@ -12,9 +12,9 @@ import {
 	PageTitle,
 	PwaManagement,
 	Separator,
-} from '@/components';
-import { useSettings } from '@/hooks/useSettings';
-import { METADATA_CONFIG } from '@/lib/config/metaDataConfig';
+} from '@/shared/components';
+import { useSettings } from '@/shared/hooks';
+import { METADATA_CONFIG } from '@/shared/lib/config/metaDataConfig';
 
 const Settings = () => {
 	const { settings, updateSetting, handleSave } = useSettings({

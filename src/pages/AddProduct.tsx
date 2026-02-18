@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 
+import { ProductForm } from '@/features/products';
+import { useProductQuery } from '@/shared/api/graphql';
 import {
 	BackButton,
 	Card,
@@ -8,10 +10,8 @@ import {
 	CardTitle,
 	Loader,
 	MetaData,
-	ProductForm,
-} from '@/components';
-import { METADATA_CONFIG } from '@/lib/config';
-import { useProductQuery } from '@/lib/graphql';
+} from '@/shared/components';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const AddProduct = () => {
 	const { id } = useParams<{ id: string }>();

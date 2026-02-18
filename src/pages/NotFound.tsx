@@ -1,5 +1,5 @@
-import { MetaData } from '@/components';
-import { METADATA_CONFIG } from '@/lib/config/metaDataConfig';
+import { MetaData } from '@/shared/components/metaData';
+import { METADATA_CONFIG } from '@/shared/lib/config/metaDataConfig';
 
 const NotFound = () => {
 	return (

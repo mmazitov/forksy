@@ -1,5 +1,5 @@
-import { MetaData, PageTitle } from '@/components';
-import { METADATA_CONFIG } from '@/lib/config';
+import { MetaData, PageTitle } from '@/shared/components';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Favorites = () => {
 	return (

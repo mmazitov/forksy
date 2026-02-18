@@ -1,10 +1,11 @@
 import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 
-import { Button, CardProductFull, Loader, MetaData } from '@/components';
-import { useAuthContext } from '@/hooks';
-import { useProductByNameQuery } from '@/lib/graphql';
-import { fromSlug } from '@/lib/utils/slug';
+import { useAuthContext } from '@/features/auth';
+import { CardProductFull } from '@/features/products';
+import { useProductByNameQuery } from '@/shared/api/graphql';
+import { Button, Loader, MetaData } from '@/shared/components';
+import { fromSlug } from '@/shared/lib/utils/slug';
 
 const ProductDetail = () => {
 	const { isAdmin, user } = useAuthContext();

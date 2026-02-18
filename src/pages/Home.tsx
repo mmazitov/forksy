@@ -1,11 +1,6 @@
-import {
-	FeaturedDishes,
-	Hero,
-	MetaData,
-	QuickActions,
-	Stats,
-} from '@/components';
-import { METADATA_CONFIG } from '@/lib/config';
+import { FeaturedDishes } from '@/features/dishes';
+import { Hero, MetaData, QuickActions, Stats } from '@/shared/components';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Home = () => {
 	return (

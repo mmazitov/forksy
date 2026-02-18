@@ -1,5 +1,6 @@
 import { LuSave } from 'react-icons/lu';
 
+import { CardPlaning, useMenuPlanner } from '@/features/schedule';
 import {
 	Card,
 	CardContent,
@@ -7,12 +8,10 @@ import {
 	MetaData,
 	Modal,
 	PageTitle,
-} from '@/components';
-import { CardPlaning } from '@/components/card';
-import DaySummary from '@/components/daySummary/DaySummary';
-import { MODAL_TYPES } from '@/constants';
-import { useMenuPlanner } from '@/hooks/useMenuPlanner';
-import { METADATA_CONFIG } from '@/lib/config';
+} from '@/shared/components';
+import DaySummary from '@/shared/components/daySummary/DaySummary';
+import { MODAL_TYPES } from '@/shared/constants';
+import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const MenuPlanner = () => {
 	const {
