@@ -1,4 +1,11 @@
-import { MetaData, PageTitle } from '@/shared/components';
+import {
+	MetaData,
+	PageTitle,
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+} from '@/shared/components';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Favorites = () => {
@@ -16,6 +23,18 @@ const Favorites = () => {
 				subtitle="Ваша персональна колекція страв й продуктів"
 				buttonVisible={false}
 			/>
+			<Tabs defaultValue="dishes">
+				<TabsList className="inline-flex gap-2">
+					<TabsTrigger value="dishes">Страви</TabsTrigger>
+					<TabsTrigger value="products">Продукти</TabsTrigger>
+				</TabsList>
+				<TabsContent value="dishes">
+					<p>Страви</p>
+				</TabsContent>
+				<TabsContent value="products">
+					<p>Продукти</p>
+				</TabsContent>
+			</Tabs>
 		</div>
 	);
 };
