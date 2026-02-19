@@ -14,6 +14,7 @@ import {
 interface UserMenuProps {
 	isLoggedIn: boolean;
 	userName?: string;
+	userImage?: string;
 	onLogout: () => void;
 	onOpenAuth: () => void;
 	isLoading?: boolean;
@@ -21,6 +22,7 @@ interface UserMenuProps {
 
 const UserMenu = ({
 	isLoggedIn,
+	userImage,
 	userName,
 	onLogout,
 	onOpenAuth,
@@ -50,7 +52,16 @@ const UserMenu = ({
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline" size="sm" className="gap-2">
-					<UserCircle className="h-4 w-4" />
+					{userImage ? (
+						<img
+							src={userImage}
+							alt={userName}
+							className="h-4 w-4 rounded-full object-cover"
+							referrerPolicy="no-referrer"
+						/>
+					) : (
+						<UserCircle className="h-4 w-4" />
+					)}
 					<span className="hidden sm:inline">{userName || 'Користувач'}</span>
 				</Button>
 			</DropdownMenuTrigger>

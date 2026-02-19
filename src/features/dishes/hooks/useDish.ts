@@ -1,3 +1,4 @@
+import { ApolloCache } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { useFavorite } from '@/features/favorites';
 import {
 	DishesDocument,
 	FavoriteDishesDocument,
+	FavoriteDishesQuery,
 	useAddToFavoritesDishMutation,
 	useCreateDishMutation,
 	useDeleteDishMutation,
@@ -216,5 +218,27 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 		addMutation: addToFavoritesDish as unknown as MutationFunction,
 		removeMutation: removeFromFavoritesDish as unknown as MutationFunction,
 		refetchQueries: [{ query: FavoriteDishesDocument }],
+		onUpdate: (cache: ApolloCache) => {
+			if (isFavorite) {
+				try {
+					const data = cache.readQuery<FavoriteDishesQuery>({
+						query: FavoriteDishesDocument,
+					});
+					if (data?.favoriteDishes) {
+						cache.writeQuery({
+							query: FavoriteDishesDocument,
+							data: {
+								...data,
+								favoriteDishes: data.favoriteDishes.filter(
+									(dish: { id: string }) => dish.id !== dishId,
+								),
+							},
+						});
+					}
+				} catch {
+					// Ignore if query is not in cache
+				}
+			}
+		},
 	});
 };

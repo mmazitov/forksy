@@ -13,7 +13,7 @@ const Header = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useToggle();
 	const { isOpen: authModalOpen, setIsOpen: setAuthModalOpen } = useModal();
 
-	const { isLoggedIn, userName, handleLogout } = useAuthContext();
+	const { isLoggedIn, userName, handleLogout, user } = useAuthContext();
 
 	return (
 		<nav className="border-border bg-card/95 supports-backdrop-filter:bg-card/80 sticky top-0 z-50 w-full border-b backdrop-blur">
@@ -26,6 +26,7 @@ const Header = () => {
 					<NavigationDesktop
 						isLoggedIn={isLoggedIn}
 						userName={userName}
+						userImage={user?.avatar}
 						handleLogout={handleLogout}
 						setAuthModalOpen={setAuthModalOpen}
 					/>
@@ -36,6 +37,7 @@ const Header = () => {
 						setMobileMenuOpen={setMobileMenuOpen}
 						isLoggedIn={isLoggedIn}
 						userName={userName}
+						userImage={user?.avatar}
 						handleLogout={handleLogout}
 						setAuthModalOpen={setAuthModalOpen}
 					/>

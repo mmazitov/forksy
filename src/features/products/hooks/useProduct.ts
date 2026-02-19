@@ -1,3 +1,4 @@
+import { ApolloCache } from '@apollo/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +7,7 @@ import { toast } from 'sonner';
 import { useFavorite } from '@/features/favorites';
 import {
 	FavoriteProductsDocument,
+	FavoriteProductsQuery,
 	ProductsDocument,
 	useAddToFavoritesProductMutation,
 	useCreateProductMutation,
@@ -173,5 +175,27 @@ export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 		addMutation: addToFavoritesProduct as unknown as MutationFunction,
 		removeMutation: removeFromFavoritesProduct as unknown as MutationFunction,
 		refetchQueries: [{ query: FavoriteProductsDocument }],
+		onUpdate: (cache: ApolloCache) => {
+			if (isFavorite) {
+				try {
+					const data = cache.readQuery<FavoriteProductsQuery>({
+						query: FavoriteProductsDocument,
+					});
+					if (data?.favoriteProducts) {
+						cache.writeQuery({
+							query: FavoriteProductsDocument,
+							data: {
+								...data,
+								favoriteProducts: data.favoriteProducts.filter(
+									(product: { id: string }) => product.id !== productId,
+								),
+							},
+						});
+					}
+				} catch {
+					// Ignore if query is not in cache
+				}
+			}
+		},
 	});
 };

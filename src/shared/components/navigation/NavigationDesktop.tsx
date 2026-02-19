@@ -11,6 +11,7 @@ interface NavigationDesktopProps {
 	userName: string;
 	handleLogout: () => void;
 	setAuthModalOpen: (value: boolean) => void;
+	userImage?: string | null;
 }
 
 const NavigationDesktop = ({
@@ -18,6 +19,7 @@ const NavigationDesktop = ({
 	userName,
 	handleLogout,
 	setAuthModalOpen,
+	userImage,
 }: NavigationDesktopProps) => {
 	const isActive = useIsActive();
 
@@ -39,6 +41,7 @@ const NavigationDesktop = ({
 			<UserMenu
 				isLoggedIn={isLoggedIn}
 				userName={userName}
+				userImage={userImage || undefined}
 				onLogout={handleLogout}
 				onOpenAuth={() => setAuthModalOpen(true)}
 			/>

@@ -10,6 +10,7 @@ interface MenuButtonProps {
 	userName: string;
 	handleLogout: () => void;
 	setAuthModalOpen: (value: boolean) => void;
+	userImage?: string | null;
 }
 
 const MenuButton = ({
@@ -19,12 +20,14 @@ const MenuButton = ({
 	userName,
 	handleLogout,
 	setAuthModalOpen,
+	userImage,
 }: MenuButtonProps) => {
 	return (
 		<div className="flex items-center gap-2 lg:hidden">
 			<UserMenu
 				isLoggedIn={isLoggedIn}
 				userName={userName}
+				userImage={userImage || undefined}
 				onLogout={handleLogout}
 				onOpenAuth={() => setAuthModalOpen(true)}
 			/>
