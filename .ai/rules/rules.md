@@ -128,7 +128,8 @@ REACT
 ────────────────────────────────────────
 
 - Functional components + hooks only.
-- Follow hooks rules strictly.
+- Follow hooks rules strictly (no conditional hooks, complete dependency arrays).
+- Clean up side effects in `useEffect` to prevent memory leaks.
 - Co-locate state.
 - Avoid unnecessary global state.
 - Derived state should be computed.
@@ -140,9 +141,10 @@ PERFORMANCE
 
 - Avoid unnecessary inline objects/functions in JSX.
 - Memoize only when measurable benefit.
-- Lazy-load large routes.
+- Lazy-load large routes and components.
 - Virtualize long lists.
 - Prefer tree-shakeable imports.
+- Flag N+1 API calls.
 
 ────────────────────────────────────────
 ERROR HANDLING
@@ -161,6 +163,15 @@ SECURITY
 - No eval.
 - Sanitize user input.
 - No secrets in client code.
+
+────────────────────────────────────────
+ACCESSIBILITY (A11Y)
+────────────────────────────────────────
+
+- Verify proper ARIA roles.
+- Ensure alt text on all meaningful images.
+- Provide labels for all inputs.
+- Ensure focus management for new UI elements (modals, dropdowns).
 
 ────────────────────────────────────────
 STYLE & HYGIENE
