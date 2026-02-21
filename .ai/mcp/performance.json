@@ -1,0 +1,83 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "__PROJECT_ROOT__"
+      ],
+      "disabledTools": [
+        "read_media_file",
+        "read_file",
+        "write_file",
+        "edit_file",
+        "create_directory",
+        "move_file"
+      ],
+      "disabled": true
+    },
+    "git": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mseep/git-mcp-server"
+      ],
+      "disabledTools": [
+        "git_clean",
+        "git_rebase",
+        "git_reset",
+        "git_merge",
+        "git_cherry_pick",
+        "git_stash",
+        "git_pull",
+        "git_push",
+        "git_worktree",
+        "git_clone",
+        "git_init",
+        "git_checkout",
+        "git_remote",
+        "git_tag",
+        "git_wrapup_instructions"
+      ],
+      "disabled": true
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ],
+      "disabledTools": [
+        "playwright_hover",
+        "playwright_fill",
+        "playwright_iframe_fill",
+        "playwright_iframe_click",
+        "playwright_press_key",
+        "playwright_click_and_switch_tab",
+        "playwright_drag",
+        "start_codegen_session",
+        "end_codegen_session",
+        "get_codegen_session",
+        "clear_codegen_session",
+        "playwright_select",
+        "playwright_upload_file",
+        "playwright_get",
+        "playwright_post",
+        "playwright_put",
+        "playwright_patch",
+        "playwright_delete",
+        "playwright_custom_user_agent",
+        "playwright_get_visible_text",
+        "playwright_get_visible_html",
+        "playwright_save_as_pdf"
+      ],
+      "disabled": true
+    },
+    "lighthouse": {
+      "command": "npx",
+      "args": ["-y", "lighthouse-mcp"],
+      "disabled": true
+    }
+  }
+}
