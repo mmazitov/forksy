@@ -35,7 +35,7 @@ const AddDishModal = ({
 						className="hover:border-primary cursor-pointer p-4 transition-colors"
 						onClick={() => onDishSelect(dish)}
 					>
-						<div className="flex items-start justify-between gap-4">
+						<div className="flex items-start justify-between gap-2">
 							<div className="flex-1">
 								<h4 className="font-medium">{dish.name}</h4>
 								<p className="text-muted-foreground text-sm">{dish.category}</p>

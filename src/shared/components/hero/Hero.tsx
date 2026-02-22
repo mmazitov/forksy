@@ -37,7 +37,7 @@ const Hero = () => {
 					та керуйте своїм раціоном ефективно.
 				</p>
 
-				<div className="flex flex-wrap gap-4">
+				<div className="flex flex-wrap gap-2">
 					{HERO_BUTTONS.map(({ to, icon, label, variant }) => (
 						<Link key={to} to={to}>
 							<Button size="lg" variant={variant} className="gap-2">

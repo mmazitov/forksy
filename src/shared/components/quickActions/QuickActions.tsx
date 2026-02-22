@@ -11,7 +11,7 @@ import { QUICK_ACTIONS } from '@/shared/constants';
 
 const QuickActions = () => {
 	return (
-		<ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+		<ul className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
 			{QUICK_ACTIONS.map((action) => (
 				<li key={action.title}>
 					<Link to={action.link}>

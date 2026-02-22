@@ -19,7 +19,7 @@ const FavoriteButton = ({
 			variant="ghost"
 			size="icon"
 			className={cn(
-				'absolute top-2 right-2 z-10 rounded-full bg-white/80 shadow-sm backdrop-blur-sm transition-all hover:bg-white',
+				'bg-background absolute top-2 right-2 z-10 rounded-full shadow-sm backdrop-blur-sm transition-all',
 				isFavorite && 'text-red-500 hover:text-red-600',
 				className,
 			)}

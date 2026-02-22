@@ -34,8 +34,8 @@ const CardCompact = ({
 }: CardCompactProps) => {
 	return (
 		<Link to={`/product/${createSlug(name)}`}>
-			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-				<CardContent className="flex flex-col gap-4 p-0">
+			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+				<CardContent className="flex flex-col gap-2 p-0">
 					<Image
 						id={id}
 						name={name}

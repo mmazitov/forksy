@@ -69,7 +69,7 @@ const Pagination = ({
 	}
 
 	return (
-		<div className={cn('flex items-center justify-between gap-4', className)}>
+		<div className={cn('flex items-center justify-between gap-2', className)}>
 			<div className="text-muted-foreground hidden text-sm sm:block">
 				Показано {startItem}-{endItem} з {totalItems}
 			</div>

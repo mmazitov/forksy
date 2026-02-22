@@ -24,7 +24,7 @@ const ProfileStats = ({
 				<CardDescription>Ваша активність у додатку</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<div className="grid grid-cols-3 gap-4 text-center">
+				<div className="grid grid-cols-3 gap-2 text-center">
 					<div>
 						<div className="text-primary text-2xl font-bold">{dishesCount}</div>
 						<div className="text-muted-foreground text-sm">Блюд</div>

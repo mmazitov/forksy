@@ -19,7 +19,7 @@ const Instructions = ({ instructions }: InstructionsProps) => {
 			<CardContent>
 				<ol className="space-y-4">
 					{instructions.map((step, index) => (
-						<li key={index} className="flex gap-4">
+						<li key={index} className="flex gap-2">
 							<Counter index={index} />
 							<p className="text-muted-foreground pt-1">{step}</p>
 						</li>

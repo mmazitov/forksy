@@ -20,7 +20,7 @@ const Ingredients = ({ ingredients }: IngredientsProps) => {
 			<CardContent>
 				<ol className="space-y-4">
 					{ingredients.map((ingredient, index) => (
-						<li key={index} className="flex items-center gap-4">
+						<li key={index} className="flex items-center gap-2">
 							<Counter index={index} />
 							<p className="text-foreground flex flex-1 items-center justify-between">
 								{ingredient.name}

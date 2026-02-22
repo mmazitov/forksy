@@ -8,7 +8,7 @@ const ScheduleWeek = () => {
 	return (
 		<>
 			<ScheduleNavigation />
-			<div className="grid gap-4">
+			<div className="grid gap-2">
 				{weekDays.map((day) => (
 					<Card key={day} className="overflow-hidden">
 						<CardHeader className="bg-muted/50 pb-3">

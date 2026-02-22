@@ -90,7 +90,7 @@ const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
 				}}
 			/>
 
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+			<div className="grid grid-cols-1 gap-2 md:grid-cols-2">
 				<FormInput
 					id="calories"
 					label="Калорійність (на 100г) *"
@@ -150,7 +150,7 @@ const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
 				}}
 			/>
 
-			<div className="flex flex-col gap-4 md:flex-row">
+			<div className="flex flex-col gap-2 md:flex-row">
 				<Button type="submit" size="lg" className="w-full" disabled={loading}>
 					{loading
 						? isEditMode

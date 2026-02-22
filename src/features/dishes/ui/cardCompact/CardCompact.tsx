@@ -32,8 +32,8 @@ const CardCompact = ({
 }: CardCompactProps) => {
 	return (
 		<Link to={`/dish/${createSlug(name)}`}>
-			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-				<CardContent className="flex flex-col gap-4 p-0">
+			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+				<CardContent className="flex flex-col gap-2 p-0">
 					<Image
 						id={id}
 						name={name}
@@ -42,7 +42,7 @@ const CardCompact = ({
 					/>
 					<Title name={name} category={category} description={description} />
 				</CardContent>
-				<CardFooter className="text-muted-foreground flex gap-4 px-4 text-sm">
+				<CardFooter className="text-muted-foreground flex gap-2 px-4 text-sm">
 					<Footer calories={calories} prepTime={prepTime} />
 				</CardFooter>
 			</Card>

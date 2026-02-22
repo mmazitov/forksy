@@ -145,7 +145,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 			{/* Basic Info */}
-			<div className="grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-4 md:grid-cols-[1fr_260px_170px] md:grid-rows-[auto]">
+			<div className="grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-2 md:grid-cols-[1fr_260px_170px] md:grid-rows-[auto]">
 				<FormInput
 					id="name"
 					label="Назва страви *"
@@ -225,7 +225,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 					</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+					<div className="grid grid-cols-2 gap-2 md:grid-cols-4">
 						<div className="bg-muted rounded-lg p-3 text-center">
 							<div className="text-primary text-2xl font-bold">
 								{calculatedNutrition.calories}
@@ -381,7 +381,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 				))}
 			</div>
 
-			<div className="flex flex-col gap-4 md:flex-row">
+			<div className="flex flex-col gap-2 md:flex-row">
 				<Button type="submit" size="lg" className="w-full" disabled={loading}>
 					{loading
 						? isEditMode

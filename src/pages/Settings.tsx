@@ -50,7 +50,7 @@ const Settings = () => {
 
 				<PwaManagement />
 
-				<div className="flex justify-end gap-4">
+				<div className="flex justify-end gap-2">
 					<Button onClick={handleSave}>Зберегти налаштування</Button>
 				</div>
 			</div>

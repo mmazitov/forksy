@@ -52,7 +52,7 @@ const Header = ({
 				)}
 			</div>
 			<div className="grid items-start justify-between">
-				<h1 className="text-foreground mb-4 text-4xl font-bold">{name}</h1>
+				<h1 className="text-foreground mb-2 text-4xl font-bold">{name}</h1>
 				<div className="flex items-center gap-2">
 					<LuClock className="text-primary h-5 w-5" />
 					<span>{prepTime} хв</span>

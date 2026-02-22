@@ -1,16 +1,13 @@
 @import 'tailwindcss';
 
 @theme {
-	/* Шрифты */
 	--font-family-sans: 'Inter', system-ui, sans-serif;
 
-	/* Радиус */
 	--radius: 1rem;
 	--radius-lg: var(--radius);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-sm: calc(var(--radius) - 4px);
 
-	/* Цвета по умолчанию (светлая тема) */
 	--color-background: hsl(210 40% 98%);
 	--color-foreground: hsl(220 15% 25%);
 
@@ -102,7 +99,6 @@
 	--animate-scale-in: scale-in 0.2s ease-out;
 }
 
-/* Темная тема */
 .dark {
 	--color-background: hsl(220 20% 12%);
 	--color-foreground: hsl(210 40% 95%);
@@ -187,7 +183,6 @@
 	--badge-dessert-fg: hsl(0 0% 100%);
 }
 
-/* Кастомные CSS переменные */
 :root {
 	--gradient-hero: linear-gradient(
 		135deg,
@@ -216,7 +211,6 @@
 	--shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.4);
 }
 
-/* Ключевые кадры анимаций */
 @keyframes accordion-down {
 	from {
 		height: 0;
@@ -261,7 +255,6 @@
 	}
 }
 
-/* Базовые стили */
 @layer base {
 	* {
 		@apply border-border;
@@ -272,7 +265,6 @@
 	}
 }
 
-/* Хелпер */
 .hover-scale {
 	@apply transition-transform duration-200 hover:scale-105;
 }
