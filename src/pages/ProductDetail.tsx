@@ -1,5 +1,5 @@
 import { ArrowLeft } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
 import { CardFull } from '@/features/products';
@@ -10,7 +10,12 @@ import { fromSlug } from '@/shared/lib/utils/slug';
 const ProductDetail = () => {
 	const { isAdmin, user } = useAuthContext();
 	const { id } = useParams<{ id: string }>();
+	const location = useLocation();
 	const productName = id ? fromSlug(id) : '';
+
+	const from = location.state?.from || '/products';
+	const backText =
+		from === '/favorites' ? 'Назад до обраного' : 'Назад до продуктів';
 
 	const { data, loading, error } = useProductByNameQuery({
 		variables: { name: productName },
@@ -47,10 +52,10 @@ const ProductDetail = () => {
 				]}
 				type="product"
 			/>
-			<Link to="/products">
+			<Link to={from}>
 				<Button variant="ghost" className="mb-6 gap-2">
 					<ArrowLeft className="h-4 w-4" />
-					Назад до продуктів
+					{backText}
 				</Button>
 			</Link>
 

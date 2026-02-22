@@ -1,5 +1,5 @@
 import { LuArrowLeft } from 'react-icons/lu';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
 import { CardFull } from '@/features/dishes';
@@ -10,7 +10,12 @@ import { fromSlug } from '@/shared/lib/utils/slug';
 const DishDetail = () => {
 	const { isAdmin, user } = useAuthContext();
 	const { id } = useParams<{ id: string }>();
+	const location = useLocation();
 	const dishName = id ? fromSlug(id) : '';
+
+	const from = location.state?.from || '/dishes';
+	const backText =
+		from === '/favorites' ? 'Назад до обраного' : 'Назад до страв';
 
 	const { data, loading, error } = useDishByNameQuery({
 		variables: { name: dishName },
@@ -41,10 +46,10 @@ const DishDetail = () => {
 				keywords={['recipe', 'dish', 'cooking', dish.name, dish.category ?? '']}
 				type="article"
 			/>
-			<Link to="/dishes">
+			<Link to={from}>
 				<Button variant="ghost" className="mb-6 gap-2">
 					<LuArrowLeft className="h-4 w-4" />
-					Назад до страв
+					{backText}
 				</Button>
 			</Link>
 

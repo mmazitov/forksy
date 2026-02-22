@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import Image from '../Image';
 import Footer from './Footer';
@@ -30,8 +30,10 @@ const CardCompact = ({
 	prepTime,
 	isFavorite: initialIsFavorite = false,
 }: CardCompactProps) => {
+	const location = useLocation();
+
 	return (
-		<Link to={`/dish/${createSlug(name)}`}>
+		<Link to={`/dish/${createSlug(name)}`} state={{ from: location.pathname }}>
 			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<CardContent className="flex flex-col gap-2 p-0">
 					<Image
