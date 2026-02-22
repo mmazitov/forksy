@@ -21,8 +21,6 @@ import { useFormList } from '@/shared/hooks';
 import { DishSchema } from '@/shared/lib/utils/schemas';
 import { DishFormData, FormIngredient } from '@/shared/types';
 
-type MutationFunction = (options?: Record<string, unknown>) => Promise<unknown>;
-
 const defaultDishValues: DishFormData = {
 	name: '',
 	category: '',
@@ -215,8 +213,8 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 		entityType: 'Dish',
 		entityId: dishId,
 		isFavorite,
-		addMutation: addToFavoritesDish as unknown as MutationFunction,
-		removeMutation: removeFromFavoritesDish as unknown as MutationFunction,
+		addMutation: addToFavoritesDish,
+		removeMutation: removeFromFavoritesDish,
 		refetchQueries: [{ query: FavoriteDishesDocument }],
 		onUpdate: (cache: ApolloCache) => {
 			if (isFavorite) {
@@ -235,9 +233,7 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 							},
 						});
 					}
-				} catch {
-					// Ignore if query is not in cache
-				}
+				} catch {}
 			}
 		},
 	});

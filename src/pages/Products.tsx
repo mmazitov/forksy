@@ -36,7 +36,7 @@ const Products = () => {
 		usePagination({
 			items: filteredItems,
 			itemsPerPage: ITEMS_PER_PAGE,
-			resetDependencies: [searchQuery, selectedCategory],
+			resetKey: `${searchQuery}-${selectedCategory}`,
 		});
 
 	if (loading) {

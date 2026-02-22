@@ -1,14 +1,15 @@
 import { ApolloCache } from '@apollo/client';
 import { toast } from 'sonner';
 
-type MutationFunction = (options?: Record<string, unknown>) => Promise<unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyMutationFn = (options: any) => Promise<any>;
 
 interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	addMutation: MutationFunction;
-	removeMutation: MutationFunction;
+	addMutation: AnyMutationFn;
+	removeMutation: AnyMutationFn;
 	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 	onUpdate?: (cache: ApolloCache) => void;
 }

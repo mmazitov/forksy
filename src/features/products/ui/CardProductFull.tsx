@@ -3,8 +3,19 @@ import { Link } from 'react-router-dom';
 
 import { useDeleteProduct, useFavoriteProduct } from '../hooks/useProduct';
 
-import { Badge, Button, FavoriteButton, NutritionCard } from '@/shared/components';
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import {
+	Badge,
+	Button,
+	FavoriteButton,
+	NutritionCard,
+} from '@/shared/components';
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from '@/shared/components/ui/card';
+import { createSlug } from '@/shared/lib/utils';
 import { categoryBadgeMap } from '@/shared/lib/utils/categoryBadge';
 
 interface CardProductFullProps {
@@ -76,7 +87,7 @@ const CardProductFull = ({
 				<div>
 					{canEdit && (
 						<div className="absolute top-2 left-2 z-10 flex flex-col gap-2 md:flex-row lg:top-0 lg:right-0 lg:left-auto">
-							<Link to={`/product/edit/${id}`}>
+							<Link to={`/product/edit/${createSlug(name)}`}>
 								<Button variant="outline" size="sm">
 									Редагувати продукт
 								</Button>

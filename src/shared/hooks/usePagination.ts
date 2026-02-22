@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 interface UsePaginationOptions<T> {
 	items: T[];
 	itemsPerPage?: number;
-	resetDependencies?: unknown[];
+	resetKey?: string | number;
 }
 
 interface UsePaginationReturn<T> {
@@ -21,7 +21,7 @@ interface UsePaginationReturn<T> {
 export const usePagination = <T>({
 	items,
 	itemsPerPage = 10,
-	resetDependencies = [],
+	resetKey,
 }: UsePaginationOptions<T>): UsePaginationReturn<T> => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -29,7 +29,7 @@ export const usePagination = <T>({
 
 	useEffect(() => {
 		setCurrentPage(1);
-	}, resetDependencies);
+	}, [resetKey]);
 
 	const paginatedItems = useMemo(() => {
 		const startIndex = (currentPage - 1) * itemsPerPage;

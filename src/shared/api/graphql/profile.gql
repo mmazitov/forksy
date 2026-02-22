@@ -11,6 +11,8 @@ query Me {
 		dislike
 		createdAt
 		updatedAt
+		dishesCount
+		productsCount
 		favoriteProducts {
 			id
 		}
@@ -47,4 +49,8 @@ mutation UpdateProfile(
 		createdAt
 		updatedAt
 	}
+}
+
+mutation ChangePassword($currentPassword: String!, $newPassword: String!) {
+	changePassword(currentPassword: $currentPassword, newPassword: $newPassword)
 }

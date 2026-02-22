@@ -1,17 +1,13 @@
 import {
+	LanguageSettings,
+	NotificationsSettings,
+	SecuritySettings,
+} from '@/features/settings';
+import {
 	Button,
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-	Checkbox,
-	Input,
-	Label,
 	MetaData,
 	PageTitle,
 	PwaManagement,
-	Separator,
 } from '@/shared/components';
 import { useSettings } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config/metaDataConfig';
@@ -37,75 +33,25 @@ const Settings = () => {
 					buttonVisible={false}
 				/>
 
-				<Card>
-					<CardHeader>
-						<CardTitle>Сповіщення</CardTitle>
-						<CardDescription>
-							Налаштуйте, як ви хочете отримувати сповіщення
-						</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<Checkbox
-							label="Email сповіщення"
-							subLabel="Отримуйте сповіщення про нові страви та оновлення"
-							checked={settings.emailNotifications}
-							onCheckedChange={(value) =>
-								updateSetting('emailNotifications', value === true)
-							}
-						/>
-						<Separator />
-						<Checkbox
-							label="Нагадування про меню"
-							subLabel="Сповіщення про планування меню"
-							checked={settings.menuReminders}
-							onCheckedChange={(value) =>
-								updateSetting('menuReminders', value === true)
-							}
-						/>
-					</CardContent>
-				</Card>
+				<NotificationsSettings
+					emailNotifications={settings.emailNotifications}
+					menuReminders={settings.menuReminders}
+					onEmailNotificationsChange={(value) =>
+						updateSetting('emailNotifications', value)
+					}
+					onMenuRemindersChange={(value) =>
+						updateSetting('menuReminders', value)
+					}
+				/>
 
-				<Card>
-					<CardHeader>
-						<CardTitle>Переваги</CardTitle>
-						<CardDescription>Персоналізація вашого досвіду</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<div className="space-y-2">
-							<Label htmlFor="language">Мова інтерфейсу</Label>
-							<p>Функціонал зміни мови буде доступний у майбутньому</p>
-						</div>
-					</CardContent>
-				</Card>
+				<LanguageSettings />
 
-				<Card>
-					<CardHeader>
-						<CardTitle>Безпека</CardTitle>
-						<CardDescription>
-							Управління паролем і безпекою акаунта
-						</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-4">
-						<div className="space-y-2">
-							<Label htmlFor="current-password">Поточний пароль</Label>
-							<Input id="current-password" type="password" />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="new-password">Новий пароль</Label>
-							<Input id="new-password" type="password" />
-						</div>
-						<div className="space-y-2">
-							<Label htmlFor="confirm-password">Підтвердіть пароль</Label>
-							<Input id="confirm-password" type="password" />
-						</div>
-					</CardContent>
-				</Card>
+				<SecuritySettings />
 
 				<PwaManagement />
 
 				<div className="flex justify-end gap-4">
-					<Button variant="outline">Скасувати</Button>
-					<Button onClick={handleSave}>Зберегти зміни</Button>
+					<Button onClick={handleSave}>Зберегти налаштування</Button>
 				</div>
 			</div>
 		</main>

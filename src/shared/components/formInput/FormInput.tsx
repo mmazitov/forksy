@@ -14,6 +14,7 @@ export interface FormInputProps extends React.HTMLAttributes<HTMLDivElement> {
 	textareaProps?: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 	itemType?: 'input' | 'textarea';
 	id: string;
+	showToggle?: boolean;
 }
 
 const FormInput = forwardRef<HTMLDivElement, FormInputProps>(
@@ -27,6 +28,7 @@ const FormInput = forwardRef<HTMLDivElement, FormInputProps>(
 			textareaProps,
 			itemType = 'input',
 			id,
+			showToggle,
 			...props
 		},
 		ref,
@@ -53,6 +55,7 @@ const FormInput = forwardRef<HTMLDivElement, FormInputProps>(
 						className={cn(
 							error && 'border-destructive focus-visible:ring-destructive',
 						)}
+						showToggle={showToggle}
 						{...registration}
 						{...inputProps}
 					/>

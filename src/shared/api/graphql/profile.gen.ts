@@ -1,8 +1,7 @@
-import type * as Types from '@/shared/types/api';
-
-import type { DocumentNode } from 'graphql';
-import type * as ApolloReactCommon from '@apollo/client/react';
 import * as ApolloReactHooks from '@apollo/client/react';
+import type { DocumentNode } from 'graphql';
+
+import type * as Types from '@/shared/types/api';
 const defaultOptions = {} as const;
 export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
 
@@ -21,6 +20,8 @@ export type MeQuery = {
 		dislike: Array<string>;
 		createdAt: string;
 		updatedAt: string;
+		dishesCount: number;
+		productsCount: number;
 		favoriteProducts: Array<{ __typename?: 'Product'; id: string }>;
 		favoriteDishes: Array<{ __typename?: 'Dish'; id: string }>;
 	} | null;
@@ -56,6 +57,16 @@ export type UpdateProfileMutation = {
 	};
 };
 
+export type ChangePasswordMutationVariables = Types.Exact<{
+	currentPassword: Types.Scalars['String']['input'];
+	newPassword: Types.Scalars['String']['input'];
+}>;
+
+export type ChangePasswordMutation = {
+	__typename?: 'Mutation';
+	changePassword: boolean;
+};
+
 export const MeDocument = {
 	kind: 'Document',
 	definitions: [
@@ -83,6 +94,11 @@ export const MeDocument = {
 								{ kind: 'Field', name: { kind: 'Name', value: 'dislike' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'dishesCount' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'productsCount' },
+								},
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'favoriteProducts' },
@@ -295,4 +311,86 @@ export function useUpdateProfileMutation(
 }
 export type UpdateProfileMutationHookResult = ReturnType<
 	typeof useUpdateProfileMutation
+>;
+export const ChangePasswordDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'ChangePassword' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'currentPassword' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'newPassword' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'changePassword' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'currentPassword' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'currentPassword' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'newPassword' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'newPassword' },
+								},
+							},
+						],
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useChangePasswordMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		ChangePasswordMutation,
+		ChangePasswordMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		ChangePasswordMutation,
+		ChangePasswordMutationVariables
+	>(ChangePasswordDocument, options);
+}
+export type ChangePasswordMutationHookResult = ReturnType<
+	typeof useChangePasswordMutation
 >;

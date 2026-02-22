@@ -70,6 +70,7 @@ export type Mutation = {
 	_empty: Maybe<Scalars['String']['output']>;
 	addToFavoritesDish: User;
 	addToFavoritesProduct: User;
+	changePassword: Scalars['Boolean']['output'];
 	createDish: Dish;
 	createProduct: Product;
 	deleteDish: Dish;
@@ -90,6 +91,11 @@ export type MutationAddToFavoritesDishArgs = {
 
 export type MutationAddToFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
+};
+
+export type MutationChangePasswordArgs = {
+	currentPassword: Scalars['String']['input'];
+	newPassword: Scalars['String']['input'];
 };
 
 export type MutationCreateDishArgs = {

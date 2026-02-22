@@ -1,6 +1,8 @@
 import { LuClock } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
+import { useDeleteDish, useFavoriteDish } from '../hooks/useDish';
+
 import {
 	Badge,
 	Button,
@@ -12,9 +14,9 @@ import {
 	FavoriteButton,
 	Separator,
 } from '@/shared/components';
+import { createSlug } from '@/shared/lib/utils';
 import { categoryBadgeMap } from '@/shared/lib/utils/categoryBadge';
 import { Ingredient } from '@/shared/types';
-import { useDeleteDish, useFavoriteDish } from '../hooks/useDish';
 
 interface CardDishFullProps {
 	id: string;
@@ -91,7 +93,7 @@ const CardDishFull = ({
 						<Badge className={`mb-3 ${badgeClass}`}>{category}</Badge>
 						{canEdit && (
 							<div className="flex flex-col gap-2 md:flex-row">
-								<Link to={`/dish/edit/${id}`}>
+								<Link to={`/dish/edit/${createSlug(name)}`}>
 									<Button variant="outline" size="sm">
 										Редагувати страву
 									</Button>

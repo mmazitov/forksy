@@ -1,7 +1,13 @@
+import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 
 import { User } from '@/app/providers/AuthContext';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
+
+interface JwtPayload {
+	exp: number;
+	userId: string;
+}
 
 export const useAuthState = () => {
 	const [token, setToken] = useLocalStorage<string | null>('token', null);
@@ -9,9 +15,21 @@ export const useAuthState = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		// Simulate loading check or token validation if needed
+		if (token) {
+			try {
+				const decoded = jwtDecode<JwtPayload>(token);
+				const isExpired = decoded.exp * 1000 < Date.now();
+				if (isExpired) {
+					setToken(null);
+					setUser(null);
+				}
+			} catch {
+				setToken(null);
+				setUser(null);
+			}
+		}
 		setIsLoading(false);
-	}, []);
+	}, [token, setToken, setUser]);
 
 	const login = (newToken: string, newUser: Omit<User, '__typename'>) => {
 		setToken(newToken);

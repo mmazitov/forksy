@@ -1,13 +1,30 @@
+import { useMemo } from 'react';
 import { LuTrendingUp } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import DishCardCompact from './DishCardCompact';
 
+import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
+import { Loader } from '@/shared/components';
 import { Grid } from '@/shared/components/grid';
 import { Button } from '@/shared/components/ui/button';
-import { dishes } from '@/mock';
 
 const FeaturedDishes = () => {
+	const { data, loading, error } = useDishesQuery();
+
+	const randomDishes = useMemo(() => {
+		if (!data?.dishes) return [];
+		return [...data.dishes].sort(() => 0.5 - Math.random()).slice(0, 5);
+	}, [data?.dishes]);
+
+	if (loading) {
+		return <Loader />;
+	}
+
+	if (error) {
+		return null;
+	}
+
 	return (
 		<>
 			<div className="mb-8 flex items-center justify-between">
@@ -27,11 +44,13 @@ const FeaturedDishes = () => {
 				</Link>
 			</div>
 
-			<Grid
-				items={dishes.slice(0, 4)}
-				renderItem={(item) => <DishCardCompact {...item} />}
-				showEmpty={false}
-			/>
+			{randomDishes.length > 0 && (
+				<Grid
+					items={randomDishes}
+					renderItem={(item) => <DishCardCompact {...item} />}
+					showEmpty={false}
+				/>
+			)}
 		</>
 	);
 };

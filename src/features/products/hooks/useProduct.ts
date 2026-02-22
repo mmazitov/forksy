@@ -18,8 +18,6 @@ import {
 import { ProductSchema } from '@/shared/lib/utils/schemas';
 import { ProductFormData } from '@/shared/types';
 
-type MutationFunction = (options?: Record<string, unknown>) => Promise<unknown>;
-
 export const useAddProduct = () => {
 	const navigate = useNavigate();
 	const [createProduct, { loading }] = useCreateProductMutation({
@@ -172,8 +170,8 @@ export const useFavoriteProduct = (productId: string, isFavorite: boolean) => {
 		entityType: 'Product',
 		entityId: productId,
 		isFavorite,
-		addMutation: addToFavoritesProduct as unknown as MutationFunction,
-		removeMutation: removeFromFavoritesProduct as unknown as MutationFunction,
+		addMutation: addToFavoritesProduct,
+		removeMutation: removeFromFavoritesProduct,
 		refetchQueries: [{ query: FavoriteProductsDocument }],
 		onUpdate: (cache: ApolloCache) => {
 			if (isFavorite) {

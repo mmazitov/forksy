@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { AuthContext } from './AuthContext';
 
 import { useAuthState } from '@/features/auth/hooks/useAuthState';
@@ -9,14 +7,9 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-	const [isInitialized, setIsInitialized] = useState(false);
 	const authState = useAuthState();
 
-	useEffect(() => {
-		setIsInitialized(true);
-	}, []);
-
-	if (!isInitialized) {
+	if (authState.isLoading) {
 		return null;
 	}
 
