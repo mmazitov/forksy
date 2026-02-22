@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
+import Image from '../Image';
 import Footer from './Footer';
-import Image from './Image';
 import Title from './Title';
 
 import { Card, CardContent, CardFooter } from '@/shared/components/ui/card';
 import { createSlug } from '@/shared/lib/utils';
 
-interface CardProductCompactProps {
+interface CardCompactProps {
 	id: string;
 	name: string;
 	category?: string | null;
@@ -21,7 +21,7 @@ interface CardProductCompactProps {
 	isFavorite?: boolean | null;
 }
 
-const CardProductCompact = ({
+const CardCompact = ({
 	id,
 	name,
 	category,
@@ -31,7 +31,7 @@ const CardProductCompact = ({
 	fat,
 	carbs,
 	isFavorite: initialIsFavorite = false,
-}: CardProductCompactProps) => {
+}: CardCompactProps) => {
 	return (
 		<Link to={`/product/${createSlug(name)}`}>
 			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
@@ -57,4 +57,4 @@ const CardProductCompact = ({
 	);
 };
 
-export default CardProductCompact;
+export default CardCompact;

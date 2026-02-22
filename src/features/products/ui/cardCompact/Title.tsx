@@ -1,17 +1,13 @@
 import { Badge } from '@/shared/components';
 import { categoryBadgeMap } from '@/shared/lib/utils/categoryBadge';
 
-interface CardCompactTitleProps {
+interface TitleProps {
 	name: string;
 	category: string | null | undefined;
 	description?: string | null;
 }
 
-const CardCompactTitle = ({
-	name,
-	category,
-	description,
-}: CardCompactTitleProps) => {
+const Title = ({ name, category, description }: TitleProps) => {
 	const badgeClass =
 		category && categoryBadgeMap[category]
 			? categoryBadgeMap[category]
@@ -35,4 +31,4 @@ const CardCompactTitle = ({
 	);
 };
 
-export default CardCompactTitle;
+export default Title;

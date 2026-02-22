@@ -1,16 +1,11 @@
-interface NutritionCardProps {
+interface NutritionProps {
 	calories?: number | null;
 	protein?: number | null;
 	fat?: number | null;
 	carbs?: number | null;
 }
 
-const NutritionCard = ({
-	calories,
-	protein,
-	fat,
-	carbs,
-}: NutritionCardProps) => {
+const Nutrition = ({ calories, protein, fat, carbs }: NutritionProps) => {
 	return (
 		<div className="grid grid-cols-2 gap-4">
 			{calories !== null && calories !== undefined && (
@@ -41,4 +36,4 @@ const NutritionCard = ({
 	);
 };
 
-export default NutritionCard;
+export default Nutrition;

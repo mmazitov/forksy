@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
-import { useAddDish, useEditDish } from '../hooks/useDish';
+import { useAddDish, useEditDish } from '../hooks';
 
 import { useProductSearch } from '@/features/products';
 import {

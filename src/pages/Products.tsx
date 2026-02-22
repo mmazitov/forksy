@@ -1,6 +1,6 @@
 import { LuPlus } from 'react-icons/lu';
 
-import { CardProductCompact } from '@/features/products';
+import { CardCompact } from '@/features/products';
 import { useProductsQuery } from '@/shared/api/graphql';
 import {
 	Filter,
@@ -86,7 +86,7 @@ const Products = () => {
 
 			<Grid
 				items={paginatedItems}
-				renderItem={(product) => <CardProductCompact {...product} />}
+				renderItem={(product) => <CardCompact {...product} />}
 				emptyMessage="Продукти не знайдено"
 				showEmpty={true}
 			/>

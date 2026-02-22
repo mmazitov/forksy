@@ -266,6 +266,7 @@ export type User = {
 	avatar: Maybe<Scalars['String']['output']>;
 	createdAt: Scalars['String']['output'];
 	diet: Maybe<Scalars['String']['output']>;
+	dishesCount: Scalars['Int']['output'];
 	dislike: Array<Scalars['String']['output']>;
 	email: Maybe<Scalars['String']['output']>;
 	facebookId: Maybe<Scalars['String']['output']>;
@@ -276,6 +277,7 @@ export type User = {
 	id: Scalars['ID']['output'];
 	name: Maybe<Scalars['String']['output']>;
 	phone: Maybe<Scalars['String']['output']>;
+	productsCount: Scalars['Int']['output'];
 	role: Maybe<Scalars['String']['output']>;
 	updatedAt: Scalars['String']['output'];
 };

@@ -2,7 +2,7 @@ import { LuArrowLeft } from 'react-icons/lu';
 import { Link, useParams } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
-import { DishCardFull as CardDishFull } from '@/features/dishes';
+import { CardFull } from '@/features/dishes';
 import { useDishByNameQuery } from '@/shared/api/graphql';
 import { Button, Loader, MetaData } from '@/shared/components';
 import { fromSlug } from '@/shared/lib/utils/slug';
@@ -48,7 +48,7 @@ const DishDetail = () => {
 				</Button>
 			</Link>
 
-			<CardDishFull
+			<CardFull
 				id={dish.id}
 				name={dish.name}
 				description={dish.description}

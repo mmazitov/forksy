@@ -11,7 +11,6 @@ export * from './logo';
 export * from './metaData';
 export * from './modal';
 export * from './navigation';
-export * from './nutrition';
 export * from './pageTitle';
 export * from './pagination';
 export * from './pwaInstallPrompt';

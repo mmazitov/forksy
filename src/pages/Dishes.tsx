@@ -1,6 +1,6 @@
 import { LuPlus } from 'react-icons/lu';
 
-import { DishCardCompact as CardDishCompact } from '@/features/dishes';
+import { CardCompact } from '@/features/dishes';
 import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
 import {
 	Filter,
@@ -86,7 +86,7 @@ const Dishes = () => {
 
 			<Grid
 				items={paginatedItems}
-				renderItem={(dish) => <CardDishCompact {...dish} />}
+				renderItem={(dish) => <CardCompact {...dish} />}
 				emptyMessage="Продукти не знайдено"
 				showEmpty={true}
 			/>

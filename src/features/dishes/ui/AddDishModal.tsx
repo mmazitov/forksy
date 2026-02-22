@@ -1,6 +1,6 @@
+import { dishes } from '@/mock';
 import { Search } from '@/shared/components/search';
 import { Card } from '@/shared/components/ui/card';
-import { dishes } from '@/mock';
 
 interface AddDishModalProps {
 	isOpen: boolean;

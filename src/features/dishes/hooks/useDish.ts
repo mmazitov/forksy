@@ -233,7 +233,9 @@ export const useFavoriteDish = (dishId: string, isFavorite: boolean) => {
 							},
 						});
 					}
-				} catch {}
+				} catch {
+					/* empty */
+				}
 			}
 		},
 	});

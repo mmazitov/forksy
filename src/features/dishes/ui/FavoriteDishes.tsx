@@ -1,18 +1,19 @@
 import { LuSearchX } from 'react-icons/lu';
 
-import { useFavoriteProducts } from '../hooks/useFavoriteProducts';
-import CardProductCompact from './CardProductCompact';
+import { useFavoriteDishes } from '../hooks/useFavoriteDishes';
+import CardCompact from './cardCompact/CardCompact';
 
-import { Grid, Loader } from '@/shared/components';
+import { Loader } from '@/shared/components';
+import { Grid } from '@/shared/components/grid';
 
-const FavoriteProductList = () => {
-	const { products, loading } = useFavoriteProducts();
+const FavoriteDishes = () => {
+	const { dishes, loading } = useFavoriteDishes();
 
 	if (loading) {
 		return <Loader />;
 	}
 
-	if (products.length === 0) {
+	if (dishes.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center py-12 text-center">
 				<div className="bg-muted mb-4 rounded-full p-4">
@@ -20,7 +21,7 @@ const FavoriteProductList = () => {
 				</div>
 				<h3 className="mb-2 text-xl font-semibold">Список порожній</h3>
 				<p className="text-muted-foreground">
-					Ви ще не додали жодного продукту до улюблених
+					Ви ще не додали жодної страви до улюблених
 				</p>
 			</div>
 		);
@@ -28,11 +29,11 @@ const FavoriteProductList = () => {
 
 	return (
 		<Grid
-			items={products}
-			renderItem={(item) => <CardProductCompact {...item} />}
+			items={dishes}
+			renderItem={(item) => <CardCompact {...item} />}
 			showEmpty={false}
 		/>
 	);
 };
 
-export default FavoriteProductList;
+export default FavoriteDishes;

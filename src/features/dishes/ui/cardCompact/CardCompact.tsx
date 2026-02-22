@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 
+import Image from '../Image';
 import Footer from './Footer';
-import Image from './Image';
 import Title from './Title';
 
 import { Card, CardContent, CardFooter } from '@/shared/components';
 import { createSlug } from '@/shared/lib/utils';
 
-interface CardDishCompactProps {
+interface CardCompactProps {
 	id: string;
 	name: string;
 	category?: string | null;
@@ -20,7 +20,7 @@ interface CardDishCompactProps {
 	isFavorite?: boolean | null;
 }
 
-const CardDishCompact = ({
+const CardCompact = ({
 	id,
 	name,
 	category,
@@ -29,7 +29,7 @@ const CardDishCompact = ({
 	calories,
 	prepTime,
 	isFavorite: initialIsFavorite = false,
-}: CardDishCompactProps) => {
+}: CardCompactProps) => {
 	return (
 		<Link to={`/dish/${createSlug(name)}`}>
 			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
@@ -43,11 +43,11 @@ const CardDishCompact = ({
 					<Title name={name} category={category} description={description} />
 				</CardContent>
 				<CardFooter className="text-muted-foreground flex gap-4 px-4 text-sm">
-					<Footer calories={calories} prepTime={prepTime} footerType="dish" />
+					<Footer calories={calories} prepTime={prepTime} />
 				</CardFooter>
 			</Card>
 		</Link>
 	);
 };
 
-export default CardDishCompact;
+export default CardCompact;

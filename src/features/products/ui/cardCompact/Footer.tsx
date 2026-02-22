@@ -1,18 +1,16 @@
 import { Flame } from 'lucide-react';
 
-interface NutritionCompactProps {
+interface FooterProps {
+	prepTime?: number | null;
+	footerType?: string;
 	calories?: number | null;
 	protein?: number | null;
 	fat?: number | null;
 	carbs?: number | null;
+	userId?: string | null;
 }
 
-const NutritionCompact = ({
-	calories,
-	protein,
-	fat,
-	carbs,
-}: NutritionCompactProps) => {
+const Footer = ({ calories, protein, fat, carbs }: FooterProps) => {
 	return (
 		<div className="space-y-2">
 			{calories !== null && calories !== undefined && (
@@ -33,4 +31,4 @@ const NutritionCompact = ({
 	);
 };
 
-export default NutritionCompact;
+export default Footer;

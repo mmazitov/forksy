@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import { AddDishModalProps, AuthModalProps, Dish } from './types';
+
 import {
 	AddDishModal,
 	AuthModal,
@@ -8,8 +12,6 @@ import {
 } from '@/shared/components';
 import { MODAL_TYPES } from '@/shared/constants';
 import { modalsConfig } from '@/shared/lib/config';
-import { useState } from 'react';
-import { AddDishModalProps, AuthModalProps, Dish } from './types';
 
 const { AUTH_MODAL, ADD_DISH_MODAL } = MODAL_TYPES;
 
@@ -75,7 +77,8 @@ const Modal = ({
 					onOpenChange,
 					selectedMeal: (selectedMeal as string) || null,
 					searchQuery: (searchQuery as string) || '',
-					onSearchChange: (onSearchChange as (query: string) => void) || (() => {}),
+					onSearchChange:
+						(onSearchChange as (query: string) => void) || (() => {}),
 					onDishSelect: (onDishSelect as (dish: Dish) => void) || (() => {}),
 				};
 				return <AddDishModal {...dishProps} />;
@@ -90,7 +93,7 @@ const Modal = ({
 			<DialogContent
 				className={
 					modalType === ADD_DISH_MODAL
-						? 'max-w-2xl max-h-[80vh] overflow-y-auto'
+						? 'max-h-[80vh] max-w-2xl overflow-y-auto'
 						: 'sm:max-w-md'
 				}
 			>
@@ -99,7 +102,7 @@ const Modal = ({
 						className={
 							modalType === ADD_DISH_MODAL
 								? ''
-								: 'text-2xl font-bold text-center'
+								: 'text-center text-2xl font-bold'
 						}
 					>
 						{getModalTitle()}

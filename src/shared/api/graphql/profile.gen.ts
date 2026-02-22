@@ -1,7 +1,8 @@
-import * as ApolloReactHooks from '@apollo/client/react';
-import type { DocumentNode } from 'graphql';
-
 import type * as Types from '@/shared/types/api';
+
+import type { DocumentNode } from 'graphql';
+import type * as ApolloReactCommon from '@apollo/client/react';
+import * as ApolloReactHooks from '@apollo/client/react';
 const defaultOptions = {} as const;
 export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
 

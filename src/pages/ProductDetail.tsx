@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
-import { CardProductFull } from '@/features/products';
+import { CardFull } from '@/features/products';
 import { useProductByNameQuery } from '@/shared/api/graphql';
 import { Button, Loader, MetaData } from '@/shared/components';
 import { fromSlug } from '@/shared/lib/utils/slug';
@@ -54,7 +54,7 @@ const ProductDetail = () => {
 				</Button>
 			</Link>
 
-			<CardProductFull
+			<CardFull
 				id={product.id}
 				name={product.name}
 				description={product.description}

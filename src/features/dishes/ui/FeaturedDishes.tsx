@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { LuTrendingUp } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
-import DishCardCompact from './DishCardCompact';
+import CardCompact from './cardCompact/CardCompact';
 
 import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
 import { Loader } from '@/shared/components';
@@ -47,7 +47,7 @@ const FeaturedDishes = () => {
 			{randomDishes.length > 0 && (
 				<Grid
 					items={randomDishes}
-					renderItem={(item) => <DishCardCompact {...item} />}
+					renderItem={(item) => <CardCompact {...item} />}
 					showEmpty={false}
 				/>
 			)}
