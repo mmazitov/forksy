@@ -27,9 +27,9 @@ const Header = ({
 			: 'bg-muted text-muted-foreground';
 
 	return (
-		<div>
+		<div className="flex flex-col gap-2">
 			{canEdit && (
-				<div className="absolute top-2 left-2 z-10 flex flex-col gap-2 md:flex-row lg:top-0 lg:right-0 lg:left-auto">
+				<div className="flex flex-col justify-end gap-2 md:flex-row">
 					<Link to={`/product/edit/${createSlug(name)}`}>
 						<Button variant="outline" size="sm">
 							Редагувати продукт
@@ -45,11 +45,21 @@ const Header = ({
 					</Button>
 				</div>
 			)}
-			{category && <Badge className={`mb-3 ${badgeClass}`}>{category}</Badge>}
-			<h1 className="text-foreground mb-4 text-4xl font-bold">{name}</h1>
-			{description && (
-				<p className="text-muted-foreground text-lg">{description}</p>
-			)}
+			<div className="grid grid-cols-2 grid-rows-2">
+				<h1 className="text-foreground col-span-1 text-4xl font-bold">
+					{name}
+				</h1>
+				{category && (
+					<Badge className={`col-span-1 ${badgeClass} hover:${badgeClass}`}>
+						{category}
+					</Badge>
+				)}
+				{description && (
+					<p className="text-muted-foreground col-span-2 text-lg">
+						{description}
+					</p>
+				)}
+			</div>
 		</div>
 	);
 };

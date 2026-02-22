@@ -5,6 +5,7 @@ import {
 	useProfile,
 } from '@/features/profile';
 import { Button, MetaData, PageTitle } from '@/shared/components';
+import { PAGE_TITLE } from '@/shared/constants';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Profile = () => {
@@ -29,8 +30,8 @@ const Profile = () => {
 					type="website"
 				/>
 				<PageTitle
-					title="Профіль користувача"
-					subtitle="Керуйте своєю особистою інформацією та налаштуваннями"
+					title={PAGE_TITLE.profile.title}
+					subtitle={PAGE_TITLE.profile.subtitle}
 					buttonVisible={false}
 				/>
 

@@ -7,6 +7,7 @@ import {
 	TabsList,
 	TabsTrigger,
 } from '@/shared/components';
+import { PAGE_TITLE } from '@/shared/constants';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Schedule = () => {
@@ -19,8 +20,8 @@ const Schedule = () => {
 				type="website"
 			/>
 			<PageTitle
-				title="Розклад харчування"
-				subtitle="Плануйте і відстежуйте прийоми їжі"
+				title={PAGE_TITLE.schedule.title}
+				subtitle={PAGE_TITLE.schedule.subtitle}
 				buttonVisible={false}
 			/>
 

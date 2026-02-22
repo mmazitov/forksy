@@ -10,7 +10,7 @@ import {
 	PageTitle,
 } from '@/shared/components';
 import DaySummary from '@/shared/components/daySummary/DaySummary';
-import { MODAL_TYPES } from '@/shared/constants';
+import { MODAL_TYPES, PAGE_TITLE } from '@/shared/constants';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const MenuPlanner = () => {
@@ -44,10 +44,10 @@ const MenuPlanner = () => {
 			/>
 
 			<PageTitle
-				title="Планування меню"
-				subtitle="Складіть ідеальне меню на тиждень"
+				title={PAGE_TITLE.planer.title}
+				subtitle={PAGE_TITLE.planer.subtitle}
 				onClick={handleSave}
-				buttonText="Зберегти меню"
+				buttonText={PAGE_TITLE.planer.button}
 				buttonIcon={<LuSave />}
 			/>
 

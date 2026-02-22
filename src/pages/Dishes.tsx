@@ -11,7 +11,11 @@ import {
 	Pagination,
 	Search,
 } from '@/shared/components';
-import { CATEGORIES_DISHES, ITEMS_PER_PAGE } from '@/shared/constants';
+import {
+	CATEGORIES_DISHES,
+	ITEMS_PER_PAGE,
+	PAGE_TITLE,
+} from '@/shared/constants';
 import { useFilter, usePagination } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
@@ -63,10 +67,10 @@ const Dishes = () => {
 			/>
 			<div className="mb-6">
 				<PageTitle
-					title="Страви та рецепти"
-					subtitle="Колекція улюблених рецептів з детальними інструкціями"
+					title={PAGE_TITLE.dishes.title}
+					subtitle={PAGE_TITLE.dishes.subtitle}
 					buttonType="link"
-					buttonText="Додати страву"
+					buttonText={PAGE_TITLE.dishes.button}
 					buttonIcon={<LuPlus />}
 					href="/dishes/add"
 				/>

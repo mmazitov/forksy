@@ -11,7 +11,11 @@ import {
 	Pagination,
 	Search,
 } from '@/shared/components';
-import { CATEGORIES_PRODUCTS, ITEMS_PER_PAGE } from '@/shared/constants';
+import {
+	CATEGORIES_PRODUCTS,
+	ITEMS_PER_PAGE,
+	PAGE_TITLE,
+} from '@/shared/constants';
 import { useFilter, usePagination } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
@@ -63,10 +67,10 @@ const Products = () => {
 			/>
 			<div className="mb-6">
 				<PageTitle
-					title="Продукти"
-					subtitle="База продуктів з інформацією про КБЖУ"
+					title={PAGE_TITLE.products.title}
+					subtitle={PAGE_TITLE.products.subtitle}
 					buttonType="link"
-					buttonText="Додати продукт"
+					buttonText={PAGE_TITLE.products.button}
 					buttonIcon={<LuPlus />}
 					href="/products/add"
 				/>

@@ -8,6 +8,7 @@ import {
 	TabsList,
 	TabsTrigger,
 } from '@/shared/components';
+import { PAGE_TITLE } from '@/shared/constants';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Favorites = () => {
@@ -21,8 +22,8 @@ const Favorites = () => {
 			/>
 
 			<PageTitle
-				title="Обрані рецепти"
-				subtitle="Ваша персональна колекція страв й продуктів"
+				title={PAGE_TITLE.favorites.title}
+				subtitle={PAGE_TITLE.favorites.subtitle}
 				buttonVisible={false}
 			/>
 			<Tabs defaultValue="dishes">
