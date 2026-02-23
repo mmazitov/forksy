@@ -1,17 +1,26 @@
+import { useCallback, useMemo } from 'react';
 import { LuSearchX } from 'react-icons/lu';
 
 import { useFavoriteDishes } from '../hooks/useFavoriteDishes';
-import CardCompact from './cardCompact/CardCompact';
+import { CardCompact } from './cardCompact';
 
-import { Loader } from '@/shared/components';
-import { Grid } from '@/shared/components/grid';
+import { Grid } from '@/shared/components';
+import { Skeleton } from '@/shared/components/skeleton';
+import { ITEMS_PER_PAGE } from '@/shared/constants';
 
-const FavoriteDishes = () => {
+const FavoriteDishesList = () => {
 	const { dishes, loading } = useFavoriteDishes();
 
-	if (loading) {
-		return <Loader />;
-	}
+	const skeletonItems = useMemo(
+		() => Array.from({ length: ITEMS_PER_PAGE }, (_, i) => ({ id: String(i) })),
+		[],
+	);
+
+	const renderSkeleton = useCallback(() => <Skeleton />, []);
+	const renderDishes = useCallback(
+		(dish: (typeof dishes)[number]) => <CardCompact {...dish} />,
+		[],
+	);
 
 	if (dishes.length === 0) {
 		return (
@@ -28,12 +37,18 @@ const FavoriteDishes = () => {
 	}
 
 	return (
-		<Grid
-			items={dishes}
-			renderItem={(item) => <CardCompact {...item} />}
-			showEmpty={false}
-		/>
+		<>
+			{loading ? (
+				<Grid
+					items={skeletonItems}
+					renderItem={renderSkeleton}
+					showEmpty={false}
+				/>
+			) : (
+				<Grid items={dishes} renderItem={renderDishes} showEmpty={false} />
+			)}
+		</>
 	);
 };
 
-export default FavoriteDishes;
+export default FavoriteDishesList;

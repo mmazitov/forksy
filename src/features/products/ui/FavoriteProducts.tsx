@@ -1,16 +1,26 @@
+import { useCallback, useMemo } from 'react';
 import { LuSearchX } from 'react-icons/lu';
 
 import { useFavoriteProducts } from '../hooks/useFavoriteProducts';
 import { CardCompact } from './cardCompact';
 
-import { Grid, Loader } from '@/shared/components';
+import { Grid } from '@/shared/components';
+import { Skeleton } from '@/shared/components/skeleton';
+import { ITEMS_PER_PAGE } from '@/shared/constants';
 
 const FavoriteProductList = () => {
 	const { products, loading } = useFavoriteProducts();
 
-	if (loading) {
-		return <Loader />;
-	}
+	const skeletonItems = useMemo(
+		() => Array.from({ length: ITEMS_PER_PAGE }, (_, i) => ({ id: String(i) })),
+		[],
+	);
+
+	const renderSkeleton = useCallback(() => <Skeleton />, []);
+	const renderProducts = useCallback(
+		(product: (typeof products)[number]) => <CardCompact {...product} />,
+		[],
+	);
 
 	if (products.length === 0) {
 		return (
@@ -27,11 +37,17 @@ const FavoriteProductList = () => {
 	}
 
 	return (
-		<Grid
-			items={products}
-			renderItem={(item) => <CardCompact {...item} />}
-			showEmpty={false}
-		/>
+		<>
+			{loading ? (
+				<Grid
+					items={skeletonItems}
+					renderItem={renderSkeleton}
+					showEmpty={false}
+				/>
+			) : (
+				<Grid items={products} renderItem={renderProducts} showEmpty={false} />
+			)}
+		</>
 	);
 };
 
