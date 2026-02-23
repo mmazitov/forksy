@@ -36,7 +36,7 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
 			if (event.data.type === 'OAUTH_SUCCESS' && event.data.token) {
-				const token = event.data.token;
+				const { token, refreshToken } = event.data;
 				const apiUrl = getApiUrl();
 
 				fetch(`${apiUrl}/graphql`, {
@@ -61,7 +61,7 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 					.then((res) => res.json())
 					.then((data) => {
 						if (data.data?.me) {
-							login(token, data.data.me);
+							login(token, refreshToken, data.data.me, true);
 							onOpenChange(false);
 						}
 					})
