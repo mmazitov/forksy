@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { LuPlus } from 'react-icons/lu';
 
 import { CardCompact } from '@/features/products';
@@ -10,7 +11,7 @@ import {
 	Pagination,
 	Search,
 } from '@/shared/components';
-import { Skeleton } from '@/shared/components/ui';
+import { Skeleton } from '@/shared/components/skeleton';
 import {
 	CATEGORIES_PRODUCTS,
 	ITEMS_PER_PAGE,
@@ -41,6 +42,19 @@ const Products = () => {
 			itemsPerPage: ITEMS_PER_PAGE,
 			resetKey: `${searchQuery}-${selectedCategory}`,
 		});
+
+	const skeletonItems = useMemo(
+		() => Array.from({ length: ITEMS_PER_PAGE }, (_, i) => ({ id: String(i) })),
+		[],
+	);
+
+	const renderSkeleton = useCallback(() => <Skeleton />, []);
+	const renderProducts = useCallback(
+		(product: (typeof productsData)[number]) => <CardCompact {...product} />,
+		[],
+	);
+
+	const showPagination = !loading && totalPages > 1;
 
 	if (error) {
 		return (
@@ -85,22 +99,20 @@ const Products = () => {
 
 			{loading ? (
 				<Grid
-					items={Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => ({
-						id: String(i),
-					}))}
-					renderItem={() => <Skeleton />}
+					items={skeletonItems}
+					renderItem={renderSkeleton}
 					showEmpty={false}
 				/>
 			) : (
 				<>
 					<Grid
 						items={paginatedItems}
-						renderItem={(product) => <CardCompact {...product} />}
+						renderItem={renderProducts}
 						emptyMessage="Продукти не знайдено"
 						showEmpty={true}
 					/>
 
-					{filteredItems.length > 0 && (
+					{showPagination && (
 						<Pagination
 							currentPage={currentPage}
 							totalPages={totalPages}

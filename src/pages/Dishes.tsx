@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { LuPlus } from 'react-icons/lu';
 
 import { CardCompact } from '@/features/dishes';
@@ -10,7 +11,7 @@ import {
 	Pagination,
 	Search,
 } from '@/shared/components';
-import { Skeleton } from '@/shared/components/ui';
+import { Skeleton } from '@/shared/components/skeleton';
 import {
 	CATEGORIES_DISHES,
 	ITEMS_PER_PAGE,
@@ -42,6 +43,19 @@ const Dishes = () => {
 			itemsPerPage: ITEMS_PER_PAGE,
 			resetKey: `${searchQuery}-${selectedCategory}`,
 		});
+
+	const skeletonItems = useMemo(
+		() => Array.from({ length: ITEMS_PER_PAGE }, (_, i) => ({ id: String(i) })),
+		[],
+	);
+
+	const renderSkeleton = useCallback(() => <Skeleton />, []);
+	const renderDishes = useCallback(
+		(dish: (typeof dishesData)[number]) => <CardCompact {...dish} />,
+		[],
+	);
+
+	const showPagination = !loading && totalPages > 1;
 
 	if (error) {
 		return (
@@ -86,22 +100,20 @@ const Dishes = () => {
 
 			{loading ? (
 				<Grid
-					items={Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => ({
-						id: String(i),
-					}))}
-					renderItem={() => <Skeleton />}
+					items={skeletonItems}
+					renderItem={renderSkeleton}
 					showEmpty={false}
 				/>
 			) : (
 				<>
 					<Grid
 						items={paginatedItems}
-						renderItem={(dish) => <CardCompact {...dish} />}
-						emptyMessage="Продукти не знайдено"
+						renderItem={renderDishes}
+						emptyMessage="Страви не знайдено"
 						showEmpty={true}
 					/>
 
-					{filteredItems.length > 0 && (
+					{showPagination && (
 						<Pagination
 							currentPage={currentPage}
 							totalPages={totalPages}
