@@ -15,6 +15,7 @@ export type RegisterMutation = {
 	register: {
 		__typename?: 'AuthPayload';
 		token: string;
+		refreshToken: string;
 		user: {
 			__typename?: 'User';
 			id: string;
@@ -34,6 +35,26 @@ export type LoginMutation = {
 	login: {
 		__typename?: 'AuthPayload';
 		token: string;
+		refreshToken: string;
+		user: {
+			__typename?: 'User';
+			id: string;
+			email?: string | null;
+			name?: string | null;
+		};
+	};
+};
+
+export type RefreshTokenMutationVariables = Types.Exact<{
+	token: Types.Scalars['String']['input'];
+}>;
+
+export type RefreshTokenMutation = {
+	__typename?: 'Mutation';
+	refreshToken: {
+		__typename?: 'AuthPayload';
+		token: string;
+		refreshToken: string;
 		user: {
 			__typename?: 'User';
 			id: string;
@@ -127,6 +148,10 @@ export const RegisterDocument = {
 							kind: 'SelectionSet',
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'refreshToken' },
+								},
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'user' },
@@ -227,6 +252,10 @@ export const LoginDocument = {
 								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
 								{
 									kind: 'Field',
+									name: { kind: 'Name', value: 'refreshToken' },
+								},
+								{
+									kind: 'Field',
 									name: { kind: 'Name', value: 'user' },
 									selectionSet: {
 										kind: 'SelectionSet',
@@ -258,3 +287,85 @@ export function useLoginMutation(
 	);
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export const RefreshTokenDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'RefreshToken' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'token' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'refreshToken' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'token' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'token' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'refreshToken' },
+								},
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'user' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+										],
+									},
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useRefreshTokenMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		RefreshTokenMutation,
+		RefreshTokenMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		RefreshTokenMutation,
+		RefreshTokenMutationVariables
+	>(RefreshTokenDocument, options);
+}
+export type RefreshTokenMutationHookResult = ReturnType<
+	typeof useRefreshTokenMutation
+>;

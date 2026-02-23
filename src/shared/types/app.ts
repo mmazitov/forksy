@@ -52,12 +52,14 @@ export interface ProductFormData {
 export interface AuthLoginData {
 	email: string;
 	password: string;
+	rememberMe?: boolean;
 }
 
 export interface AuthRegisterData {
 	email: string;
 	password: string;
 	name: string;
+	rememberMe?: boolean;
 }
 
 export interface ProfileFormData {

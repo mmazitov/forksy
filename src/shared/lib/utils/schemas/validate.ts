@@ -1,12 +1,9 @@
 import { z } from 'zod';
 
 export const LoginSchema = z.object({
-	email: z
-		.string()
-		.email({ message: 'Будь ласка, введіть дійсну електронну адресу' }),
-	password: z
-		.string()
-		.min(6, { message: 'Пароль повинен містити щонайменше 6 символів' }),
+	email: z.string().email('Некоректна електронна пошта'),
+	password: z.string().min(6, 'Пароль повинен містити щонайменше 6 символів'),
+	rememberMe: z.boolean().optional(),
 });
 
 export const RegisterSchema = z.object({

@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { LuLock, LuMail, LuUser } from 'react-icons/lu';
 import { z } from 'zod';
 
 import { useAuthForm } from '../hooks/useAuthForm';
 
-import { Button, Input, Label } from '@/shared/components';
+import { Button, Checkbox, Input, Label } from '@/shared/components';
 import { modalsConfig } from '@/shared/lib/config';
 import { LoginSchema, RegisterSchema } from '@/shared/lib/utils/schemas/';
 
@@ -26,9 +26,13 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 	const {
 		register,
 		handleSubmit,
+		control,
 		formState: { errors, isSubmitting },
 	} = useForm<AuthFormData>({
 		resolver: zodResolver(schema),
+		defaultValues: {
+			rememberMe: true,
+		},
 	});
 
 	const onSubmit = async (data: AuthFormData) => {
@@ -104,6 +108,26 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						</div>
 					)}
 				</div>
+			</div>
+
+			<div className="flex items-center space-x-2">
+				<Controller
+					name="rememberMe"
+					control={control}
+					render={({ field }) => (
+						<Checkbox
+							id="rememberMe"
+							checked={field.value as boolean}
+							onCheckedChange={field.onChange}
+						/>
+					)}
+				/>
+				<label
+					htmlFor="rememberMe"
+					className="cursor-pointer text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+				>
+					Запам&apos;ятати мене
+				</label>
 			</div>
 
 			<Button

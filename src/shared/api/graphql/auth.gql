@@ -1,6 +1,7 @@
 mutation Register($email: String!, $password: String!, $name: String!) {
 	register(email: $email, password: $password, name: $name) {
 		token
+		refreshToken
 		user {
 			id
 			email
@@ -12,6 +13,19 @@ mutation Register($email: String!, $password: String!, $name: String!) {
 mutation Login($email: String!, $password: String!) {
 	login(email: $email, password: $password) {
 		token
+		refreshToken
+		user {
+			id
+			email
+			name
+		}
+	}
+}
+
+mutation RefreshToken($token: String!) {
+	refreshToken(token: $token) {
+		token
+		refreshToken
 		user {
 			id
 			email

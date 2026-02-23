@@ -26,7 +26,8 @@ export const useAuthForm = () => {
 				throw new Error('Не вдалося увійти');
 			}
 
-			login(result.data.login.token, result.data.login.user);
+			const { token, refreshToken, user } = result.data.login;
+			login(token, refreshToken, user, data.rememberMe ?? true);
 			toast.success('Успішно увійшли');
 			return true;
 		} catch (err: unknown) {
@@ -53,7 +54,8 @@ export const useAuthForm = () => {
 				throw new Error('Не вдалося зареєструватися');
 			}
 
-			login(result.data.register.token, result.data.register.user);
+			const { token, refreshToken, user } = result.data.register;
+			login(token, refreshToken, user, data.rememberMe ?? true);
 			toast.success('Успішно зареєструвалися');
 			return true;
 		} catch (err: unknown) {
