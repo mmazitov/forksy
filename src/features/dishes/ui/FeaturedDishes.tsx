@@ -6,6 +6,7 @@ import CardCompact from './cardCompact/CardCompact';
 
 import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
 import { Grid } from '@/shared/components/grid';
+import { Skeleton } from '@/shared/components/ui';
 import { Button } from '@/shared/components/ui/button';
 
 const FeaturedDishes = () => {
@@ -19,6 +20,8 @@ const FeaturedDishes = () => {
 	if (error) {
 		return null;
 	}
+
+	const isLoading = !data && !error;
 
 	return (
 		<>
@@ -39,12 +42,22 @@ const FeaturedDishes = () => {
 				</Link>
 			</div>
 
-			{randomDishes.length > 0 && (
+			{isLoading ? (
 				<Grid
-					items={randomDishes}
-					renderItem={(item) => <CardCompact {...item} />}
+					items={Array.from({ length: 5 }).map((_, i) => ({
+						id: String(i),
+					}))}
+					renderItem={() => <Skeleton />}
 					showEmpty={false}
 				/>
+			) : (
+				randomDishes.length > 0 && (
+					<Grid
+						items={randomDishes}
+						renderItem={(item) => <CardCompact {...item} />}
+						showEmpty={false}
+					/>
+				)
 			)}
 		</>
 	);

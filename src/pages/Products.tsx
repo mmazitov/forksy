@@ -5,12 +5,12 @@ import { useProductsQuery } from '@/shared/api/graphql';
 import {
 	Filter,
 	Grid,
-	Loader,
 	MetaData,
 	PageTitle,
 	Pagination,
 	Search,
 } from '@/shared/components';
+import { Skeleton } from '@/shared/components/ui';
 import {
 	CATEGORIES_PRODUCTS,
 	ITEMS_PER_PAGE,
@@ -18,7 +18,6 @@ import {
 } from '@/shared/constants';
 import { useFilter, usePagination } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
-
 const Products = () => {
 	const { data, loading, error } = useProductsQuery();
 
@@ -42,10 +41,6 @@ const Products = () => {
 			itemsPerPage: ITEMS_PER_PAGE,
 			resetKey: `${searchQuery}-${selectedCategory}`,
 		});
-
-	if (loading) {
-		return <Loader />;
-	}
 
 	if (error) {
 		return (
@@ -88,22 +83,34 @@ const Products = () => {
 				/>
 			</div>
 
-			<Grid
-				items={paginatedItems}
-				renderItem={(product) => <CardCompact {...product} />}
-				emptyMessage="Продукти не знайдено"
-				showEmpty={true}
-			/>
-
-			{filteredItems.length > 0 && (
-				<Pagination
-					currentPage={currentPage}
-					totalPages={totalPages}
-					onPageChange={handlePageChange}
-					itemsPerPage={ITEMS_PER_PAGE}
-					totalItems={filteredItems.length}
-					className="mt-8"
+			{loading ? (
+				<Grid
+					items={Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => ({
+						id: String(i),
+					}))}
+					renderItem={() => <Skeleton />}
+					showEmpty={false}
 				/>
+			) : (
+				<>
+					<Grid
+						items={paginatedItems}
+						renderItem={(product) => <CardCompact {...product} />}
+						emptyMessage="Продукти не знайдено"
+						showEmpty={true}
+					/>
+
+					{filteredItems.length > 0 && (
+						<Pagination
+							currentPage={currentPage}
+							totalPages={totalPages}
+							onPageChange={handlePageChange}
+							itemsPerPage={ITEMS_PER_PAGE}
+							totalItems={filteredItems.length}
+							className="mt-8"
+						/>
+					)}
+				</>
 			)}
 		</div>
 	);

@@ -73,3 +73,4 @@ export { Checkbox } from './checkbox';
 
 export { Counter } from './counter';
 export * from './form';
+export { Skeleton } from './skeleton';
