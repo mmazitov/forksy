@@ -5,21 +5,16 @@ import { Link } from 'react-router-dom';
 import CardCompact from './cardCompact/CardCompact';
 
 import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
-import { Loader } from '@/shared/components';
 import { Grid } from '@/shared/components/grid';
 import { Button } from '@/shared/components/ui/button';
 
 const FeaturedDishes = () => {
-	const { data, loading, error } = useDishesQuery();
+	const { data, error } = useDishesQuery();
 
 	const randomDishes = useMemo(() => {
 		if (!data?.dishes) return [];
 		return [...data.dishes].sort(() => 0.5 - Math.random()).slice(0, 5);
 	}, [data?.dishes]);
-
-	if (loading) {
-		return <Loader />;
-	}
 
 	if (error) {
 		return null;
