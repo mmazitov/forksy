@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from 'react';
 import { LuSearchX } from 'react-icons/lu';
 
 import { useFavoriteDishes } from '../hooks/useFavoriteDishes';
@@ -11,18 +10,7 @@ import { ITEMS_PER_PAGE } from '@/shared/constants';
 const FavoriteDishesList = () => {
 	const { dishes, loading } = useFavoriteDishes();
 
-	const skeletonItems = useMemo(
-		() => Array.from({ length: ITEMS_PER_PAGE }, (_, i) => ({ id: String(i) })),
-		[],
-	);
-
-	const renderSkeleton = useCallback(() => <Skeleton />, []);
-	const renderDishes = useCallback(
-		(dish: (typeof dishes)[number]) => <CardCompact {...dish} />,
-		[],
-	);
-
-	if (dishes.length === 0) {
+	if (!loading && dishes.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center py-12 text-center">
 				<div className="bg-muted mb-4 rounded-full p-4">
@@ -37,17 +25,14 @@ const FavoriteDishesList = () => {
 	}
 
 	return (
-		<>
-			{loading ? (
-				<Grid
-					items={skeletonItems}
-					renderItem={renderSkeleton}
-					showEmpty={false}
-				/>
-			) : (
-				<Grid items={dishes} renderItem={renderDishes} showEmpty={false} />
-			)}
-		</>
+		<Grid
+			items={dishes}
+			itemComponent={CardCompact}
+			showEmpty={false}
+			isLoading={loading}
+			skeletonComponent={Skeleton}
+			skeletonCount={ITEMS_PER_PAGE}
+		/>
 	);
 };
 

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { LuTrendingUp } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
@@ -16,17 +16,6 @@ const FeaturedDishes = () => {
 		if (!data?.dishes) return [];
 		return [...data.dishes].sort(() => 0.5 - Math.random()).slice(0, 5);
 	}, [data?.dishes]);
-
-	const skeletonItems = useMemo(
-		() => Array.from({ length: 5 }).map((_, i) => ({ id: String(i) })),
-		[],
-	);
-
-	const renderSkeleton = useCallback(() => <Skeleton />, []);
-	const renderDishes = useCallback(
-		(dish: (typeof randomDishes)[number]) => <CardCompact {...dish} />,
-		[],
-	);
 
 	if (error) {
 		return (
@@ -57,19 +46,14 @@ const FeaturedDishes = () => {
 				</Link>
 			</div>
 
-			{loading ? (
-				<Grid
-					items={skeletonItems}
-					renderItem={renderSkeleton}
-					showEmpty={false}
-				/>
-			) : (
-				<Grid
-					items={randomDishes}
-					renderItem={renderDishes}
-					showEmpty={false}
-				/>
-			)}
+			<Grid
+				items={randomDishes}
+				itemComponent={CardCompact}
+				showEmpty={false}
+				isLoading={loading}
+				skeletonComponent={Skeleton}
+				skeletonCount={5}
+			/>
 		</>
 	);
 };

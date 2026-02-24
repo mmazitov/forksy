@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from 'react';
 import { LuPlus } from 'react-icons/lu';
 
 import { CardCompact } from '@/features/dishes';
@@ -44,17 +43,6 @@ const Dishes = () => {
 			resetKey: `${searchQuery}-${selectedCategory}`,
 		});
 
-	const skeletonItems = useMemo(
-		() => Array.from({ length: ITEMS_PER_PAGE }, (_, i) => ({ id: String(i) })),
-		[],
-	);
-
-	const renderSkeleton = useCallback(() => <Skeleton />, []);
-	const renderDishes = useCallback(
-		(dish: (typeof dishesData)[number]) => <CardCompact {...dish} />,
-		[],
-	);
-
 	const showPagination = !loading && totalPages > 1;
 
 	if (error) {
@@ -98,32 +86,25 @@ const Dishes = () => {
 				/>
 			</div>
 
-			{loading ? (
-				<Grid
-					items={skeletonItems}
-					renderItem={renderSkeleton}
-					showEmpty={false}
-				/>
-			) : (
-				<>
-					<Grid
-						items={paginatedItems}
-						renderItem={renderDishes}
-						emptyMessage="Страви не знайдено"
-						showEmpty={true}
-					/>
+			<Grid
+				items={paginatedItems}
+				itemComponent={CardCompact}
+				emptyMessage="Страви не знайдено"
+				showEmpty={true}
+				isLoading={loading}
+				skeletonComponent={Skeleton}
+				skeletonCount={ITEMS_PER_PAGE}
+			/>
 
-					{showPagination && (
-						<Pagination
-							currentPage={currentPage}
-							totalPages={totalPages}
-							onPageChange={handlePageChange}
-							itemsPerPage={ITEMS_PER_PAGE}
-							totalItems={filteredItems.length}
-							className="mt-8"
-						/>
-					)}
-				</>
+			{showPagination && (
+				<Pagination
+					currentPage={currentPage}
+					totalPages={totalPages}
+					onPageChange={handlePageChange}
+					itemsPerPage={ITEMS_PER_PAGE}
+					totalItems={filteredItems.length}
+					className="mt-8"
+				/>
 			)}
 		</div>
 	);
