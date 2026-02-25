@@ -15,6 +15,7 @@ import {
 	useRemoveFromFavoritesProductMutation,
 	useUpdateProductMutation,
 } from '@/shared/api/graphql';
+import { useFormPersist } from '@/shared/hooks/useFormPersist';
 import { ProductSchema } from '@/shared/lib/utils/schemas';
 import { ProductFormData } from '@/shared/types';
 
@@ -25,12 +26,7 @@ export const useAddProduct = () => {
 		awaitRefetchQueries: true,
 	});
 
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { errors },
-	} = useForm<ProductFormData>({
+	const form = useForm<ProductFormData>({
 		resolver: zodResolver(ProductSchema),
 		defaultValues: {
 			name: '',
@@ -42,6 +38,18 @@ export const useAddProduct = () => {
 			carbs: 0,
 			description: '',
 		},
+	});
+
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = form;
+
+	const { clearDraft } = useFormPersist({
+		form,
+		storageKey: 'draft-product-add',
 	});
 
 	const onSubmit = async (data: ProductFormData) => {
@@ -58,6 +66,7 @@ export const useAddProduct = () => {
 					description: data.description || undefined,
 				},
 			});
+			clearDraft();
 			toast.success('Продукт успішно додано!');
 			navigate('/products');
 		} catch (error) {
@@ -85,12 +94,7 @@ export const useEditProduct = (
 		awaitRefetchQueries: true,
 	});
 
-	const {
-		register,
-		handleSubmit,
-		control,
-		formState: { errors },
-	} = useForm<ProductFormData>({
+	const form = useForm<ProductFormData>({
 		resolver: zodResolver(ProductSchema),
 		defaultValues: initialData || {
 			name: '',
@@ -102,6 +106,18 @@ export const useEditProduct = (
 			carbs: 0,
 			description: '',
 		},
+	});
+
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = form;
+
+	const { clearDraft } = useFormPersist({
+		form,
+		storageKey: `draft-product-edit-${productId}`,
 	});
 
 	const onSubmit = async (data: ProductFormData) => {
@@ -119,6 +135,7 @@ export const useEditProduct = (
 					description: data.description || undefined,
 				},
 			});
+			clearDraft();
 			toast.success('Продукт успішно оновлено!');
 			navigate('/products');
 		} catch (error) {

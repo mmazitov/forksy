@@ -17,7 +17,7 @@ import {
 	useRemoveFromFavoritesDishMutation,
 	useUpdateDishMutation,
 } from '@/shared/api/graphql';
-import { useFormList } from '@/shared/hooks';
+import { useFormList, useFormPersist } from '@/shared/hooks';
 import { DishSchema } from '@/shared/lib/utils/schemas';
 import { DishFormData, FormIngredient } from '@/shared/types';
 
@@ -43,19 +43,26 @@ export const useAddDish = () => {
 		awaitRefetchQueries: true,
 	});
 
+	const form = useForm<DishFormData>({
+		resolver: zodResolver(DishSchema),
+		defaultValues: defaultDishValues,
+	});
+
 	const {
 		register,
 		handleSubmit,
 		control,
 		setValue,
 		formState: { errors },
-	} = useForm<DishFormData>({
-		resolver: zodResolver(DishSchema),
-		defaultValues: defaultDishValues,
-	});
+	} = form;
 
 	const ingredientsList = useFormList<FormIngredient>({ name: '', amount: '' });
 	const instructionsList = useFormList<string>('');
+
+	const { clearDraft } = useFormPersist({
+		form,
+		storageKey: 'draft-dish-add',
+	});
 
 	const onSubmit = async (data: DishFormData) => {
 		const preparedData = prepareDishFormData(ingredientsList, instructionsList);
@@ -80,6 +87,7 @@ export const useAddDish = () => {
 					instructions: filteredInstructions,
 				},
 			});
+			clearDraft();
 			toast.success('Страву успішно додано!');
 			navigate('/dishes');
 		} catch (error) {
@@ -117,22 +125,29 @@ export const useEditDish = (
 		awaitRefetchQueries: true,
 	});
 
+	const form = useForm<DishFormData>({
+		resolver: zodResolver(DishSchema),
+		defaultValues: initialData || defaultDishValues,
+	});
+
 	const {
 		register,
 		handleSubmit,
 		control,
 		setValue,
 		formState: { errors },
-	} = useForm<DishFormData>({
-		resolver: zodResolver(DishSchema),
-		defaultValues: initialData || defaultDishValues,
-	});
+	} = form;
 
 	const ingredientsList = useFormList<FormIngredient>(
 		{ name: '', amount: '' },
 		options?.ingredients,
 	);
 	const instructionsList = useFormList<string>('', options?.instructions);
+
+	const { clearDraft } = useFormPersist({
+		form,
+		storageKey: `draft-dish-edit-${dishId}`,
+	});
 
 	const onSubmit = async (data: DishFormData) => {
 		const preparedData = prepareDishFormData(ingredientsList, instructionsList);
@@ -158,6 +173,7 @@ export const useEditDish = (
 					instructions: filteredInstructions,
 				},
 			});
+			clearDraft();
 			toast.success('Страву успішно оновлено!');
 			navigate('/dishes');
 		} catch (error) {
