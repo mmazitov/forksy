@@ -1,9 +1,13 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import {
+	useGetPlannerItemsQuery,
+	useSavePlannerItemsMutation,
+} from '@/shared/api/graphql/planner.gen';
 import { CATEGORIES_DISHES } from '@/shared/constants';
 import { weekDays } from '@/shared/lib/utils/';
-import { dishes } from '@/mock';
+import { Dish, PlannerItemInput } from '@/shared/types/api';
 
 export interface DayMenuType {
 	[day: string]: {
@@ -27,6 +31,33 @@ export const useMenuPlanner = () => {
 		),
 	);
 
+	const { data: plannerData } = useGetPlannerItemsQuery({
+		fetchPolicy: 'cache-and-network',
+	});
+
+	useEffect(() => {
+		if (plannerData?.getPlannerItems) {
+			const newPlan: DayMenuType = Object.fromEntries(
+				weekDays.map((day) => [
+					day,
+					Object.fromEntries(MEAL_TIMES.map((meal) => [meal, []])),
+				]),
+			) as DayMenuType;
+			plannerData.getPlannerItems.forEach((item) => {
+				if (newPlan[item.day] && newPlan[item.day][item.mealTime]) {
+					newPlan[item.day][item.mealTime].push({
+						id: item.dish.id,
+						name: item.dish.name,
+						calories: item.dish.calories || 0,
+					});
+				}
+			});
+			setMenuPlan(newPlan);
+		}
+	}, [plannerData]);
+
+	const [savePlannerMutation] = useSavePlannerItemsMutation();
+
 	const openDialog = useCallback((meal: string) => {
 		setSelectedMeal(meal);
 		setIsDialogOpen(true);
@@ -40,7 +71,7 @@ export const useMenuPlanner = () => {
 	}, []);
 
 	const addDishToMenu = useCallback(
-		(dish: (typeof dishes)[0]) => {
+		(dish: Pick<Dish, 'id' | 'name' | 'calories'>) => {
 			if (!selectedMeal) return;
 
 			setMenuPlan((prev) => ({
@@ -49,7 +80,7 @@ export const useMenuPlanner = () => {
 					...prev[selectedDay],
 					[selectedMeal]: [
 						...(prev[selectedDay]?.[selectedMeal] || []),
-						{ id: dish.id, name: dish.name, calories: dish.calories },
+						{ id: dish.id, name: dish.name, calories: dish.calories || 0 },
 					],
 				},
 			}));
@@ -90,9 +121,28 @@ export const useMenuPlanner = () => {
 		};
 	}, [menuPlan, selectedDay]);
 
-	const handleSave = useCallback(() => {
-		toast.success('Меню успішно збережено!');
-	}, []);
+	const handleSave = useCallback(async () => {
+		const itemsToSave: PlannerItemInput[] = [];
+
+		Object.entries(menuPlan).forEach(([day, meals]) => {
+			Object.entries(meals).forEach(([mealTime, dishes]) => {
+				dishes.forEach((dish) => {
+					itemsToSave.push({
+						day,
+						mealTime,
+						dishId: dish.id,
+					});
+				});
+			});
+		});
+
+		try {
+			await savePlannerMutation({ variables: { items: itemsToSave } });
+			toast.success('Меню успішно збережено!');
+		} catch {
+			toast.error('Помилка при збереженні меню');
+		}
+	}, [menuPlan, savePlannerMutation]);
 
 	const weekDaysForFilter = weekDays.map((day, index) => ({
 		id: index,

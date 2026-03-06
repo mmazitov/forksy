@@ -1,6 +1,7 @@
-import { dishes } from '@/mock';
+import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
 import { Search } from '@/shared/components/search';
 import { Card } from '@/shared/components/ui/card';
+import { Dish } from '@/shared/types/api';
 
 interface AddDishModalProps {
 	isOpen: boolean;
@@ -8,17 +9,24 @@ interface AddDishModalProps {
 	selectedMeal: string | null;
 	searchQuery: string;
 	onSearchChange: (query: string) => void;
-	onDishSelect: (dish: (typeof dishes)[0]) => void;
+	onDishSelect: (dish: Pick<Dish, 'id' | 'name' | 'calories'>) => void;
 }
 
 const AddDishModal = ({
 	searchQuery,
 	onSearchChange,
 	onDishSelect,
+	selectedMeal,
 }: AddDishModalProps) => {
-	const filteredDishes = dishes.filter((dish) =>
-		dish.name.toLowerCase().includes(searchQuery.toLowerCase()),
-	);
+	const { data } = useDishesQuery({
+		variables: {
+			category: selectedMeal || undefined,
+			search: searchQuery || undefined,
+		},
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const filteredDishes = data?.dishes || [];
 
 	return (
 		<div className="space-y-4">
@@ -33,7 +41,13 @@ const AddDishModal = ({
 					<Card
 						key={dish.id}
 						className="hover:border-primary cursor-pointer p-4 transition-colors"
-						onClick={() => onDishSelect(dish)}
+						onClick={() =>
+							onDishSelect({
+								id: dish.id,
+								name: dish.name,
+								calories: dish.calories ?? null,
+							})
+						}
 					>
 						<div className="flex items-start justify-between gap-2">
 							<div className="flex-1">

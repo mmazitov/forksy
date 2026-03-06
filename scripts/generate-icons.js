@@ -17,7 +17,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Find source icon
-let sourceIcon = path.join(__dirname, '../public/original.png');
+const sourceIcon = path.join(__dirname, '../public/original.png');
 if (!fs.existsSync(sourceIcon)) {
 	console.error('❌ Source icon not found at:', sourceIcon);
 	process.exit(1);

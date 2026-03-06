@@ -1,5 +1,6 @@
-import { ANIMATION_DURATION } from '@/shared/constants';
 import { useEffect, useState } from 'react';
+
+import { ANIMATION_DURATION } from '@/shared/constants';
 import './SplashScreen.css';
 
 interface SplashScreenProps {

@@ -50,9 +50,10 @@ const Modal = ({
 
 	const getModalTitle = (): string => {
 		switch (modalType) {
-			case AUTH_MODAL:
+			case AUTH_MODAL: {
 				const { LOGIN, REGISTER } = modalsConfig.AUTH_MODAL;
 				return isLogin ? LOGIN.title : REGISTER.title;
+			}
 			case ADD_DISH_MODAL:
 				return `Виберіть блюдо для ${selectedMeal}`;
 			default:

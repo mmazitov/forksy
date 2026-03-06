@@ -1,7 +1,8 @@
-import { Button } from '@/shared/components';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { LuMoon, LuSun } from 'react-icons/lu';
+
+import { Button } from '@/shared/components';
 
 const ThemeToggle = () => {
 	const { theme, setTheme } = useTheme();

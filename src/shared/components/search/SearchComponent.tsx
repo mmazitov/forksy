@@ -1,5 +1,6 @@
-import { Input } from '@/shared/components';
 import { LuDelete, LuSearch } from 'react-icons/lu';
+
+import { Input } from '@/shared/components';
 
 interface SearchComponentProps {
 	searchQuery: string;

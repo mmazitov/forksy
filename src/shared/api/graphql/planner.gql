@@ -1,0 +1,20 @@
+query GetPlannerItems {
+	getPlannerItems {
+		id
+		dishId
+		day
+		mealTime
+		dish {
+			id
+			name
+			category
+			imageUrl
+			calories
+			description
+		}
+	}
+}
+
+mutation SavePlannerItems($items: [PlannerItemInput!]!) {
+	savePlanner(items: $items)
+}

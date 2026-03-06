@@ -82,6 +82,7 @@ export type Mutation = {
 	register: AuthPayload;
 	removeFromFavoritesDish: User;
 	removeFromFavoritesProduct: User;
+	savePlanner: Scalars['Boolean']['output'];
 	updateDish: Dish;
 	updateProduct: Product;
 	updateProfile: User;
@@ -162,6 +163,10 @@ export type MutationRemoveFromFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
 };
 
+export type MutationSavePlannerArgs = {
+	items: Array<PlannerItemInput>;
+};
+
 export type MutationUpdateDishArgs = {
 	calories?: InputMaybe<Scalars['Int']['input']>;
 	carbs?: InputMaybe<Scalars['Float']['input']>;
@@ -199,6 +204,23 @@ export type MutationUpdateProfileArgs = {
 	phone?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type PlannerItem = {
+	__typename?: 'PlannerItem';
+	createdAt: Scalars['String']['output'];
+	day: Scalars['String']['output'];
+	dish: Dish;
+	dishId: Scalars['ID']['output'];
+	id: Scalars['ID']['output'];
+	mealTime: Scalars['String']['output'];
+	userId: Scalars['ID']['output'];
+};
+
+export type PlannerItemInput = {
+	day: Scalars['String']['input'];
+	dishId: Scalars['ID']['input'];
+	mealTime: Scalars['String']['input'];
+};
+
 export type Product = {
 	__typename?: 'Product';
 	calories: Maybe<Scalars['Int']['output']>;
@@ -224,6 +246,7 @@ export type Query = {
 	dishes: Array<Dish>;
 	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
+	getPlannerItems: Array<PlannerItem>;
 	me: Maybe<User>;
 	product: Maybe<Product>;
 	productByName: Maybe<Product>;
