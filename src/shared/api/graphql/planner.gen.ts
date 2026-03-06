@@ -1,12 +1,12 @@
+import type * as Types from '@/shared/types/api';
 
 import type { DocumentNode } from 'graphql';
 import type * as ApolloReactCommon from '@apollo/client/react';
 import * as ApolloReactHooks from '@apollo/client/react';
-
-import type * as Types from '@/shared/types/api';
 const defaultOptions = {} as const;
 export type GetPlannerItemsQueryVariables = Types.Exact<{
-	weekStart: Types.Scalars['String']['input'];
+	startDate: Types.Scalars['String']['input'];
+	endDate: Types.Scalars['String']['input'];
 }>;
 
 export type GetPlannerItemsQuery = {
@@ -15,7 +15,7 @@ export type GetPlannerItemsQuery = {
 		__typename?: 'PlannerItem';
 		id: string;
 		dishId: string;
-		day: string;
+		date: string;
 		mealTime: string;
 		dish: {
 			__typename?: 'Dish';
@@ -31,7 +31,8 @@ export type GetPlannerItemsQuery = {
 
 export type SavePlannerItemsMutationVariables = Types.Exact<{
 	items: Array<Types.PlannerItemInput> | Types.PlannerItemInput;
-	weekStart: Types.Scalars['String']['input'];
+	startDate: Types.Scalars['String']['input'];
+	endDate: Types.Scalars['String']['input'];
 }>;
 
 export type SavePlannerItemsMutation = {
@@ -51,7 +52,21 @@ export const GetPlannerItemsDocument = {
 					kind: 'VariableDefinition',
 					variable: {
 						kind: 'Variable',
-						name: { kind: 'Name', value: 'weekStart' },
+						name: { kind: 'Name', value: 'startDate' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'endDate' },
 					},
 					type: {
 						kind: 'NonNullType',
@@ -71,10 +86,18 @@ export const GetPlannerItemsDocument = {
 						arguments: [
 							{
 								kind: 'Argument',
-								name: { kind: 'Name', value: 'weekStart' },
+								name: { kind: 'Name', value: 'startDate' },
 								value: {
 									kind: 'Variable',
-									name: { kind: 'Name', value: 'weekStart' },
+									name: { kind: 'Name', value: 'startDate' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'endDate' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'endDate' },
 								},
 							},
 						],
@@ -83,7 +106,7 @@ export const GetPlannerItemsDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'dishId' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'day' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'date' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'mealTime' } },
 								{
 									kind: 'Field',
@@ -187,7 +210,21 @@ export const SavePlannerItemsDocument = {
 					kind: 'VariableDefinition',
 					variable: {
 						kind: 'Variable',
-						name: { kind: 'Name', value: 'weekStart' },
+						name: { kind: 'Name', value: 'startDate' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'endDate' },
 					},
 					type: {
 						kind: 'NonNullType',
@@ -215,10 +252,18 @@ export const SavePlannerItemsDocument = {
 							},
 							{
 								kind: 'Argument',
-								name: { kind: 'Name', value: 'weekStart' },
+								name: { kind: 'Name', value: 'startDate' },
 								value: {
 									kind: 'Variable',
-									name: { kind: 'Name', value: 'weekStart' },
+									name: { kind: 'Name', value: 'startDate' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'endDate' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'endDate' },
 								},
 							},
 						],

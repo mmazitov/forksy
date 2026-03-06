@@ -13,7 +13,8 @@ export const useSchedule = () => {
 	const endOfWeek = currentWeek.endOf('isoWeek');
 
 	const todayWeek = `${startOfWeek.format('D MMMM')} – ${endOfWeek.format('D MMMM')}`;
-	const weekStart = startOfWeek.format('YYYY-MM-DD');
+	const startDate = startOfWeek.format('YYYY-MM-DD');
+	const endDate = endOfWeek.add(1, 'day').format('YYYY-MM-DD'); // Exclusive end date for database query
 
 	const weekDiff = currentWeek
 		.startOf('isoWeek')
@@ -29,7 +30,8 @@ export const useSchedule = () => {
 	return {
 		currentWeek,
 		todayWeek,
-		weekStart,
+		startDate,
+		endDate,
 		weekDiff,
 		handlePrevious,
 		handleNext,

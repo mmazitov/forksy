@@ -164,8 +164,9 @@ export type MutationRemoveFromFavoritesProductArgs = {
 };
 
 export type MutationSavePlannerArgs = {
+	endDate: Scalars['String']['input'];
 	items: Array<PlannerItemInput>;
-	weekStart: Scalars['String']['input'];
+	startDate: Scalars['String']['input'];
 };
 
 export type MutationUpdateDishArgs = {
@@ -208,20 +209,18 @@ export type MutationUpdateProfileArgs = {
 export type PlannerItem = {
 	__typename?: 'PlannerItem';
 	createdAt: Scalars['String']['output'];
-	day: Scalars['String']['output'];
+	date: Scalars['String']['output'];
 	dish: Dish;
 	dishId: Scalars['ID']['output'];
 	id: Scalars['ID']['output'];
 	mealTime: Scalars['String']['output'];
 	userId: Scalars['ID']['output'];
-	weekStart: Scalars['String']['output'];
 };
 
 export type PlannerItemInput = {
-	day: Scalars['String']['input'];
+	date: Scalars['String']['input'];
 	dishId: Scalars['ID']['input'];
 	mealTime: Scalars['String']['input'];
-	weekStart: Scalars['String']['input'];
 };
 
 export type Product = {
@@ -272,7 +271,8 @@ export type QueryDishesArgs = {
 };
 
 export type QueryGetPlannerItemsArgs = {
-	weekStart: Scalars['String']['input'];
+	endDate: Scalars['String']['input'];
+	startDate: Scalars['String']['input'];
 };
 
 export type QueryProductArgs = {

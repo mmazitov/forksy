@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -33,10 +34,10 @@ export const useMenuPlanner = () => {
 	);
 
 	const schedule = useSchedule();
-	const { weekStart } = schedule;
+	const { startDate, endDate } = schedule;
 
 	const { data: plannerData } = useGetPlannerItemsQuery({
-		variables: { weekStart },
+		variables: { startDate, endDate },
 		fetchPolicy: 'cache-and-network',
 	});
 
@@ -49,8 +50,9 @@ export const useMenuPlanner = () => {
 				]),
 			) as DayMenuType;
 			plannerData.getPlannerItems.forEach((item) => {
-				if (newPlan[item.day] && newPlan[item.day][item.mealTime]) {
-					newPlan[item.day][item.mealTime].push({
+				const itemDay = weekDays[dayjs(item.date).isoWeekday() - 1];
+				if (itemDay && newPlan[itemDay] && newPlan[itemDay][item.mealTime]) {
+					newPlan[itemDay][item.mealTime].push({
 						id: item.dish.id,
 						name: item.dish.name,
 						calories: item.dish.calories || 0,
@@ -130,13 +132,15 @@ export const useMenuPlanner = () => {
 		const itemsToSave: PlannerItemInput[] = [];
 
 		Object.entries(menuPlan).forEach(([day, meals]) => {
+			const dayIndex = weekDays.indexOf(day);
+			const date = dayjs(startDate).add(dayIndex, 'day').format('YYYY-MM-DD');
+
 			Object.entries(meals).forEach(([mealTime, dishes]) => {
 				dishes.forEach((dish) => {
 					itemsToSave.push({
-						day,
+						date,
 						mealTime,
 						dishId: dish.id,
-						weekStart,
 					});
 				});
 			});
@@ -144,13 +148,13 @@ export const useMenuPlanner = () => {
 
 		try {
 			await savePlannerMutation({
-				variables: { items: itemsToSave, weekStart },
+				variables: { items: itemsToSave, startDate, endDate },
 			});
 			toast.success('Меню успішно збережено!');
 		} catch {
 			toast.error('Помилка при збереженні меню');
 		}
-	}, [menuPlan, savePlannerMutation, weekStart]);
+	}, [menuPlan, savePlannerMutation, startDate, endDate]);
 
 	const weekDaysForFilter = weekDays.map((day, index) => ({
 		id: index,

@@ -1,7 +1,7 @@
 export interface Dish {
 	id: string;
 	name: string;
-	calories: number;
+	calories?: number | null;
 	description?: string;
 	image?: string;
 	category?: string;

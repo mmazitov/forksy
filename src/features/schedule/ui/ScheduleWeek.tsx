@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Loader2 } from 'lucide-react';
 
 import { useGetPlannerItemsQuery } from '@/shared/api/graphql/planner.gen';
@@ -9,19 +10,21 @@ import { weekDays } from '@/shared/lib/utils';
 
 const ScheduleWeek = () => {
 	const schedule = useSchedule();
-	const { weekStart } = schedule;
+	const { startDate, endDate } = schedule;
 
 	const { data, loading, error } = useGetPlannerItemsQuery({
-		variables: { weekStart },
+		variables: { startDate, endDate },
 		fetchPolicy: 'cache-and-network',
 	});
 
 	// Group planner items by day and mealTime for easy lookup
 	const plannerMap = (data?.getPlannerItems || []).reduce(
 		(acc, item) => {
-			if (!acc[item.day]) acc[item.day] = {};
-			if (!acc[item.day][item.mealTime]) acc[item.day][item.mealTime] = [];
-			acc[item.day][item.mealTime].push(item);
+			const itemDay = weekDays[dayjs(item.date).isoWeekday() - 1];
+			if (!itemDay) return acc;
+			if (!acc[itemDay]) acc[itemDay] = {};
+			if (!acc[itemDay][item.mealTime]) acc[itemDay][item.mealTime] = [];
+			acc[itemDay][item.mealTime].push(item);
 			return acc;
 		},
 		{} as Record<
