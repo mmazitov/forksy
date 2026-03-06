@@ -7,6 +7,7 @@ export * from './useModal'; // Assuming useModal is here
 export * from './usePagination';
 export * from './usePwaInstallPrompt';
 export * from './usePwaManagement';
+export * from './useSchedule';
 export * from './useSearch';
 export {
 	initServiceWorker,

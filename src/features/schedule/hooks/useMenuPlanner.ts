@@ -6,6 +6,7 @@ import {
 	useSavePlannerItemsMutation,
 } from '@/shared/api/graphql/planner.gen';
 import { CATEGORIES_DISHES } from '@/shared/constants';
+import { useSchedule } from '@/shared/hooks/useSchedule';
 import { weekDays } from '@/shared/lib/utils/';
 import { Dish, PlannerItemInput } from '@/shared/types/api';
 
@@ -31,7 +32,11 @@ export const useMenuPlanner = () => {
 		),
 	);
 
+	const schedule = useSchedule();
+	const { weekStart } = schedule;
+
 	const { data: plannerData } = useGetPlannerItemsQuery({
+		variables: { weekStart },
 		fetchPolicy: 'cache-and-network',
 	});
 
@@ -131,18 +136,21 @@ export const useMenuPlanner = () => {
 						day,
 						mealTime,
 						dishId: dish.id,
+						weekStart,
 					});
 				});
 			});
 		});
 
 		try {
-			await savePlannerMutation({ variables: { items: itemsToSave } });
+			await savePlannerMutation({
+				variables: { items: itemsToSave, weekStart },
+			});
 			toast.success('Меню успішно збережено!');
 		} catch {
 			toast.error('Помилка при збереженні меню');
 		}
-	}, [menuPlan, savePlannerMutation]);
+	}, [menuPlan, savePlannerMutation, weekStart]);
 
 	const weekDaysForFilter = weekDays.map((day, index) => ({
 		id: index,
@@ -165,5 +173,6 @@ export const useMenuPlanner = () => {
 		handleSave,
 		weekDaysForFilter,
 		mealTimes: MEAL_TIMES,
+		schedule,
 	};
 };

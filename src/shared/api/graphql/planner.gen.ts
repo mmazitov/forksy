@@ -6,7 +6,7 @@ import * as ApolloReactHooks from '@apollo/client/react';
 import type * as Types from '@/shared/types/api';
 const defaultOptions = {} as const;
 export type GetPlannerItemsQueryVariables = Types.Exact<{
-	[key: string]: never;
+	weekStart: Types.Scalars['String']['input'];
 }>;
 
 export type GetPlannerItemsQuery = {
@@ -31,6 +31,7 @@ export type GetPlannerItemsQuery = {
 
 export type SavePlannerItemsMutationVariables = Types.Exact<{
 	items: Array<Types.PlannerItemInput> | Types.PlannerItemInput;
+	weekStart: Types.Scalars['String']['input'];
 }>;
 
 export type SavePlannerItemsMutation = {
@@ -45,12 +46,38 @@ export const GetPlannerItemsDocument = {
 			kind: 'OperationDefinition',
 			operation: 'query',
 			name: { kind: 'Name', value: 'GetPlannerItems' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'weekStart' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+			],
 			selectionSet: {
 				kind: 'SelectionSet',
 				selections: [
 					{
 						kind: 'Field',
 						name: { kind: 'Name', value: 'getPlannerItems' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'weekStart' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'weekStart' },
+								},
+							},
+						],
 						selectionSet: {
 							kind: 'SelectionSet',
 							selections: [
@@ -94,10 +121,14 @@ export const GetPlannerItemsDocument = {
 	],
 } as unknown as DocumentNode;
 export function useGetPlannerItemsQuery(
-	baseOptions?: ApolloReactHooks.QueryHookOptions<
+	baseOptions: ApolloReactHooks.QueryHookOptions<
 		GetPlannerItemsQuery,
 		GetPlannerItemsQueryVariables
-	>,
+	> &
+		(
+			| { variables: GetPlannerItemsQueryVariables; skip?: boolean }
+			| { skip: boolean }
+		),
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
 	return ApolloReactHooks.useQuery<
@@ -152,6 +183,20 @@ export const SavePlannerItemsDocument = {
 						},
 					},
 				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'weekStart' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
 			],
 			selectionSet: {
 				kind: 'SelectionSet',
@@ -166,6 +211,14 @@ export const SavePlannerItemsDocument = {
 								value: {
 									kind: 'Variable',
 									name: { kind: 'Name', value: 'items' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'weekStart' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'weekStart' },
 								},
 							},
 						],

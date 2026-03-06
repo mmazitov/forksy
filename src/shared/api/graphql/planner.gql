@@ -1,5 +1,5 @@
-query GetPlannerItems {
-	getPlannerItems {
+query GetPlannerItems($weekStart: String!) {
+	getPlannerItems(weekStart: $weekStart) {
 		id
 		dishId
 		day
@@ -15,6 +15,6 @@ query GetPlannerItems {
 	}
 }
 
-mutation SavePlannerItems($items: [PlannerItemInput!]!) {
-	savePlanner(items: $items)
+mutation SavePlannerItems($items: [PlannerItemInput!]!, $weekStart: String!) {
+	savePlanner(items: $items, weekStart: $weekStart)
 }

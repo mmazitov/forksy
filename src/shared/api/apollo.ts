@@ -51,11 +51,11 @@ const authLink = setContext((_, { headers }) => {
 	let token = tokenRaw;
 
 	try {
-		if (tokenRaw) {
+		if (tokenRaw && (tokenRaw.startsWith('{') || tokenRaw.startsWith('"'))) {
 			token = JSON.parse(tokenRaw);
 		}
-	} catch (e) {
-		console.error('Error parsing token:', e);
+	} catch {
+		// Ignore parse errors for raw JWT strings
 	}
 
 	// return the headers to the context so httpLink can read them

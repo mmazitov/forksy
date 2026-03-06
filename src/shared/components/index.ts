@@ -17,6 +17,7 @@ export * from './pwaInstallPrompt';
 export * from './pwaManagement';
 export * from './pwaUpdatePrompt';
 export * from './quickActions';
+export * from './scheduleNavigation';
 export * from './search';
 export * from './socialList';
 export * from './splashScreen';

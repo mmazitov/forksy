@@ -1,13 +1,22 @@
 import { LuChevronLeft, LuChevronRight, LuRefreshCw } from 'react-icons/lu';
 
-import { useSchedule } from '../hooks/useSchedule';
-
 import { Button, Card, CardContent } from '@/shared/components';
 
-const ScheduleNavigation = () => {
-	const { todayWeek, weekDiff, handlePrevious, handleNext, handleReset } =
-		useSchedule();
+export interface ScheduleNavigationProps {
+	todayWeek: string;
+	weekDiff: number;
+	handlePrevious: () => void;
+	handleNext: () => void;
+	handleReset: () => void;
+}
 
+const ScheduleNavigation = ({
+	todayWeek,
+	weekDiff,
+	handlePrevious,
+	handleNext,
+	handleReset,
+}: ScheduleNavigationProps) => {
 	return (
 		<Card>
 			<CardContent className="p-6">

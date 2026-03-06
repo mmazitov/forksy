@@ -8,6 +8,7 @@ import {
 	MetaData,
 	Modal,
 	PageTitle,
+	ScheduleNavigation,
 } from '@/shared/components';
 import DaySummary from '@/shared/components/daySummary/DaySummary';
 import { MODAL_TYPES, PAGE_TITLE } from '@/shared/constants';
@@ -30,6 +31,7 @@ const MenuPlanner = () => {
 		handleSave,
 		weekDaysForFilter,
 		mealTimes,
+		schedule,
 	} = useMenuPlanner();
 
 	const dailyStats = getDailyStats();
@@ -50,6 +52,16 @@ const MenuPlanner = () => {
 				buttonText={PAGE_TITLE.planer.button}
 				buttonIcon={<LuSave />}
 			/>
+
+			<div className="mb-6">
+				<ScheduleNavigation
+					todayWeek={schedule.todayWeek}
+					weekDiff={schedule.weekDiff}
+					handlePrevious={schedule.handlePrevious}
+					handleNext={schedule.handleNext}
+					handleReset={schedule.handleReset}
+				/>
+			</div>
 
 			{/* Day Selector */}
 			<Card className="mb-6">
