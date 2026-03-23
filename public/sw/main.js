@@ -120,7 +120,7 @@ self.addEventListener('fetch', (event) => {
 
 // Background Sync - replay offline queue
 self.addEventListener('sync', (event) => {
-	if (event.tag === 'forksy-sync') {
+	if (event.tag === 'forklet-sync') {
 		console.log('[Service Worker] Background sync triggered');
 		event.waitUntil(replayQueue());
 	}
@@ -146,13 +146,13 @@ self.addEventListener('push', (event) => {
 	const data = event.data?.json() ?? {};
 
 	const options = {
-		body: data.body || 'New notification from Forksy',
+		body: data.body || 'New notification from Forklet',
 		icon: '/icon-192x192.png',
 		badge: '/icon-192x192.png',
 		data: data,
 	};
 
 	event.waitUntil(
-		self.registration.showNotification(data.title || 'Forksy', options),
+		self.registration.showNotification(data.title || 'Forklet', options),
 	);
 });

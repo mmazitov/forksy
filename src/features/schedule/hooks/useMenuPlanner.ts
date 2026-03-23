@@ -8,12 +8,21 @@ import {
 } from '@/shared/api/graphql/planner.gen';
 import { CATEGORIES_DISHES } from '@/shared/constants';
 import { useSchedule } from '@/shared/hooks/useSchedule';
-import { weekDays } from '@/shared/lib/utils/';
+import {
+	mealTimeToUI,
+	UI_NAME_TO_MEAL_TIME,
+	weekDays,
+} from '@/shared/lib/utils/';
 import { Dish, PlannerItemInput } from '@/shared/types/api';
 
 export interface DayMenuType {
 	[day: string]: {
-		[mealTime: string]: Array<{ id: string; name: string; calories: number }>;
+		[mealTime: string]: Array<{
+			plannerItemId: string | null;
+			id: string; // Dish ID
+			name: string;
+			calories: number;
+		}>;
 	};
 }
 
@@ -50,9 +59,12 @@ export const useMenuPlanner = () => {
 				]),
 			) as DayMenuType;
 			plannerData.getPlannerItems.forEach((item) => {
-				const itemDay = weekDays[dayjs(item.date).isoWeekday() - 1];
-				if (itemDay && newPlan[itemDay] && newPlan[itemDay][item.mealTime]) {
-					newPlan[itemDay][item.mealTime].push({
+				const timestamp = Number(item.date);
+				const itemDay = weekDays[dayjs(timestamp).isoWeekday() - 1];
+				const uiMealTime = mealTimeToUI(item.mealTime);
+				if (itemDay && newPlan[itemDay] && newPlan[itemDay][uiMealTime]) {
+					newPlan[itemDay][uiMealTime].push({
+						plannerItemId: item.id,
 						id: item.dish.id,
 						name: item.dish.name,
 						calories: item.dish.calories || 0,
@@ -61,9 +73,12 @@ export const useMenuPlanner = () => {
 			});
 			setMenuPlan(newPlan);
 		}
-	}, [plannerData]);
+	}, [plannerData, startDate, endDate]);
 
-	const [savePlannerMutation] = useSavePlannerItemsMutation();
+	const [savePlannerMutation] = useSavePlannerItemsMutation({
+		refetchQueries: ['GetPlannerItems'],
+		awaitRefetchQueries: true,
+	});
 
 	const openDialog = useCallback((meal: string) => {
 		setSelectedMeal(meal);
@@ -87,7 +102,12 @@ export const useMenuPlanner = () => {
 					...prev[selectedDay],
 					[selectedMeal]: [
 						...(prev[selectedDay]?.[selectedMeal] || []),
-						{ id: dish.id, name: dish.name, calories: dish.calories || 0 },
+						{
+							plannerItemId: null,
+							id: dish.id,
+							name: dish.name,
+							calories: dish.calories || 0,
+						},
 					],
 				},
 			}));
@@ -136,10 +156,12 @@ export const useMenuPlanner = () => {
 			const date = dayjs(startDate).add(dayIndex, 'day').format('YYYY-MM-DD');
 
 			Object.entries(meals).forEach(([mealTime, dishes]) => {
+				const enumMealTime = UI_NAME_TO_MEAL_TIME[mealTime];
 				dishes.forEach((dish) => {
 					itemsToSave.push({
+						id: dish.plannerItemId,
 						date,
-						mealTime,
+						mealTime: enumMealTime,
 						dishId: dish.id,
 					});
 				});

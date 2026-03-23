@@ -5,10 +5,9 @@ import {
 	CardTitle,
 	Counter,
 } from '@/shared/components';
-import { Ingredient } from '@/shared/types';
 
 interface IngredientsProps {
-	ingredients: Ingredient[];
+	ingredients: { name: string; amount: string; productId?: string | null }[];
 }
 
 const Ingredients = ({ ingredients }: IngredientsProps) => {

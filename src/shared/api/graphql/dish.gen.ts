@@ -26,6 +26,7 @@ export type DishFieldsFragment = {
 		__typename?: 'Ingredient';
 		name: string;
 		amount: string;
+		productId?: string | null;
 	}>;
 };
 
@@ -178,6 +179,7 @@ export const DishFieldsFragmentDoc = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},
@@ -266,6 +268,7 @@ export const DishDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},
@@ -385,6 +388,7 @@ export const DishByNameDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},
@@ -554,6 +558,7 @@ export const DishesDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},
@@ -649,6 +654,7 @@ export const FavoriteDishesDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},
@@ -968,6 +974,7 @@ export const CreateDishDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},
@@ -1275,6 +1282,7 @@ export const UpdateDishDocument = {
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'productId' } },
 							],
 						},
 					},

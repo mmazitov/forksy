@@ -59,12 +59,21 @@ export type Ingredient = {
 	__typename?: 'Ingredient';
 	amount: Scalars['String']['output'];
 	name: Scalars['String']['output'];
+	productId: Maybe<Scalars['ID']['output']>;
 };
 
 export type IngredientInput = {
 	amount: Scalars['String']['input'];
 	name: Scalars['String']['input'];
+	productId?: InputMaybe<Scalars['ID']['input']>;
 };
+
+export enum MealTime {
+	Breakfast = 'BREAKFAST',
+	Dinner = 'DINNER',
+	Lunch = 'LUNCH',
+	Snack = 'SNACK',
+}
 
 export type Mutation = {
 	__typename?: 'Mutation';
@@ -213,14 +222,15 @@ export type PlannerItem = {
 	dish: Dish;
 	dishId: Scalars['ID']['output'];
 	id: Scalars['ID']['output'];
-	mealTime: Scalars['String']['output'];
+	mealTime: MealTime;
 	userId: Scalars['ID']['output'];
 };
 
 export type PlannerItemInput = {
 	date: Scalars['String']['input'];
 	dishId: Scalars['ID']['input'];
-	mealTime: Scalars['String']['input'];
+	id?: InputMaybe<Scalars['ID']['input']>;
+	mealTime: MealTime;
 };
 
 export type Product = {
@@ -306,11 +316,8 @@ export type User = {
 	dishesCount: Scalars['Int']['output'];
 	dislike: Array<Scalars['String']['output']>;
 	email: Maybe<Scalars['String']['output']>;
-	facebookId: Maybe<Scalars['String']['output']>;
 	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
-	githubId: Maybe<Scalars['String']['output']>;
-	googleId: Maybe<Scalars['String']['output']>;
 	id: Scalars['ID']['output'];
 	name: Maybe<Scalars['String']['output']>;
 	phone: Maybe<Scalars['String']['output']>;

@@ -269,38 +269,4 @@
 	@apply transition-transform duration-200 hover:scale-105;
 }
 
-@keyframes drawLine {
-	to {
-		stroke-dashoffset: 0;
-	}
-}
 
-@keyframes fillLogo {
-	0% {
-		fill: transparent;
-	}
-	80% {
-		fill: transparent;
-	}
-	100% {
-		fill: #33ccbf;
-	}
-}
-
-@keyframes slideUp {
-	0% {
-		transform: translateY(50px);
-		opacity: 0;
-	}
-	100% {
-		transform: translateY(0);
-		opacity: 1;
-	}
-}
-
-.path {
-	animation:
-		drawLine 2s ease forwards,
-		fillLogo 1s ease 2s forwards,
-		slideUp 1s ease-out 2.5s forwards;
-}

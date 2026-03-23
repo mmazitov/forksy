@@ -16,7 +16,7 @@ export type GetPlannerItemsQuery = {
 		id: string;
 		dishId: string;
 		date: string;
-		mealTime: string;
+		mealTime: Types.MealTime;
 		dish: {
 			__typename?: 'Dish';
 			id: string;

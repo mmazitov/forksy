@@ -1,38 +1,54 @@
-@keyframes drawCalendar {
+@keyframes drawStroke {
 	to {
 		stroke-dashoffset: 0;
 	}
 }
 
-@keyframes fillCalendar {
+@keyframes fillFadeIn {
 	to {
+		opacity: 1;
+		fill-opacity: 1;
+	}
+}
+
+@keyframes slideUpFade {
+	to {
+		transform: translateY(0);
 		opacity: 1;
 	}
 }
 
-@keyframes forkSlideUp {
-	to {
-		transform: translateY(0);
-	}
-}
-
-.calendar-outline {
-	fill: none;
+.fork-draw {
 	stroke: #33ccbf;
-	stroke-width: 2;
-	stroke-dasharray: 1500;
-	stroke-dashoffset: 1500;
-	animation: drawCalendar 2s ease-in-out forwards;
+	stroke-dasharray: 200;
+	stroke-dashoffset: 200;
+	animation: drawStroke 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.calendar-fill {
-	fill: #33ccbf;
+.fork-draw-handle {
+	stroke: #33ccbf;
+	stroke-dasharray: 100;
+	stroke-dashoffset: 100;
+	animation: drawStroke 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+}
+
+.leaf-draw {
+	stroke: #f4a17d;
+	stroke-dasharray: 150;
+	stroke-dashoffset: 150;
+	animation: drawStroke 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+}
+
+.leaf-fill {
+	fill: #f4a17d;
+	fill-opacity: 0;
 	opacity: 0;
-	animation: fillCalendar 0.5s ease-in-out 2s forwards;
+	animation: fillFadeIn 0.8s ease-out 1.5s forwards;
 }
 
-.fork {
-	fill: #33ccbf;
-	transform: translateY(200px);
-	animation: forkSlideUp 1.5s ease-out 2.5s forwards;
+.splash-text {
+	transform: translateY(20px);
+	opacity: 0;
+	animation: slideUpFade 0.8s ease-out 1.2s forwards;
+	color: #33ccbf;
 }

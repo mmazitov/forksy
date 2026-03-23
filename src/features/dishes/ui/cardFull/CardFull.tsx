@@ -6,7 +6,6 @@ import Instructions from './Instructions';
 import Nutrition from './Nutrition';
 
 import { Separator } from '@/shared/components';
-import { Ingredient } from '@/shared/types';
 
 interface CardFullProps {
 	id: string;
@@ -20,7 +19,7 @@ interface CardFullProps {
 	protein?: number | null;
 	fat?: number | null;
 	carbs?: number | null;
-	ingredients: Ingredient[];
+	ingredients: { name: string; amount: string; productId?: string | null }[];
 	instructions: string[];
 	isAdmin?: boolean;
 	userId?: string;

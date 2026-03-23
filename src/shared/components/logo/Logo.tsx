@@ -5,10 +5,10 @@ const Logo = () => {
 	return (
 		<Link
 			to="/"
-			className="flex items-center gap-2 text-xl font-bold text-foreground cursor-pointer"
+			className="text-foreground flex cursor-pointer items-center gap-2 text-xl font-bold"
 		>
-			<ReactSVG src="/logo.svg" />
-			<span>Forksy</span>
+			<ReactSVG src="/logo.svg" width={32} height={32} />
+			<span>Forklet</span>
 		</Link>
 	);
 };
