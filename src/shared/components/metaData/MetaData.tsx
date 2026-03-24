@@ -19,13 +19,13 @@ const truncateDescription = (text: string, maxLength: number = 160): string => {
 export const MetaData = ({
 	title,
 	description,
-	image = 'https://forklet.com/og-image.jpg',
+	image = 'https://munch.io/og-image.jpg',
 	url = typeof window !== 'undefined' ? window.location.href : '',
 	type = 'website',
 	author,
 	keywords = [],
 }: MetaDataProps) => {
-	const siteTitle = 'Forklet';
+	const siteTitle = 'Munchio';
 	const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 	const truncatedDescription = truncateDescription(description);
 
@@ -44,7 +44,7 @@ export const MetaData = ({
 			<Meta property="og:type" content={type} />
 			<Meta property="og:url" content={url} />
 			<Meta property="og:image" content={image} />
-			<Meta property="og:site_name" content="Forklet" />
+			<Meta property="og:site_name" content="Munchio" />
 
 			{/* Twitter Card Tags */}
 			<Meta name="twitter:card" content="summary_large_image" />

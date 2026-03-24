@@ -1,9 +1,9 @@
 export const APP_CONFIG = {
-	name: 'Forksy',
+	name: 'Munchio',
 	description: 'Планувальник меню та продуктів',
 	version: '1.0.0',
 	theme: {
-		storageKey: 'mealplanner-theme',
+		storageKey: 'munchio-theme',
 		defaultTheme: 'system' as const,
 	},
 	routes: {

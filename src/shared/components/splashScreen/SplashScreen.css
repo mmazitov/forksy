@@ -1,54 +1,122 @@
-@keyframes drawStroke {
-	to {
-		stroke-dashoffset: 0;
+.slice-cover-top {
+	position: absolute;
+	bottom: 50%;
+	left: -50%;
+	right: -50%;
+	height: 150vh;
+	background: var(--color-primary);
+	transform: skewY(-15deg);
+	transform-origin: bottom center;
+	animation: sliceTop 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	z-index: 10;
+}
+
+.slice-cover-bottom {
+	position: absolute;
+	top: 50%;
+	left: -50%;
+	right: -50%;
+	height: 150vh;
+	background: var(--color-primary);
+	transform: skewY(-15deg);
+	transform-origin: top center;
+	animation: sliceBottom 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	z-index: 10;
+}
+
+.slice-slash {
+	position: absolute;
+	top: 50%;
+	left: -50%;
+	right: -50%;
+	height: 4px;
+	background: var(--color-background);
+	transform: translateY(-50%) rotate(-15deg) scaleX(0);
+	animation: slashLine 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	z-index: 15;
+}
+
+.slice-logo {
+	animation: scaleUp 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	z-index: 5;
+}
+
+.m-left-shape {
+	fill: var(--color-primary);
+}
+
+.knife-shape {
+	fill: var(--color-foreground);
+}
+
+.splash-text {
+	color: var(--color-foreground);
+	margin-top: 1rem;
+	font-size: 2rem;
+	font-weight: 800;
+	letter-spacing: -0.05em;
+	opacity: 0;
+	animation: fillFadeIn 0.8s ease-out 1.2s forwards;
+}
+
+@keyframes slashLine {
+	0% {
+		transform: translateY(-50%) rotate(-15deg) scaleX(0);
+		opacity: 1;
+	}
+	20% {
+		transform: translateY(-50%) rotate(-15deg) scaleX(1);
+		opacity: 1;
+	}
+	30%,
+	100% {
+		transform: translateY(-50%) rotate(-15deg) scaleX(1);
+		opacity: 0;
+	}
+}
+
+@keyframes sliceTop {
+	0%,
+	25% {
+		transform: skewY(-15deg) translateY(0);
+	}
+	45%,
+	100% {
+		transform: skewY(-15deg) translateY(-100vh);
+	}
+}
+
+@keyframes sliceBottom {
+	0%,
+	25% {
+		transform: skewY(-15deg) translateY(0);
+	}
+	45%,
+	100% {
+		transform: skewY(-15deg) translateY(100vh);
+	}
+}
+
+@keyframes scaleUp {
+	0%,
+	30% {
+		transform: scale(0.5);
+		opacity: 0;
+	}
+	45%,
+	100% {
+		transform: scale(1);
+		opacity: 1;
 	}
 }
 
 @keyframes fillFadeIn {
 	to {
 		opacity: 1;
-		fill-opacity: 1;
 	}
-}
-
-@keyframes slideUpFade {
-	to {
-		transform: translateY(0);
-		opacity: 1;
-	}
-}
-
-.fork-draw {
-	stroke: #33ccbf;
-	stroke-dasharray: 200;
-	stroke-dashoffset: 200;
-	animation: drawStroke 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.fork-draw-handle {
-	stroke: #33ccbf;
-	stroke-dasharray: 100;
-	stroke-dashoffset: 100;
-	animation: drawStroke 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
-}
-
-.leaf-draw {
-	stroke: #f4a17d;
-	stroke-dasharray: 150;
-	stroke-dashoffset: 150;
-	animation: drawStroke 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
-}
-
-.leaf-fill {
-	fill: #f4a17d;
-	fill-opacity: 0;
-	opacity: 0;
-	animation: fillFadeIn 0.8s ease-out 1.5s forwards;
-}
-
-.splash-text {
-	transform: translateY(20px);
-	opacity: 0;
-	animation: slideUpFade 0.8s ease-out 1.2s forwards;
-	color: #33ccbf;
 }

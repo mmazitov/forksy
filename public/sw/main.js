@@ -120,7 +120,7 @@ self.addEventListener('fetch', (event) => {
 
 // Background Sync - replay offline queue
 self.addEventListener('sync', (event) => {
-	if (event.tag === 'forklet-sync') {
+	if (event.tag === 'munchio-sync') {
 		console.log('[Service Worker] Background sync triggered');
 		event.waitUntil(replayQueue());
 	}
@@ -146,13 +146,13 @@ self.addEventListener('push', (event) => {
 	const data = event.data?.json() ?? {};
 
 	const options = {
-		body: data.body || 'New notification from Forklet',
+		body: data.body || 'New notification from Munchio',
 		icon: '/icon-192x192.png',
 		badge: '/icon-192x192.png',
 		data: data,
 	};
 
 	event.waitUntil(
-		self.registration.showNotification(data.title || 'Forklet', options),
+		self.registration.showNotification(data.title || 'Munchio', options),
 	);
 });
