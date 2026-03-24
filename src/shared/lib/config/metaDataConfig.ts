@@ -1,19 +1,19 @@
 export const METADATA_CONFIG = {
 	site: {
-		name: 'Munchio',
-		fullName: 'Munchio - Планувальник харчування та менеджер рецептів',
+		name: 'Mealvy',
+		fullName: 'Mealvy - Планувальник харчування та менеджер рецептів',
 		description:
 			'Ваш особистий планувальник харчування та менеджер рецептів. Плануйте свої страви, керуйте рецептами та відкривайте нові страви з детальною інформацією про поживні речовини.',
-		url: 'https://munch.io',
-		image: 'https://munch.io/og-image.jpg',
+		url: 'https://mealvy.com',
+		image: 'https://mealvy.com/og-image.jpg',
 		language: 'uk',
 		type: 'website',
 	},
 
 	social: {
-		twitter: '@Munchio',
-		facebook: 'Munchio',
-		instagram: '@Munchio_app',
+		twitter: '@Mealvy',
+		facebook: 'Mealvy',
+		instagram: '@Mealvy_app',
 	},
 
 	keywords: {

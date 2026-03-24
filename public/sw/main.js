@@ -146,13 +146,13 @@ self.addEventListener('push', (event) => {
 	const data = event.data?.json() ?? {};
 
 	const options = {
-		body: data.body || 'New notification from Munchio',
+		body: data.body || 'New notification from Mealvy',
 		icon: '/icon-192x192.png',
 		badge: '/icon-192x192.png',
 		data: data,
 	};
 
 	event.waitUntil(
-		self.registration.showNotification(data.title || 'Munchio', options),
+		self.registration.showNotification(data.title || 'Mealvy', options),
 	);
 });

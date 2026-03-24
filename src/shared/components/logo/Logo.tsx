@@ -8,7 +8,7 @@ const Logo = () => {
 			className="text-foreground flex cursor-pointer items-center text-xl font-bold"
 		>
 			<ReactSVG src="/logo.svg" className="block h-[48px] w-[48px]" />
-			<span>Munchio</span>
+			<span>Mealvy</span>
 		</Link>
 	);
 };
