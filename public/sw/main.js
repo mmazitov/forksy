@@ -120,7 +120,7 @@ self.addEventListener('fetch', (event) => {
 
 // Background Sync - replay offline queue
 self.addEventListener('sync', (event) => {
-	if (event.tag === 'munchio-sync') {
+	if (event.tag === 'mealvy-sync') {
 		console.log('[Service Worker] Background sync triggered');
 		event.waitUntil(replayQueue());
 	}

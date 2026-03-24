@@ -1,9 +1,9 @@
 export const APP_CONFIG = {
-	name: 'Munchio',
+	name: 'Mealvy',
 	description: 'Планувальник меню та продуктів',
 	version: '1.0.0',
 	theme: {
-		storageKey: 'munchio-theme',
+		storageKey: 'mealvy-theme',
 		defaultTheme: 'system' as const,
 	},
 	routes: {
