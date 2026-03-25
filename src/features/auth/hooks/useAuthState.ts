@@ -85,7 +85,7 @@ export const useAuthState = () => {
 	}, [login, logout, refreshMutation, getStorage]);
 
 	const isAuthenticated = !!token && !!user;
-	const isAdmin = user?.role === 'admin';
+	const isAdmin = user?.role === 'ADMIN';
 
 	return {
 		user,

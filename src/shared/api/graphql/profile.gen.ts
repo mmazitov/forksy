@@ -48,6 +48,7 @@ export type UpdateProfileMutation = {
 		id: string;
 		email?: string | null;
 		name?: string | null;
+		role?: string | null;
 		avatar?: string | null;
 		phone?: string | null;
 		diet?: string | null;
@@ -283,6 +284,7 @@ export const UpdateProfileDocument = {
 								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'role' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'avatar' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'phone' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'diet' } },

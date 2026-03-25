@@ -41,6 +41,7 @@ mutation UpdateProfile(
 		id
 		email
 		name
+		role
 		avatar
 		phone
 		diet

@@ -21,6 +21,7 @@ export type RegisterMutation = {
 			id: string;
 			email?: string | null;
 			name?: string | null;
+			role?: string | null;
 		};
 	};
 };
@@ -41,6 +42,7 @@ export type LoginMutation = {
 			id: string;
 			email?: string | null;
 			name?: string | null;
+			role?: string | null;
 		};
 	};
 };
@@ -60,6 +62,7 @@ export type RefreshTokenMutation = {
 			id: string;
 			email?: string | null;
 			name?: string | null;
+			role?: string | null;
 		};
 	};
 };
@@ -161,6 +164,7 @@ export const RegisterDocument = {
 											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
 											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'role' } },
 										],
 									},
 								},
@@ -263,6 +267,7 @@ export const LoginDocument = {
 											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
 											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'role' } },
 										],
 									},
 								},
@@ -343,6 +348,7 @@ export const RefreshTokenDocument = {
 											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
 											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'role' } },
 										],
 									},
 								},
