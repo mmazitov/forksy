@@ -1,4 +1,4 @@
-# Forksy Frontend
+# Mealvy Frontend
 
 React + TypeScript застосунок для планування меню та управління продуктами.
 
@@ -32,7 +32,7 @@ cp .env.example .env
 ```env
 VITE_API_URL=http://localhost:4000/graphql  # для development
 # або
-VITE_API_URL=https://forksy-api.onrender.com/graphql  # для production
+VITE_API_URL=https://mealvy-api.onrender.com/graphql  # для production
 ```
 
 ### 3. Generate GraphQL types

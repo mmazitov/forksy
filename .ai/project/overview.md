@@ -1,8 +1,8 @@
-# Forksy Frontend – Project Review
+# Mealvy Frontend – Project Review
 
 ## Overview
 
-Forksy Frontend is a React 19 / TypeScript SPA for a food-tracking and meal-planning platform. It communicates with a GraphQL backend via Apollo Client v4, is styled with Tailwind CSS v4 + shadcn/ui (Radix UI primitives), and is bundled with Vite v7.
+Mealvy Frontend is a React 19 / TypeScript SPA for a food-tracking and meal-planning platform. It communicates with a GraphQL backend via Apollo Client v4, is styled with Tailwind CSS v4 + shadcn/ui (Radix UI primitives), and is bundled with Vite v7.
 
 ---
 

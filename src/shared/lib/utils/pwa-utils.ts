@@ -9,7 +9,7 @@ const clearAllCaches = async (): Promise<void> => {
 
 	await Promise.all(
 		cacheNames
-			.filter((name) => name.startsWith('forksy-'))
+			.filter((name) => name.startsWith('mealvy-'))
 			.map((name) => {
 				console.log(`[PWA] Clearing cache: ${name}`);
 				return caches.delete(name);
@@ -67,11 +67,11 @@ const getPwaCacheInfo = async (): Promise<{
 	}
 
 	const cacheNames = await caches.keys();
-	const forksynCaches = cacheNames.filter((name) => name.startsWith('forksy-'));
+	const mealvynCaches = cacheNames.filter((name) => name.startsWith('mealvy-'));
 
 	let totalSize = 0;
 
-	for (const cacheName of forksynCaches) {
+	for (const cacheName of mealvynCaches) {
 		const cache = await caches.open(cacheName);
 		const keys = await cache.keys();
 
@@ -89,8 +89,8 @@ const getPwaCacheInfo = async (): Promise<{
 	}
 
 	return {
-		cacheCount: forksynCaches.length,
-		cacheNames: forksynCaches,
+		cacheCount: mealvynCaches.length,
+		cacheNames: mealvynCaches,
 		totalSize,
 	};
 };
@@ -111,5 +111,6 @@ export {
 	formatBytes,
 	fullPwaReset,
 	getPwaCacheInfo,
-	unregisterAllServiceWorkers,
+	unregisterAllServiceWorkers
 };
+

@@ -30,7 +30,7 @@ export const generateRecipeSchema = (recipe: RecipeSchema) => {
 		image: recipe.image,
 		author: {
 			'@type': 'Organization',
-			name: 'Forksy',
+			name: 'Mealvy',
 		},
 		prepTime: recipe.prepTime,
 		cookTime: recipe.cookTime,
@@ -74,19 +74,19 @@ export const generateOrganizationSchema = () => {
 	return {
 		'@context': 'https://schema.org',
 		'@type': 'Organization',
-		name: 'Forksy',
-		url: 'https://forksy.com',
-		logo: 'https://forksy.com/logo.png',
+		name: 'Mealvy',
+		url: 'https://mealvy.com',
+		logo: 'https://mealvy.com/logo.png',
 		description: 'Your personal meal planner and recipe manager',
 		sameAs: [
-			'https://www.facebook.com/forksy',
-			'https://twitter.com/forksy',
-			'https://www.instagram.com/forksy_app',
+			'https://www.facebook.com/mealvy',
+			'https://twitter.com/mealvy',
+			'https://www.instagram.com/mealvy_app',
 		],
 		contactPoint: {
 			'@type': 'ContactPoint',
 			contactType: 'Customer Support',
-			email: 'support@forksy.com',
+			email: 'support@mealvy.com',
 		},
 	};
 };

@@ -1,6 +1,6 @@
-# Agent Instructions for `forksy-frontend`
+# Agent Instructions for `mealvy-frontend`
 
-You are an AI assistant working on `forksy-frontend`, a React 19 / TypeScript SPA for a food-tracking and meal-planning platform.
+You are an AI assistant working on `mealvy-frontend`, a React 19 / TypeScript SPA for a food-tracking and meal-planning platform.
 
 ## 🚨 CRITICAL: Context Files 🚨
 

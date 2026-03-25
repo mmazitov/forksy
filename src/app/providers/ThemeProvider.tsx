@@ -15,7 +15,7 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
 			attribute="class"
 			defaultTheme="system"
 			enableSystem
-			storageKey="forksy-theme"
+			storageKey="mealvy-theme"
 		>
 			{children}
 		</NextThemesProvider>

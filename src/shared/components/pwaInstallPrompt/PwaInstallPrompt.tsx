@@ -14,7 +14,7 @@ const PwaInstallPrompt = () => {
 				<div className="flex-1">
 					<h3 className="mb-1 text-base font-semibold">Встановити додаток?</h3>
 					<p className="text-muted-foreground mb-3 text-sm">
-						Встановіть Forksy на домашній екран для швидкого доступу
+						Встановіть Mealvy на домашній екран для швидкого доступу
 					</p>
 					<div className="flex gap-2">
 						<Button onClick={handleInstall} className="h-8 text-xs" size="lg">
