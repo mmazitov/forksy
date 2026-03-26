@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <path d="M 15 80 L 15 15 L 33 15 L 48 51 L 63 15 L 70 15 L 70 40 L 53 80 L 43 80 L 33 56 L 33 80 Z" fill="var(--color-primary, hsl(175, 60%, 50%))" />
+  <style>
+    .m-left { fill: hsl(16 75% 52%); }
+    @media (prefers-color-scheme: dark) {
+      .m-left { fill: hsl(16 75% 52%); }
+    }
+  </style>
+  <path class="m-left" d="M 15 80 L 15 15 L 33 15 L 48 51 L 63 15 L 70 15 L 70 40 L 53 80 L 43 80 L 33 56 L 33 80 Z" />
   <path d="M 74 15 L 79 15 L 82 18 L 82 35 L 74 35 Z M 74 38 L 87 38 L 87 55 Q 87 88 74 90 Z" fill="currentColor" />
 </svg>
