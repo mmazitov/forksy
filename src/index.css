@@ -1,199 +1,214 @@
 @import 'tailwindcss';
 
 @theme {
-	--font-family-sans: 'Inter', system-ui, sans-serif;
+	/* ── Typography ─────────────────────────────────── */
+	--font-family-sans: 'DM Sans', system-ui, sans-serif;
+	--font-family-display: 'Fraunces', Georgia, serif;
 
-	--radius: 1rem;
+	/* ── Border Radius ──────────────────────────────── */
+	--radius: 0.875rem;
 	--radius-lg: var(--radius);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-sm: calc(var(--radius) - 4px);
 
-	--color-background: hsl(210 40% 98%);
-	--color-foreground: hsl(220 15% 25%);
+	/* ── Light Mode Colors ──────────────────────────── */
+	/* Warm cream background — the food app feel */
+	--color-background: hsl(38 35% 97%);
+	--color-foreground: hsl(20 15% 18%);
 
-	--color-card: hsl(0 0% 100%);
-	--color-card-foreground: hsl(220 15% 25%);
+	--color-card: hsl(36 40% 99%);
+	--color-card-foreground: hsl(20 15% 18%);
 
-	--color-popover: hsl(0 0% 100%);
-	--color-popover-foreground: hsl(220 15% 25%);
+	--color-popover: hsl(36 40% 99%);
+	--color-popover-foreground: hsl(20 15% 18%);
 
-	--color-primary: hsl(175 60% 50%);
+	/* Terracotta primary */
+	--color-primary: hsl(16 75% 52%);
 	--color-primary-foreground: hsl(0 0% 100%);
 
-	--color-secondary: hsl(20 85% 75%);
-	--color-secondary-foreground: hsl(220 15% 25%);
+	/* Forest green secondary */
+	--color-secondary: hsl(155 42% 36%);
+	--color-secondary-foreground: hsl(0 0% 100%);
 
-	--color-muted: hsl(210 30% 92%);
-	--color-muted-foreground: hsl(220 10% 50%);
+	/* Warm sand muted */
+	--color-muted: hsl(36 30% 92%);
+	--color-muted-foreground: hsl(20 10% 48%);
 
-	--color-accent: hsl(270 60% 70%);
-	--color-accent-foreground: hsl(0 0% 100%);
+	/* Golden amber accent */
+	--color-accent: hsl(42 90% 58%);
+	--color-accent-foreground: hsl(20 15% 18%);
 
 	--color-destructive: hsl(0 72% 55%);
 	--color-destructive-foreground: hsl(0 0% 100%);
 
-	--color-border: hsl(210 25% 88%);
-	--color-input: hsl(210 25% 88%);
-	--color-ring: hsl(175 60% 50%);
+	--color-border: hsl(36 25% 87%);
+	--color-input: hsl(36 25% 87%);
+	--color-ring: hsl(16 75% 52%);
 
-	--color-sidebar-background: hsl(0 0% 98%);
-	--color-sidebar-foreground: hsl(240 5.3% 26.1%);
-	--color-sidebar-primary: hsl(240 5.9% 10%);
-	--color-sidebar-primary-foreground: hsl(0 0% 98%);
-	--color-sidebar-accent: hsl(240 4.8% 95.9%);
-	--color-sidebar-accent-foreground: hsl(240 5.9% 10%);
-	--color-sidebar-border: hsl(220 13% 91%);
-	--color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+	--color-sidebar-background: hsl(36 30% 97%);
+	--color-sidebar-foreground: hsl(20 15% 18%);
+	--color-sidebar-primary: hsl(16 75% 52%);
+	--color-sidebar-primary-foreground: hsl(0 0% 100%);
+	--color-sidebar-accent: hsl(36 30% 92%);
+	--color-sidebar-accent-foreground: hsl(20 15% 18%);
+	--color-sidebar-border: hsl(36 25% 87%);
+	--color-sidebar-ring: hsl(16 75% 52%);
 
-	/* badge colors */
-	--badge-meat: hsl(0 65% 60%);
+	/* ── Badge Colors ───────────────────────────────── */
+	--badge-meat: hsl(5 65% 55%);
 	--badge-meat-fg: hsl(0 0% 100%);
 
-	--badge-fish: hsl(195 70% 55%);
+	--badge-fish: hsl(200 65% 48%);
 	--badge-fish-fg: hsl(0 0% 100%);
 
-	--badge-vegetables: hsl(140 55% 45%);
+	--badge-vegetables: hsl(145 50% 40%);
 	--badge-vegetables-fg: hsl(0 0% 100%);
 
-	--badge-fruits: hsl(25 85% 60%);
+	--badge-fruits: hsl(22 80% 58%);
 	--badge-fruits-fg: hsl(0 0% 100%);
 
-	--badge-dairy: hsl(210 30% 92%);
-	--badge-dairy-fg: hsl(220 15% 25%);
+	--badge-dairy: hsl(36 30% 88%);
+	--badge-dairy-fg: hsl(20 15% 25%);
 
-	--badge-grains: hsl(45 70% 70%);
-	--badge-grains-fg: hsl(220 15% 25%);
+	--badge-grains: hsl(42 75% 62%);
+	--badge-grains-fg: hsl(20 15% 20%);
 
-	--badge-drinks: hsl(200 70% 55%);
+	--badge-drinks: hsl(205 65% 50%);
 	--badge-drinks-fg: hsl(0 0% 100%);
 
-	--badge-canned: hsl(30 60% 65%);
-	--badge-canned-fg: hsl(220 15% 20%);
+	--badge-canned: hsl(28 55% 58%);
+	--badge-canned-fg: hsl(20 15% 18%);
 
-	--badge-addons: hsl(270 60% 70%);
+	--badge-addons: hsl(275 55% 62%);
 	--badge-addons-fg: hsl(0 0% 100%);
 
-	--badge-other: hsl(220 10% 70%);
+	--badge-other: hsl(30 15% 65%);
 	--badge-other-fg: hsl(0 0% 100%);
 
-	/* Meal categories */
-	--badge-breakfast: hsl(42 90% 65%);
-	--badge-breakfast-fg: hsl(220 15% 20%);
+	/* ── Meal Time Badges ───────────────────────────── */
+	--badge-breakfast: hsl(42 90% 60%);
+	--badge-breakfast-fg: hsl(20 15% 18%);
 
-	--badge-lunch: hsl(155 55% 50%);
+	--badge-lunch: hsl(145 50% 40%);
 	--badge-lunch-fg: hsl(0 0% 100%);
 
-	--badge-dinner: hsl(255 55% 65%);
+	--badge-dinner: hsl(255 48% 58%);
 	--badge-dinner-fg: hsl(0 0% 100%);
 
-	--badge-snack: hsl(175 60% 55%);
+	--badge-snack: hsl(16 70% 52%);
 	--badge-snack-fg: hsl(0 0% 100%);
 
-	--badge-dessert: hsl(330 70% 65%);
+	--badge-dessert: hsl(332 65% 58%);
 	--badge-dessert-fg: hsl(0 0% 100%);
 
-	/* Анимации */
+	/* ── Animations ─────────────────────────────────── */
 	--animate-accordion-down: accordion-down 0.2s ease-out;
 	--animate-accordion-up: accordion-up 0.2s ease-out;
-	--animate-fade-in: fade-in 0.3s ease-out;
+	--animate-fade-in: fade-in 0.35s ease-out;
+	--animate-fade-up: fade-up 0.4s ease-out;
 	--animate-scale-in: scale-in 0.2s ease-out;
+	--animate-slide-up: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark {
-	--color-background: hsl(220 20% 12%);
-	--color-foreground: hsl(210 40% 95%);
+	--color-background: hsl(22 18% 10%);
+	--color-foreground: hsl(36 30% 94%);
 
-	--color-card: hsl(220 18% 15%);
-	--color-card-foreground: hsl(210 40% 95%);
+	--color-card: hsl(22 16% 13%);
+	--color-card-foreground: hsl(36 30% 94%);
 
-	--color-popover: hsl(220 18% 15%);
-	--color-popover-foreground: hsl(210 40% 95%);
+	--color-popover: hsl(22 16% 13%);
+	--color-popover-foreground: hsl(36 30% 94%);
 
-	--color-primary: hsl(175 60% 45%);
+	/* Warm terracotta — slightly muted in dark */
+	--color-primary: hsl(16 68% 55%);
 	--color-primary-foreground: hsl(0 0% 100%);
 
-	--color-secondary: hsl(20 70% 60%);
+	/* Forest green — warmer in dark mode */
+	--color-secondary: hsl(155 38% 42%);
 	--color-secondary-foreground: hsl(0 0% 100%);
 
-	--color-muted: hsl(220 15% 20%);
-	--color-muted-foreground: hsl(220 10% 60%);
+	--color-muted: hsl(22 14% 18%);
+	--color-muted-foreground: hsl(30 12% 58%);
 
-	--color-accent: hsl(270 55% 60%);
-	--color-accent-foreground: hsl(0 0% 100%);
+	/* Amber accent stays vibrant */
+	--color-accent: hsl(42 80% 52%);
+	--color-accent-foreground: hsl(20 15% 12%);
 
 	--color-destructive: hsl(0 65% 50%);
 	--color-destructive-foreground: hsl(0 0% 100%);
 
-	--color-border: hsl(220 15% 25%);
-	--color-input: hsl(220 15% 25%);
-	--color-ring: hsl(175 60% 45%);
+	--color-border: hsl(22 14% 22%);
+	--color-input: hsl(22 14% 22%);
+	--color-ring: hsl(16 68% 55%);
 
-	--color-sidebar-background: hsl(240 5.9% 10%);
-	--color-sidebar-foreground: hsl(240 4.8% 95.9%);
-	--color-sidebar-primary: hsl(224.3 76.3% 48%);
+	--color-sidebar-background: hsl(22 18% 8%);
+	--color-sidebar-foreground: hsl(36 30% 90%);
+	--color-sidebar-primary: hsl(16 68% 55%);
 	--color-sidebar-primary-foreground: hsl(0 0% 100%);
-	--color-sidebar-accent: hsl(240 3.7% 15.9%);
-	--color-sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-	--color-sidebar-border: hsl(240 3.7% 15.9%);
-	--color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+	--color-sidebar-accent: hsl(22 14% 18%);
+	--color-sidebar-accent-foreground: hsl(36 30% 90%);
+	--color-sidebar-border: hsl(22 14% 22%);
+	--color-sidebar-ring: hsl(16 68% 55%);
 
-	--badge-meat: hsl(0 55% 45%);
+	--badge-meat: hsl(5 55% 48%);
 	--badge-meat-fg: hsl(0 0% 100%);
 
-	--badge-fish: hsl(195 60% 45%);
+	--badge-fish: hsl(200 55% 44%);
 	--badge-fish-fg: hsl(0 0% 100%);
 
-	--badge-vegetables: hsl(140 45% 40%);
+	--badge-vegetables: hsl(145 42% 36%);
 	--badge-vegetables-fg: hsl(0 0% 100%);
 
-	--badge-fruits: hsl(25 75% 55%);
+	--badge-fruits: hsl(22 70% 52%);
 	--badge-fruits-fg: hsl(0 0% 100%);
 
-	--badge-dairy: hsl(220 15% 25%);
-	--badge-dairy-fg: hsl(210 40% 95%);
+	--badge-dairy: hsl(36 18% 22%);
+	--badge-dairy-fg: hsl(36 30% 90%);
 
-	--badge-grains: hsl(45 60% 55%);
-	--badge-grains-fg: hsl(220 15% 15%);
+	--badge-grains: hsl(42 65% 52%);
+	--badge-grains-fg: hsl(20 15% 12%);
 
-	--badge-drinks: hsl(200 65% 45%);
+	--badge-drinks: hsl(205 55% 44%);
 	--badge-drinks-fg: hsl(0 0% 100%);
 
-	--badge-canned: hsl(30 55% 45%);
+	--badge-canned: hsl(28 48% 48%);
 	--badge-canned-fg: hsl(0 0% 100%);
 
-	--badge-addons: hsl(270 55% 55%);
+	--badge-addons: hsl(275 48% 52%);
 	--badge-addons-fg: hsl(0 0% 100%);
 
-	--badge-other: hsl(220 10% 35%);
-	--badge-other-fg: hsl(210 40% 95%);
+	--badge-other: hsl(30 12% 40%);
+	--badge-other-fg: hsl(36 30% 90%);
 
-	--badge-breakfast: hsl(42 80% 55%);
-	--badge-breakfast-fg: hsl(0 0% 100%);
+	--badge-breakfast: hsl(42 80% 52%);
+	--badge-breakfast-fg: hsl(20 15% 10%);
 
-	--badge-lunch: hsl(155 45% 40%);
+	--badge-lunch: hsl(145 42% 36%);
 	--badge-lunch-fg: hsl(0 0% 100%);
 
-	--badge-dinner: hsl(255 45% 50%);
+	--badge-dinner: hsl(255 42% 52%);
 	--badge-dinner-fg: hsl(0 0% 100%);
 
-	--badge-snack: hsl(175 50% 45%);
+	--badge-snack: hsl(16 62% 48%);
 	--badge-snack-fg: hsl(0 0% 100%);
 
-	--badge-dessert: hsl(330 60% 55%);
+	--badge-dessert: hsl(332 58% 52%);
 	--badge-dessert-fg: hsl(0 0% 100%);
 }
 
 :root {
 	--gradient-hero: linear-gradient(
 		135deg,
-		hsl(175 60% 50% / 0.1),
-		hsl(270 60% 70% / 0.1)
+		hsl(16 75% 52% / 0.08),
+		hsl(42 90% 58% / 0.08),
+		hsl(155 42% 36% / 0.06)
 	);
-	--gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 40% 99%));
+	--gradient-card: linear-gradient(180deg, hsl(36 40% 99%), hsl(38 35% 97%));
 
-	--shadow-sm: 0 2px 8px hsl(220 15% 25% / 0.05);
-	--shadow-md: 0 4px 16px hsl(220 15% 25% / 0.08);
-	--shadow-lg: 0 8px 24px hsl(220 15% 25% / 0.12);
+	--shadow-sm: 0 2px 8px hsl(20 15% 18% / 0.06);
+	--shadow-md: 0 4px 16px hsl(20 15% 18% / 0.10);
+	--shadow-lg: 0 8px 32px hsl(20 15% 18% / 0.14);
 
 	--transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -201,16 +216,18 @@
 .dark {
 	--gradient-hero: linear-gradient(
 		135deg,
-		hsl(175 60% 45% / 0.15),
-		hsl(270 55% 60% / 0.15)
+		hsl(16 68% 55% / 0.12),
+		hsl(42 80% 52% / 0.08),
+		hsl(155 38% 42% / 0.10)
 	);
-	--gradient-card: linear-gradient(180deg, hsl(220 18% 15%), hsl(220 18% 16%));
+	--gradient-card: linear-gradient(180deg, hsl(22 16% 13%), hsl(22 18% 12%));
 
-	--shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.2);
-	--shadow-md: 0 4px 16px hsl(0 0% 0% / 0.3);
-	--shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.4);
+	--shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.25);
+	--shadow-md: 0 4px 16px hsl(0 0% 0% / 0.35);
+	--shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.45);
 }
 
+/* ── Keyframes ───────────────────────────────────── */
 @keyframes accordion-down {
 	from {
 		height: 0;
@@ -236,7 +253,18 @@
 @keyframes fade-in {
 	0% {
 		opacity: 0;
-		transform: translateY(10px);
+		transform: translateY(8px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fade-up {
+	0% {
+		opacity: 0;
+		transform: translateY(16px);
 	}
 	100% {
 		opacity: 1;
@@ -246,12 +274,23 @@
 
 @keyframes scale-in {
 	0% {
-		transform: scale(0.95);
+		transform: scale(0.96);
 		opacity: 0;
 	}
 	100% {
 		transform: scale(1);
 		opacity: 1;
+	}
+}
+
+@keyframes slide-up {
+	0% {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 
@@ -262,11 +301,22 @@
 
 	body {
 		@apply bg-background text-foreground font-sans;
+		font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 	}
+
+	/* Apply display font to all headings */
+	h1, h2, h3, h4 {
+		font-family: var(--font-family-display);
+		font-optical-sizing: auto;
+	}
+}
+
+/* ── Utilities ───────────────────────────────────── */
+.font-display {
+	font-family: var(--font-family-display);
+	font-optical-sizing: auto;
 }
 
 .hover-scale {
 	@apply transition-transform duration-200 hover:scale-105;
 }
-
-

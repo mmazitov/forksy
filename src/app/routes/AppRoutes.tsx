@@ -27,7 +27,7 @@ const AppRoutes = () => {
 	}, [pathname]);
 
 	return (
-		<div className="bg-background min-h-screen">
+		<div className="bg-background min-h-screen pb-16 lg:pb-0">
 			<Header />
 			<Routes>
 				<Route path="/" element={<Home />} />

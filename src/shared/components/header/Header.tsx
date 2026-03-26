@@ -1,61 +1,61 @@
-import { useAuthContext } from '@/features/auth';
+import { UserMenu } from '@/features/profile';
 import {
 	Logo,
-	MenuButton,
 	Modal,
+	NavigationBottomBar,
 	NavigationDesktop,
-	NavigationMobile,
+	ThemeToggle,
 } from '@/shared/components';
+import { useAuthContext } from '@/features/auth';
 import { MODAL_TYPES } from '@/shared/constants';
-import { useModal, useToggle } from '@/shared/hooks';
+import { useModal } from '@/shared/hooks';
 
 const Header = () => {
-	const [mobileMenuOpen, setMobileMenuOpen] = useToggle();
 	const { isOpen: authModalOpen, setIsOpen: setAuthModalOpen } = useModal();
 
 	const { isLoggedIn, userName, handleLogout, user } = useAuthContext();
 
 	return (
-		<nav className="border-border bg-card/95 supports-backdrop-filter:bg-card/80 sticky top-0 z-50 w-full border-b backdrop-blur">
-			<div className="container mx-auto px-4">
-				<div className="flex h-16 items-center justify-between">
-					{/* Logo */}
-					<Logo />
+		<>
+			<nav className="border-border bg-card/95 supports-backdrop-filter:bg-card/80 sticky top-0 z-50 w-full border-b backdrop-blur">
+				<div className="container mx-auto px-4">
+					<div className="flex h-16 items-center justify-between">
+						{/* Logo */}
+						<Logo />
 
-					{/* Desktop Navigation */}
-					<NavigationDesktop
-						isLoggedIn={isLoggedIn}
-						userName={userName}
-						userImage={user?.avatar}
-						handleLogout={handleLogout}
-						setAuthModalOpen={setAuthModalOpen}
-					/>
+						{/* Desktop Navigation */}
+						<NavigationDesktop
+							isLoggedIn={isLoggedIn}
+							userName={userName}
+							userImage={user?.avatar}
+							handleLogout={handleLogout}
+							setAuthModalOpen={setAuthModalOpen}
+						/>
 
-					{/* Mobile Menu Button */}
-					<MenuButton
-						mobileMenuOpen={mobileMenuOpen}
-						setMobileMenuOpen={setMobileMenuOpen}
-						isLoggedIn={isLoggedIn}
-						userName={userName}
-						userImage={user?.avatar}
-						handleLogout={handleLogout}
-						setAuthModalOpen={setAuthModalOpen}
-					/>
+						{/* Mobile: Theme toggle + User menu (visible only on mobile) */}
+						<div className="flex items-center gap-1 lg:hidden">
+							<ThemeToggle />
+							<UserMenu
+								isLoggedIn={isLoggedIn}
+								userName={userName}
+								userImage={user?.avatar || undefined}
+								onLogout={handleLogout}
+								onOpenAuth={() => setAuthModalOpen(true)}
+							/>
+						</div>
+					</div>
 				</div>
 
-				{/* Mobile Navigation */}
-				<NavigationMobile
-					mobileMenuOpen={mobileMenuOpen}
-					setMobileMenuOpen={setMobileMenuOpen}
+				<Modal
+					modalType={MODAL_TYPES.AUTH_MODAL}
+					open={authModalOpen}
+					onOpenChange={setAuthModalOpen}
 				/>
-			</div>
+			</nav>
 
-			<Modal
-				modalType={MODAL_TYPES.AUTH_MODAL}
-				open={authModalOpen}
-				onOpenChange={setAuthModalOpen}
-			/>
-		</nav>
+			{/* Mobile Bottom Navigation Bar */}
+			<NavigationBottomBar />
+		</>
 	);
 };
 

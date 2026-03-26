@@ -2,7 +2,7 @@
 description: Implement or fix a frontend feature in React/TypeScript following project guidelines
 ---
 
-Follow the implementation workflow defined in `.ai/rules/rules.md`.
+Follow the implementation workflow defined in `.ai/prompts/coding.md`.
 
 Design and implement the feature or bug fix described in $ARGUMENTS.
 
