@@ -1,1 +1,0 @@
-export { dishes } from './dishes';

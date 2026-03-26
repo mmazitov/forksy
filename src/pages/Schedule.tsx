@@ -1,3 +1,5 @@
+import { BsCalendar2Month, BsCalendar2Week } from 'react-icons/bs';
+
 import { ScheduleMonth, ScheduleWeek } from '@/features/schedule';
 import {
 	MetaData,
@@ -27,8 +29,14 @@ const Schedule = () => {
 
 			<Tabs defaultValue="week" className="space-y-6">
 				<TabsList className="grid w-full max-w-md grid-cols-2">
-					<TabsTrigger value="week">Тиждень</TabsTrigger>
-					<TabsTrigger value="month">Місяць</TabsTrigger>
+					<TabsTrigger value="week" className="flex gap-1">
+						<BsCalendar2Week className="h-4 w-4" />
+						Тиждень
+					</TabsTrigger>
+					<TabsTrigger value="month" className="flex gap-1">
+						<BsCalendar2Month className="h-4 w-4" />
+						Місяць
+					</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="week" className="space-y-6">

@@ -33,7 +33,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
 	return (
 		<div
-			className={`bg-background fixed inset-0 z-50 flex items-center justify-center overflow-hidden transition-opacity duration-1000 outline-none ${
+			className={`bg-background fixed inset-0 z-1000 flex items-center justify-center overflow-hidden transition-opacity duration-1000 outline-none ${
 				isVisible ? 'opacity-100' : 'opacity-0'
 			}`}
 		>

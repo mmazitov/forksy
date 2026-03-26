@@ -30,13 +30,13 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
 		icon: LuNotebookPen,
 	},
 	{
-		name: 'Продукти',
-		href: '/products',
-		icon: LuApple,
-	},
-	{
 		name: 'Страви',
 		href: '/dishes',
 		icon: LuSoup,
+	},
+	{
+		name: 'Продукти',
+		href: '/products',
+		icon: LuApple,
 	},
 ] as const;

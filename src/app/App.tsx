@@ -14,7 +14,6 @@ const App = () => {
 	return (
 		<Providers>
 			{showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-			{/* {<SplashScreen onComplete={() => setShowSplash(false)} />} */}
 			<PwaInstallPrompt />
 			<PwaUpdatePrompt />
 			<BrowserRouter>

@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import { Loader2 } from 'lucide-react';
 
+import ScheduleNavigation from './ScheduleNavigation';
+
 import { useGetPlannerItemsQuery } from '@/shared/api/graphql/planner.gen';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components';
-import ScheduleNavigation from '@/shared/components/scheduleNavigation/ScheduleNavigation';
 import { CATEGORIES_DISHES } from '@/shared/constants/categories';
 import { useSchedule } from '@/shared/hooks';
 import { uiToMealTime, weekDays } from '@/shared/lib/utils';
