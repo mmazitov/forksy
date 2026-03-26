@@ -39,8 +39,15 @@ const Grid = <T extends { id: string }>({
 	return (
 		<>
 			<div className="grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-				{items.map((item) => (
-					<div key={item.id}>
+				{items.map((item, index) => (
+					<div
+						key={item.id}
+						className="animate-fade-up opacity-0"
+						style={{
+							animationDelay: `${index * 80}ms`,
+							animationFillMode: 'forwards',
+						}}
+					>
 						{ItemComponent ? <ItemComponent {...item} /> : renderItem?.(item)}
 					</div>
 				))}

@@ -38,18 +38,23 @@ const Image = ({
 			)}
 		>
 			<FavoriteButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
+
+			{/* Glassmorphism overlay on hover */}
+			{!isFull && (
+				<div className="bg-background/5 absolute inset-0 z-10 opacity-0 transition-opacity duration-500 backdrop-blur-[2px] group-hover:opacity-100" />
+			)}
+
 			{imageUrl ? (
 				<img
 					src={imageUrl}
 					alt={name}
 					className={cn(
-						'h-full w-full object-cover',
-						!isFull &&
-							'transition-transform duration-300 group-hover:scale-110',
+						'h-full w-full object-cover transition-transform duration-700 ease-out',
+						!isFull && 'group-hover:scale-110',
 					)}
 				/>
 			) : (
-				<div className="bg-muted flex h-full w-full items-center justify-center">
+				<div className="bg-muted flex h-full w-full items-center justify-center transition-transform duration-700 ease-out group-hover:scale-110">
 					<span
 						className={cn(
 							'text-muted-foreground',
