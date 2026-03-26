@@ -51,7 +51,7 @@
 }
 
 .knife-shape {
-	fill: var(--color-secondary);
+	fill: currentColor;
 }
 
 .splash-text {
