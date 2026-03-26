@@ -9,7 +9,7 @@ const PwaInstallPrompt = () => {
 	if (!canInstall || !showPrompt) return null;
 
 	return (
-		<div className="bg-card text-card-foreground fixed bottom-65 z-50 w-full rounded-t-lg border p-4 shadow-lg">
+		<div className="bg-card text-card-foreground fixed bottom-[65px] z-50 w-full rounded-t-lg border p-4 shadow-lg lg:bottom-0">
 			<div className="flex items-start justify-between gap-3">
 				<div className="flex-1">
 					<h3 className="mb-1 text-base font-semibold">Встановити додаток?</h3>
