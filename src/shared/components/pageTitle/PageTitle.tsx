@@ -1,19 +1,27 @@
-import { Link } from 'react-router-dom';
+import { ActionButton } from '../actionButton';
 
 import { useAuthContext } from '@/features/auth';
-import { Button } from '@/shared/components';
 
 interface PageTitleProps {
 	title: string;
 	subtitle?: string;
 	buttonVisible?: boolean;
+	buttonDisable?: boolean;
 	buttonType?: 'button' | 'link';
 	buttonText?: string;
 	buttonIcon?: React.ReactNode;
 	onClick?: () => void;
 	href?: string;
 	isLoggedIn?: boolean;
+	secondaryButtonVisible?: boolean;
+	secondaryButtonDisable?: boolean;
+	secondaryButtonText?: string;
+	secondaryButtonType?: 'button' | 'link';
+	secondaryButtonIcon?: React.ReactNode;
+	secondaryButtonOnClick?: () => void;
+	secondaryButtonHref?: string;
 }
+
 const PageTitle = ({
 	title,
 	subtitle,
@@ -23,7 +31,15 @@ const PageTitle = ({
 	href,
 	buttonType = 'button',
 	buttonVisible = true,
+	buttonDisable = false,
 	isLoggedIn,
+	secondaryButtonVisible = false,
+	secondaryButtonText,
+	secondaryButtonType = 'button',
+	secondaryButtonIcon,
+	secondaryButtonOnClick,
+	secondaryButtonHref,
+	secondaryButtonDisable = false,
 }: PageTitleProps) => {
 	const { user } = useAuthContext();
 	const loggedIn = isLoggedIn !== undefined ? isLoggedIn : !!user;
@@ -36,19 +52,28 @@ const PageTitle = ({
 					<p className="text-muted-foreground">{subtitle}</p>
 				</div>
 
-				{buttonVisible && buttonType === 'button' && loggedIn && (
-					<Button onClick={onClick} className="gap-2">
-						{buttonIcon}
-						{buttonText}
-					</Button>
-				)}
-				{buttonVisible && buttonType === 'link' && href && loggedIn && (
-					<Link to={href || '#'}>
-						<Button className="gap-2">
-							{buttonIcon}
-							{buttonText}
-						</Button>
-					</Link>
+				{loggedIn && (
+					<div className="flex flex-col items-stretch gap-2">
+						<ActionButton
+							type={buttonType}
+							text={buttonText}
+							icon={buttonIcon}
+							onClick={onClick}
+							href={href}
+							disabled={buttonDisable}
+							visible={buttonVisible}
+						/>
+
+						<ActionButton
+							type={secondaryButtonType}
+							text={secondaryButtonText}
+							icon={secondaryButtonIcon}
+							onClick={secondaryButtonOnClick}
+							href={secondaryButtonHref}
+							disabled={secondaryButtonDisable}
+							visible={secondaryButtonVisible}
+						/>
+					</div>
 				)}
 			</div>
 		</div>

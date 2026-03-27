@@ -1,5 +1,5 @@
 import { BsCalendar2Day, BsCalendar2Week } from 'react-icons/bs';
-import { LuSave } from 'react-icons/lu';
+import { LuList, LuSave } from 'react-icons/lu';
 
 import {
 	PlannerDay,
@@ -84,6 +84,11 @@ const MenuPlanner = () => {
 				onClick={handleSave}
 				buttonText={PAGE_TITLE.planer.button}
 				buttonIcon={<LuSave />}
+				buttonDisable={true}
+				secondaryButtonVisible={true}
+				secondaryButtonText="Список продуктів"
+				secondaryButtonIcon={<LuList />}
+				secondaryButtonDisable={true}
 			/>
 			<Tabs defaultValue="day" className="space-y-6">
 				<TabsList className="grid w-full max-w-md grid-cols-2">
