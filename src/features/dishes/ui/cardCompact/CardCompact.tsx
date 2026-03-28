@@ -33,7 +33,11 @@ const CardCompact = ({
 	const location = useLocation();
 
 	return (
-		<Link to={`/dish/${createSlug(name)}`} state={{ from: location.pathname }}>
+		<Link
+			to={`/dish/${createSlug(name)}`}
+			state={{ from: location.pathname }}
+			aria-label={name}
+		>
 			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<CardContent className="flex flex-col gap-2 p-0">
 					<Image

@@ -92,6 +92,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 
 	const {
 		items: ingredients,
+		ids: ingredientIds,
 		addItem: addIngredient,
 		removeItem: removeIngredient,
 		updateItem: updateIngredient,
@@ -99,6 +100,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 
 	const {
 		items: instructions,
+		ids: instructionIds,
 		addItem: addInstruction,
 		removeItem: removeInstruction,
 		updateItem: updateInstruction,
@@ -274,7 +276,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 				</div>
 				{ingredients.map((ingredient: FormIngredient, index: number) => (
 					<div
-						key={index}
+						key={ingredientIds[index]}
 						className="grid gap-2"
 						style={{
 							gridTemplateColumns: '1fr 128px 40px',
@@ -355,7 +357,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 					</Button>
 				</div>
 				{instructions.map((instruction: string, index: number) => (
-					<div key={index} className="flex items-start gap-2">
+					<div key={instructionIds[index]} className="flex items-start gap-2">
 						<span className="bg-primary text-primary-foreground mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold">
 							{index + 1}
 						</span>

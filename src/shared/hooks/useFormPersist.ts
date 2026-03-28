@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -56,7 +56,7 @@ export const useFormPersist = <T extends FieldValues>({
 
 	const isRestoring = useRef(true);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (disabled) return;
 
 		if (draft) {
@@ -66,9 +66,9 @@ export const useFormPersist = <T extends FieldValues>({
 			}));
 		}
 
-		setTimeout(() => {
+		queueMicrotask(() => {
 			isRestoring.current = false;
-		}, 100);
+		});
 	}, []);
 
 	useEffect(() => {

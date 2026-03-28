@@ -33,7 +33,7 @@ export const formatPhone = (phone: string): string => {
 		return `+${cleaned.slice(0, 3)} (${cleaned.slice(3, 5)}) ${cleaned.slice(5)}`;
 	}
 	if (cleaned.length >= 3) {
-		return `+${cleaned.slice(0, 3)} (${cleaned.slice(3)}`;
+		return `+${cleaned.slice(0, 3)} (${cleaned.slice(3)})`;
 	}
 
 	return `+${cleaned}`;

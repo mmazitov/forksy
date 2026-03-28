@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 const initServiceWorker = () => {
 	if ('serviceWorker' in navigator && import.meta.env.PROD) {
 		window.addEventListener('load', () => {
@@ -54,14 +56,17 @@ const initServiceWorker = () => {
 };
 
 const usePwaUpdateListener = (callback?: () => void) => {
-	if (typeof window !== 'undefined') {
-		window.addEventListener('pwa-update-available', () => {
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+
+		const handler = () => {
 			console.log('[PWA] Update available');
-			if (callback) {
-				callback();
-			}
-		});
-	}
+			if (callback) callback();
+		};
+
+		window.addEventListener('pwa-update-available', handler);
+		return () => window.removeEventListener('pwa-update-available', handler);
+	}, [callback]);
 };
 
 const skipWaitingAndReload = () => {

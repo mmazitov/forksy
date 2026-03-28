@@ -63,7 +63,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 							className="pl-10"
 						/>
 						{'name' in errors && errors.name && (
-							<div className="pt-1 text-xs text-red-600">
+							<div role="alert" className="pt-1 text-xs text-red-600">
 								{errors.name.message}
 							</div>
 						)}

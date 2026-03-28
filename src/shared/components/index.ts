@@ -1,4 +1,5 @@
 export * from './backButton';
+export * from './errorBoundary';
 export * from './daySummary';
 export * from './favoriteButton';
 export * from './filter';
