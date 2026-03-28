@@ -35,6 +35,7 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
+			if (event.origin !== getApiUrl()) return;
 			if (event.data.type === 'OAUTH_SUCCESS' && event.data.token) {
 				const { token, refreshToken } = event.data;
 				const apiUrl = getApiUrl();
@@ -65,8 +66,8 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 							onOpenChange(false);
 						}
 					})
-					.catch((err) => {
-						console.error('OAuth error:', err);
+					.catch(() => {
+						if (import.meta.env.DEV) console.error('OAuth error');
 					});
 			}
 		};

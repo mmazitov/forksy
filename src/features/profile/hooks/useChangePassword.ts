@@ -50,7 +50,7 @@ export const useChangePassword = () => {
 				toast.error('Помилка при зміні пароля');
 			}
 
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 

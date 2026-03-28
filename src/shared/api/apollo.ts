@@ -19,23 +19,25 @@ const errorLink = onError((errorResponse) => {
 	// @ts-expect-error - Apollo Client 4.0.9 doesn't properly export ErrorResponse types
 	const { graphQLErrors, networkError } = errorResponse;
 
-	if (graphQLErrors) {
-		// @ts-expect-error - graphQLErrors type inference issue in Apollo Client
-		graphQLErrors.forEach((error) => {
-			console.error(
-				`[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`,
-			);
-		});
-	}
-	if (networkError) {
-		console.error(`[Network error]: ${networkError}`);
-		if (
-			'message' in networkError &&
-			networkError.message?.includes('Failed to fetch')
-		) {
-			console.warn(
-				'GraphQL server is not available. Check your VITE_API_URL environment variable.',
-			);
+	if (import.meta.env.DEV) {
+		if (graphQLErrors) {
+			// @ts-expect-error - graphQLErrors type inference issue in Apollo Client
+			graphQLErrors.forEach((error) => {
+				console.error(
+					`[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`,
+				);
+			});
+		}
+		if (networkError) {
+			console.error(`[Network error]: ${networkError}`);
+			if (
+				'message' in networkError &&
+				networkError.message?.includes('Failed to fetch')
+			) {
+				console.warn(
+					'GraphQL server is not available. Check your VITE_API_URL environment variable.',
+				);
+			}
 		}
 	}
 });

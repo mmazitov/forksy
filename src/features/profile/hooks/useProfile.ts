@@ -92,7 +92,7 @@ export const useProfile = () => {
 
 			setIsEditMode(false);
 		} catch (error) {
-			console.error('Failed to update profile:', error);
+			if (import.meta.env.DEV) console.error('Failed to update profile:', error);
 			toast({
 				title: 'Помилка',
 				description: 'Не вдалося оновити профіль',

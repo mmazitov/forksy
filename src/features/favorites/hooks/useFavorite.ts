@@ -70,7 +70,7 @@ export const useFavorite = ({
 			toast.error(
 				`Помилка при оновленні улюблених ${entityName}, лише авторизовані користувачі можуть додавати улюблені ${entityName}`,
 			);
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 

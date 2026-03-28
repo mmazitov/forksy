@@ -92,7 +92,7 @@ export const useAddDish = () => {
 			navigate('/dishes');
 		} catch (error) {
 			toast.error('Помилка при додаванні страви');
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 
@@ -178,7 +178,7 @@ export const useEditDish = (
 			navigate('/dishes');
 		} catch (error) {
 			toast.error('Помилка при оновленні страви');
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 
@@ -214,7 +214,7 @@ export const useDeleteDish = (dishId: string) => {
 			navigate('/dishes');
 		} catch (error) {
 			toast.error('Помилка при видаленні страви');
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 

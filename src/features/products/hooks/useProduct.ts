@@ -71,7 +71,7 @@ export const useAddProduct = () => {
 			navigate('/products');
 		} catch (error) {
 			toast.error('Помилка при додаванні продукту');
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 	return {
@@ -140,7 +140,7 @@ export const useEditProduct = (
 			navigate('/products');
 		} catch (error) {
 			toast.error('Помилка при оновленні продукту');
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 	return {
@@ -172,7 +172,7 @@ export const useDeleteProduct = (productId: string) => {
 			navigate('/products');
 		} catch (error) {
 			toast.error('Помилка при видаленні продукту');
-			console.error(error);
+			if (import.meta.env.DEV) console.error(error);
 		}
 	};
 
