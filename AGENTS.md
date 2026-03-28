@@ -39,7 +39,22 @@ You have access to specialized workflows. When the user types one of these slash
 - `/extract-hook` — Extract reusable custom React hooks from components
 - `/explain-code` — Explain code with analogies and diagrams
 - `/coding` — General coding assistance with project conventions
+- `/consolidate-memory` — Extract decisions and facts from recent sessions into memory files
 
 ---
 
 **Note:** Do not add new project rules directly to this file. Update `.ai/rules/rules.md` or `.ai/project/overview.md` to maintain a single source of truth.
+
+---
+
+## Memory System
+
+At the start of each conversation, **read `.claude/memory/recent-memory.md` in full** to restore
+rolling 48-hour context (recent decisions, open questions, patterns).
+
+For deeper historical context, read `.claude/memory/long-term-memory.md` — it contains stable
+project facts, user preferences, and architecture decisions.
+
+Active project state (sprint focus, known bugs, deferred work) is in `.claude/memory/project-memory.md`.
+
+> Run `/consolidate-memory` after any significant work session to keep memory current.
