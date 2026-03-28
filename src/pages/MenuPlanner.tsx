@@ -37,6 +37,8 @@ const MenuPlanner = () => {
 		weekDaysForFilter,
 		mealTimes,
 		schedule,
+		isDirty,
+		hasSavedData,
 	} = useMenuPlanner();
 
 	const dailyStats = getDailyStats();
@@ -84,11 +86,11 @@ const MenuPlanner = () => {
 				onClick={handleSave}
 				buttonText={PAGE_TITLE.planer.button}
 				buttonIcon={<LuSave />}
-				buttonDisable={true}
+				buttonDisable={!isDirty}
 				secondaryButtonVisible={true}
 				secondaryButtonText="Список продуктів"
 				secondaryButtonIcon={<LuList />}
-				secondaryButtonDisable={true}
+				secondaryButtonDisable={isDirty || !hasSavedData}
 			/>
 			<Tabs defaultValue="day" className="space-y-6">
 				<TabsList className="grid w-full max-w-md grid-cols-2">

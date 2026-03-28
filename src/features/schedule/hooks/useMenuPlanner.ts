@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import {
-	useGetPlannerItemsQuery,
+	useGetMenuPlansQuery,
 	useSavePlannerItemsMutation,
 } from '@/shared/api/graphql/planner.gen';
 import { CATEGORIES_DISHES } from '@/shared/constants';
@@ -42,41 +42,55 @@ export const useMenuPlanner = () => {
 		),
 	);
 
+	const [initialPlan, setInitialPlan] = useState<string>('');
+	const [hasSavedData, setHasSavedData] = useState(false);
+
 	const schedule = useSchedule();
 	const { startDate, endDate } = schedule;
 
-	const { data: plannerData } = useGetPlannerItemsQuery({
+	const { data: menuPlansData } = useGetMenuPlansQuery({
 		variables: { startDate, endDate },
 		fetchPolicy: 'cache-and-network',
 	});
 
 	useEffect(() => {
-		if (plannerData?.getPlannerItems) {
+		if (menuPlansData?.getMenuPlans) {
 			const newPlan: DayMenuType = Object.fromEntries(
 				weekDays.map((day) => [
 					day,
 					Object.fromEntries(MEAL_TIMES.map((meal) => [meal, []])),
 				]),
 			) as DayMenuType;
-			plannerData.getPlannerItems.forEach((item) => {
-				const timestamp = Number(item.date);
-				const itemDay = weekDays[dayjs(timestamp).isoWeekday() - 1];
-				const uiMealTime = mealTimeToUI(item.mealTime);
-				if (itemDay && newPlan[itemDay] && newPlan[itemDay][uiMealTime]) {
-					newPlan[itemDay][uiMealTime].push({
-						plannerItemId: item.id,
-						id: item.dish.id,
-						name: item.dish.name,
-						calories: item.dish.calories || 0,
-					});
-				}
+
+			menuPlansData.getMenuPlans.forEach((plan) => {
+				const timestamp = Number(plan.date);
+				const finalDate = isNaN(timestamp) ? plan.date : timestamp;
+				const itemDay = weekDays[dayjs(finalDate).isoWeekday() - 1];
+
+				plan.items.forEach((item) => {
+					const uiMealTime = mealTimeToUI(item.mealTime);
+					if (itemDay && newPlan[itemDay] && newPlan[itemDay][uiMealTime]) {
+						newPlan[itemDay][uiMealTime].push({
+							plannerItemId: item.id,
+							id: item.dish.id,
+							name: item.dish.name,
+							calories: item.dish.calories || 0,
+						});
+					}
+				});
 			});
 			setMenuPlan(newPlan);
+			setInitialPlan(JSON.stringify(newPlan));
+			setHasSavedData(
+				menuPlansData.getMenuPlans.some((plan) => plan.items.length > 0),
+			);
 		}
-	}, [plannerData, startDate, endDate]);
+	}, [menuPlansData, startDate, endDate]);
+
+	const isDirty = initialPlan !== JSON.stringify(menuPlan);
 
 	const [savePlannerMutation] = useSavePlannerItemsMutation({
-		refetchQueries: ['GetPlannerItems'],
+		refetchQueries: ['GetPlannerItems', 'GetMenuPlans'],
 		awaitRefetchQueries: true,
 	});
 
@@ -200,5 +214,7 @@ export const useMenuPlanner = () => {
 		weekDaysForFilter,
 		mealTimes: MEAL_TIMES,
 		schedule,
+		isDirty,
+		hasSavedData,
 	};
 };
