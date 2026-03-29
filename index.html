@@ -43,10 +43,14 @@
 					navigator.serviceWorker
 						.register('/sw.js', { scope: '/' })
 						.then((registration) => {
-							console.log('[PWA] Service Worker registered:', registration);
+							if (import.meta.env.DEV) {
+								console.log('[PWA] Service Worker registered:', registration);
+							}
 						})
 						.catch((error) => {
-							console.error('[PWA] Service Worker registration failed:', error);
+							if (import.meta.env.DEV) {
+								console.error('[PWA] Service Worker registration failed:', error);
+							}
 						});
 				});
 			}
