@@ -1,12 +1,12 @@
 // Install event - cache App Shell
 self.addEventListener('install', (event) => {
-	console.log('[Service Worker] Installing...');
+	log('[Service Worker] Installing...');
 
 	event.waitUntil(
 		caches.open(CACHES.APP_SHELL).then((cache) => {
-			console.log('[Service Worker] Caching App Shell');
+			log('[Service Worker] Caching App Shell');
 			const precacheUrls = self.__PRECACHE_MANIFEST || ['/', '/index.html'];
-			console.log('[Service Worker] Precaching:', precacheUrls);
+			log('[Service Worker] Precaching:', precacheUrls);
 			return cache.addAll(precacheUrls);
 		}),
 	);
@@ -16,7 +16,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - cleanup old caches
 self.addEventListener('activate', (event) => {
-	console.log('[Service Worker] Activating...');
+	log('[Service Worker] Activating...');
 
 	event.waitUntil(cleanupOldCaches(Object.values(CACHES)));
 
@@ -121,7 +121,7 @@ self.addEventListener('fetch', (event) => {
 // Background Sync - replay offline queue
 self.addEventListener('sync', (event) => {
 	if (event.tag === 'mealvy-sync') {
-		console.log('[Service Worker] Background sync triggered');
+		log('[Service Worker] Background sync triggered');
 		event.waitUntil(replayQueue());
 	}
 });

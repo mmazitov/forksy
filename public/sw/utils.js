@@ -4,7 +4,7 @@ async function cleanupOldCaches(allowedCaches) {
 	await Promise.all(
 		keys.map((key) => {
 			if (!allowedCaches.includes(key)) {
-				console.log(`[SW Utils] Deleting old cache: ${key}`);
+				log(`[SW Utils] Deleting old cache: ${key}`);
 				return caches.delete(key);
 			}
 		}),
@@ -30,8 +30,8 @@ async function getGraphQLOperation(request) {
 				query: body.query,
 			};
 		}
-	} catch (error) {
-		console.error('[SW Utils] Failed to parse GraphQL operation:', error);
+	} catch (err) {
+		error('[SW Utils] Failed to parse GraphQL operation:', err);
 	}
 	return null;
 }

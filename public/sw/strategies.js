@@ -13,8 +13,8 @@ async function cacheFirst(request, cacheName) {
 			cache.put(request, response.clone());
 		}
 		return response;
-	} catch (error) {
-		console.error('[Strategy] Cache First failed, trying any cache:', error);
+	} catch (err) {
+		error('[Strategy] Cache First failed, trying any cache:', err);
 		// Try to find in any cache as fallback
 		const cacheMatch = await caches.match(request);
 		if (cacheMatch) {
@@ -47,8 +47,8 @@ async function staleWhileRevalidate(request, cacheName) {
 			}
 			return response;
 		})
-		.catch((error) => {
-			console.error('[Strategy] Network fetch failed:', error);
+		.catch((err) => {
+			error('[Strategy] Network fetch failed:', err);
 			return null;
 		});
 
@@ -66,8 +66,8 @@ async function networkFirst(request, cacheName) {
 			cache.put(request, response.clone());
 		}
 		return response;
-	} catch (error) {
-		console.error('[Strategy] Network First fallback to cache:', error);
+	} catch (err) {
+		error('[Strategy] Network First fallback to cache:', err);
 		// Only try to match GET requests from cache
 		if (request.method === 'GET') {
 			const cached = await cache.match(request);
@@ -75,7 +75,7 @@ async function networkFirst(request, cacheName) {
 				return cached;
 			}
 		}
-		throw error;
+		throw err;
 	}
 }
 

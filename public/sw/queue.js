@@ -15,7 +15,7 @@ async function enqueueRequest(request) {
 		);
 
 		await cache.put(`${Date.now()}-${Math.random()}`, entry);
-		console.log('[Queue] Request enqueued:', request.url);
+		log('[Queue] Request enqueued:', request.url);
 
 		// Notify clients about offline action
 		self.clients.matchAll().then((clients) => {
@@ -26,8 +26,8 @@ async function enqueueRequest(request) {
 				});
 			});
 		});
-	} catch (error) {
-		console.error('[Queue] Failed to enqueue request:', error);
+	} catch (err) {
+		error('[Queue] Failed to enqueue request:', err);
 	}
 }
 
@@ -35,7 +35,7 @@ async function replayQueue() {
 	const cache = await caches.open(CACHES.QUEUE);
 	const keys = await cache.keys();
 
-	console.log(`[Queue] Replaying ${keys.length} queued requests`);
+	log(`[Queue] Replaying ${keys.length} queued requests`);
 
 	for (const key of keys) {
 		try {
@@ -50,7 +50,7 @@ async function replayQueue() {
 
 			if (response.ok) {
 				await cache.delete(key);
-				console.log('[Queue] Successfully replayed:', data.url);
+				log('[Queue] Successfully replayed:', data.url);
 
 				// Notify clients about successful replay
 				self.clients.matchAll().then((clients) => {
@@ -62,8 +62,8 @@ async function replayQueue() {
 					});
 				});
 			}
-		} catch (error) {
-			console.error('[Queue] Failed to replay request:', error);
+		} catch (err) {
+			error('[Queue] Failed to replay request:', err);
 			// Leave in queue for next sync attempt
 		}
 	}
