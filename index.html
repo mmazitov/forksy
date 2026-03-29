@@ -40,16 +40,22 @@
 		<script>
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', () => {
+					const isDev =
+						window.location.hostname === 'localhost' ||
+						window.location.hostname === '127.0.0.1';
 					navigator.serviceWorker
 						.register('/sw.js', { scope: '/' })
 						.then((registration) => {
-							if (import.meta.env.DEV) {
+							if (isDev) {
 								console.log('[PWA] Service Worker registered:', registration);
 							}
 						})
 						.catch((error) => {
-							if (import.meta.env.DEV) {
-								console.error('[PWA] Service Worker registration failed:', error);
+							if (isDev) {
+								console.error(
+									'[PWA] Service Worker registration failed:',
+									error,
+								);
 							}
 						});
 				});
