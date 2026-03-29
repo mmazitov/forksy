@@ -1,3 +1,2 @@
-export { AuthModal } from '@/features/auth';
-export { default as AddDishModal } from '@/features/dishes/ui/AddDishModal';
+// Feature modals should be imported directly from their feature slice.
 export { default as Modal } from './Modal';

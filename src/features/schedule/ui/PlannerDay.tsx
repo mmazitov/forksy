@@ -11,7 +11,7 @@ interface PlannerDayProps {
 	menuPlan: Record<string, Record<string, PlanningDish[]>>;
 	dailyStats: { calories: number; dishes: number };
 	openDialog: (meal: string) => void;
-	removeDishFromMenu: (meal: string, dishId: string) => void;
+	removeDishFromMenu: (day: string, meal: string, dishId: string) => void;
 }
 
 const PlannerDay = ({
@@ -52,7 +52,9 @@ const PlannerDay = ({
 							mealDishes={mealDishes}
 							mealCalories={mealCalories}
 							onAddDish={openDialog}
-							onRemoveDish={removeDishFromMenu}
+							onRemoveDish={(m: string, dId: string) =>
+								removeDishFromMenu(selectedDay, m, dId)
+							}
 						/>
 					);
 				})}

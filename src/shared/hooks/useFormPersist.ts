@@ -56,6 +56,7 @@ export const useFormPersist = <T extends FieldValues>({
 
 	const isRestoring = useRef(true);
 
+	// Intentional run-once: restore draft only on mount to avoid overwriting user edits on re-render.
 	useLayoutEffect(() => {
 		if (disabled) return;
 
@@ -69,6 +70,7 @@ export const useFormPersist = <T extends FieldValues>({
 		queueMicrotask(() => {
 			isRestoring.current = false;
 		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {

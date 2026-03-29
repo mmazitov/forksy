@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useAuthStorage } from './useAuthStorage';
 
-import { User } from '@/app/providers/AuthContext';
+import { User } from '@/features/auth/model/AuthContext';
 import { useRefreshTokenMutation } from '@/shared/api/graphql';
 
 interface JwtPayload {

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 import {
@@ -133,19 +133,18 @@ export const useMenuPlanner = () => {
 	);
 
 	const removeDishFromMenu = useCallback(
-		(meal: string, dishId: string) => {
+		(day: string, meal: string, dishId: string) => {
 			setMenuPlan((prev) => ({
 				...prev,
-				[selectedDay]: {
-					...prev[selectedDay],
-					[meal]:
-						prev[selectedDay]?.[meal]?.filter((d) => d.id !== dishId) || [],
+				[day]: {
+					...prev[day],
+					[meal]: prev[day]?.[meal]?.filter((d) => d.id !== dishId) || [],
 				},
 			}));
 
 			toast.success('Блюдо видалено');
 		},
-		[selectedDay],
+		[],
 	);
 
 	const getDailyStats = useCallback(() => {
@@ -161,6 +160,35 @@ export const useMenuPlanner = () => {
 			calories: totalCalories,
 		};
 	}, [menuPlan, selectedDay]);
+
+	const weeklyTotalCalories = useMemo(
+		() =>
+			Object.values(menuPlan).reduce(
+				(total, dayMeals) =>
+					total +
+					Object.values(dayMeals).reduce(
+						(dayTotal, dishes) =>
+							dayTotal + dishes.reduce((sum, dish) => sum + dish.calories, 0),
+						0,
+					),
+				0,
+			),
+		[menuPlan],
+	);
+
+	const weeklyTotalDishes = useMemo(
+		() =>
+			Object.values(menuPlan).reduce(
+				(total, dayMeals) =>
+					total +
+					Object.values(dayMeals).reduce(
+						(dayTotal, dishes) => dayTotal + dishes.length,
+						0,
+					),
+				0,
+			),
+		[menuPlan],
+	);
 
 	const handleSave = useCallback(async () => {
 		const itemsToSave: PlannerItemInput[] = [];
@@ -210,6 +238,8 @@ export const useMenuPlanner = () => {
 		addDishToMenu,
 		removeDishFromMenu,
 		getDailyStats,
+		weeklyTotalCalories,
+		weeklyTotalDishes,
 		handleSave,
 		weekDaysForFilter,
 		mealTimes: MEAL_TIMES,

@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { AddDishModalProps, AuthModalProps, Dish } from './types';
 
 import {
-	AddDishModal,
-	AuthModal,
 	Dialog,
 	DialogContent,
 	DialogHeader,
@@ -12,6 +10,8 @@ import {
 } from '@/shared/components';
 import { MODAL_TYPES } from '@/shared/constants';
 import { modalsConfig } from '@/shared/lib/config';
+import { AuthModal } from '@/features/auth';
+import AddDishModal from '@/features/dishes/ui/AddDishModal';
 
 const { AUTH_MODAL, ADD_DISH_MODAL } = MODAL_TYPES;
 

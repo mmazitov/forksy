@@ -21,12 +21,14 @@ export const useSplashScreen = () => {
 				setShowSplash(true);
 			}
 
-			console.log('PWA Check:', {
-				isStandalone,
-				isPWAInstalled,
-				hasServiceWorker,
-				isPWAMode,
-			});
+			if (import.meta.env.DEV) {
+				console.log('PWA Check:', {
+					isStandalone,
+					isPWAInstalled,
+					hasServiceWorker,
+					isPWAMode,
+				});
+			}
 		};
 
 		checkIfPWA();

@@ -62,7 +62,7 @@ export const usePwaInstallPrompt = () => {
 
 		await deferredPrompt.prompt();
 		const { outcome } = await deferredPrompt.userChoice;
-		console.log(`User response to the install prompt: ${outcome}`);
+		if (import.meta.env.DEV) { console.log(`User response to the install prompt: ${outcome}`); }
 
 		setDeferredPrompt(null);
 		setCanInstall(false);

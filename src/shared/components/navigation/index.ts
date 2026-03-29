@@ -1,3 +1,3 @@
-export { default as MenuButton } from './MenuButton';
+// MenuButton and NavigationDesktop have moved to @/app/components — these shims exist for backwards compatibility.
+export { MenuButton, NavigationDesktop } from '@/app/components';
 export { default as NavigationBottomBar } from './NavigationBottomBar';
-export { default as NavigationDesktop } from './NavigationDesktop';

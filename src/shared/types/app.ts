@@ -5,16 +5,9 @@ export interface NutritionInfo {
 	carbs: number;
 }
 
-export interface ProductNutrition {
-	calories: number;
-	protein: number;
-	fat: number;
-	carbs: number;
-}
-
 export interface IngredientForCalculation {
 	amount: string;
-	nutrition: ProductNutrition | null;
+	nutrition: NutritionInfo | null;
 }
 
 export interface FormIngredient {

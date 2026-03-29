@@ -33,6 +33,8 @@ const MenuPlanner = () => {
 		addDishToMenu,
 		removeDishFromMenu,
 		getDailyStats,
+		weeklyTotalCalories,
+		weeklyTotalDishes,
 		handleSave,
 		weekDaysForFilter,
 		mealTimes,
@@ -42,35 +44,6 @@ const MenuPlanner = () => {
 	} = useMenuPlanner();
 
 	const dailyStats = getDailyStats();
-
-	// Calculate weekly total calories
-	const weeklyTotalCalories = Object.values(menuPlan).reduce(
-		(total, dayMeals) => {
-			return (
-				total +
-				Object.values(dayMeals).reduce((dayTotal, dishes) => {
-					return (
-						dayTotal +
-						dishes.reduce((dishTotal, dish) => dishTotal + dish.calories, 0)
-					);
-				}, 0)
-			);
-		},
-		0,
-	);
-
-	const weeklyTotalDishes = Object.values(menuPlan).reduce(
-		(total, dayMeals) => {
-			return (
-				total +
-				Object.values(dayMeals).reduce(
-					(dayTotal, dishes) => dayTotal + dishes.length,
-					0,
-				)
-			);
-		},
-		0,
-	);
 
 	return (
 		<div className="container mx-auto px-4 py-8">

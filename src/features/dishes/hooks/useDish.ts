@@ -6,7 +6,6 @@ import { toast } from 'sonner';
 
 import { prepareDishFormData } from '../lib/dishHelpers';
 
-import { useFavorite } from '@/features/favorites';
 import {
 	DishesDocument,
 	FavoriteDishesDocument,
@@ -17,7 +16,7 @@ import {
 	useRemoveFromFavoritesDishMutation,
 	useUpdateDishMutation,
 } from '@/shared/api/graphql';
-import { useFormList, useFormPersist } from '@/shared/hooks';
+import { useFavorite, useFormList, useFormPersist } from '@/shared/hooks';
 import { DishSchema } from '@/shared/lib/utils/schemas';
 import { DishFormData, FormIngredient } from '@/shared/types';
 

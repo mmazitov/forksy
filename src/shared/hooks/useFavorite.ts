@@ -1,15 +1,22 @@
 import { ApolloCache } from '@apollo/client';
 import { toast } from 'sonner';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyMutationFn = (options: any) => Promise<any>;
+type DishMutationVariables = { dishId: string };
+type ProductMutationVariables = { productId: string };
+
+type MutationFn = (options: {
+	variables: DishMutationVariables | ProductMutationVariables;
+	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
+	optimisticResponse?: Record<string, unknown>;
+	update?: (cache: ApolloCache) => void;
+}) => Promise<unknown>;
 
 interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	addMutation: AnyMutationFn;
-	removeMutation: AnyMutationFn;
+	addMutation: MutationFn;
+	removeMutation: MutationFn;
 	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 	onUpdate?: (cache: ApolloCache) => void;
 }
@@ -26,10 +33,13 @@ export const useFavorite = ({
 	const toggleFavorite = async () => {
 		try {
 			const mutation = isFavorite ? removeMutation : addMutation;
-			const variableName = entityType === 'Product' ? 'productId' : 'dishId';
+			const variables =
+				entityType === 'Product'
+					? { productId: entityId }
+					: { dishId: entityId };
 
 			await mutation({
-				variables: { [variableName]: entityId },
+				variables,
 				refetchQueries,
 				optimisticResponse: {
 					[isFavorite

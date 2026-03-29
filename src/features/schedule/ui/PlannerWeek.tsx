@@ -10,7 +10,7 @@ interface PlannerWeekProps {
 	menuPlan: Record<string, Record<string, PlanningDish[]>>;
 	setSelectedDay: (day: string) => void;
 	openDialog: (meal: string) => void;
-	removeDishFromMenu: (meal: string, dishId: string) => void;
+	removeDishFromMenu: (day: string, meal: string, dishId: string) => void;
 	weeklyTotalCalories: number;
 	weeklyTotalDishes: number;
 }
@@ -72,8 +72,7 @@ const PlannerWeek = ({
 												openDialog(m);
 											}}
 											onRemoveDish={(m: string, dId: string) => {
-												setSelectedDay(dayKey);
-												removeDishFromMenu(m, dId);
+												removeDishFromMenu(dayKey, m, dId);
 											}}
 											isCompact
 										/>

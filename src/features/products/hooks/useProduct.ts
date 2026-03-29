@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { useFavorite } from '@/features/favorites';
 import {
 	FavoriteProductsDocument,
 	FavoriteProductsQuery,
@@ -18,6 +17,7 @@ import {
 import { useFormPersist } from '@/shared/hooks/useFormPersist';
 import { ProductSchema } from '@/shared/lib/utils/schemas';
 import { ProductFormData } from '@/shared/types';
+import { useFavorite } from '@/shared/hooks';
 
 export const useAddProduct = () => {
 	const navigate = useNavigate();
