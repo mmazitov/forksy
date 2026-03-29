@@ -1,22 +1,14 @@
 import { ApolloCache } from '@apollo/client';
 import { toast } from 'sonner';
 
-type DishMutationVariables = { dishId: string };
-type ProductMutationVariables = { productId: string };
-
-type MutationFn = (options: {
-	variables: DishMutationVariables | ProductMutationVariables;
-	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
-	optimisticResponse?: Record<string, unknown>;
-	update?: (cache: ApolloCache) => void;
-}) => Promise<unknown>;
-
 interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	addMutation: MutationFn;
-	removeMutation: MutationFn;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	addMutation: (options?: any) => Promise<any>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	removeMutation: (options?: any) => Promise<any>;
 	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 	onUpdate?: (cache: ApolloCache) => void;
 }
