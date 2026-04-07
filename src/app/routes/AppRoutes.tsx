@@ -8,6 +8,7 @@ import { ProtectedRoute } from '@/features/auth';
 const Home = lazy(() => import('@/pages/Home'));
 const Schedule = lazy(() => import('@/pages/Schedule'));
 const MenuPlanner = lazy(() => import('@/pages/MenuPlanner'));
+const ShoppingList = lazy(() => import('@/pages/ShoppingList'));
 const Products = lazy(() => import('@/pages/Products'));
 const ProductDetail = lazy(() => import('@/pages/ProductDetail'));
 const AddProduct = lazy(() => import('@/pages/AddProduct'));
@@ -34,6 +35,7 @@ const AppRoutes = () => {
 					<Route path="/" element={<Home />} />
 					<Route path="/schedule" element={<Schedule />} />
 					<Route path="/menu-planner" element={<MenuPlanner />} />
+					<Route path="/shopping-list" element={<ShoppingList />} />
 					<Route path="/products" element={<Products />} />
 					<Route path="/product/:id" element={<ProductDetail />} />
 					<Route

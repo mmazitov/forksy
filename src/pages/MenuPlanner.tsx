@@ -1,5 +1,6 @@
 import { BsCalendar2Day, BsCalendar2Week } from 'react-icons/bs';
 import { LuList, LuSave } from 'react-icons/lu';
+import { useNavigate } from 'react-router-dom';
 
 import {
 	PlannerDay,
@@ -20,6 +21,8 @@ import { MODAL_TYPES, PAGE_TITLE } from '@/shared/constants';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const MenuPlanner = () => {
+	const navigate = useNavigate();
+
 	const {
 		selectedDay,
 		setSelectedDay,
@@ -64,6 +67,9 @@ const MenuPlanner = () => {
 				secondaryButtonText="Список продуктів"
 				secondaryButtonIcon={<LuList />}
 				secondaryButtonDisable={isDirty || !hasSavedData}
+				secondaryButtonOnClick={() =>
+					navigate(`/shopping-list?week=${schedule.weekDiff}`)
+				}
 			/>
 			<Tabs defaultValue="day" className="space-y-6">
 				<TabsList className="grid w-full max-w-md grid-cols-2">

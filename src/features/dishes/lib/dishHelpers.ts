@@ -3,7 +3,11 @@ import { toast } from 'sonner';
 import { FormIngredient } from '@/shared/types';
 
 export interface PreparedFormData {
-	filteredIngredients: Array<{ name: string; amount: string }>;
+	filteredIngredients: Array<{
+		name: string;
+		amount: string;
+		productId?: string;
+	}>;
 	filteredInstructions: string[];
 }
 
@@ -13,7 +17,11 @@ export const prepareDishFormData = (
 ): PreparedFormData | null => {
 	const filteredIngredients = ingredientsList.items
 		.filter((i) => i.name.trim())
-		.map((i) => ({ name: i.name, amount: i.amount || '' }));
+		.map((i) => ({
+			name: i.name,
+			amount: i.amount || '',
+			productId: i.productId,
+		}));
 
 	const filteredInstructions = instructionsList.items.filter((i) => i.trim());
 

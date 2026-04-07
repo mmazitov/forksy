@@ -246,5 +246,6 @@ export const useMenuPlanner = () => {
 		schedule,
 		isDirty,
 		hasSavedData,
+		menuPlansData: menuPlansData?.getMenuPlans || [],
 	};
 };

@@ -1,11 +1,6 @@
-export interface Dish {
-	id: string;
-	name: string;
-	calories?: number | null;
-	description?: string;
-	image?: string;
-	category?: string;
-}
+import { Dish } from '@/shared/types/api';
+
+export type { Dish };
 
 export interface AuthModalProps {
 	onOpenChange: (open: boolean) => void;
@@ -20,7 +15,7 @@ export interface AddDishModalProps {
 	selectedMeal: string | null;
 	searchQuery: string;
 	onSearchChange: (query: string) => void;
-	onDishSelect: (dish: Dish) => void;
+	onDishSelect: (dish: Pick<Dish, 'id' | 'name' | 'calories'>) => void;
 }
 
 export interface BaseModalProps {

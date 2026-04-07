@@ -59,6 +59,7 @@ export type Ingredient = {
 	__typename?: 'Ingredient';
 	amount: Scalars['String']['output'];
 	name: Scalars['String']['output'];
+	product: Maybe<Product>;
 	productId: Maybe<Scalars['ID']['output']>;
 };
 

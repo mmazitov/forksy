@@ -80,7 +80,10 @@ const Modal = ({
 					searchQuery: (searchQuery as string) || '',
 					onSearchChange:
 						(onSearchChange as (query: string) => void) || (() => {}),
-					onDishSelect: (onDishSelect as (dish: Dish) => void) || (() => {}),
+					onDishSelect:
+						(onDishSelect as (
+							dish: Pick<Dish, 'id' | 'name' | 'calories'>,
+						) => void) || (() => {}),
 				};
 				return <AddDishModal {...dishProps} />;
 			}

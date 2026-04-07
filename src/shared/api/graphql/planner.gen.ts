@@ -54,6 +54,13 @@ export type GetMenuPlansQuery = {
 				name: string;
 				imageUrl?: string | null;
 				calories?: number | null;
+				ingredients: Array<{
+					__typename?: 'Ingredient';
+					name: string;
+					amount: string;
+					productId?: string | null;
+					product?: { __typename?: 'Product'; category?: string | null } | null;
+				}>;
 			};
 		}>;
 	}>;
@@ -313,6 +320,43 @@ export const GetMenuPlansDocument = {
 														{
 															kind: 'Field',
 															name: { kind: 'Name', value: 'calories' },
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'ingredients' },
+															selectionSet: {
+																kind: 'SelectionSet',
+																selections: [
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'name' },
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'amount' },
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'productId' },
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'product' },
+																		selectionSet: {
+																			kind: 'SelectionSet',
+																			selections: [
+																				{
+																					kind: 'Field',
+																					name: {
+																						kind: 'Name',
+																						value: 'category',
+																					},
+																				},
+																			],
+																		},
+																	},
+																],
+															},
 														},
 													],
 												},

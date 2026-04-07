@@ -1,5 +1,4 @@
 import { AuthContext } from '@/features/auth/model/AuthContext';
-
 import { useAuthState } from '@/features/auth/hooks/useAuthState';
 import { Loader } from '@/shared/components/loader';
 
