@@ -74,7 +74,21 @@ export const useAuthState = () => {
 								logout();
 							}
 						})
-						.catch(() => logout())
+						.catch((error: unknown) => {
+							// Only logout on explicit auth errors, not transient network issues
+							const message =
+								error instanceof Error ? error.message.toLowerCase() : '';
+							const isAuthError =
+								message.includes('unauthenticated') ||
+								message.includes('unauthorized') ||
+								message.includes('invalid') ||
+								message.includes('expired');
+							if (isAuthError) {
+								logout();
+							}
+							// On network errors: keep existing token in state, let user continue
+							// The session will be retried on next page load
+						})
 						.finally(() => setIsLoading(false));
 					return;
 				} else if (!isExpired) {
