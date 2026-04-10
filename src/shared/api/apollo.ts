@@ -48,8 +48,9 @@ const authLink = setContext((_, { headers }) => {
 		return { headers };
 	}
 
-	// get the authentication token from local storage if it exists
-	const tokenRaw = localStorage.getItem('token');
+	// get the authentication token — check localStorage first (rememberMe: true), then sessionStorage (rememberMe: false)
+	const tokenRaw =
+		localStorage.getItem('token') || sessionStorage.getItem('token');
 	let token = tokenRaw;
 
 	try {
