@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAuthStorage } from './useAuthStorage';
 
 import { User } from '@/features/auth/model/AuthContext';
+import { setUnauthenticatedHandler } from '@/shared/api/apollo';
 import { useRefreshTokenMutation } from '@/shared/api/graphql';
 
 interface JwtPayload {
@@ -25,6 +26,11 @@ export const useAuthState = () => {
 		removeStorageItem('refreshToken');
 		removeStorageItem('user');
 	}, [removeStorageItem]);
+
+	useEffect(() => {
+		setUnauthenticatedHandler(logout);
+		return () => setUnauthenticatedHandler(() => {});
+	}, [logout]);
 
 	const login = useCallback(
 		(
