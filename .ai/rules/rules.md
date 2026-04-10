@@ -186,3 +186,4 @@ STYLE & HYGIENE
 EXAMPLES & REFERENCES
 ────────────────────────────────────────
 - When implementing new features, components, or hooks, ALWAYS check `.ai/rules/examples.md`
+
