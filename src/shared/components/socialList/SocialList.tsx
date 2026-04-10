@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useAuthContext } from '@/features/auth';
 import { Button } from '@/shared/components';
@@ -7,8 +7,10 @@ import { SOCIAL_ITEMS } from '@/shared/constants';
 interface SocialListProps {
 	onOpenChange: (open: boolean) => void;
 }
+
 const SocialList = ({ onOpenChange }: SocialListProps) => {
 	const { login } = useAuthContext();
+	const popupRef = useRef<Window | null>(null);
 
 	const getApiUrl = () => {
 		return (
@@ -26,7 +28,7 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 		const left = (window.innerWidth - width) / 2;
 		const top = (window.innerHeight - height) / 2;
 
-		window.open(
+		popupRef.current = window.open(
 			authUrl,
 			'oauth-popup',
 			`width=${width},height=${height},left=${left},top=${top}`,
@@ -35,7 +37,9 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
-			if (event.origin !== getApiUrl()) return;
+			const expectedOrigin = getApiUrl().replace(/\/$/, '');
+			if (event.origin.replace(/\/$/, '') !== expectedOrigin) return;
+			if (event.source !== popupRef.current) return;
 			if (event.data.type === 'OAUTH_SUCCESS' && event.data.token) {
 				const { token, refreshToken } = event.data;
 				const apiUrl = getApiUrl();
