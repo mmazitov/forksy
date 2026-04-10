@@ -129,7 +129,7 @@ self.addEventListener('sync', (event) => {
 // Message event - handle client messages
 self.addEventListener('message', (event) => {
 	// Only accept messages from trusted window clients (not SharedWorker or ServiceWorker)
-	if (!event.source || !(event.source instanceof Client)) {
+	if (!event.source || !(event.source instanceof WindowClient)) {
 		return;
 	}
 

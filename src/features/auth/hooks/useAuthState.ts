@@ -29,7 +29,7 @@ export const useAuthState = () => {
 
 	useEffect(() => {
 		setUnauthenticatedHandler(logout);
-		return () => setUnauthenticatedHandler(() => {});
+		return () => setUnauthenticatedHandler(null);
 	}, [logout]);
 
 	const login = useCallback(

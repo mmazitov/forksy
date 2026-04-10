@@ -10,7 +10,7 @@ const getGraphQLUrl = () => {
 // Module-level handler — set by useAuthState on mount
 let onUnauthenticated: (() => void) | null = null;
 
-export const setUnauthenticatedHandler = (handler: () => void) => {
+export const setUnauthenticatedHandler = (handler: (() => void) | null) => {
   onUnauthenticated = handler;
 };
 
@@ -27,13 +27,16 @@ const errorLink = onError((errorResponse) => {
 	const { graphQLErrors, networkError } = errorResponse;
 
 	if (graphQLErrors) {
+		let didLogout = false;
 		// @ts-expect-error - graphQLErrors type inference issue in Apollo Client
 		graphQLErrors.forEach((error) => {
 			if (
-				error.extensions?.code === 'UNAUTHENTICATED' ||
-				error.message?.toLowerCase().includes('unauthenticated') ||
-				error.message?.toLowerCase().includes('unauthorized')
+				!didLogout &&
+				(error.extensions?.code === 'UNAUTHENTICATED' ||
+					error.message?.toLowerCase().includes('unauthenticated') ||
+					error.message?.toLowerCase().includes('unauthorized'))
 			) {
+				didLogout = true;
 				onUnauthenticated?.();
 			}
 
