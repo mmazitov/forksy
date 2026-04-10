@@ -10,7 +10,10 @@ dayjs.extend(isoWeek);
 
 export const useShoppingListPage = () => {
 	const [searchParams] = useSearchParams();
-	const weekDiff = parseInt(searchParams.get('week') || '0', 10);
+	const rawWeekDiff = parseInt(searchParams.get('week') || '0', 10);
+	const weekDiff = isNaN(rawWeekDiff)
+		? 0
+		: Math.max(-52, Math.min(52, rawWeekDiff));
 
 	const currentWeek = dayjs().add(weekDiff, 'week');
 	const startOfWeek = currentWeek.startOf('isoWeek');
