@@ -29,8 +29,6 @@ export type Scalars = {
 
 export type AuthPayload = {
 	__typename?: 'AuthPayload';
-	refreshToken: Scalars['String']['output'];
-	token: Scalars['String']['output'];
 	user: User;
 };
 
@@ -100,7 +98,7 @@ export type Mutation = {
 	deleteProduct: Product;
 	handleOAuthCallback: SocialAuthPayload;
 	login: AuthPayload;
-	refreshToken: AuthPayload;
+	logout: Scalars['Boolean']['output'];
 	register: AuthPayload;
 	removeFromFavoritesDish: User;
 	removeFromFavoritesProduct: User;
@@ -165,10 +163,6 @@ export type MutationHandleOAuthCallbackArgs = {
 export type MutationLoginArgs = {
 	email: Scalars['String']['input'];
 	password: Scalars['String']['input'];
-};
-
-export type MutationRefreshTokenArgs = {
-	token: Scalars['String']['input'];
 };
 
 export type MutationRegisterArgs = {
@@ -322,8 +316,6 @@ export type QueryProductsArgs = {
 
 export type SocialAuthPayload = {
 	__typename?: 'SocialAuthPayload';
-	refreshToken: Scalars['String']['output'];
-	token: Scalars['String']['output'];
 	user: User;
 };
 

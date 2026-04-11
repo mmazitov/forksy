@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		<AuthContext.Provider
 			value={{
 				user: authState.user,
-				token: authState.token,
 				login: authState.login,
 				logout: authState.logout,
 				isLoading: authState.isLoading,

@@ -1,5 +1,4 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
 const getGraphQLUrl = () => {
@@ -11,12 +10,12 @@ const getGraphQLUrl = () => {
 let onUnauthenticated: (() => void) | null = null;
 
 export const setUnauthenticatedHandler = (handler: (() => void) | null) => {
-  onUnauthenticated = handler;
+	onUnauthenticated = handler;
 };
 
 const httpLink = createHttpLink({
 	uri: getGraphQLUrl(),
-	credentials: 'include', // Important for cookies/sessions
+	credentials: 'include',
 	fetchOptions: {
 		mode: 'cors',
 	},
@@ -61,38 +60,10 @@ const errorLink = onError((errorResponse) => {
 	}
 });
 
-const authLink = setContext((_, { headers }) => {
-	// Ensure we're on the client side
-	if (typeof window === 'undefined') {
-		return { headers };
-	}
-
-	// get the authentication token — check localStorage first (rememberMe: true), then sessionStorage (rememberMe: false)
-	const tokenRaw =
-		localStorage.getItem('token') || sessionStorage.getItem('token');
-	let token = tokenRaw;
-
-	try {
-		if (tokenRaw && (tokenRaw.startsWith('{') || tokenRaw.startsWith('"'))) {
-			token = JSON.parse(tokenRaw);
-		}
-	} catch {
-		// Ignore parse errors for raw JWT strings
-	}
-
-	// return the headers to the context so httpLink can read them
-	return {
-		headers: {
-			...headers,
-			authorization: token ? `Bearer ${token}` : '',
-		},
-	};
-});
-
 const cache = new InMemoryCache();
 
 export const client = new ApolloClient({
-	link: errorLink.concat(authLink).concat(httpLink),
+	link: errorLink.concat(httpLink),
 	cache,
 	defaultOptions: {
 		query: {

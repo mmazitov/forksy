@@ -14,8 +14,6 @@ export type RegisterMutation = {
 	__typename?: 'Mutation';
 	register: {
 		__typename?: 'AuthPayload';
-		token: string;
-		refreshToken: string;
 		user: {
 			__typename?: 'User';
 			id: string;
@@ -35,8 +33,6 @@ export type LoginMutation = {
 	__typename?: 'Mutation';
 	login: {
 		__typename?: 'AuthPayload';
-		token: string;
-		refreshToken: string;
 		user: {
 			__typename?: 'User';
 			id: string;
@@ -47,25 +43,9 @@ export type LoginMutation = {
 	};
 };
 
-export type RefreshTokenMutationVariables = Types.Exact<{
-	token: Types.Scalars['String']['input'];
-}>;
+export type LogoutMutationVariables = Types.Exact<{ [key: string]: never }>;
 
-export type RefreshTokenMutation = {
-	__typename?: 'Mutation';
-	refreshToken: {
-		__typename?: 'AuthPayload';
-		token: string;
-		refreshToken: string;
-		user: {
-			__typename?: 'User';
-			id: string;
-			email?: string | null;
-			name?: string | null;
-			role?: string | null;
-		};
-	};
-};
+export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean };
 
 export const RegisterDocument = {
 	kind: 'Document',
@@ -150,11 +130,6 @@ export const RegisterDocument = {
 						selectionSet: {
 							kind: 'SelectionSet',
 							selections: [
-								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'refreshToken' },
-								},
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'user' },
@@ -253,11 +228,6 @@ export const LoginDocument = {
 						selectionSet: {
 							kind: 'SelectionSet',
 							selections: [
-								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'refreshToken' },
-								},
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'user' },
@@ -292,86 +262,32 @@ export function useLoginMutation(
 	);
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export const RefreshTokenDocument = {
+export const LogoutDocument = {
 	kind: 'Document',
 	definitions: [
 		{
 			kind: 'OperationDefinition',
 			operation: 'mutation',
-			name: { kind: 'Name', value: 'RefreshToken' },
-			variableDefinitions: [
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'token' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-			],
+			name: { kind: 'Name', value: 'Logout' },
 			selectionSet: {
 				kind: 'SelectionSet',
 				selections: [
-					{
-						kind: 'Field',
-						name: { kind: 'Name', value: 'refreshToken' },
-						arguments: [
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'token' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'token' },
-								},
-							},
-						],
-						selectionSet: {
-							kind: 'SelectionSet',
-							selections: [
-								{ kind: 'Field', name: { kind: 'Name', value: 'token' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'refreshToken' },
-								},
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'user' },
-									selectionSet: {
-										kind: 'SelectionSet',
-										selections: [
-											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'role' } },
-										],
-									},
-								},
-							],
-						},
-					},
+					{ kind: 'Field', name: { kind: 'Name', value: 'logout' } },
 				],
 			},
 		},
 	],
 } as unknown as DocumentNode;
-export function useRefreshTokenMutation(
+export function useLogoutMutation(
 	baseOptions?: ApolloReactHooks.MutationHookOptions<
-		RefreshTokenMutation,
-		RefreshTokenMutationVariables
+		LogoutMutation,
+		LogoutMutationVariables
 	>,
 ) {
 	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useMutation<
-		RefreshTokenMutation,
-		RefreshTokenMutationVariables
-	>(RefreshTokenDocument, options);
+	return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(
+		LogoutDocument,
+		options,
+	);
 }
-export type RefreshTokenMutationHookResult = ReturnType<
-	typeof useRefreshTokenMutation
->;
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;

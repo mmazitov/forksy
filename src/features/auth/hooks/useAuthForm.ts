@@ -22,12 +22,12 @@ export const useAuthForm = () => {
 				},
 			});
 
-			if (!result.data?.login) {
+			if (!result.data?.login?.user) {
 				throw new Error('Не вдалося увійти');
 			}
 
-			const { token, refreshToken, user } = result.data.login;
-			login(token, refreshToken, user, data.rememberMe ?? true);
+			const { user } = result.data.login;
+			login(user);
 			toast.success('Успішно увійшли');
 			return true;
 		} catch (err: unknown) {
@@ -50,12 +50,12 @@ export const useAuthForm = () => {
 				},
 			});
 
-			if (!result.data?.register) {
+			if (!result.data?.register?.user) {
 				throw new Error('Не вдалося зареєструватися');
 			}
 
-			const { token, refreshToken, user } = result.data.register;
-			login(token, refreshToken, user, data.rememberMe ?? true);
+			const { user } = result.data.register;
+			login(user);
 			toast.success('Успішно зареєструвалися');
 			return true;
 		} catch (err: unknown) {

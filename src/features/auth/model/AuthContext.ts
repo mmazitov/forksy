@@ -12,13 +12,7 @@ export interface User {
 
 export interface AuthContextType {
 	user: User | null;
-	token: string | null;
-	login: (
-		token: string,
-		refreshToken: string,
-		user: Omit<User, '__typename'>,
-		rememberMe: boolean,
-	) => void;
+	login: (user: Omit<User, '__typename'>) => void;
 	logout: () => void;
 	isLoading: boolean;
 	isAuthenticated: boolean;

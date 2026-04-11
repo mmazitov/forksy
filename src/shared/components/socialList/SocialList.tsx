@@ -40,16 +40,15 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 			const expectedOrigin = getApiUrl().replace(/\/$/, '');
 			if (event.origin.replace(/\/$/, '') !== expectedOrigin) return;
 			if (event.source !== popupRef.current) return;
-			if (event.data.type === 'OAUTH_SUCCESS' && event.data.token) {
-				const { token, refreshToken } = event.data;
+			if (event.data.type === 'OAUTH_SUCCESS') {
 				const apiUrl = getApiUrl();
 
 				fetch(`${apiUrl}/graphql`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
 					},
+					credentials: 'include',
 					body: JSON.stringify({
 						query: `
 							query Me {
@@ -58,6 +57,7 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 									email
 									name
 									avatar
+									role
 								}
 							}
 						`,
@@ -66,7 +66,7 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 					.then((res) => res.json())
 					.then((data) => {
 						if (data.data?.me) {
-							login(token, refreshToken, data.data.me, true);
+							login(data.data.me);
 							onOpenChange(false);
 						}
 					})
