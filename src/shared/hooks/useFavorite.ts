@@ -5,8 +5,10 @@ interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	addMutation: (options?: unknown) => Promise<unknown>;
-	removeMutation: (options?: unknown) => Promise<unknown>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	addMutation: (options?: any) => Promise<any>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	removeMutation: (options?: any) => Promise<any>;
 	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 	onUpdate?: (cache: ApolloCache) => void;
 }
