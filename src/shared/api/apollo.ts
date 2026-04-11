@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import type { GraphQLError } from 'graphql';
 
 const getGraphQLUrl = () => {
 	// Use environment variable or fallback to localhost
@@ -22,12 +23,13 @@ const httpLink = createHttpLink({
 });
 
 const errorLink = onError((errorResponse) => {
-	// @ts-expect-error - Apollo Client 4.0.9 doesn't properly export ErrorResponse types
-	const { graphQLErrors, networkError } = errorResponse;
+	const { graphQLErrors, networkError } = errorResponse as {
+		graphQLErrors?: readonly GraphQLError[];
+		networkError?: Error | null;
+	};
 
 	if (graphQLErrors) {
 		let didLogout = false;
-		// @ts-expect-error - graphQLErrors type inference issue in Apollo Client
 		graphQLErrors.forEach((error) => {
 			if (
 				!didLogout &&
