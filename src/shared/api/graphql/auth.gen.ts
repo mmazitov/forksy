@@ -1,8 +1,10 @@
-import type * as Types from '@/shared/types/api';
+/* eslint-disable */
 
 import type { DocumentNode } from 'graphql';
 import type * as ApolloReactCommon from '@apollo/client/react';
 import * as ApolloReactHooks from '@apollo/client/react';
+
+import type * as Types from '@/shared/types/api';
 const defaultOptions = {} as const;
 export type RegisterMutationVariables = Types.Exact<{
 	email: Types.Scalars['String']['input'];

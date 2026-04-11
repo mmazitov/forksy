@@ -13,15 +13,15 @@ const PwaManagement = () => {
 	} = usePwaManagement();
 
 	return (
-		<div className="space-y-4 rounded-lg border border-border bg-card p-4">
+		<div className="border-border bg-card space-y-4 rounded-lg border p-4">
 			<div>
 				<h3 className="text-lg font-semibold">Управління PWA</h3>
-				<p className="mt-2 text-sm text-muted-foreground">
+				<p className="text-muted-foreground mt-2 text-sm">
 					Керуйте кешем та сервіс-воркером вашого додатку
 				</p>
 			</div>
 
-			<div className="space-y-2 rounded bg-muted/50 p-3">
+			<div className="bg-muted/50 space-y-2 rounded p-3">
 				<div className="flex justify-between text-sm">
 					<span>Статус Service Worker:</span>
 					<span
@@ -50,9 +50,9 @@ const PwaManagement = () => {
 						{cacheInfo.cacheNames.length > 0 && (
 							<details className="mt-2 cursor-pointer">
 								<summary className="text-sm font-medium">Деталі кешів</summary>
-								<ul className="mt-2 space-y-1 text-xs font-mono">
+								<ul className="mt-2 space-y-1 font-mono text-xs">
 									{cacheInfo.cacheNames.map((name) => (
-										<li key={name} className="truncate text-muted-foreground">
+										<li key={name} className="text-muted-foreground truncate">
 											{name}
 										</li>
 									))}
@@ -92,8 +92,9 @@ const PwaManagement = () => {
 				</Button>
 			</div>
 
-			<p className="text-xs text-muted-foreground">
-				💡 Порада: Якщо виникли проблеми з PWA, спробуйте "Повне скидання PWA"
+			<p className="text-muted-foreground text-xs">
+				💡 Порада: Якщо виникли проблеми з PWA, спробуйте &ldquo;Повне скидання
+				PWA&rdquo;
 			</p>
 		</div>
 	);

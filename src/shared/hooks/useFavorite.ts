@@ -1,28 +1,12 @@
-import type { ApolloCache, FetchResult } from '@apollo/client';
+import type { ApolloCache } from '@apollo/client';
 import { toast } from 'sonner';
-
-interface MutationVariables {
-	productId?: string;
-	dishId?: string;
-}
-
-interface MutationFunctionOptions {
-	variables?: MutationVariables;
-	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
-	optimisticResponse?: unknown;
-	update?: (cache: ApolloCache) => void;
-}
-
-type MutationFunction = (
-	options?: MutationFunctionOptions,
-) => Promise<FetchResult<unknown>>;
 
 interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	addMutation: MutationFunction;
-	removeMutation: MutationFunction;
+	addMutation: (options?: unknown) => Promise<unknown>;
+	removeMutation: (options?: unknown) => Promise<unknown>;
 	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 	onUpdate?: (cache: ApolloCache) => void;
 }

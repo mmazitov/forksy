@@ -98,9 +98,7 @@ describe('Input', () => {
 	});
 
 	it('should position icon correctly', () => {
-		const { container } = render(
-			<Input showIcon icon={<LuSearch data-testid="search-icon" />} />,
-		);
+		render(<Input showIcon icon={<LuSearch data-testid="search-icon" />} />);
 
 		const iconWrapper = screen.getByTestId('search-icon').parentElement;
 		expect(iconWrapper).toHaveClass('absolute');

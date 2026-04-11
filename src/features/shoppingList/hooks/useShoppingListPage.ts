@@ -18,7 +18,6 @@ export const useShoppingListPage = () => {
 
 	// Normalize URL on mount if the raw param was invalid or out of range.
 	// Empty deps array is intentional — this runs once to sanitize the initial URL.
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => {
 		const raw = searchParams.get('week');
 		if (raw === null) return;
@@ -27,6 +26,7 @@ export const useShoppingListPage = () => {
 		} else if (String(rawWeekDiff) !== String(weekDiff)) {
 			setSearchParams({ week: String(weekDiff) }, { replace: true });
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const currentWeek = dayjs().add(weekDiff, 'week');

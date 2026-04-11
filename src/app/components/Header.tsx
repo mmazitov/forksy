@@ -1,3 +1,6 @@
+import NavigationDesktop from './NavigationDesktop';
+
+import { useAuthContext } from '@/features/auth';
 import { UserMenu } from '@/features/profile';
 import {
 	Logo,
@@ -5,11 +8,8 @@ import {
 	NavigationBottomBar,
 	ThemeToggle,
 } from '@/shared/components';
-import { useAuthContext } from '@/features/auth';
 import { MODAL_TYPES } from '@/shared/constants';
 import { useModal } from '@/shared/hooks';
-
-import NavigationDesktop from './NavigationDesktop';
 
 const Header = () => {
 	const { isOpen: authModalOpen, setIsOpen: setAuthModalOpen } = useModal();
