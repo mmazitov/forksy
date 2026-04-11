@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig({
+	// @ts-expect-error - Vite/Vitest plugin type incompatibility
 	plugins: [react()],
 	test: {
 		globals: true,
