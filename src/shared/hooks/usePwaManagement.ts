@@ -29,7 +29,7 @@ export const usePwaManagement = () => {
 			const info = await getPwaCacheInfo();
 			setCacheInfo(info);
 		} catch (error) {
-			console.error('Failed to load cache info:', error);
+			if (import.meta.env.DEV) console.error('Failed to load cache info:', error);
 			toast.error('Не вдалося завантажити інформацію про кеш');
 		}
 	};
@@ -48,7 +48,7 @@ export const usePwaManagement = () => {
 			await loadCacheInfo();
 			toast.success('Кеш очищено успішно');
 		} catch (error) {
-			console.error('Failed to clear cache:', error);
+			if (import.meta.env.DEV) console.error('Failed to clear cache:', error);
 			toast.error('Не вдалося очистити кеш');
 		} finally {
 			setIsLoading(false);
@@ -65,7 +65,7 @@ export const usePwaManagement = () => {
 				window.location.href = '/';
 			}, 1500);
 		} catch (error) {
-			console.error('Failed to reset PWA:', error);
+			if (import.meta.env.DEV) console.error('Failed to reset PWA:', error);
 			toast.error('Не вдалося скинути PWA');
 		} finally {
 			setIsLoading(false);
@@ -79,7 +79,7 @@ export const usePwaManagement = () => {
 			await checkServiceWorker();
 			toast.success('Service Worker видалено');
 		} catch (error) {
-			console.error('Failed to unregister service worker:', error);
+			if (import.meta.env.DEV) console.error('Failed to unregister service worker:', error);
 			toast.error('Не вдалося видалити Service Worker');
 		} finally {
 			setIsLoading(false);

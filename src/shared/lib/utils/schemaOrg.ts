@@ -21,12 +21,19 @@ interface ProductSchema {
 	carbs: number;
 }
 
+/**
+ * Prevents script tag injection in JSON-LD structured data.
+ * Replaces </script sequences that could break the enclosing script tag.
+ */
+const sanitizeJsonLdString = (value: string): string =>
+	value.replace(/<\/script/gi, '<\\/script');
+
 export const generateRecipeSchema = (recipe: RecipeSchema) => {
 	return {
 		'@context': 'https://schema.org/',
 		'@type': 'Recipe',
-		name: recipe.name,
-		description: recipe.description,
+		name: sanitizeJsonLdString(recipe.name),
+		description: sanitizeJsonLdString(recipe.description),
 		image: recipe.image,
 		author: {
 			'@type': 'Organization',
@@ -40,11 +47,11 @@ export const generateRecipeSchema = (recipe: RecipeSchema) => {
 			'@type': 'NutritionInformation',
 			calories: `${recipe.calories} calories`,
 		},
-		recipeIngredient: recipe.ingredients,
+		recipeIngredient: recipe.ingredients.map(sanitizeJsonLdString),
 		recipeInstructions: recipe.instructions.map((instruction, index) => ({
 			'@type': 'HowToStep',
 			position: index + 1,
-			text: instruction,
+			text: sanitizeJsonLdString(instruction),
 		})),
 	};
 };
@@ -53,12 +60,12 @@ export const generateProductSchema = (product: ProductSchema) => {
 	return {
 		'@context': 'https://schema.org/',
 		'@type': 'Product',
-		name: product.name,
-		description: product.description,
+		name: sanitizeJsonLdString(product.name),
+		description: sanitizeJsonLdString(product.description),
 		image: product.image,
 		brand: {
 			'@type': 'Brand',
-			name: product.brand,
+			name: sanitizeJsonLdString(product.brand),
 		},
 		nutrition: {
 			'@type': 'NutritionInformation',
