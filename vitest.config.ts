@@ -19,7 +19,17 @@ export default defineConfig({
 				'**/*.config.*',
 				'**/mockData',
 				'dist/',
+				'**/__tests__/**',
+				'**/index.ts',
+				'**/main.tsx',
+				'src/shared/api/graphql/**',
 			],
+			thresholds: {
+				lines: 60,
+				functions: 60,
+				branches: 50,
+				statements: 60,
+			},
 		},
 	},
 	resolve: {
