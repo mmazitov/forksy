@@ -23,6 +23,14 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 		const apiUrl = getApiUrl();
 		const authUrl = `${apiUrl}/auth/${provider}-auth`;
 
+		if (import.meta.env.DEV) {
+			console.log('[OAuth] Opening popup:', {
+				provider,
+				authUrl,
+				apiUrl,
+			});
+		}
+
 		const width = 500;
 		const height = 600;
 		const left = (window.innerWidth - width) / 2;
@@ -33,46 +41,63 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 			'oauth-popup',
 			`width=${width},height=${height},left=${left},top=${top}`,
 		);
+
+		if (!popupRef.current && import.meta.env.DEV) {
+			console.error('[OAuth] Failed to open popup - popup blocker?');
+		}
 	};
 
 	useEffect(() => {
-		const handleMessage = (event: MessageEvent) => {
-			const expectedOrigin = getApiUrl().replace(/\/$/, '');
-			if (event.origin.replace(/\/$/, '') !== expectedOrigin) return;
-			if (event.source !== popupRef.current) return;
-			if (event.data.type === 'OAUTH_SUCCESS') {
-				const apiUrl = getApiUrl();
+		const handleMessage = async (event: MessageEvent) => {
+			if (import.meta.env.DEV) {
+				console.log('[OAuth] Message received:', {
+					origin: event.origin,
+					expectedOrigin: getApiUrl().replace(/\/$/, ''),
+					data: event.data,
+					source: event.source === popupRef.current ? 'popup' : 'other',
+				});
+			}
 
-				fetch(`${apiUrl}/graphql`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					credentials: 'include',
-					body: JSON.stringify({
-						query: `
-							query Me {
-								me {
-									id
-									email
-									name
-									avatar
-									role
-								}
-							}
-						`,
-					}),
-				})
-					.then((res) => res.json())
-					.then((data) => {
-						if (data.data?.me) {
-							login(data.data.me);
-							onOpenChange(false);
-						}
-					})
-					.catch(() => {
-						if (import.meta.env.DEV) console.error('OAuth error');
+			const expectedOrigin = getApiUrl().replace(/\/$/, '');
+			if (event.origin.replace(/\/$/, '') !== expectedOrigin) {
+				if (import.meta.env.DEV) {
+					console.warn('[OAuth] Origin mismatch:', {
+						received: event.origin,
+						expected: expectedOrigin,
 					});
+				}
+				return;
+			}
+
+			if (event.source !== popupRef.current) {
+				if (import.meta.env.DEV) {
+					console.warn('[OAuth] Source mismatch');
+				}
+				return;
+			}
+
+			if (event.data.type === 'OAUTH_SUCCESS') {
+				if (import.meta.env.DEV) {
+					console.log('[OAuth] Success, cookies set in popup, calling login()');
+				}
+
+				try {
+					await login();
+
+					if (import.meta.env.DEV) {
+						console.log('[OAuth] Login successful, closing modal');
+					}
+
+					onOpenChange(false);
+				} catch (error) {
+					if (import.meta.env.DEV) {
+						console.error('[OAuth] Login failed:', error);
+					}
+				}
+			} else if (event.data.type === 'OAUTH_ERROR') {
+				if (import.meta.env.DEV) {
+					console.error('[OAuth] Error from popup:', event.data.error);
+				}
 			}
 		};
 

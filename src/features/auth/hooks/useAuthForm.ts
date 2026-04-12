@@ -26,8 +26,7 @@ export const useAuthForm = () => {
 				throw new Error('Не вдалося увійти');
 			}
 
-			const { user } = result.data.login;
-			login(user);
+			await login();
 			toast.success('Успішно увійшли');
 			return true;
 		} catch (err: unknown) {
@@ -54,8 +53,7 @@ export const useAuthForm = () => {
 				throw new Error('Не вдалося зареєструватися');
 			}
 
-			const { user } = result.data.register;
-			login(user);
+			await login();
 			toast.success('Успішно зареєструвалися');
 			return true;
 		} catch (err: unknown) {
