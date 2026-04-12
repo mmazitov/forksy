@@ -61,6 +61,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 							aria-describedby={
 								'name' in errors && errors.name ? 'name-error' : undefined
 							}
+							autoComplete="username"
 						/>
 						{'name' in errors && errors.name && (
 							<div
@@ -87,6 +88,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						className="pl-10"
 						aria-invalid={errors.email ? 'true' : 'false'}
 						aria-describedby={errors.email ? 'email-error' : undefined}
+						autoComplete="email"
 					/>
 					{errors.email && (
 						<div
@@ -113,7 +115,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						showToggle
 						aria-invalid={errors.password ? 'true' : 'false'}
 						aria-describedby={errors.password ? 'password-error' : undefined}
-						autoComplete="current-password"
+						autoComplete="password"
 					/>
 					{errors.password && (
 						<div
