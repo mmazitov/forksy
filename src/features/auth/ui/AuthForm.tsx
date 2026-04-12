@@ -113,6 +113,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						showToggle
 						aria-invalid={errors.password ? 'true' : 'false'}
 						aria-describedby={errors.password ? 'password-error' : undefined}
+						autoComplete="current-password"
 					/>
 					{errors.password && (
 						<div
