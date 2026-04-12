@@ -88,12 +88,12 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 			{SOCIAL_ITEMS.map((item) => (
 				<li key={item.name}>
 					<Button
-						aria-label={item.name}
+						aria-label={`Увійти через ${item.name}`}
 						variant="outline"
 						className="w-full cursor-pointer"
 						onClick={() => handleSocialLogin(item.name)}
 					>
-						<item.icon className="h-5 w-5" />
+						<item.icon className="h-5 w-5" aria-hidden="true" />
 					</Button>
 				</li>
 			))}

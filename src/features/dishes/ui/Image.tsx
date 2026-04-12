@@ -41,7 +41,10 @@ const Image = ({
 
 			{/* Glassmorphism overlay on hover */}
 			{!isFull && (
-				<div className="bg-background/5 absolute inset-0 z-10 opacity-0 transition-opacity duration-500 backdrop-blur-[2px] group-hover:opacity-100" />
+				<div
+					className="bg-background/5 absolute inset-0 z-10 opacity-0 backdrop-blur-[2px] transition-opacity duration-500 group-hover:opacity-100"
+					aria-hidden="true"
+				/>
 			)}
 
 			{imageUrl ? (

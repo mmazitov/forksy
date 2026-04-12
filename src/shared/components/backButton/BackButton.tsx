@@ -23,8 +23,12 @@ const BackButton = ({
 	return (
 		<div className="mb-6 flex items-center justify-between gap-2">
 			<Link to={href}>
-				<Button variant="ghost" className="gap-2">
-					<LuArrowBigLeft className="h-4 w-4" />
+				<Button
+					variant="ghost"
+					className="gap-2"
+					aria-label={`Назад до ${title}`}
+				>
+					<LuArrowBigLeft className="h-4 w-4" aria-hidden="true" />
 					{title}
 				</Button>
 			</Link>

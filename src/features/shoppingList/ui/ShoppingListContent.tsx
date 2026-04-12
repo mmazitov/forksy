@@ -52,12 +52,22 @@ export const ShoppingListContent = ({
 							<button
 								onClick={() => toggleCategory(categoryName)}
 								className="transition-opacity hover:opacity-80"
-								aria-label={`Toggle all ${categoryName}`}
+								aria-label={
+									allCategoryChecked
+										? `Зняти позначки з усіх інгредієнтів ${categoryName}`
+										: `Позначити усі інгредієнти ${categoryName}`
+								}
 							>
 								{allCategoryChecked ? (
-									<CheckCircle2 className="text-primary h-5 w-5" />
+									<CheckCircle2
+										className="text-primary h-5 w-5"
+										aria-hidden="true"
+									/>
 								) : (
-									<Circle className="text-muted-foreground h-5 w-5" />
+									<Circle
+										className="text-muted-foreground h-5 w-5"
+										aria-hidden="true"
+									/>
 								)}
 							</button>
 							<Badge className={getCategoryBadgeClass(categoryName)}>

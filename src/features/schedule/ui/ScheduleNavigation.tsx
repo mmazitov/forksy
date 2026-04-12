@@ -26,8 +26,9 @@ const ScheduleNavigation = ({
 						size="icon"
 						onClick={handlePrevious}
 						className="cursor-pointer"
+						aria-label="Попередній тиждень"
 					>
-						<LuChevronLeft className="h-4 w-4" />
+						<LuChevronLeft className="h-4 w-4" aria-hidden="true" />
 					</Button>
 
 					<div className="text-center">
@@ -41,8 +42,9 @@ const ScheduleNavigation = ({
 										variant="link"
 										className="text-primary h-auto cursor-pointer p-0"
 										onClick={handleReset}
+										aria-label="Повернутися до поточного тижня"
 									>
-										<LuRefreshCw />
+										<LuRefreshCw aria-hidden="true" />
 									</Button>
 								</>
 							)}
@@ -55,8 +57,9 @@ const ScheduleNavigation = ({
 						size="icon"
 						onClick={handleNext}
 						className="cursor-pointer"
+						aria-label="Наступний тиждень"
 					>
-						<LuChevronRight className="h-4 w-4" />
+						<LuChevronRight className="h-4 w-4" aria-hidden="true" />
 					</Button>
 				</div>
 			</CardContent>

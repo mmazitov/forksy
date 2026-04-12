@@ -28,8 +28,12 @@ const FavoriteButton = ({
 				e.stopPropagation();
 				onClick();
 			}}
+			aria-label={isFavorite ? 'Видалити з обраного' : 'Додати до обраного'}
 		>
-			<LuHeart className={cn('h-5 w-5', isFavorite && 'fill-current')} />
+			<LuHeart
+				className={cn('h-5 w-5', isFavorite && 'fill-current')}
+				aria-hidden="true"
+			/>
 		</Button>
 	);
 };
