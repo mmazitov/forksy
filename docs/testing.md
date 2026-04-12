@@ -1,275 +1,171 @@
 # Testing Guide
 
-## Overview
+## Philosophy
 
-Проект использует **Vitest** + **React Testing Library** для unit, integration и component тестов.
+This project follows a **pragmatic approach to testing**:
+- Focus on critical business logic and user flows
+- Prioritize high-value tests over coverage metrics
+- Leverage TypeScript's type system to catch errors at compile time
 
-## Структура тестов
+## What We Test
+
+### ✅ Critical Business Logic
+- **Authentication** (`useAuthState`) — auth is critical for the app
+- **Favorites** (`useFavorite`) — core UX feature
+- **Validation** (`validate`) — data correctness
+- **Nutrition calculations** (`nutrition`) — calculation accuracy
+
+### ✅ Integration Flows
+- **Auth flow** — login → refresh → logout
+- Critical user journeys
+
+### ✅ Reusable Hooks
+- **useDebounce** — used in search and forms
+
+## What We DON'T Test
+
+### ❌ Library UI Components
+- shadcn/ui components (Button, Input) — already tested upstream
+- Simple wrapper components
+
+### ❌ Trivial Utilities
+- `cn` (clsx wrapper)
+- `slug` (simple string transformation)
+- `useToggle`, `useLocalStorage` — too simple
+
+### ❌ Coverage for Coverage's Sake
+- No thresholds
+- No mandatory metrics
+
+## Test Structure
 
 ```
 src/
 ├── features/
 │   └── auth/
 │       ├── __tests__/
-│       │   └── auth-flow.integration.test.tsx  # Integration tests
+│       │   └── auth-flow.integration.test.tsx
 │       └── hooks/
 │           └── __tests__/
-│               └── useAuthState.test.ts        # Hook tests
+│               └── useAuthState.test.ts
 ├── shared/
-│   ├── components/
-│   │   ├── backButton/
-│   │   │   └── __tests__/
-│   │   │       └── BackButton.test.tsx         # Component tests
-│   │   └── ...
 │   ├── hooks/
 │   │   └── __tests__/
 │   │       ├── useDebounce.test.ts
-│   │       ├── useFavorite.test.ts
-│   │       └── useToggle.test.ts
+│   │       └── useFavorite.test.ts
 │   └── lib/
 │       └── utils/
 │           └── __tests__/
-│               ├── cn.test.ts
 │               ├── nutrition.test.ts
-│               ├── slug.test.ts
 │               └── validate.test.ts
 └── test/
-    └── setup.ts                                 # Global test setup
+    └── setup.ts
 ```
 
-## Запуск тестов
+## Running Tests
 
 ```bash
-# Запуск всех тестов
+# Run all tests
 yarn test
 
-# Запуск с UI интерфейсом
+# Run with UI interface
 yarn test:ui
-
-# Запуск с coverage
-yarn test:coverage
-
-# Запуск конкретного файла
-yarn test src/shared/hooks/__tests__/useDebounce.test.ts
 
 # Watch mode
 yarn test --watch
 ```
 
-## Coverage Thresholds
+## Current Coverage
 
-Настроены минимальные пороги покрытия в `vitest.config.ts`:
+**~78 tests** cover critical parts:
+- 8 tests — `useAuthState`
+- 9 tests — `useFavorite`
+- 6 tests — `useDebounce`
+- 16 tests — `validate`
+- 25 tests — `nutrition`
+- 6 tests — auth integration flow
+- 8 tests — `FavoriteButton`
 
-- **Lines**: 25%
-- **Functions**: 20%
-- **Branches**: 50%
-- **Statements**: 25%
+## When to Add Tests
 
-**Примечание**: Пороги установлены на текущий уровень покрытия. По мере добавления новых тестов их следует постепенно повышать.
+Add tests only if:
+1. **Critical business logic** — a bug would lead to data loss or broken UX
+2. **Complex calculations** — math, data transformations
+3. **Regression** — bug already happened and needs prevention
 
-## Типы тестов
+**Don't add tests for:**
+- Simple components
+- Wrapper functions
+- Obvious logic
+- Achieving coverage metrics
 
-### 1. Unit Tests
+## Test Infrastructure
 
-Тестируют отдельные функции и утилиты:
-
-```typescript
-// src/shared/lib/utils/__tests__/cn.test.ts
-import { describe, expect, it } from 'vitest';
-import { cn } from '../cn';
-
-describe('cn', () => {
-  it('should merge class names', () => {
-    expect(cn('foo', 'bar')).toBe('foo bar');
-  });
-});
-```
-
-### 2. Hook Tests
-
-Тестируют custom React hooks:
-
-```typescript
-// src/shared/hooks/__tests__/useDebounce.test.ts
-import { renderHook, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import { useDebounce } from '../useDebounce';
-
-describe('useDebounce', () => {
-  it('should debounce value changes', async () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => useDebounce(value, 500),
-      { initialProps: { value: 'initial' } }
-    );
-
-    rerender({ value: 'updated' });
-    
-    await waitFor(() => {
-      expect(result.current).toBe('updated');
-    }, { timeout: 600 });
-  });
-});
-```
-
-### 3. Component Tests
-
-Тестируют React компоненты:
-
-```typescript
-// src/shared/components/backButton/__tests__/BackButton.test.tsx
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
-import BackButton from '../BackButton';
-
-describe('BackButton', () => {
-  it('should call ctaButtonClick when CTA button is clicked', async () => {
-    const user = userEvent.setup();
-    const handleClick = vi.fn();
-
-    render(
-      <BrowserRouter>
-        <BackButton
-          title="Назад"
-          href="/home"
-          ctaButton={true}
-          ctaButtonText="Зберегти"
-          ctaButtonClick={handleClick}
-        />
-      </BrowserRouter>
-    );
-
-    const ctaButton = screen.getByText('Зберегти');
-    await user.click(ctaButton);
-
-    expect(handleClick).toHaveBeenCalledTimes(1);
-  });
-});
-```
-
-### 4. Integration Tests
-
-Тестируют взаимодействие нескольких компонентов/модулей:
-
-```typescript
-// src/features/auth/__tests__/auth-flow.integration.test.tsx
-import { renderHook, waitFor } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
-import { useAuthState } from '../hooks/useAuthState';
-
-describe('Auth Flow Integration', () => {
-  it('should complete full auth flow: login → refresh → logout', async () => {
-    const { result } = renderHook(() => useAuthState());
-
-    // Test login
-    result.current.login(mockUser);
-    await waitFor(() => {
-      expect(result.current.isAuthenticated).toBe(true);
-    });
-
-    // Test logout
-    result.current.logout();
-    await waitFor(() => {
-      expect(result.current.isAuthenticated).toBe(false);
-    });
-  });
-});
-```
+- **Framework**: Vitest + React Testing Library
+- **Environment**: jsdom
+- **User interactions**: @testing-library/user-event
+- **Setup**: `src/test/setup.ts`
 
 ## Best Practices
 
-### 1. Именование тестов
+1. **Test behavior, not implementation**
+   ```ts
+   // ✅ Good
+   expect(screen.getByText('Login')).toBeInTheDocument();
+   
+   // ❌ Bad
+   expect(component.state.isLoggedIn).toBe(true);
+   ```
 
-- Используйте описательные названия: `should [expected behavior] when [condition]`
-- Группируйте связанные тесты в `describe` блоки
+2. **Use user-event for interactions**
+   ```ts
+   import { userEvent } from '@testing-library/user-event';
+   
+   await userEvent.click(button);
+   await userEvent.type(input, 'text');
+   ```
 
-### 2. Моки
+3. **Avoid over-mocking**
+   - Mock only external dependencies (API, localStorage)
+   - Don't mock internal modules unless necessary
 
-```typescript
-// Mock внешних зависимостей в setup.ts
-vi.mock('react-loader-spinner', () => ({
-  Circles: vi.fn(() => null),
-}));
-
-// Mock функций в тестах
-const mockFn = vi.fn();
-mockFn.mockResolvedValue({ data: {} });
-```
-
-### 3. Async тесты
-
-```typescript
-// Используйте waitFor для async операций
-await waitFor(() => {
-  expect(result.current.isLoading).toBe(false);
-}, { timeout: 1000 });
-
-// Используйте user-event для симуляции действий пользователя
-const user = userEvent.setup();
-await user.click(button);
-await user.type(input, 'text');
-```
-
-### 4. Cleanup
-
-```typescript
-// Автоматический cleanup после каждого теста (в setup.ts)
-afterEach(() => {
-  cleanup();
-});
-
-// Ручной cleanup для моков
-afterEach(() => {
-  vi.restoreAllMocks();
-});
-```
-
-## CI/CD
-
-Тесты автоматически запускаются в GitHub Actions при:
-- Push в `main` или `develop`
-- Создании Pull Request
-
-Workflow файл: `.github/workflows/test.yml`
+4. **Write readable tests**
+   ```ts
+   describe('useAuthState', () => {
+     it('should login user with valid credentials', async () => {
+       // Arrange
+       const { result } = renderHook(() => useAuthState());
+       
+       // Act
+       await act(() => result.current.login(email, password));
+       
+       // Assert
+       expect(result.current.user).toBeDefined();
+     });
+   });
+   ```
 
 ## Troubleshooting
 
-### Проблема: Тесты падают с ошибкой "act(...)"
-
-**Решение**: Оберните state updates в `waitFor`:
-
-```typescript
-await waitFor(() => {
-  expect(result.current.value).toBe(expected);
-});
+### Act warnings
+```
+Warning: An update to Component inside a test was not wrapped in act(...)
 ```
 
-### Проблема: Mock не работает
+**Solution**: Wrap async updates in `act()` or use `waitFor()`
 
-**Решение**: Убедитесь что mock определен до импорта компонента:
+### Mock not working
+Make sure the mock is defined **before** importing the tested module:
 
-```typescript
-vi.mock('./module', () => ({
-  default: vi.fn(),
-}));
-
-import Component from './Component'; // После mock
+```ts
+vi.mock('module', () => ({ ... }));
+import { Component } from './Component'; // after mock
 ```
 
-### Проблема: Timeout ошибки
+### jsdom limitations
+jsdom doesn't support:
+- Canvas API
+- WebGL
+- Some CSS features
 
-**Решение**: Увеличьте timeout в `waitFor`:
-
-```typescript
-await waitFor(() => {
-  expect(result.current.value).toBe(expected);
-}, { timeout: 2000 });
-```
-
-## Полезные ссылки
-
-- [Vitest Documentation](https://vitest.dev/)
-- [React Testing Library](https://testing-library.com/react)
-- [Testing Library User Event](https://testing-library.com/docs/user-event/intro)
-- [Vitest UI](https://vitest.dev/guide/ui.html)
+For such cases, use manual testing.

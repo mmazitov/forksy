@@ -1,133 +1,433 @@
 # Mealvy Frontend
 
-React + TypeScript застосунок для планування меню та управління продуктами.
+> A modern meal planning and nutrition tracking application built with React and TypeScript.
 
-## Tech Stack
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.1-61dafb.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.1-646cff.svg)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-- **React 19** + **TypeScript**
-- **Vite** (build tool)
-- **TailwindCSS** + **Radix UI**
-- **Apollo Client** (GraphQL)
-- **React Router** v6
-- **React Hook Form** + **Zod**
+## 🚀 Features
 
-## Setup
+- 🍽️ **Meal Management** - Create, edit, and organize dishes and products
+- 📅 **Weekly Planning** - Plan your meals for the entire week
+- 🔍 **Smart Search** - Advanced search and filtering capabilities
+- 📊 **Nutrition Tracking** - Automatic calculation of nutritional values
+- 🎨 **Theme Support** - Dark/light mode with system preference detection
+- 📱 **PWA Ready** - Installable progressive web app with offline support
+- 🔐 **OAuth Integration** - Sign in with Google, GitHub, or Facebook
+- ⚡ **Real-time Updates** - GraphQL subscriptions for live data
+- 🌐 **Offline First** - Service Worker caching for offline capabilities
 
-### 1. Install dependencies
+## 📋 Table of Contents
+
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Development](#development)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+
+## 🛠 Tech Stack
+
+### Core
+- **React 19** - UI library with latest features
+- **TypeScript 5.9** - Type-safe development
+- **Vite 7** - Next-generation build tool
+
+### State & Data
+- **Apollo Client 4** - GraphQL client with caching
+- **Zustand** - Lightweight state management
+- **React Hook Form** - Performant form handling
+- **Zod** - Schema validation
+
+### UI & Styling
+- **TailwindCSS 4** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **shadcn/ui** - Re-usable component library
+- **Lucide React** - Beautiful icon set
+
+### Developer Experience
+- **Vitest** - Fast unit testing framework
+- **React Testing Library** - Component testing utilities
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **GraphQL Code Generator** - Type-safe GraphQL operations
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- **Node.js** 18+ and npm/yarn
+- **Backend API** running (see [mealvy-backend](https://github.com/your-org/mealvy-backend))
+
+### Installation
+
+1. **Clone the repository**
 
 ```bash
+git clone https://github.com/your-org/mealvy-frontend.git
+cd mealvy-frontend
+```
+
+2. **Install dependencies**
+
+```bash
+yarn install
+# or
 npm install
 ```
 
-### 2. Environment variables
+3. **Configure environment variables**
 
-Створи `.env` файл на основі `.env.example`:
+Create a `.env` file based on `.env.example`:
 
 ```bash
 cp .env.example .env
 ```
 
-Вкажи URL твого backend API:
+Update the environment variables:
 
 ```env
-VITE_API_URL=http://localhost:4000/graphql  # для development
-# або
-VITE_API_URL=https://mealvy-api.onrender.com/graphql  # для production
+# GraphQL API endpoint
+VITE_API_URL=http://localhost:4000/graphql
+
+# OAuth providers (optional)
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
+VITE_GITHUB_CLIENT_ID=your_github_client_id
+VITE_FACEBOOK_APP_ID=your_facebook_app_id
 ```
 
-### 3. Generate GraphQL types
+4. **Generate GraphQL types**
 
 ```bash
-npm run generate
+yarn generate
 ```
 
-Це згенерує TypeScript types з GraphQL schema.
+This generates TypeScript types and React hooks from your GraphQL schema.
 
-### 4. Run development server
+5. **Start development server**
 
 ```bash
-npm run dev
+yarn dev
 ```
 
-Застосунок буде доступний на `http://localhost:5173`
+The application will be available at `http://localhost:5173`
 
-## Scripts
+## 💻 Development
 
-- `npm run dev` - запустити development server
-- `npm run build` - build для production
-- `npm run preview` - preview production build локально
-- `npm run lint` - lint code
-- `npm run generate` - згенерувати GraphQL types з backend schema
+### Available Scripts
 
-## Deployment (Vercel)
+| Command              | Description                           |
+| -------------------- | ------------------------------------- |
+| `yarn dev`           | Start development server on port 5173 |
+| `yarn build`         | Build for production                  |
+| `yarn preview`       | Preview production build locally      |
+| `yarn lint`          | Run ESLint                            |
+| `yarn format`        | Format code with Prettier             |
+| `yarn generate`      | Generate GraphQL types from schema    |
+| `yarn test`          | Run tests                             |
+| `yarn test:ui`       | Run tests with UI interface           |
+| `yarn test:coverage` | Run tests with coverage report        |
 
-### Automatic deployment
+### Code Quality
 
-1. Push код до GitHub
-2. В Vercel Dashboard:
-   - Import Project
-   - Обери repository
-   - Add environment variable: `VITE_API_URL`
-3. Deploy!
+The project enforces code quality through:
 
-Vercel автоматично:
-- Детектить Vite project
-- Запустить `npm run build`
-- Деплоїть до edge network
+- **TypeScript** - Strict type checking enabled
+- **ESLint** - Linting with React and TypeScript rules
+- **Prettier** - Consistent code formatting
+- **Husky** - Pre-commit hooks (optional)
 
-### Manual deployment
+### GraphQL Development
+
+When the backend GraphQL schema changes:
+
+1. Ensure the backend is running
+2. Run `yarn generate` to update types
+3. Review generated files in `src/shared/api/graphql/`
+
+The code generator creates:
+- TypeScript types for all GraphQL types
+- React hooks for queries and mutations
+- Typed document nodes for operations
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+#### Automatic Deployment
+
+1. Push your code to GitHub
+2. Import project in [Vercel Dashboard](https://vercel.com)
+3. Configure environment variables:
+   - `VITE_API_URL` - Your GraphQL API endpoint
+4. Deploy!
+
+Vercel automatically:
+- Detects Vite configuration
+- Runs `yarn build`
+- Deploys to global edge network
+- Provides preview deployments for PRs
+
+#### Manual Deployment
 
 ```bash
-npm run build
+yarn build
 npx vercel --prod
 ```
 
-## Environment Variables
+### Other Platforms
 
-- `VITE_API_URL` - URL твого GraphQL API endpoint
+The app can be deployed to any static hosting service:
 
-**Important:** Всі env variables для Vite мають починатися з `VITE_`
+- **Netlify** - `netlify deploy --prod`
+- **Cloudflare Pages** - Connect via Git
+- **AWS S3 + CloudFront** - Upload `dist/` folder
+- **GitHub Pages** - Use `gh-pages` package
 
-## Features
+### Build Output
 
-- 🍽️ Управління стравами та продуктами
-- 📅 Планування меню на тиждень
-- 🔍 Пошук та фільтрація
-- 🎨 Темна/світла тема
-- 📱 PWA (Progressive Web App)
-- 🔐 OAuth authentication (Google, GitHub, Facebook)
-- 🌐 Service Worker для offline capabilities
+The production build creates optimized assets in `dist/`:
 
-## Project Structure
+```bash
+yarn build
+```
+
+Output includes:
+- Minified JavaScript bundles
+- Optimized CSS
+- Service Worker for PWA
+- Static assets with cache headers
+
+### Environment Variables
+
+| Variable                | Required | Description              |
+| ----------------------- | -------- | ------------------------ |
+| `VITE_API_URL`          | Yes      | GraphQL API endpoint URL |
+| `VITE_GOOGLE_CLIENT_ID` | No       | Google OAuth client ID   |
+| `VITE_GITHUB_CLIENT_ID` | No       | GitHub OAuth client ID   |
+| `VITE_FACEBOOK_APP_ID`  | No       | Facebook OAuth app ID    |
+
+**Note:** All Vite environment variables must be prefixed with `VITE_`
+
+## 📁 Project Structure
+
+The project follows **Feature-Sliced Design** architecture:
 
 ```
 src/
-├── components/     # Переповторювані UI компоненти
-├── pages/          # Page-level компоненти (routes)
-├── hooks/          # Custom React hooks
-├── lib/            # Utilities, configs, GraphQL setup
-├── types/          # TypeScript type definitions
-├── constants/      # App constants
-└── modules/        # Feature-specific modules
+├── app/                    # Application initialization
+│   ├── providers/         # Context providers (Auth, Apollo, Theme)
+│   ├── routes/            # Route configuration
+│   └── App.tsx            # Root component
+│
+├── pages/                  # Page components (routes)
+│   ├── Home.tsx
+│   ├── DishDetail.tsx
+│   └── ...
+│
+├── features/               # Feature modules
+│   ├── auth/              # Authentication feature
+│   │   ├── hooks/         # useAuthState, useLogin
+│   │   ├── model/         # AuthContext, types
+│   │   └── __tests__/     # Feature tests
+│   ├── dishes/            # Dishes management
+│   └── products/          # Products management
+│
+├── shared/                 # Shared resources
+│   ├── api/               # API layer
+│   │   ├── apollo.ts      # Apollo Client setup
+│   │   └── graphql/       # Generated GraphQL types
+│   ├── components/        # Reusable UI components
+│   │   ├── ui/            # shadcn/ui components
+│   │   ├── search/        # Search component
+│   │   └── ...
+│   ├── hooks/             # Shared hooks
+│   │   ├── useDebounce.ts
+│   │   ├── useFavorite.ts
+│   │   └── ...
+│   ├── lib/               # Utilities and helpers
+│   │   └── utils/         # Validation, formatting, etc.
+│   └── types/             # Shared TypeScript types
+│
+├── test/                   # Test setup and utilities
+│   └── setup.ts
+│
+└── main.tsx               # Application entry point
 ```
 
-## GraphQL Code Generation
+### Architecture Principles
 
-Проєкт використовує GraphQL Code Generator для автоматичної генерації:
-- TypeScript types з schema
-- React hooks для queries/mutations
-- Typed operations
+- **Feature-Sliced Design** - Organized by features, not file types
+- **Unidirectional dependencies** - `app` → `pages` → `features` → `shared`
+- **Colocation** - Tests and types live near their implementation
+- **Separation of concerns** - Clear boundaries between layers
 
-Config: `codegen.ts`
+## 🔧 GraphQL Code Generation
 
-Після зміни GraphQL schema на backend, запусти:
+The project uses [GraphQL Code Generator](https://the-guild.dev/graphql/codegen) for type-safe GraphQL operations.
+
+### Configuration
+
+See `codegen.ts` for the complete configuration.
+
+### Generated Files
+
+The generator creates:
+
+- **Types** - TypeScript interfaces for all GraphQL types
+- **Hooks** - React hooks for queries and mutations
+- **Documents** - Typed document nodes for operations
+
+### Workflow
+
+1. Write GraphQL operations in `.gql` files:
+
+```graphql
+# src/features/auth/api/auth.gql
+query Me {
+  me {
+    id
+    email
+    name
+  }
+}
+```
+
+2. Run code generation:
 
 ```bash
-npm run generate
+yarn generate
 ```
 
-## Notes
+3. Use generated hooks:
 
-- Apollo Client налаштований з credentials: 'include' для OAuth
-- Service Worker кешує assets для offline mode
-- PWA installable на мобільних пристроях
+```typescript
+import { useMeQuery } from './auth.generated';
+
+const { data, loading } = useMeQuery();
+```
+
+### Benefits
+
+- ✅ **Type Safety** - Compile-time type checking
+- ✅ **Auto-completion** - IntelliSense for GraphQL operations
+- ✅ **Refactoring** - Rename fields with confidence
+- ✅ **Documentation** - Types serve as inline documentation
+
+## 🧪 Testing
+
+The project uses **Vitest** and **React Testing Library** for testing.
+
+### Testing Philosophy
+
+We follow a **pragmatic approach to testing**:
+
+- ✅ **Test critical business logic** - Authentication, data validation, calculations
+- ✅ **Test integration flows** - User journeys and feature interactions
+- ✅ **Test reusable hooks** - Shared utilities used across the app
+- ❌ **Don't test library components** - shadcn/ui is already tested
+- ❌ **Don't test trivial code** - Simple wrappers and utilities
+
+### Test Coverage
+
+**Current: ~78 tests** covering:
+
+| Module           | Tests | Description                     |
+| ---------------- | ----- | ------------------------------- |
+| `useAuthState`   | 8     | Authentication state management |
+| `useFavorite`    | 9     | Favorite functionality          |
+| `useDebounce`    | 6     | Debounce hook                   |
+| `validate`       | 16    | Form validation logic           |
+| `nutrition`      | 25    | Nutrition calculations          |
+| `auth-flow`      | 6     | Integration tests               |
+| `FavoriteButton` | 8     | Component with business logic   |
+
+### Running Tests
+
+```bash
+# Run all tests
+yarn test
+
+# Run with UI
+yarn test:ui
+
+# Run with coverage
+yarn test:coverage
+
+# Watch mode
+yarn test --watch
+```
+
+### Writing Tests
+
+Example test structure:
+
+```typescript
+import { renderHook, act } from '@testing-library/react';
+import { useAuthState } from './useAuthState';
+
+describe('useAuthState', () => {
+  it('should login user with valid credentials', async () => {
+    const { result } = renderHook(() => useAuthState());
+    
+    await act(() => result.current.login(email, password));
+    
+    expect(result.current.user).toBeDefined();
+    expect(result.current.isAuthenticated).toBe(true);
+  });
+});
+```
+
+For detailed testing guidelines, see [`docs/testing.md`](./docs/testing.md)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. **Fork the repository**
+2. **Create a feature branch** - `git checkout -b feature/amazing-feature`
+3. **Follow code style** - Run `yarn lint` and `yarn format`
+4. **Write tests** - For critical business logic
+5. **Commit changes** - Use conventional commits
+6. **Push to branch** - `git push origin feature/amazing-feature`
+7. **Open a Pull Request**
+
+### Commit Convention
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add new feature
+fix: fix bug
+docs: update documentation
+style: format code
+refactor: refactor code
+test: add tests
+chore: update dependencies
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [shadcn/ui](https://ui.shadcn.com/) - Beautiful component library
+- [Radix UI](https://www.radix-ui.com/) - Accessible primitives
+- [Apollo Client](https://www.apollographql.com/docs/react/) - GraphQL client
+- [Vite](https://vitejs.dev/) - Next-generation build tool
+
+## 📧 Support
+
+For questions or issues:
+
+- 📫 Open an [issue](https://github.com/mmazitov/mealvy/issues)
+- 💬 Start a [discussion](https://github.com/mmazitov/mealvy/discussions)
+- 📧 Email: support@mealvy.app
+
+---
+
+**Built with ❤️ using React and TypeScript**
