@@ -14,11 +14,15 @@ const QuickActions = () => {
 		<ul className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
 			{QUICK_ACTIONS.map((action) => (
 				<li key={action.title}>
-					<Link to={action.link}>
+					<Link
+						to={action.link}
+						aria-label={`${action.title}: ${action.description}`}
+					>
 						<Card className="group h-full cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
 							<CardHeader>
 								<div
 									className={`bg-muted mb-3 flex h-12 w-12 items-center justify-center rounded-lg transition-transform group-hover:scale-110 ${action.color}`}
+									aria-hidden="true"
 								>
 									<action.icon className="h-6 w-6" />
 								</div>

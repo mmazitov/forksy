@@ -166,7 +166,12 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 						control={control}
 						render={({ field }) => (
 							<Select onValueChange={field.onChange} value={field.value}>
-								<SelectTrigger>
+								<SelectTrigger
+									aria-invalid={errors.category ? 'true' : 'false'}
+									aria-describedby={
+										errors.category ? 'category-error' : undefined
+									}
+								>
 									<SelectValue placeholder="Виберіть категорію" />
 								</SelectTrigger>
 								<SelectContent>
@@ -180,7 +185,11 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 						)}
 					/>
 					{errors.category && (
-						<p className="text-destructive text-sm">
+						<p
+							id="category-error"
+							role="alert"
+							className="text-destructive text-sm"
+						>
 							{errors.category.message}
 						</p>
 					)}
@@ -269,8 +278,9 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 						variant="outline"
 						size="sm"
 						onClick={addIngredient}
+						aria-label="Додати інгредієнт"
 					>
-						<LuPlus className="mr-1 h-4 w-4" />
+						<LuPlus className="mr-1 h-4 w-4" aria-hidden="true" />
 						Додати
 					</Button>
 				</div>
@@ -300,6 +310,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 										onKeyDown={(e) => e.stopPropagation()}
 										onKeyUp={(e) => e.stopPropagation()}
 										autoFocus
+										aria-label="Пошук продукту"
 									/>
 								</div>
 								<div className="max-h-50 overflow-y-auto">
@@ -325,6 +336,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 							onChange={(e) =>
 								updateIngredient(index, { amount: e.target.value })
 							}
+							aria-label={`Кількість інгредієнту ${index + 1}`}
 						/>
 						{ingredients.length > 1 ? (
 							<Button
@@ -332,8 +344,9 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 								variant="ghost"
 								size="icon"
 								onClick={() => removeIngredient(index)}
+								aria-label={`Видалити інгредієнт ${index + 1}`}
 							>
-								<LuMinus className="h-4 w-4" />
+								<LuMinus className="h-4 w-4" aria-hidden="true" />
 							</Button>
 						) : (
 							<div />
@@ -351,8 +364,9 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 						variant="outline"
 						size="sm"
 						onClick={addInstruction}
+						aria-label="Додати крок приготування"
 					>
-						<LuPlus className="mr-1 h-4 w-4" />
+						<LuPlus className="mr-1 h-4 w-4" aria-hidden="true" />
 						Додати крок
 					</Button>
 				</div>
@@ -367,6 +381,7 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 							onChange={(e) => updateInstruction(index, e.target.value)}
 							rows={2}
 							className="flex-1"
+							aria-label={`Крок ${index + 1}`}
 						/>
 						{instructions.length > 1 && (
 							<Button
@@ -375,8 +390,9 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 								size="icon"
 								onClick={() => removeInstruction(index)}
 								className="mt-2"
+								aria-label={`Видалити крок ${index + 1}`}
 							>
-								<X className="h-4 w-4" />
+								<X className="h-4 w-4" aria-hidden="true" />
 							</Button>
 						)}
 					</div>

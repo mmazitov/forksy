@@ -35,11 +35,13 @@ const MenuButton = ({
 				className="hover:bg-muted rounded-md p-2 transition-colors"
 				onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
 				variant={'ghost'}
+				aria-label={mobileMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
+				aria-expanded={mobileMenuOpen}
 			>
 				{mobileMenuOpen ? (
-					<X className="h-6 w-6" />
+					<X className="h-6 w-6" aria-hidden="true" />
 				) : (
-					<Menu className="h-6 w-6" />
+					<Menu className="h-6 w-6" aria-hidden="true" />
 				)}
 			</Button>
 		</div>

@@ -34,9 +34,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					<button
 						type="button"
 						onClick={() => setShowPassword(!showPassword)}
-						className="absolute inset-y-0 right-[10px] flex w-[40px] cursor-pointer items-center justify-center text-[var(--input-color)]"
+						className="absolute inset-y-0 right-2.5 flex w-10 cursor-pointer items-center justify-center"
+						aria-label={showPassword ? 'Приховати пароль' : 'Показати пароль'}
 					>
-						{showPassword ? <LuEye size={20} /> : <LuEyeOff size={20} />}
+						{showPassword ? (
+							<LuEye size={20} aria-hidden="true" />
+						) : (
+							<LuEyeOff size={20} aria-hidden="true" />
+						)}
 					</button>
 				)}
 				{showIcon && (

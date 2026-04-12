@@ -50,16 +50,24 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 				<div className="space-y-2">
 					<Label htmlFor="name">Ім&aposя</Label>
 					<div className="relative">
-						<LuUser className={iconClass} />
+						<LuUser className={iconClass} aria-hidden="true" />
 						<Input
 							id="name"
 							type="text"
 							{...register('name')}
 							placeholder="Введіть ваше ім'я"
 							className="pl-10"
+							aria-invalid={'name' in errors && errors.name ? 'true' : 'false'}
+							aria-describedby={
+								'name' in errors && errors.name ? 'name-error' : undefined
+							}
 						/>
 						{'name' in errors && errors.name && (
-							<div role="alert" className="pt-1 text-xs text-red-600">
+							<div
+								id="name-error"
+								role="alert"
+								className="pt-1 text-xs text-red-600"
+							>
 								{errors.name.message}
 							</div>
 						)}
@@ -70,16 +78,22 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 			<div className="space-y-2">
 				<Label htmlFor="email">Електронна пошта</Label>
 				<div className="relative">
-					<LuMail className={iconClass} />
+					<LuMail className={iconClass} aria-hidden="true" />
 					<Input
 						id="email"
 						type="email"
 						{...register('email')}
 						placeholder="example@mail.com"
 						className="pl-10"
+						aria-invalid={errors.email ? 'true' : 'false'}
+						aria-describedby={errors.email ? 'email-error' : undefined}
 					/>
 					{errors.email && (
-						<div className="pt-1 text-xs text-red-600">
+						<div
+							id="email-error"
+							role="alert"
+							className="pt-1 text-xs text-red-600"
+						>
 							{errors.email.message}
 						</div>
 					)}
@@ -89,7 +103,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 			<div className="space-y-2">
 				<Label htmlFor="password">Пароль</Label>
 				<div className="relative">
-					<LuLock className={iconClass} />
+					<LuLock className={iconClass} aria-hidden="true" />
 					<Input
 						id="password"
 						type="password"
@@ -97,9 +111,15 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						placeholder="••••••••"
 						className="pl-10"
 						showToggle
+						aria-invalid={errors.password ? 'true' : 'false'}
+						aria-describedby={errors.password ? 'password-error' : undefined}
 					/>
 					{errors.password && (
-						<div className="pt-1 text-xs text-red-600">
+						<div
+							id="password-error"
+							role="alert"
+							className="pt-1 text-xs text-red-600"
+						>
 							{errors.password.message}
 						</div>
 					)}

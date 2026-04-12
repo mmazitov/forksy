@@ -61,7 +61,12 @@ const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
 					control={control}
 					render={({ field }) => (
 						<Select onValueChange={field.onChange} value={field.value}>
-							<SelectTrigger>
+							<SelectTrigger
+								aria-invalid={errors.category ? 'true' : 'false'}
+								aria-describedby={
+									errors.category ? 'category-error' : undefined
+								}
+							>
 								<SelectValue placeholder="Виберіть категорію" />
 							</SelectTrigger>
 							<SelectContent>
@@ -75,7 +80,13 @@ const ProductForm = ({ product, isEditMode = false }: ProductFormProps) => {
 					)}
 				/>
 				{errors.category && (
-					<p className="text-destructive text-sm">{errors.category.message}</p>
+					<p
+						id="category-error"
+						role="alert"
+						className="text-destructive text-sm"
+					>
+						{errors.category.message}
+					</p>
 				)}
 			</div>
 
