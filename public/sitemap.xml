@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<!-- Home -->
+
 	<url>
 		<loc>https://mealvy.vercel.app/</loc>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
 		<lastmod>2026-04-13</lastmod>
 	</url>
-
-	<!-- Main Pages -->
 	<url>
 		<loc>https://mealvy.vercel.app/dishes</loc>
 		<changefreq>daily</changefreq>
@@ -45,8 +44,6 @@
 		<priority>0.7</priority>
 		<lastmod>2026-04-13</lastmod>
 	</url>
-
-	<!-- Auth Pages (noindex in robots meta, but include for completeness) -->
 	<url>
 		<loc>https://mealvy.vercel.app/profile</loc>
 		<changefreq>monthly</changefreq>
