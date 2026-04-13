@@ -13,6 +13,7 @@ interface PageTitleProps {
 	onClick?: () => void;
 	href?: string;
 	isLoggedIn?: boolean;
+	buttonMobileVisible?: boolean;
 	secondaryButtonVisible?: boolean;
 	secondaryButtonDisable?: boolean;
 	secondaryButtonText?: string;
@@ -20,6 +21,7 @@ interface PageTitleProps {
 	secondaryButtonIcon?: React.ReactNode;
 	secondaryButtonOnClick?: () => void;
 	secondaryButtonHref?: string;
+	secondaryButtonMobileVisible?: boolean;
 }
 
 const PageTitle = ({
@@ -33,6 +35,7 @@ const PageTitle = ({
 	buttonVisible = true,
 	buttonDisable = false,
 	isLoggedIn,
+	buttonMobileVisible = true,
 	secondaryButtonVisible = false,
 	secondaryButtonText,
 	secondaryButtonType = 'button',
@@ -40,6 +43,7 @@ const PageTitle = ({
 	secondaryButtonOnClick,
 	secondaryButtonHref,
 	secondaryButtonDisable = false,
+	secondaryButtonMobileVisible = true,
 }: PageTitleProps) => {
 	const { user } = useAuthContext();
 	const loggedIn = isLoggedIn !== undefined ? isLoggedIn : !!user;
@@ -62,6 +66,7 @@ const PageTitle = ({
 							href={href}
 							disabled={buttonDisable}
 							visible={buttonVisible}
+							mobileVisible={buttonMobileVisible}
 						/>
 
 						<ActionButton
@@ -72,6 +77,7 @@ const PageTitle = ({
 							href={secondaryButtonHref}
 							disabled={secondaryButtonDisable}
 							visible={secondaryButtonVisible}
+							mobileVisible={secondaryButtonMobileVisible}
 						/>
 					</div>
 				)}

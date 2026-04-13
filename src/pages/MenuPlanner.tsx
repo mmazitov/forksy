@@ -86,6 +86,7 @@ const MenuPlanner = () => {
 				buttonText={PAGE_TITLE.planer.button}
 				buttonIcon={<LuSave />}
 				buttonDisable={isLoading || !isDirty}
+				buttonMobileVisible={false}
 				secondaryButtonVisible={true}
 				secondaryButtonText="Список продуктів"
 				secondaryButtonIcon={<LuList />}
@@ -93,6 +94,7 @@ const MenuPlanner = () => {
 				secondaryButtonOnClick={() =>
 					navigate(`/shopping-list?week=${schedule.weekDiff}`)
 				}
+				secondaryButtonMobileVisible={false}
 			/>
 			<Tabs defaultValue="day" className="space-y-6">
 				<TabsList className="grid w-full max-w-md grid-cols-2">
