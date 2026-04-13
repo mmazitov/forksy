@@ -91,15 +91,25 @@ const errorLink = onError((errorResponse) => {
 		}
 	}
 
-	if (import.meta.env.DEV && networkError) {
-		console.error(`[Network error]: ${networkError}`);
-		if (
-			'message' in networkError &&
-			networkError.message?.includes('Failed to fetch')
-		) {
-			console.warn(
-				'GraphQL server is not available. Check your VITE_API_URL environment variable.',
-			);
+	if (networkError) {
+		if (import.meta.env.DEV) {
+			console.error(`[Network error]: ${networkError}`);
+			if (
+				'message' in networkError &&
+				networkError.message?.includes('Failed to fetch')
+			) {
+				console.warn(
+					'GraphQL server is not available. Check your VITE_API_URL environment variable.',
+				);
+			}
+		}
+
+		// Only logout on 401 Unauthorized, not on general network errors
+		if ('statusCode' in networkError && networkError.statusCode === 401) {
+			if (import.meta.env.DEV) {
+				console.warn('[Apollo] 401 Unauthorized, logging out');
+			}
+			onUnauthenticated?.();
 		}
 	}
 });

@@ -33,9 +33,22 @@ async function cacheFirst(request, cacheName) {
 async function staleWhileRevalidate(request, cacheName) {
 	const cache = await caches.open(cacheName);
 
-	// Only cache GET requests
-	if (request.method !== 'GET') {
-		return fetch(request);
+	// POST requests (GraphQL) - try network, fallback to cache
+	if (request.method === 'POST') {
+		try {
+			const response = await fetch(request);
+			if (response && response.status === 200) {
+				cache.put(request, response.clone());
+			}
+			return response;
+		} catch (err) {
+			error('[Strategy] POST request failed, trying cache:', err);
+			const cached = await cache.match(request);
+			if (cached) {
+				return cached;
+			}
+			throw err;
+		}
 	}
 
 	const cached = await cache.match(request);
@@ -81,5 +94,11 @@ async function networkFirst(request, cacheName) {
 
 // Network Only - for auth requests
 async function networkOnly(request) {
-	return fetch(request);
+	try {
+		return await fetch(request);
+	} catch (err) {
+		error('[Strategy] Network Only failed:', err);
+		// Re-throw to let Apollo Client handle auth errors properly
+		throw err;
+	}
 }
