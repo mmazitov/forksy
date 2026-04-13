@@ -141,28 +141,25 @@ const items = [
 <Breadcrumb items={items} />
 ```
 
-### Prerendering with react-snap
+### Prerendering Strategy
 
-**Status:** ⚠️ Temporarily disabled (requires Chrome/Puppeteer setup)
+**Current Approach:** Client-side rendering with fallback meta tags
 
-**Configuration:** `package.json` → `reactSnap` section
+The app uses CSR (Client-Side Rendering) with:
+- Static fallback meta tags in `index.html` for initial SEO
+- Dynamic meta tags via `react-head` after hydration
+- Service Worker for PWA caching
 
-Prerenders static HTML for all routes to improve initial SEO and load times.
+**Why no SSR/SSG?**
+- Vercel automatically optimizes React SPAs
+- Fallback meta tags provide good initial SEO
+- Dynamic content (auth, user data) benefits from CSR
+- PWA Service Worker caches assets efficiently
 
-**Known Issues:**
-- `react-snap` is outdated (last updated 2018)
-- Requires Chrome/Chromium installed locally
-- Puppeteer version conflicts with Node.js 22
-
-**Alternative Solutions:**
-1. **Vercel ISR** - Use Vercel's Incremental Static Regeneration
-2. **Vite SSG Plugin** - `vite-ssg` for static site generation
-3. **Manual Prerendering** - Custom script with Playwright
-
-**To enable react-snap:**
-1. Install Chrome/Chromium
-2. Update `package.json`: `"postbuild": "react-snap"`
-3. Run `yarn build`
+**Future Options:**
+1. **Vercel Edge Functions** - Add SSR for critical pages
+2. **Next.js Migration** - Full SSR/ISR support
+3. **Prerender.io** - Third-party prerendering service
 
 ## Future Improvements
 

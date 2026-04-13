@@ -11,31 +11,9 @@
 		"generate": "graphql-codegen && node scripts/add-operations-imports.js",
 		"generate:sitemap": "node scripts/generate-sitemap.cjs",
 		"prebuild": "yarn generate:sitemap",
-		"postbuild": "echo 'Skipping react-snap - requires Chrome setup'",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
 		"test:coverage": "vitest --coverage"
-	},
-	"reactSnap": {
-		"source": "dist",
-		"minifyHtml": {
-			"collapseWhitespace": true,
-			"removeComments": true
-		},
-		"include": [
-			"/",
-			"/dishes",
-			"/products",
-			"/schedule",
-			"/menu-planner",
-			"/shopping-list",
-			"/favorites"
-		],
-		"skipThirdPartyRequests": true,
-		"puppeteerArgs": [
-			"--no-sandbox",
-			"--disable-setuid-sandbox"
-		]
 	},
 	"dependencies": {
 		"@apollo/client": "^4.0.9",
@@ -104,7 +82,6 @@
 		"jsdom": "^26.0.0",
 		"prettier": "^3.6.2",
 		"prettier-plugin-tailwindcss": "^0.7.2",
-		"react-snap": "^1.23.0",
 		"sharp": "^0.34.5",
 		"typescript": "~5.9.3",
 		"typescript-eslint": "^8.46.0",
