@@ -4,7 +4,13 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAuthContext } from '@/features/auth';
 import { CardFull } from '@/features/dishes';
 import { useDishByNameQuery } from '@/shared/api/graphql';
-import { Button, Loader, MetaData, SchemaOrg } from '@/shared/components';
+import {
+	Breadcrumb,
+	Button,
+	Loader,
+	MetaData,
+	SchemaOrg,
+} from '@/shared/components';
 import { fromSlug } from '@/shared/lib/utils/slug';
 import { generateRecipeSchema } from '@/shared/lib/utils/schemaOrg';
 
@@ -59,6 +65,12 @@ const DishDetail = () => {
 		instructions: dish.instructions ?? [],
 	});
 
+	const breadcrumbItems = [
+		{ name: 'Головна', url: '/' },
+		{ name: 'Страви', url: '/dishes' },
+		{ name: dish.name, url: `/dishes/${id}` },
+	];
+
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
@@ -74,6 +86,7 @@ const DishDetail = () => {
 				type="article"
 			/>
 			<SchemaOrg schema={recipeSchema} />
+			<Breadcrumb items={breadcrumbItems} />
 			<Link to={from}>
 				<Button variant="ghost" className="mb-6 gap-2">
 					<LuArrowLeft className="h-4 w-4" />
