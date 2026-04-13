@@ -9,6 +9,8 @@
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"preview": "vite preview",
 		"generate": "graphql-codegen && node scripts/add-operations-imports.js",
+		"generate:sitemap": "node scripts/generate-sitemap.js",
+		"prebuild": "yarn generate:sitemap",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
 		"test:coverage": "vitest --coverage"

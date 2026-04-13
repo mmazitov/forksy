@@ -1,0 +1,1 @@
+export { SchemaOrg } from './SchemaOrg';

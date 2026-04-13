@@ -1,11 +1,13 @@
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://mealvy.vercel.app';
+
 export const METADATA_CONFIG = {
 	site: {
 		name: 'Mealvy',
 		fullName: 'Mealvy - Планувальник харчування та менеджер рецептів',
 		description:
 			'Ваш особистий планувальник харчування та менеджер рецептів. Плануйте свої страви, керуйте рецептами та відкривайте нові страви з детальною інформацією про поживні речовини.',
-		url: 'https://mealvy.com',
-		image: 'https://mealvy.com/og-image.jpg',
+		url: SITE_URL,
+		image: `${SITE_URL}/og-image.jpg`,
 		language: 'uk',
 		type: 'website',
 	},

@@ -1,8 +1,17 @@
 import { FeaturedDishes } from '@/features/dishes';
-import { Hero, MetaData, QuickActions, Stats } from '@/shared/components';
+import {
+	Hero,
+	MetaData,
+	QuickActions,
+	SchemaOrg,
+	Stats,
+} from '@/shared/components';
 import { METADATA_CONFIG } from '@/shared/lib/config';
+import { generateOrganizationSchema } from '@/shared/lib/utils/schemaOrg';
 
 const Home = () => {
+	const organizationSchema = generateOrganizationSchema();
+
 	return (
 		<>
 			<MetaData
@@ -11,6 +20,7 @@ const Home = () => {
 				keywords={METADATA_CONFIG.keywords.home}
 				type="website"
 			/>
+			<SchemaOrg schema={organizationSchema} />
 			{/* Hero Section */}
 			<section
 				className="relative overflow-hidden"
