@@ -175,10 +175,14 @@ The app uses CSR (Client-Side Rendering) with:
 
 ## Future Improvements
 
-1. **Dynamic Sitemap with API Data**
-   - Fetch dishes/products from database
-   - Include detail page URLs in sitemap
+1. **Sitemap Index**
+   - Split into multiple sitemaps if > 50,000 URLs
+   - Create sitemap index file for better organization
 
 2. **Multilingual Support**
    - Add hreflang tags for English version
    - Separate sitemaps per language
+
+3. **Image Sitemap**
+   - Add dish/product images to sitemap
+   - Improve image search visibility
