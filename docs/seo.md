@@ -98,14 +98,26 @@ Used for:
 
 **Script:** `scripts/generate-sitemap.cjs`
 
-Automatically generates sitemap before each build with current date.
+Automatically generates sitemap before each build with:
+- **Static routes** (9 URLs): home, dishes, products, schedule, etc.
+- **Dynamic dish routes**: Fetched from GraphQL API
+- **Dynamic product routes**: Fetched from GraphQL API
+
+**Features:**
+- Fetches data from `VITE_API_URL` GraphQL endpoint
+- Converts names to URL-friendly slugs
+- Uses `updatedAt` field for accurate `lastmod` dates
+- Graceful fallback if API is unavailable
 
 **Usage:**
 ```bash
 yarn generate:sitemap
 ```
 
-**Future:** Extend to fetch dishes/products from API for dynamic URLs.
+**Example output:**
+```
+✅ Generated sitemap.xml with 120 URLs (9 static, 2 dishes, 109 products)
+```
 
 ### Schema.org Component
 
