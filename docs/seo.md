@@ -143,17 +143,26 @@ const items = [
 
 ### Prerendering with react-snap
 
-**Configuration:** `reactSnap.config.js`
+**Status:** ⚠️ Temporarily disabled (requires Chrome/Puppeteer setup)
+
+**Configuration:** `package.json` → `reactSnap` section
 
 Prerenders static HTML for all routes to improve initial SEO and load times.
 
-**Routes prerendered:**
-- Home, Dishes, Products, Schedule, Menu Planner, Shopping List, Favorites
+**Known Issues:**
+- `react-snap` is outdated (last updated 2018)
+- Requires Chrome/Chromium installed locally
+- Puppeteer version conflicts with Node.js 22
 
-**Build process:**
-1. `yarn build` → Vite builds app
-2. `postbuild` → react-snap prerenders routes
-3. Result: Static HTML files in `dist/`
+**Alternative Solutions:**
+1. **Vercel ISR** - Use Vercel's Incremental Static Regeneration
+2. **Vite SSG Plugin** - `vite-ssg` for static site generation
+3. **Manual Prerendering** - Custom script with Playwright
+
+**To enable react-snap:**
+1. Install Chrome/Chromium
+2. Update `package.json`: `"postbuild": "react-snap"`
+3. Run `yarn build`
 
 ## Future Improvements
 
