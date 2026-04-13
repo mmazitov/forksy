@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useAuthContext } from '@/features/auth';
 import { CardFull } from '@/features/products';
 import { useProductByNameQuery } from '@/shared/api/graphql';
-import { Button, Loader, MetaData } from '@/shared/components';
+import { Button, Loader, MetaData, SchemaOrg } from '@/shared/components';
 import { fromSlug } from '@/shared/lib/utils/slug';
 import { generateProductSchema } from '@/shared/lib/utils/schemaOrg';
 
@@ -67,10 +67,7 @@ const ProductDetail = () => {
 				]}
 				type="product"
 			/>
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-			/>
+			<SchemaOrg schema={productSchema} />
 			<Link to={from}>
 				<Button variant="ghost" className="mb-6 gap-2">
 					<ArrowLeft className="h-4 w-4" />

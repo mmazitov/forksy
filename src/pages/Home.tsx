@@ -1,5 +1,11 @@
 import { FeaturedDishes } from '@/features/dishes';
-import { Hero, MetaData, QuickActions, Stats } from '@/shared/components';
+import {
+	Hero,
+	MetaData,
+	QuickActions,
+	SchemaOrg,
+	Stats,
+} from '@/shared/components';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 import { generateOrganizationSchema } from '@/shared/lib/utils/schemaOrg';
 
@@ -14,10 +20,7 @@ const Home = () => {
 				keywords={METADATA_CONFIG.keywords.home}
 				type="website"
 			/>
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-			/>
+			<SchemaOrg schema={organizationSchema} />
 			{/* Hero Section */}
 			<section
 				className="relative overflow-hidden"
