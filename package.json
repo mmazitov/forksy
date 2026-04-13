@@ -11,10 +11,31 @@
 		"generate": "graphql-codegen && node scripts/add-operations-imports.js",
 		"generate:sitemap": "node scripts/generate-sitemap.cjs",
 		"prebuild": "yarn generate:sitemap",
-		"postbuild": "react-snap",
+		"postbuild": "echo 'Skipping react-snap - requires Chrome setup'",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
 		"test:coverage": "vitest --coverage"
+	},
+	"reactSnap": {
+		"source": "dist",
+		"minifyHtml": {
+			"collapseWhitespace": true,
+			"removeComments": true
+		},
+		"include": [
+			"/",
+			"/dishes",
+			"/products",
+			"/schedule",
+			"/menu-planner",
+			"/shopping-list",
+			"/favorites"
+		],
+		"skipThirdPartyRequests": true,
+		"puppeteerArgs": [
+			"--no-sandbox",
+			"--disable-setuid-sandbox"
+		]
 	},
 	"dependencies": {
 		"@apollo/client": "^4.0.9",
