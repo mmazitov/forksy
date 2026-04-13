@@ -73,7 +73,73 @@
 	<!-- Products -->
 
 	<url>
+		<loc>https://mealvy.vercel.app/products/111</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
 		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-5</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -92,6 +158,66 @@
 	</url>
 	<url>
 		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-extra-virgin</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -151,271 +277,7 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
 		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-5</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-15-3</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -457,25 +319,7 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
+		<loc>https://mealvy.vercel.app/products/-</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -488,6 +332,12 @@
 	</url>
 	<url>
 		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -505,54 +355,6 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
-		<loc>https://mealvy.vercel.app/products/-extra-virgin</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
 		<loc>https://mealvy.vercel.app/products/-</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
@@ -589,6 +391,42 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
 		<loc>https://mealvy.vercel.app/products/-</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
@@ -602,6 +440,144 @@
 	</url>
 	<url>
 		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/-</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -625,30 +601,6 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
 		<loc>https://mealvy.vercel.app/products/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
@@ -661,13 +613,7 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
+		<loc>https://mealvy.vercel.app/products/-15-3</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>
@@ -703,12 +649,6 @@
 		<lastmod>2026-04-13</lastmod>
 	</url>
 	<url>
-		<loc>https://mealvy.vercel.app/products/-</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-		<lastmod>2026-04-13</lastmod>
-	</url>
-	<url>
 		<loc>https://mealvy.vercel.app/products/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
@@ -716,6 +656,12 @@
 	</url>
 	<url>
 		<loc>https://mealvy.vercel.app/products/-</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.8</priority>
+		<lastmod>2026-04-13</lastmod>
+	</url>
+	<url>
+		<loc>https://mealvy.vercel.app/products/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 		<lastmod>2026-04-13</lastmod>

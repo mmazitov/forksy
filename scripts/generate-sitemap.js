@@ -10,6 +10,10 @@ const API_URL =
 	process.env.VITE_API_URL || 'https://mealvy-backend.fly.dev/graphql';
 const OUTPUT_PATH = path.join(__dirname, '../public/sitemap.xml');
 
+// Limit dynamic content to prevent sitemap bloat
+// Google will discover other pages through internal links
+const MAX_ITEMS_PER_TYPE = 100;
+
 // Static routes
 const staticRoutes = [
 	{ loc: '/', changefreq: 'daily', priority: '1.0' },
@@ -34,11 +38,12 @@ function toSlug(name) {
 }
 
 // Fetch dishes from GraphQL API
+// Only fetch recent/popular items to keep sitemap manageable
 async function fetchDishes() {
 	try {
 		const query = `
 			query GetAllDishes {
-				dishes(limit: 1000) {
+				dishes(limit: ${MAX_ITEMS_PER_TYPE}) {
 					id
 					name
 					updatedAt
@@ -61,11 +66,12 @@ async function fetchDishes() {
 }
 
 // Fetch products from GraphQL API
+// Only fetch recent/popular items to keep sitemap manageable
 async function fetchProducts() {
 	try {
 		const query = `
 			query GetAllProducts {
-				products(limit: 1000) {
+				products(limit: ${MAX_ITEMS_PER_TYPE}) {
 					id
 					name
 					updatedAt
@@ -166,7 +172,10 @@ ${productUrls}
 
 	const totalUrls = staticRoutes.length + dishes.length + products.length;
 	console.log(
-		`✅ Generated sitemap.xml with ${totalUrls} URLs (${staticRoutes.length} static, ${dishes.length} dishes, ${products.length} products)`,
+		`✅ Generated sitemap.xml with ${totalUrls} URLs (${staticRoutes.length} static, ${dishes.length}/${MAX_ITEMS_PER_TYPE} dishes, ${products.length}/${MAX_ITEMS_PER_TYPE} products)`,
+	);
+	console.log(
+		`ℹ️  Note: Limited to ${MAX_ITEMS_PER_TYPE} items per type. Google will discover other pages through internal links.`,
 	);
 }
 
