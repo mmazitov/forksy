@@ -6,6 +6,7 @@ import { CardFull } from '@/features/dishes';
 import { useDishByNameQuery } from '@/shared/api/graphql';
 import { Button, Loader, MetaData } from '@/shared/components';
 import { fromSlug } from '@/shared/lib/utils/slug';
+import { generateRecipeSchema } from '@/shared/lib/utils/schemaOrg';
 
 const DishDetail = () => {
 	const { isAdmin, user } = useAuthContext();
@@ -44,13 +45,37 @@ const DishDetail = () => {
 
 	const dish = data.dishByName;
 
+	// Generate Recipe Schema.org markup
+	const recipeSchema = generateRecipeSchema({
+		name: dish.name,
+		description: dish.description ?? 'Смачна страва від Mealvy',
+		image: dish.imageUrl ?? 'https://mealvy.vercel.app/icon-512.png',
+		prepTime: `PT${dish.prepTime ?? 0}M`,
+		cookTime: 'PT0M',
+		servings: dish.servings ?? 1,
+		calories: dish.calories ?? 0,
+		ingredients:
+			dish.ingredients?.map((ing) => `${ing.name} - ${ing.amount}`) ?? [],
+		instructions: dish.instructions ?? [],
+	});
+
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
 				title={dish.name}
 				description={dish.description ?? ''}
-				keywords={['recipe', 'dish', 'cooking', dish.name, dish.category ?? '']}
+				keywords={[
+					'рецепт',
+					'страва',
+					'готування',
+					dish.name,
+					dish.category ?? '',
+				]}
 				type="article"
+			/>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(recipeSchema) }}
 			/>
 			<Link to={from}>
 				<Button variant="ghost" className="mb-6 gap-2">
