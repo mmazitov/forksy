@@ -55,6 +55,7 @@ const PlannerDay = ({
 							onRemoveDish={(m: string, dId: string) =>
 								removeDishFromMenu(selectedDay, m, dId)
 							}
+							disableNavigation
 						/>
 					);
 				})}

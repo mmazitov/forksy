@@ -53,7 +53,7 @@ const PageTitle = ({
 				</div>
 
 				{loggedIn && (
-					<div className="flex flex-col items-stretch gap-2">
+					<div className="flex flex-row items-stretch gap-2">
 						<ActionButton
 							type={buttonType}
 							text={buttonText}
