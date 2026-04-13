@@ -87,12 +87,6 @@ const DishDetail = () => {
 			/>
 			<SchemaOrg schema={recipeSchema} />
 			<Breadcrumb items={breadcrumbItems} />
-			<Link to={from}>
-				<Button variant="ghost" className="mb-6 gap-2">
-					<LuArrowLeft className="h-4 w-4" />
-					{backText}
-				</Button>
-			</Link>
 
 			<CardFull
 				id={dish.id}

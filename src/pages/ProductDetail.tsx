@@ -81,12 +81,6 @@ const ProductDetail = () => {
 			/>
 			<SchemaOrg schema={productSchema} />
 			<Breadcrumb items={breadcrumbItems} />
-			<Link to={from}>
-				<Button variant="ghost" className="mb-6 gap-2">
-					<ArrowLeft className="h-4 w-4" />
-					{backText}
-				</Button>
-			</Link>
 
 			<CardFull
 				id={product.id}
