@@ -92,20 +92,75 @@ Used for:
 - INP (Interaction to Next Paint): < 200ms
 - CLS (Cumulative Layout Shift): < 0.1
 
+## Advanced Features
+
+### Dynamic Sitemap Generation
+
+**Script:** `scripts/generate-sitemap.cjs`
+
+Automatically generates sitemap before each build with current date.
+
+**Usage:**
+```bash
+yarn generate:sitemap
+```
+
+**Future:** Extend to fetch dishes/products from API for dynamic URLs.
+
+### Schema.org Component
+
+**Component:** `src/shared/components/schemaOrg/SchemaOrg.tsx`
+
+Reusable component for rendering JSON-LD schema markup.
+
+**Usage:**
+```typescript
+import { SchemaOrg } from '@/shared/components';
+
+const schema = generateRecipeSchema({ ... });
+
+<SchemaOrg schema={schema} />
+```
+
+### Breadcrumb Navigation
+
+**Component:** `src/shared/components/breadcrumb/Breadcrumb.tsx`
+
+Breadcrumb navigation with BreadcrumbList schema for better SEO.
+
+**Usage:**
+```typescript
+import { Breadcrumb } from '@/shared/components';
+
+const items = [
+	{ name: 'Головна', url: '/' },
+	{ name: 'Страви', url: '/dishes' },
+	{ name: 'Dish Name', url: '/dishes/dish-name' },
+];
+
+<Breadcrumb items={items} />
+```
+
+### Prerendering with react-snap
+
+**Configuration:** `reactSnap.config.js`
+
+Prerenders static HTML for all routes to improve initial SEO and load times.
+
+**Routes prerendered:**
+- Home, Dishes, Products, Schedule, Menu Planner, Shopping List, Favorites
+
+**Build process:**
+1. `yarn build` → Vite builds app
+2. `postbuild` → react-snap prerenders routes
+3. Result: Static HTML files in `dist/`
+
 ## Future Improvements
 
-1. **Dynamic Sitemap Generation**
-   - Generate sitemap from database (dishes, products)
-   - Update automatically on content changes
+1. **Dynamic Sitemap with API Data**
+   - Fetch dishes/products from database
+   - Include detail page URLs in sitemap
 
-2. **Breadcrumb Schema**
-   - Add BreadcrumbList schema to detail pages
-   - Improve navigation understanding
-
-3. **Prerendering**
-   - Add react-snap or Vercel prerendering
-   - Improve initial SEO for crawlers
-
-4. **Multilingual Support**
+2. **Multilingual Support**
    - Add hreflang tags for English version
    - Separate sitemaps per language
