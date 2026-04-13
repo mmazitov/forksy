@@ -15,10 +15,11 @@
 - 📊 **Nutrition Tracking** - Automatic calculation of nutritional values
 - 🎨 **Theme Support** - Dark/light mode with system preference detection
 - 📱 **PWA Ready** - Installable progressive web app with offline support
-- 🔐 **OAuth Integration** - Sign in with Google, GitHub, or Facebook
+- 🔐 **OAuth Integration** - Sign in with Google
 - ⚡ **Real-time Updates** - GraphQL subscriptions for live data
 - 🌐 **Offline First** - Service Worker caching for offline capabilities
 - ♿ **Accessibility First** - WCAG 2.1 Level A compliant with full keyboard navigation
+- 🔎 **SEO Optimized** - Dynamic sitemap, Schema.org markup, Open Graph tags
 
 ## 📋 Table of Contents
 
@@ -27,6 +28,7 @@
 - [Development](#development)
 - [Testing](#testing)
 - [Accessibility](#accessibility)
+- [SEO & Performance](#seo--performance)
 - [Deployment](#deployment)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
@@ -93,12 +95,10 @@ Update the environment variables:
 
 ```env
 # GraphQL API endpoint
-VITE_API_URL=http://localhost:4000/graphql
+VITE_API_URL=https://mealvy-backend.fly.dev/graphql
 
-# OAuth providers (optional)
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
-VITE_GITHUB_CLIENT_ID=your_github_client_id
-VITE_FACEBOOK_APP_ID=your_facebook_app_id
+# Site URL for SEO (sitemap, Open Graph)
+VITE_SITE_URL=https://mealvy.vercel.app
 ```
 
 4. **Generate GraphQL types**
@@ -121,17 +121,18 @@ The application will be available at `http://localhost:5173`
 
 ### Available Scripts
 
-| Command              | Description                           |
-| -------------------- | ------------------------------------- |
-| `yarn dev`           | Start development server on port 5173 |
-| `yarn build`         | Build for production                  |
-| `yarn preview`       | Preview production build locally      |
-| `yarn lint`          | Run ESLint                            |
-| `yarn format`        | Format code with Prettier             |
-| `yarn generate`      | Generate GraphQL types from schema    |
-| `yarn test`          | Run tests                             |
-| `yarn test:ui`       | Run tests with UI interface           |
-| `yarn test:coverage` | Run tests with coverage report        |
+| Command                 | Description                           |
+| ----------------------- | ------------------------------------- |
+| `yarn dev`              | Start development server on port 5173 |
+| `yarn build`            | Build for production                  |
+| `yarn preview`          | Preview production build locally      |
+| `yarn lint`             | Run ESLint                            |
+| `yarn format`           | Format code with Prettier             |
+| `yarn generate`         | Generate GraphQL types from schema    |
+| `yarn generate:sitemap` | Generate sitemap.xml with API data    |
+| `yarn test`             | Run tests                             |
+| `yarn test:ui`          | Run tests with UI interface           |
+| `yarn test:coverage`    | Run tests with coverage report        |
 
 ### Code Quality
 
@@ -205,12 +206,10 @@ Output includes:
 
 ### Environment Variables
 
-| Variable                | Required | Description              |
-| ----------------------- | -------- | ------------------------ |
-| `VITE_API_URL`          | Yes      | GraphQL API endpoint URL |
-| `VITE_GOOGLE_CLIENT_ID` | No       | Google OAuth client ID   |
-| `VITE_GITHUB_CLIENT_ID` | No       | GitHub OAuth client ID   |
-| `VITE_FACEBOOK_APP_ID`  | No       | Facebook OAuth app ID    |
+| Variable        | Required | Description                           |
+| --------------- | -------- | ------------------------------------- |
+| `VITE_API_URL`  | Yes      | GraphQL API endpoint URL              |
+| `VITE_SITE_URL` | Yes      | Site URL for SEO (sitemap, OG images) |
 
 **Note:** All Vite environment variables must be prefixed with `VITE_`
 
@@ -461,6 +460,66 @@ If you encounter any accessibility barriers:
    - Expected vs. actual behavior
 
 We prioritize accessibility issues and aim to resolve them quickly.
+
+## 🔎 SEO & Performance
+
+Mealvy is optimized for search engines and social media sharing.
+
+### SEO Features
+
+#### Meta Tags
+- ✅ **Static fallback tags** in `index.html` for initial page load
+- ✅ **Dynamic meta tags** via `react-head` for each page
+- ✅ **Open Graph tags** for social media previews
+- ✅ **Twitter Card tags** for Twitter sharing
+
+#### Schema.org Structured Data
+- ✅ **Recipe Schema** - Rich snippets for dish pages
+- ✅ **Product Schema** - Rich snippets for product pages
+- ✅ **Organization Schema** - Company information on home page
+- ✅ **Breadcrumb Schema** - Navigation breadcrumbs on detail pages
+
+#### Dynamic Sitemap
+- ✅ **Auto-generated** before each build
+- ✅ **Static routes** (9 URLs) - home, dishes, products, etc.
+- ✅ **Dynamic routes** - fetched from GraphQL API
+  - Dish detail pages with proper slugs
+  - Product detail pages with proper slugs
+- ✅ **Accurate dates** - uses `updatedAt` field for `lastmod`
+
+**Example sitemap generation:**
+```bash
+yarn generate:sitemap
+# ✅ Generated sitemap.xml with 120 URLs (9 static, 2 dishes, 109 products)
+```
+
+#### Open Graph Image
+- ✅ **1200x630px** optimized image
+- ✅ **Brand colors** and typography
+- ✅ **Auto-generated** with Sharp
+
+#### Performance
+- ✅ **PWA** with Service Worker caching
+- ✅ **Code splitting** with React.lazy()
+- ✅ **Asset optimization** via Vite
+- ✅ **CDN delivery** via Vercel Edge Network
+
+### SEO Best Practices
+
+1. **Update sitemap** after adding new content
+2. **Submit to Google Search Console** after deployment
+3. **Validate Schema.org** with [Google Rich Results Test](https://search.google.com/test/rich-results)
+4. **Test social sharing** with [Facebook Debugger](https://developers.facebook.com/tools/debug/)
+
+### Scripts
+
+```bash
+# Generate sitemap with latest data
+yarn generate:sitemap
+
+# Generate Open Graph image
+node scripts/create-og-image.js
+```
 
 ## 🤝 Contributing
 
