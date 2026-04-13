@@ -1,3 +1,8 @@
+export interface BreadcrumbItem {
+	name: string;
+	url: string;
+}
+
 interface RecipeSchema {
 	name: string;
 	description: string;
@@ -98,9 +103,7 @@ export const generateOrganizationSchema = () => {
 	};
 };
 
-export const generateBreadcrumbSchema = (
-	breadcrumbs: Array<{ name: string; url: string }>,
-) => {
+export const generateBreadcrumbSchema = (breadcrumbs: BreadcrumbItem[]) => {
 	return {
 		'@context': 'https://schema.org',
 		'@type': 'BreadcrumbList',
