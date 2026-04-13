@@ -1,8 +1,11 @@
 import { FeaturedDishes } from '@/features/dishes';
 import { Hero, MetaData, QuickActions, Stats } from '@/shared/components';
 import { METADATA_CONFIG } from '@/shared/lib/config';
+import { generateOrganizationSchema } from '@/shared/lib/utils/schemaOrg';
 
 const Home = () => {
+	const organizationSchema = generateOrganizationSchema();
+
 	return (
 		<>
 			<MetaData
@@ -10,6 +13,10 @@ const Home = () => {
 				description={METADATA_CONFIG.descriptions.home}
 				keywords={METADATA_CONFIG.keywords.home}
 				type="website"
+			/>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
 			/>
 			{/* Hero Section */}
 			<section
