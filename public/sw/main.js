@@ -39,6 +39,16 @@ self.addEventListener('fetch', (event) => {
 			(async () => {
 				const operation = await getGraphQLOperation(request);
 
+				// Auth queries - Network Only (no caching to prevent stale auth state)
+				if (
+					operation?.operationName === 'Me' ||
+					operation?.operationName === 'Logout' ||
+					operation?.query?.includes('query Me') ||
+					operation?.query?.includes('mutation Logout')
+				) {
+					return networkOnly(request);
+				}
+
 				// Products queries
 				if (
 					operation?.operationName === 'Products' ||
