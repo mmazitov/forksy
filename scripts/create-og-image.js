@@ -1,6 +1,10 @@
-const sharp = require('sharp');
-const fs = require('fs');
-const path = require('path');
+import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const width = 1200;
 const height = 630;
@@ -35,18 +39,18 @@ const svg = `
 const outputPath = path.join(__dirname, '../public/og-image.jpg');
 
 sharp(Buffer.from(svg))
-  .jpeg({ quality: 90 })
-  .toFile(outputPath)
-  .then(() => {
-    console.log(`✅ Created og-image.jpg (${width}x${height}px)`);
-    // Clean up temp file
-    const tempPath = path.join(__dirname, '../public/og-image-temp.png');
-    if (fs.existsSync(tempPath)) {
-      fs.unlinkSync(tempPath);
-      console.log('✅ Cleaned up temporary file');
-    }
-  })
-  .catch((err) => {
-    console.error('❌ Error creating og-image:', err);
-    process.exit(1);
-  });
+	.jpeg({ quality: 90 })
+	.toFile(outputPath)
+	.then(() => {
+		console.log(`✅ Created og-image.jpg (${width}x${height}px)`);
+		// Clean up temp file
+		const tempPath = path.join(__dirname, '../public/og-image-temp.png');
+		if (fs.existsSync(tempPath)) {
+			fs.unlinkSync(tempPath);
+			console.log('✅ Cleaned up temporary file');
+		}
+	})
+	.catch((err) => {
+		console.error('❌ Error creating og-image:', err);
+		process.exit(1);
+	});

@@ -96,7 +96,7 @@ Used for:
 
 ### Dynamic Sitemap Generation
 
-**Script:** `scripts/generate-sitemap.cjs`
+**Script:** `scripts/generate-sitemap.js`
 
 Automatically generates sitemap before each build with:
 - **Static routes** (9 URLs): home, dishes, products, schedule, etc.
