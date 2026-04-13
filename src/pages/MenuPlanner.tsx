@@ -44,6 +44,7 @@ const MenuPlanner = () => {
 		schedule,
 		isDirty,
 		hasSavedData,
+		isLoading,
 	} = useMenuPlanner();
 
 	const dailyStats = getDailyStats();
@@ -62,11 +63,11 @@ const MenuPlanner = () => {
 				onClick={handleSave}
 				buttonText={PAGE_TITLE.planer.button}
 				buttonIcon={<LuSave />}
-				buttonDisable={!isDirty}
+				buttonDisable={isLoading || !isDirty}
 				secondaryButtonVisible={true}
 				secondaryButtonText="Список продуктів"
 				secondaryButtonIcon={<LuList />}
-				secondaryButtonDisable={isDirty || !hasSavedData}
+				secondaryButtonDisable={isLoading || isDirty || !hasSavedData}
 				secondaryButtonOnClick={() =>
 					navigate(`/shopping-list?week=${schedule.weekDiff}`)
 				}

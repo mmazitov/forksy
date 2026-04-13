@@ -43,12 +43,14 @@ export const useMenuPlanner = () => {
 	);
 
 	const [initialPlan, setInitialPlan] = useState<string>('');
-	const [hasSavedData, setHasSavedData] = useState(false);
+	const [hasSavedData, setHasSavedData] = useState<boolean | undefined>(
+		undefined,
+	);
 
 	const schedule = useSchedule();
 	const { startDate, endDate } = schedule;
 
-	const { data: menuPlansData } = useGetMenuPlansQuery({
+	const { data: menuPlansData, loading } = useGetMenuPlansQuery({
 		variables: { startDate, endDate },
 		fetchPolicy: 'cache-and-network',
 	});
@@ -246,6 +248,7 @@ export const useMenuPlanner = () => {
 		schedule,
 		isDirty,
 		hasSavedData,
+		isLoading: loading,
 		menuPlansData: menuPlansData?.getMenuPlans || [],
 	};
 };
