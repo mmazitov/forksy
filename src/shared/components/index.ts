@@ -26,3 +26,4 @@ export * from './splashScreen';
 export * from './stats';
 export * from './themeToggle';
 export * from './ui';
+export * from './floatingMenu';

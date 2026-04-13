@@ -10,6 +10,7 @@ interface ActionButtonProps {
 	href?: string;
 	disabled?: boolean;
 	visible?: boolean;
+	mobileVisible?: boolean;
 }
 
 const ActionButton = ({
@@ -20,11 +21,16 @@ const ActionButton = ({
 	href,
 	disabled,
 	visible,
+	mobileVisible = true,
 }: ActionButtonProps) => {
 	if (!visible) return null;
 
 	const content = (
-		<Button onClick={onClick} className="gap-2" disabled={disabled}>
+		<Button
+			onClick={onClick}
+			className={`gap-2 ${!mobileVisible ? 'hidden md:flex' : ''}`}
+			disabled={disabled}
+		>
 			{icon}
 			{text}
 		</Button>
