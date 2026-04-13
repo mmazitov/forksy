@@ -75,6 +75,7 @@ const PlannerWeek = ({
 												removeDishFromMenu(dayKey, m, dId);
 											}}
 											isCompact
+											disableNavigation
 										/>
 									);
 								})}

@@ -14,8 +14,14 @@ const DishDetail = () => {
 	const dishName = id ? fromSlug(id) : '';
 
 	const from = location.state?.from || '/dishes';
-	const backText =
-		from === '/favorites' ? 'Назад до обраного' : 'Назад до страв';
+
+	const getBackText = () => {
+		if (from === '/favorites') return 'Назад до обраного';
+		if (from === '/schedule') return 'Назад до розкладу';
+		return 'Назад до страв';
+	};
+
+	const backText = getBackText();
 
 	const { data, loading, error } = useDishByNameQuery({
 		variables: { name: dishName },

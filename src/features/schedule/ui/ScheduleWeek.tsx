@@ -1,46 +1,18 @@
-import dayjs from 'dayjs';
 import { Loader2 } from 'lucide-react';
 
+import CardPlaning from './CardPlaning';
 import ScheduleNavigation from './ScheduleNavigation';
+import { useScheduleWeek } from '../hooks/useScheduleWeek';
 
-import { useGetPlannerItemsQuery } from '@/shared/api/graphql/planner.gen';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components';
 import { CATEGORIES_DISHES } from '@/shared/constants/categories';
-import { useSchedule } from '@/shared/hooks';
-import { uiToMealTime, weekDays } from '@/shared/lib/utils';
+import { cn, weekDays } from '@/shared/lib/utils';
 
 const ScheduleWeek = () => {
-	const schedule = useSchedule();
-	const { startDate, endDate } = schedule;
+	const { schedule, menuPlan, loading, error, todayDayIndex, isCurrentWeek } =
+		useScheduleWeek();
 
-	const { data, loading, error } = useGetPlannerItemsQuery({
-		variables: { startDate, endDate },
-		fetchPolicy: 'cache-and-network',
-	});
-
-	const todayDayIndex = dayjs().isoWeekday() - 1;
-	const currentWeekStart = dayjs().startOf('isoWeek');
-	const scheduleWeekStart = dayjs(startDate);
-	const isCurrentWeek = currentWeekStart.isSame(scheduleWeekStart, 'week');
-
-	// Group planner items by day and mealTime for easy lookup
-	const plannerMap = (data?.getPlannerItems || []).reduce(
-		(acc, item) => {
-			const timestamp = Number(item.date);
-			const itemDay = weekDays[dayjs(timestamp).isoWeekday() - 1];
-			if (!itemDay) return acc;
-			if (!acc[itemDay]) acc[itemDay] = {};
-			if (!acc[itemDay][item.mealTime]) acc[itemDay][item.mealTime] = [];
-			acc[itemDay][item.mealTime].push(item);
-			return acc;
-		},
-		{} as Record<
-			string,
-			Record<string, NonNullable<typeof data>['getPlannerItems']>
-		>,
-	);
-
-	if (loading && !data) {
+	if (loading) {
 		return (
 			<div className="flex justify-center p-8">
 				<Loader2 className="text-primary h-8 w-8 animate-spin" />
@@ -68,51 +40,56 @@ const ScheduleWeek = () => {
 			<div className="grid gap-2">
 				{weekDays.map((day, index) => {
 					const isToday = isCurrentWeek && index === todayDayIndex;
+					const dayMeals = menuPlan[day] || {};
+					const dayTotalCalories = Object.values(dayMeals).reduce(
+						(sum, dishes) => sum + dishes.reduce((s, d) => s + d.calories, 0),
+						0,
+					);
+
 					return (
 						<Card
 							key={day}
-							className={`overflow-hidden ${isToday ? 'border-primary border-2' : ''}`}
+							className={cn(
+								'overflow-hidden',
+								isToday && 'border-primary border-2',
+							)}
 						>
 							<CardHeader className="bg-muted/50 pb-3">
-								<CardTitle className="text-lg">{day}</CardTitle>
+								<div className="flex items-center justify-between">
+									<CardTitle className="text-lg">{day}</CardTitle>
+									{dayTotalCalories > 0 && (
+										<span
+											className={cn(
+												'rounded-full px-2 py-0.5 text-xs font-medium',
+												dayTotalCalories > 2500
+													? 'bg-red-100 text-red-700'
+													: 'bg-emerald-100 text-emerald-700',
+											)}
+										>
+											{dayTotalCalories} ккал
+										</span>
+									)}
+								</div>
 							</CardHeader>
 							<CardContent className="p-4">
 								<div className="grid grid-cols-1 gap-3 md:grid-cols-4">
 									{CATEGORIES_DISHES.slice(1, 5).map((mealCategory) => {
-										const enumMealTime = uiToMealTime(mealCategory.name);
-										const mealsList = plannerMap[day]?.[enumMealTime] || [];
-										const hasMeals = mealsList.length > 0;
-										const totalCalories = mealsList.reduce(
-											(sum, item) => sum + (item.dish.calories || 0),
+										const mealDishes = dayMeals[mealCategory.name] || [];
+										const mealCalories = mealDishes.reduce(
+											(sum, dish) => sum + dish.calories,
 											0,
 										);
-										const dishNames = mealsList
-											.map((item) => item.dish.name)
-											.join(', ');
 
 										return (
-											<div
+											<CardPlaning
 												key={mealCategory.id}
-												className="border-border hover:border-primary cursor-pointer rounded-lg border p-3 transition-colors"
-											>
-												<div className="text-muted-foreground mb-1 text-xs">
-													{mealCategory.name}
-												</div>
-												{hasMeals ? (
-													<>
-														<div className="mb-1 line-clamp-2 text-sm font-medium">
-															{dishNames}
-														</div>
-														<div className="text-muted-foreground text-xs">
-															{totalCalories} ккал
-														</div>
-													</>
-												) : (
-													<div className="text-muted-foreground text-sm">
-														Не заплановано
-													</div>
-												)}
-											</div>
+												meal={mealCategory.name}
+												mealDishes={mealDishes}
+												mealCalories={mealCalories}
+												isCompact
+												sourcePage="/schedule"
+												readOnly
+											/>
 										);
 									})}
 								</div>
