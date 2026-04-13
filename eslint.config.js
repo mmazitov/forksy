@@ -16,6 +16,12 @@ export default [
 			'*.config.js',
 			'*.config.ts',
 			'codegen.ts',
+			// Generated files
+			'src/shared/api/graphql/*.gen.ts',
+			'src/shared/types/api.ts',
+			// Scripts (Node.js)
+			'scripts/**/*.js',
+			'scripts/**/*.cjs',
 		],
 	},
 	js.configs.recommended,
