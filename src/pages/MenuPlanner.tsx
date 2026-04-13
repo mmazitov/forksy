@@ -9,6 +9,7 @@ import {
 	useMenuPlanner,
 } from '@/features/schedule';
 import {
+	FloatingMenu,
 	MetaData,
 	Modal,
 	PageTitle,
@@ -19,6 +20,7 @@ import {
 } from '@/shared/components';
 import { MODAL_TYPES, PAGE_TITLE } from '@/shared/constants';
 import { METADATA_CONFIG } from '@/shared/lib/config';
+import { FloatingMenuItem } from '@/shared/types';
 
 const MenuPlanner = () => {
 	const navigate = useNavigate();
@@ -49,8 +51,28 @@ const MenuPlanner = () => {
 
 	const dailyStats = getDailyStats();
 
+	const menuItems: FloatingMenuItem[] = [
+		{
+			icon: <LuSave />,
+			label: 'Save menu',
+			onClick: handleSave,
+			disabled: isLoading || !isDirty,
+		},
+		{
+			icon: <LuList />,
+			label: 'Shopping list',
+			onClick: () => navigate(`/shopping-list?week=${schedule.weekDiff}`),
+			disabled: isLoading || isDirty || !hasSavedData,
+		},
+	];
 	return (
 		<div className="container mx-auto px-4 py-8">
+			<FloatingMenu
+				position="bottom-right"
+				items={menuItems}
+				closeOnClick={false}
+			/>
+
 			<MetaData
 				title={METADATA_CONFIG.titles.menu}
 				description={METADATA_CONFIG.descriptions.menu}

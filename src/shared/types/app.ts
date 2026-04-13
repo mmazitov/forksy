@@ -66,3 +66,10 @@ export interface PlanningDish {
 	name: string;
 	calories: number;
 }
+
+export interface FloatingMenuItem {
+	icon: React.ReactNode;
+	label?: string;
+	onClick: () => void;
+	disabled?: boolean;
+}
