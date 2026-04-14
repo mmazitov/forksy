@@ -165,12 +165,15 @@ The code generator creates:
 1. Push your code to GitHub
 2. Import project in [Vercel Dashboard](https://vercel.com)
 3. Configure environment variables:
-   - `VITE_API_URL` - Your GraphQL API endpoint
+   - `VITE_API_URL` - Your GraphQL API endpoint (e.g., `https://api.mealvy.app/graphql`)
+   - `VITE_SITE_URL` - Your site URL (e.g., `https://mealvy.app`)
 4. Deploy!
+
+**Important:** The `VITE_API_URL` must include the `/graphql` path. The codegen script will automatically append it if missing, but it's recommended to include it explicitly.
 
 Vercel automatically:
 - Detects Vite configuration
-- Runs `yarn build`
+- Runs `yarn build` (which includes `yarn generate`)
 - Deploys to global edge network
 - Provides preview deployments for PRs
 
