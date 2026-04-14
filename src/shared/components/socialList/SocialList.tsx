@@ -49,55 +49,24 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 
 	useEffect(() => {
 		const handleMessage = async (event: MessageEvent) => {
-			if (import.meta.env.DEV) {
-				console.log('[OAuth] Message received:', {
-					origin: event.origin,
-					expectedOrigin: getApiUrl().replace(/\/$/, ''),
-					data: event.data,
-					source: event.source === popupRef.current ? 'popup' : 'other',
-				});
-			}
-
 			const expectedOrigin = getApiUrl().replace(/\/$/, '');
 			if (event.origin.replace(/\/$/, '') !== expectedOrigin) {
-				if (import.meta.env.DEV) {
-					console.warn('[OAuth] Origin mismatch:', {
-						received: event.origin,
-						expected: expectedOrigin,
-					});
-				}
 				return;
 			}
 
 			if (event.source !== popupRef.current) {
-				if (import.meta.env.DEV) {
-					console.warn('[OAuth] Source mismatch');
-				}
 				return;
 			}
 
 			if (event.data.type === 'OAUTH_SUCCESS') {
-				if (import.meta.env.DEV) {
-					console.log('[OAuth] Success, cookies set in popup, calling login()');
-				}
-
 				try {
 					await login();
-
-					if (import.meta.env.DEV) {
-						console.log('[OAuth] Login successful, closing modal');
-					}
-
 					onOpenChange(false);
 				} catch (error) {
-					if (import.meta.env.DEV) {
-						console.error('[OAuth] Login failed:', error);
-					}
+					console.error('[OAuth] Login failed:', error);
 				}
 			} else if (event.data.type === 'OAUTH_ERROR') {
-				if (import.meta.env.DEV) {
-					console.error('[OAuth] Error from popup:', event.data.error);
-				}
+				console.error('[OAuth] Error from popup:', event.data.error);
 			}
 		};
 
