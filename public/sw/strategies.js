@@ -33,20 +33,13 @@ async function cacheFirst(request, cacheName) {
 async function staleWhileRevalidate(request, cacheName) {
 	const cache = await caches.open(cacheName);
 
-	// POST requests (GraphQL) - try network, fallback to cache
+	// POST requests (GraphQL) - network only, no caching (Cache API doesn't support POST)
 	if (request.method === 'POST') {
 		try {
 			const response = await fetch(request);
-			if (response && response.status === 200) {
-				cache.put(request, response.clone());
-			}
 			return response;
 		} catch (err) {
-			error('[Strategy] POST request failed, trying cache:', err);
-			const cached = await cache.match(request);
-			if (cached) {
-				return cached;
-			}
+			error('[Strategy] POST request failed:', err);
 			throw err;
 		}
 	}
