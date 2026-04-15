@@ -50,11 +50,22 @@ const SocialList = ({ onOpenChange }: SocialListProps) => {
 	useEffect(() => {
 		const handleMessage = async (event: MessageEvent) => {
 			const expectedOrigin = getApiUrl().replace(/\/$/, '');
-			if (event.origin.replace(/\/$/, '') !== expectedOrigin) {
+			const eventOrigin = event.origin.replace(/\/$/, '');
+
+			if (eventOrigin !== expectedOrigin) {
+				if (import.meta.env.DEV) {
+					console.warn('[OAuth] Rejected message from unexpected origin:', {
+						received: eventOrigin,
+						expected: expectedOrigin,
+					});
+				}
 				return;
 			}
 
 			if (event.source !== popupRef.current) {
+				if (import.meta.env.DEV) {
+					console.warn('[OAuth] Rejected message from unexpected source');
+				}
 				return;
 			}
 
