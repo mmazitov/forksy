@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { Header } from '@/app/components';
 import { Loader } from '@/shared/components/loader';
-import { ProtectedRoute } from '@/features/auth';
+import { ProtectedRoute } from '@/shared/lib/hoc';
 
 const Home = lazy(() => import('@/pages/Home'));
 const Schedule = lazy(() => import('@/pages/Schedule'));

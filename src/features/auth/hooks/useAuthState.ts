@@ -5,46 +5,38 @@ import { useLogoutMutation, useMeQuery } from '@/shared/api/graphql';
 
 export const useAuthState = () => {
 	const { data, loading, refetch } = useMeQuery({
-		fetchPolicy: 'cache-first',
-		errorPolicy: 'ignore',
+		fetchPolicy: 'network-only',
+		errorPolicy: 'all',
 	});
 	const [logoutMutation] = useLogoutMutation();
 
 	const user = data?.me ?? null;
+	const isAuthenticated = !!user;
+	const isAdmin = user?.role === 'ADMIN';
 
 	const logout = useCallback(async () => {
 		try {
 			await logoutMutation();
 		} catch {
-			// Ignore errors
+			// Logout is safe even on error — clear client state anyway
 		} finally {
 			await client.clearStore();
-			await refetch();
 		}
-	}, [logoutMutation, refetch]);
+	}, [logoutMutation]);
 
+	// Реєструємо обробник тільки коли юзер вже залогінений.
+	// Для незалогіненого юзера handler = null → error link не викликає logout
+	// → не тригерить clearStore → не створює нескінченний цикл рефетчів.
 	useEffect(() => {
-		setUnauthenticatedHandler(logout);
-		return () => setUnauthenticatedHandler(null);
-	}, [logout]);
+		if (isAuthenticated) {
+			setUnauthenticatedHandler(logout);
+			return () => setUnauthenticatedHandler(null);
+		}
+	}, [isAuthenticated, logout]);
 
 	const login = useCallback(async () => {
-		if (import.meta.env.DEV) {
-			console.log(
-				'[useAuthState] login() called, clearing cache and refetching...',
-			);
-		}
-		await client.refetchQueries({
-			include: 'active',
-		});
-		const result = await refetch();
-		if (import.meta.env.DEV) {
-			console.log('[useAuthState] refetch result:', result);
-		}
+		await refetch();
 	}, [refetch]);
-
-	const isAuthenticated = !!user;
-	const isAdmin = user?.role === 'ADMIN';
 
 	return {
 		user,

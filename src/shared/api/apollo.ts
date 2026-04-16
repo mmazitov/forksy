@@ -1,130 +1,98 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
-import type { GraphQLError } from 'graphql';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { ErrorLink } from '@apollo/client/link/error';
+import { HttpLink } from '@apollo/client/link/http';
 import { Observable } from '@apollo/client/utilities';
 
 import { refreshAccessToken } from './refreshToken';
 
-const getGraphQLUrl = () => {
-	// Use environment variable or fallback to localhost
-	return import.meta.env.VITE_API_URL || 'http://localhost:4000/graphql';
-};
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/graphql';
 
-// Module-level handler — set by useAuthState on mount
+// Set by useAuthState on mount to handle session expiry
 let onUnauthenticated: (() => void) | null = null;
 
 export const setUnauthenticatedHandler = (handler: (() => void) | null) => {
 	onUnauthenticated = handler;
 };
 
-const httpLink = createHttpLink({
-	uri: getGraphQLUrl(),
+const httpLink = new HttpLink({
+	uri: API_URL,
 	credentials: 'include',
-	fetchOptions: {
-		mode: 'cors',
-	},
 });
 
-let isRefreshing = false;
-let refreshPromise: Promise<boolean> | null = null;
+let refreshing: Promise<boolean> | null = null;
 
-const errorLink = onError((errorResponse) => {
-	const { graphQLErrors, networkError, operation, forward } = errorResponse as {
-		graphQLErrors?: readonly GraphQLError[];
-		networkError?: Error | null;
-		operation: unknown;
-		forward: (operation: unknown) => unknown;
-	};
+const errorLink = new ErrorLink(({ error, operation, forward }) => {
+	// Apollo Client v4: errors are consolidated into a single `error` object.
+	// CombinedGraphQLErrors.is() checks for GraphQL-level errors.
+	const isUnauth =
+		CombinedGraphQLErrors.is(error) &&
+		error.errors.some(
+			(e) =>
+				e.extensions?.code === 'UNAUTHENTICATED' ||
+				e.message?.toLowerCase().includes('unauthenticated') ||
+				e.message?.toLowerCase().includes('not authenticated'),
+		);
 
-	if (graphQLErrors) {
-		for (const error of graphQLErrors) {
-			const isAuthError =
-				error.extensions?.code === 'UNAUTHENTICATED' ||
-				error.message?.toLowerCase().includes('unauthenticated') ||
-				error.message?.toLowerCase().includes('unauthorized');
+	if (isUnauth) {
+		// Якщо handler не встановлено — юзер ніколи не був залогінений.
+		// Не намагаємось refresh (немає refresh token) → просто пробрасуємо помилку.
+		if (!onUnauthenticated) {
+			return;
+		}
 
-			if (isAuthError) {
-				if (!isRefreshing) {
-					isRefreshing = true;
-					refreshPromise = refreshAccessToken().finally(() => {
-						isRefreshing = false;
-						refreshPromise = null;
-					});
-				}
+		if (!refreshing) {
+			refreshing = refreshAccessToken().finally(() => {
+				refreshing = null;
+			});
+		}
 
-				return new Observable((observer) => {
-					(refreshPromise || Promise.resolve(false))
-						.then((success) => {
-							if (success) {
-								if (import.meta.env.DEV) {
-									console.log('[Apollo] Token refreshed, retrying request');
-								}
-								const subscriber = {
-									next: observer.next.bind(observer),
-									error: observer.error.bind(observer),
-									complete: observer.complete.bind(observer),
-								};
-								(
-									forward(operation) as {
-										subscribe: (subscriber: unknown) => void;
-									}
-								).subscribe(subscriber);
-							} else {
-								if (import.meta.env.DEV) {
-									console.warn('[Apollo] Token refresh failed, logging out');
-								}
-								onUnauthenticated?.();
-								observer.error(new Error('Token refresh failed'));
-							}
-						})
-						.catch((err) => {
-							observer.error(err);
+		return new Observable((observer) => {
+			(refreshing as Promise<boolean>)
+				.then((ok) => {
+					if (ok) {
+						const sub = forward(operation).subscribe({
+							next: observer.next.bind(observer),
+							error: observer.error.bind(observer),
+							complete: observer.complete.bind(observer),
 						});
-				});
-			}
-
-			if (import.meta.env.DEV) {
-				console.error(
-					`[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`,
-				);
-			}
-		}
+						return () => sub.unsubscribe();
+					} else {
+						// Refresh не вдався — сесія протухла.
+						// Викликаємо logout через handler (він точно не null, бо ми перевірили вище).
+						if (onUnauthenticated) onUnauthenticated();
+						observer.error(new Error('Session expired'));
+					}
+				})
+				.catch((err) => observer.error(err));
+		});
 	}
 
-	if (networkError) {
-		if (import.meta.env.DEV) {
-			console.error(`[Network error]: ${networkError}`);
-			if (
-				'message' in networkError &&
-				networkError.message?.includes('Failed to fetch')
-			) {
-				console.warn(
-					'GraphQL server is not available. Check your VITE_API_URL environment variable.',
-				);
-			}
-		}
+	// Network / HTTP 401
+	if (
+		!CombinedGraphQLErrors.is(error) &&
+		'statusCode' in error &&
+		(error as { statusCode?: number }).statusCode === 401
+	) {
+		onUnauthenticated?.();
+	}
 
-		// Only logout on 401 Unauthorized, not on general network errors
-		if ('statusCode' in networkError && networkError.statusCode === 401) {
-			if (import.meta.env.DEV) {
-				console.warn('[Apollo] 401 Unauthorized, logging out');
-			}
-			onUnauthenticated?.();
+	if (import.meta.env.DEV) {
+		if (CombinedGraphQLErrors.is(error)) {
+			error.errors.forEach((e) =>
+				console.error(`[GraphQL] ${e.message}`, e.extensions?.code),
+			);
+		} else {
+			console.error('[Network]', error);
 		}
 	}
 });
-
-const cache = new InMemoryCache();
 
 export const client = new ApolloClient({
 	link: errorLink.concat(httpLink),
-	cache,
+	cache: new InMemoryCache(),
 	defaultOptions: {
-		query: {
-			fetchPolicy: 'cache-first',
-		},
-		watchQuery: {
-			fetchPolicy: 'cache-first',
-		},
+		query: { fetchPolicy: 'cache-first' },
+		watchQuery: { fetchPolicy: 'cache-first' },
 	},
 });
