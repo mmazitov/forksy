@@ -35,8 +35,6 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
 		);
 
 	if (isUnauth) {
-		// Якщо handler не встановлено — юзер ніколи не був залогінений.
-		// Не намагаємось refresh (немає refresh token) → просто пробрасуємо помилку.
 		if (!onUnauthenticated) {
 			return;
 		}
@@ -58,8 +56,6 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
 						});
 						return () => sub.unsubscribe();
 					} else {
-						// Refresh не вдався — сесія протухла.
-						// Викликаємо logout через handler (він точно не null, бо ми перевірили вище).
 						if (onUnauthenticated) onUnauthenticated();
 						observer.error(new Error('Session expired'));
 					}

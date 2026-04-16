@@ -39,7 +39,6 @@ const Image = ({
 		>
 			<FavoriteButton isFavorite={isFavorite} onClick={handleFavoriteClick} />
 
-			{/* Glassmorphism overlay on hover */}
 			{!isFull && (
 				<div
 					className="bg-background/5 absolute inset-0 z-10 opacity-0 backdrop-blur-[2px] transition-opacity duration-500 group-hover:opacity-100"

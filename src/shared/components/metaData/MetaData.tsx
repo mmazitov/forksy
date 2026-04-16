@@ -31,14 +31,12 @@ export const MetaData = ({
 
 	return (
 		<>
-			{/* Basic Meta Tags */}
 			<Title>{fullTitle}</Title>
 			<Meta name="description" content={truncatedDescription} />
 			<Meta name="keywords" content={keywords.join(', ')} />
 			{author && <Meta name="author" content={author} />}
 			<Meta name="viewport" content="width=device-width, initial-scale=1" />
 
-			{/* Open Graph Tags */}
 			<Meta property="og:title" content={fullTitle} />
 			<Meta property="og:description" content={truncatedDescription} />
 			<Meta property="og:type" content={type} />
@@ -46,16 +44,13 @@ export const MetaData = ({
 			<Meta property="og:image" content={image} />
 			<Meta property="og:site_name" content="Mealvy" />
 
-			{/* Twitter Card Tags */}
 			<Meta name="twitter:card" content="summary_large_image" />
 			<Meta name="twitter:title" content={fullTitle} />
 			<Meta name="twitter:description" content={truncatedDescription} />
 			<Meta name="twitter:image" content={image} />
 
-			{/* Canonical URL */}
 			<Link rel="canonical" href={url} />
 
-			{/* Additional SEO Meta Tags */}
 			<Meta name="robots" content="index, follow" />
 			<Meta name="language" content="Ukrainian" />
 			<Meta httpEquiv="X-UA-Compatible" content="IE=edge" />

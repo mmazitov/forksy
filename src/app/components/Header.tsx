@@ -21,10 +21,8 @@ const Header = () => {
 			<nav className="border-border bg-card/95 supports-backdrop-filter:bg-card/80 sticky top-0 z-50 w-full border-b backdrop-blur">
 				<div className="container mx-auto px-4">
 					<div className="flex h-16 items-center justify-between">
-						{/* Logo */}
 						<Logo />
 
-						{/* Desktop Navigation */}
 						<NavigationDesktop
 							isLoggedIn={isLoggedIn}
 							userName={userName}
@@ -33,7 +31,6 @@ const Header = () => {
 							setAuthModalOpen={setAuthModalOpen}
 						/>
 
-						{/* Mobile: Theme toggle + User menu (visible only on mobile) */}
 						<div className="flex items-center gap-1 lg:hidden">
 							<ThemeToggle />
 							<UserMenu
@@ -54,7 +51,6 @@ const Header = () => {
 				/>
 			</nav>
 
-			{/* Mobile Bottom Navigation Bar */}
 			<NavigationBottomBar />
 		</>
 	);

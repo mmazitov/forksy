@@ -4,12 +4,8 @@ import { toast } from 'sonner';
 import { skipWaitingAndReload } from '@/shared/hooks';
 
 const PwaUpdatePrompt = () => {
-	// const [updateAvailable, setUpdateAvailable] = useState(false);
-
 	useEffect(() => {
 		const handleUpdate = () => {
-			// setUpdateAvailable(true);
-
 			toast.info('Доступна нова версія додатку', {
 				description: 'Оновіть сторінку, щоб отримати останні зміни',
 				duration: Infinity,

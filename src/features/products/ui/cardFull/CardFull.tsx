@@ -51,7 +51,6 @@ const CardFull = ({
 
 	return (
 		<div className="relative grid grid-cols-1 gap-8 lg:grid-cols-2">
-			{/* Image */}
 			<Image
 				id={id}
 				name={name}
@@ -60,7 +59,6 @@ const CardFull = ({
 				variant="full"
 			/>
 
-			{/* Info */}
 			<div className="space-y-6">
 				<Header
 					name={name}
@@ -71,7 +69,6 @@ const CardFull = ({
 					deleteLoading={deleteLoading}
 				/>
 
-				{/* Nutrition Facts */}
 				<Card>
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">

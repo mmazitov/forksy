@@ -21,7 +21,6 @@ const Home = () => {
 				type="website"
 			/>
 			<SchemaOrg schema={organizationSchema} />
-			{/* Hero Section */}
 			<section
 				className="relative overflow-hidden"
 				style={{ background: 'var(--gradient-hero)' }}
@@ -29,17 +28,14 @@ const Home = () => {
 				<Hero />
 			</section>
 
-			{/* Quick Actions */}
 			<section className="container mx-auto px-4 py-12 md:py-16">
 				<QuickActions />
 			</section>
 
-			{/* Featured Dishes */}
 			<section className="container mx-auto px-4 py-12 md:py-16">
 				<FeaturedDishes />
 			</section>
 
-			{/* Stats Section */}
 			<section className="container mx-auto px-4 py-12 md:py-16">
 				<Stats />
 			</section>

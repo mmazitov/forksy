@@ -24,9 +24,6 @@ export const useAuthState = () => {
 		}
 	}, [logoutMutation]);
 
-	// Реєструємо обробник тільки коли юзер вже залогінений.
-	// Для незалогіненого юзера handler = null → error link не викликає logout
-	// → не тригерить clearStore → не створює нескінченний цикл рефетчів.
 	useEffect(() => {
 		if (isAuthenticated) {
 			setUnauthenticatedHandler(logout);

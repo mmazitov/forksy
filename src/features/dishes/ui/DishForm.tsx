@@ -146,7 +146,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-			{/* Basic Info */}
 			<div className="grid grid-cols-[1fr_1fr] grid-rows-[auto_auto] gap-2 md:grid-cols-[1fr_260px_170px] md:grid-rows-[auto]">
 				<FormInput
 					id="name"
@@ -228,7 +227,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 				}}
 			/>
 
-			{/* Calculated Nutrition */}
 			<Card>
 				<CardHeader className="pb-3">
 					<CardTitle className="text-base">
@@ -269,7 +267,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 				</CardContent>
 			</Card>
 
-			{/* Ingredients */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
 					<Label>Інгредієнти</Label>
@@ -355,7 +352,6 @@ const DishForm = ({ dish, products, isEditMode = false }: DishFormProps) => {
 				))}
 			</div>
 
-			{/* Instructions */}
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
 					<Label>Кроки приготування</Label>
