@@ -26,7 +26,7 @@ const QuickActions = () => {
 								>
 									<action.icon className="h-6 w-6" />
 								</div>
-								<CardTitle className="text-lg">{action.title}</CardTitle>
+								<CardTitle className="text-xl">{action.title}</CardTitle>
 								<CardDescription>{action.description}</CardDescription>
 							</CardHeader>
 						</Card>

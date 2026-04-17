@@ -20,7 +20,7 @@ const FeaturedDishes = () => {
 	if (error) {
 		return (
 			<div className="container mx-auto px-4 py-8">
-				<div className="rounded-lg bg-red-50 p-4 text-red-600">
+				<div className="bg-destructive/10 text-destructive rounded-lg p-4">
 					Помилка завантаження продуктів: {error.message}
 				</div>
 			</div>

@@ -52,8 +52,12 @@ const PageTitle = ({
 		<div className="mb-8">
 			<div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between md:gap-0">
 				<div>
-					<h1 className="text-foreground mb-2 text-4xl font-bold">{title}</h1>
-					<p className="text-muted-foreground">{subtitle}</p>
+					<h1 className="text-foreground mb-2 text-4xl leading-tight font-bold">
+						{title}
+					</h1>
+					<p className="text-muted-foreground text-base leading-relaxed">
+						{subtitle}
+					</p>
 				</div>
 
 				{loggedIn && (
