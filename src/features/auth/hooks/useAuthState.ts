@@ -18,9 +18,9 @@ export const useAuthState = () => {
 		try {
 			await logoutMutation();
 		} catch {
-			// Logout is safe even on error — clear client state anyway
+			// Logout is safe even on error — reset client state anyway
 		} finally {
-			await client.clearStore();
+			await client.resetStore();
 		}
 	}, [logoutMutation]);
 
