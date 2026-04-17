@@ -67,7 +67,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 							<div
 								id="name-error"
 								role="alert"
-								className="pt-1 text-xs text-red-600"
+								className="text-destructive pt-1 text-xs"
 							>
 								{errors.name.message}
 							</div>
@@ -94,7 +94,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						<div
 							id="email-error"
 							role="alert"
-							className="pt-1 text-xs text-red-600"
+							className="text-destructive pt-1 text-xs"
 						>
 							{errors.email.message}
 						</div>
@@ -121,7 +121,7 @@ const AuthForm = ({ onOpenChange, isLogin }: AuthFormProps) => {
 						<div
 							id="password-error"
 							role="alert"
-							className="pt-1 text-xs text-red-600"
+							className="text-destructive pt-1 text-xs"
 						>
 							{errors.password.message}
 						</div>

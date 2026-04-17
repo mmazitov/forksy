@@ -14,7 +14,7 @@ const Title = ({ name, category, description }: TitleProps) => {
 			: 'bg-muted text-muted-foreground';
 	return (
 		<div className="grid grid-cols-2 items-start justify-between gap-2 px-4">
-			<h3 className="text-foreground line-clamp-4 text-base font-semibold">
+			<h3 className="text-foreground line-clamp-4 text-lg leading-tight font-semibold">
 				{name}
 			</h3>
 			{category && (

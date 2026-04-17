@@ -38,7 +38,7 @@ const CardCompact = ({
 			state={{ from: location.pathname }}
 			aria-label={`Переглянути рецепт ${name}${category ? `, категорія ${category}` : ''}${calories ? `, ${calories} калорій` : ''}`}
 		>
-			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-2 overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+			<Card className="group flex h-full cursor-pointer flex-col justify-between gap-2 overflow-hidden shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
 				<CardContent className="flex flex-col gap-2 p-0">
 					<Image
 						id={id}
