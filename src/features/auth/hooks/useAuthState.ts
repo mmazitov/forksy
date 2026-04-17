@@ -20,7 +20,8 @@ export const useAuthState = () => {
 		} catch {
 			// Logout is safe even on error — reset client state anyway
 		} finally {
-			await client.resetStore();
+			// resetStore clears cache first, then refetches — AbortError from refetch is safe to ignore
+			await client.resetStore().catch(() => {});
 		}
 	}, [logoutMutation]);
 
