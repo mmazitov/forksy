@@ -27,7 +27,7 @@ const Favorites = () => {
 				buttonVisible={false}
 			/>
 			<Tabs defaultValue="dishes">
-				<TabsList className="mb-6 inline-flex gap-2">
+				<TabsList className="mb-6 inline-flex">
 					<TabsTrigger value="dishes">Страви</TabsTrigger>
 					<TabsTrigger value="products">Продукти</TabsTrigger>
 				</TabsList>
