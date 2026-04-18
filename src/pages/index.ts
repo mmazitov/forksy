@@ -1,3 +1,4 @@
+export { default as AcceptInvitation } from './AcceptInvitation';
 export { default as AddDish } from './AddDish';
 export { default as AddProduct } from './AddProduct';
 export { default as DishDetail } from './DishDetail';

@@ -30,3 +30,13 @@ mutation CancelFamilyInvitation($invitationId: ID!) {
 		id
 	}
 }
+
+mutation AcceptFamilyInvitation($invitationId: ID!) {
+	acceptFamilyInvitation(invitationId: $invitationId) {
+		id
+		email
+		name
+		status
+		invitedAt
+	}
+}

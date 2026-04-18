@@ -53,6 +53,22 @@ export type CancelFamilyInvitationMutation = {
 	cancelFamilyInvitation: { __typename?: 'FamilyMember'; id: string };
 };
 
+export type AcceptFamilyInvitationMutationVariables = Types.Exact<{
+	invitationId: Types.Scalars['ID']['input'];
+}>;
+
+export type AcceptFamilyInvitationMutation = {
+	__typename?: 'Mutation';
+	acceptFamilyInvitation: {
+		__typename?: 'FamilyMember';
+		id: string;
+		email: string;
+		name?: string | null;
+		status: Types.FamilyMemberStatus;
+		invitedAt?: string | null;
+	};
+};
+
 export const FamilyMembersDocument = {
 	kind: 'Document',
 	definitions: [
@@ -312,4 +328,71 @@ export function useCancelFamilyInvitationMutation(
 }
 export type CancelFamilyInvitationMutationHookResult = ReturnType<
 	typeof useCancelFamilyInvitationMutation
+>;
+export const AcceptFamilyInvitationDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'AcceptFamilyInvitation' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'invitationId' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'acceptFamilyInvitation' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'invitationId' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'invitationId' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'email' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'status' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'invitedAt' } },
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useAcceptFamilyInvitationMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		AcceptFamilyInvitationMutation,
+		AcceptFamilyInvitationMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		AcceptFamilyInvitationMutation,
+		AcceptFamilyInvitationMutationVariables
+	>(AcceptFamilyInvitationDocument, options);
+}
+export type AcceptFamilyInvitationMutationHookResult = ReturnType<
+	typeof useAcceptFamilyInvitationMutation
 >;

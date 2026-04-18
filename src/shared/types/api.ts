@@ -105,6 +105,7 @@ export type MenuPlan = {
 export type Mutation = {
 	__typename?: 'Mutation';
 	_empty: Maybe<Scalars['String']['output']>;
+	acceptFamilyInvitation: FamilyMember;
 	addToFavoritesDish: User;
 	addToFavoritesProduct: User;
 	cancelFamilyInvitation: FamilyMember;
@@ -124,6 +125,10 @@ export type Mutation = {
 	updateDish: Dish;
 	updateProduct: Product;
 	updateProfile: User;
+};
+
+export type MutationAcceptFamilyInvitationArgs = {
+	invitationId: Scalars['ID']['input'];
 };
 
 export type MutationAddToFavoritesDishArgs = {
