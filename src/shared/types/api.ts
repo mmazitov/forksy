@@ -53,6 +53,22 @@ export type Dish = {
 	userId: Scalars['ID']['output'];
 };
 
+export type FamilyMember = {
+	__typename?: 'FamilyMember';
+	email: Scalars['String']['output'];
+	id: Scalars['ID']['output'];
+	invitedAt: Maybe<Scalars['String']['output']>;
+	name: Maybe<Scalars['String']['output']>;
+	sharedMenusCount: Maybe<Scalars['Int']['output']>;
+	status: FamilyMemberStatus;
+};
+
+export enum FamilyMemberStatus {
+	Member = 'MEMBER',
+	Owner = 'OWNER',
+	Pending = 'PENDING',
+}
+
 export type Ingredient = {
 	__typename?: 'Ingredient';
 	amount: Scalars['String']['output'];
@@ -91,15 +107,17 @@ export type Mutation = {
 	_empty: Maybe<Scalars['String']['output']>;
 	addToFavoritesDish: User;
 	addToFavoritesProduct: User;
+	cancelFamilyInvitation: FamilyMember;
 	changePassword: Scalars['Boolean']['output'];
 	createDish: Dish;
 	createProduct: Product;
 	deleteDish: Dish;
 	deleteProduct: Product;
-	handleOAuthCallback: SocialAuthPayload;
+	inviteFamilyMember: FamilyMember;
 	login: AuthPayload;
 	logout: Scalars['Boolean']['output'];
 	register: AuthPayload;
+	removeFamilyMember: FamilyMember;
 	removeFromFavoritesDish: User;
 	removeFromFavoritesProduct: User;
 	savePlanner: Scalars['Boolean']['output'];
@@ -114,6 +132,10 @@ export type MutationAddToFavoritesDishArgs = {
 
 export type MutationAddToFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
+};
+
+export type MutationCancelFamilyInvitationArgs = {
+	invitationId: Scalars['ID']['input'];
 };
 
 export type MutationChangePasswordArgs = {
@@ -155,9 +177,8 @@ export type MutationDeleteProductArgs = {
 	id: Scalars['ID']['input'];
 };
 
-export type MutationHandleOAuthCallbackArgs = {
-	code: Scalars['String']['input'];
-	provider: Scalars['String']['input'];
+export type MutationInviteFamilyMemberArgs = {
+	email: Scalars['String']['input'];
 };
 
 export type MutationLoginArgs = {
@@ -169,6 +190,10 @@ export type MutationRegisterArgs = {
 	email: Scalars['String']['input'];
 	name?: InputMaybe<Scalars['String']['input']>;
 	password: Scalars['String']['input'];
+};
+
+export type MutationRemoveFamilyMemberArgs = {
+	memberId: Scalars['ID']['input'];
 };
 
 export type MutationRemoveFromFavoritesDishArgs = {
@@ -264,6 +289,7 @@ export type Query = {
 	dish: Maybe<Dish>;
 	dishByName: Maybe<Dish>;
 	dishes: Array<Dish>;
+	familyMembers: Array<FamilyMember>;
 	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
 	getMenuPlans: Array<MenuPlan>;
@@ -312,11 +338,6 @@ export type QueryProductsArgs = {
 	limit?: InputMaybe<Scalars['Int']['input']>;
 	offset?: InputMaybe<Scalars['Int']['input']>;
 	search?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type SocialAuthPayload = {
-	__typename?: 'SocialAuthPayload';
-	user: User;
 };
 
 export type User = {

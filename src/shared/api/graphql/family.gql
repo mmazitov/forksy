@@ -1,0 +1,32 @@
+query FamilyMembers {
+	familyMembers {
+		id
+		email
+		name
+		status
+		sharedMenusCount
+		invitedAt
+	}
+}
+
+mutation InviteFamilyMember($email: String!) {
+	inviteFamilyMember(email: $email) {
+		id
+		email
+		name
+		status
+		invitedAt
+	}
+}
+
+mutation RemoveFamilyMember($memberId: ID!) {
+	removeFamilyMember(memberId: $memberId) {
+		id
+	}
+}
+
+mutation CancelFamilyInvitation($invitationId: ID!) {
+	cancelFamilyInvitation(invitationId: $invitationId) {
+		id
+	}
+}

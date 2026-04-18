@@ -1,5 +1,6 @@
 import {
 	DietaryPreferences,
+	FamilyInformation,
 	PersonalInfo,
 	ProfileStats,
 	useProfile,
@@ -42,6 +43,8 @@ const Profile = () => {
 					onEdit={handleEdit}
 					onUpdate={updateFormData}
 				/>
+
+				<FamilyInformation />
 
 				<DietaryPreferences
 					user={user}
