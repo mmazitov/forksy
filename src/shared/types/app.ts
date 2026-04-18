@@ -1,5 +1,3 @@
-import { FamilyMemberStatus } from './api';
-
 export interface NutritionInfo {
 	calories: number;
 	protein: number;
@@ -74,17 +72,4 @@ export interface FloatingMenuItem {
 	label?: string;
 	onClick: () => void;
 	disabled?: boolean;
-}
-
-export interface FamilyMember {
-	id: string;
-	email: string;
-	name?: string | null;
-	status: FamilyMemberStatus;
-	sharedMenusCount?: number;
-	invitedAt?: string;
-}
-
-export interface InviteFamilyMemberInput {
-	email: string;
 }

@@ -74,7 +74,12 @@ const FamilyInformation = () => {
 							{members.map((member) => (
 								<FamilyMemberCard
 									key={member.id}
-									member={member}
+									member={{
+										...member,
+										name: member.name ?? null,
+										invitedAt: member.invitedAt ?? null,
+										sharedMenusCount: member.sharedMenusCount ?? null,
+									}}
 									isCurrentUser={member.email === user?.email}
 									onRemove={handleRemove}
 									onCancelInvitation={handleCancelInvitation}

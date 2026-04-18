@@ -1,7 +1,7 @@
 import { Clock, Mail, Trash2, User, X } from 'lucide-react';
 
 import { Badge, Button } from '@/shared/components';
-import { FamilyMember, FamilyMemberStatus } from '@/shared/types';
+import { FamilyMemberStatus, FamilyMember } from '@/shared/types';
 
 interface FamilyMemberCardProps {
 	member: FamilyMember;
