@@ -5,6 +5,7 @@ export { default as DishDetail } from './DishDetail';
 export { default as Dishes } from './Dishes';
 export { default as Favorites } from './Favorites';
 export { default as Home } from './Home';
+export { default as MenuDetail } from './MenuDetail';
 export { default as MenuPlanner } from './MenuPlanner';
 export { default as NotFound } from './NotFound';
 export { default as ProductDetail } from './ProductDetail';

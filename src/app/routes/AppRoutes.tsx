@@ -18,6 +18,7 @@ const AddDish = lazy(() => import('@/pages/AddDish'));
 const Settings = lazy(() => import('@/pages/Settings'));
 const Profile = lazy(() => import('@/pages/Profile'));
 const Favorites = lazy(() => import('@/pages/Favorites'));
+const MenuDetail = lazy(() => import('@/pages/MenuDetail'));
 const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
@@ -94,6 +95,14 @@ const AppRoutes = () => {
 						element={
 							<ProtectedRoute>
 								<Favorites />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/menu/:id"
+						element={
+							<ProtectedRoute>
+								<MenuDetail />
 							</ProtectedRoute>
 						}
 					/>

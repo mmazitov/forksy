@@ -12,6 +12,7 @@ export const APP_CONFIG = {
 		menuPlanner: '/menu-planner',
 		products: '/products',
 		dishes: '/dishes',
+		menuDetail: '/menu',
 	},
 } as const;
 

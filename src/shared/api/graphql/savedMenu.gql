@@ -1,0 +1,54 @@
+fragment SavedMenuFields on SavedMenu {
+  id
+  name
+  startDate
+  endDate
+  weekNumber
+  totalDishes
+  totalCalories
+  totalProtein
+  totalFat
+  totalCarbs
+  createdAt
+  updatedAt
+  items {
+    id
+    dishId
+    date
+    mealTime
+    dish {
+      id
+      name
+      imageUrl
+      calories
+      protein
+      fat
+      carbs
+    }
+  }
+}
+
+query SavedMenus {
+  savedMenus {
+    ...SavedMenuFields
+  }
+}
+
+query SavedMenu($id: ID!) {
+  savedMenu(id: $id) {
+    ...SavedMenuFields
+  }
+}
+
+mutation DeleteSavedMenu($id: ID!) {
+  deleteSavedMenu(id: $id) {
+    id
+    name
+  }
+}
+
+mutation DuplicateSavedMenu($id: ID!) {
+  duplicateSavedMenu(id: $id) {
+    ...SavedMenuFields
+  }
+}

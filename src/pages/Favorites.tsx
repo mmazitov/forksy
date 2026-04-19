@@ -1,4 +1,5 @@
 import { FavoriteDishes } from '@/features/dishes';
+import { SavedMenus } from '@/features/menus';
 import { FavoriteProducts } from '@/features/products';
 import {
 	MetaData,
@@ -28,9 +29,13 @@ const Favorites = () => {
 			/>
 			<Tabs defaultValue="dishes">
 				<TabsList className="mb-6 inline-flex">
+					<TabsTrigger value="menu">Меню</TabsTrigger>
 					<TabsTrigger value="dishes">Страви</TabsTrigger>
 					<TabsTrigger value="products">Продукти</TabsTrigger>
 				</TabsList>
+				<TabsContent value="menu" className="mt-0">
+					<SavedMenus />
+				</TabsContent>
 				<TabsContent value="dishes" className="mt-0">
 					<FavoriteDishes />
 				</TabsContent>

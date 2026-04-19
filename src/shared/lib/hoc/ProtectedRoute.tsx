@@ -1,4 +1,5 @@
 import { ReactNode, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
 import { Card, CardContent } from '@/shared/components';
@@ -15,12 +16,20 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children, fallback }: ProtectedRouteProps) => {
 	const { user, isLoading } = useAuthContext();
 	const { isOpen: authModalOpen, setIsOpen: setAuthModalOpen } = useModal();
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const isInvitationRoute = location.pathname.includes('/accept-invitation/');
 
 	useEffect(() => {
 		if (!isLoading && !user) {
-			setAuthModalOpen(true);
+			if (isInvitationRoute) {
+				setAuthModalOpen(true);
+			} else {
+				navigate('/', { replace: true });
+			}
 		}
-	}, [isLoading, user, setAuthModalOpen]);
+	}, [isLoading, user, setAuthModalOpen, navigate, isInvitationRoute]);
 
 	if (isLoading) {
 		return (
@@ -40,6 +49,10 @@ const ProtectedRoute = ({ children, fallback }: ProtectedRouteProps) => {
 	}
 
 	if (!user) {
+		if (!isInvitationRoute) {
+			return null;
+		}
+
 		return (
 			<>
 				<div className="container mx-auto max-w-md px-4 py-8">

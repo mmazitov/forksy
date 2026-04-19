@@ -114,6 +114,8 @@ export type Mutation = {
 	createProduct: Product;
 	deleteDish: Dish;
 	deleteProduct: Product;
+	deleteSavedMenu: SavedMenu;
+	duplicateSavedMenu: SavedMenu;
 	inviteFamilyMember: FamilyMember;
 	login: AuthPayload;
 	logout: Scalars['Boolean']['output'];
@@ -121,6 +123,7 @@ export type Mutation = {
 	removeFamilyMember: FamilyMember;
 	removeFromFavoritesDish: User;
 	removeFromFavoritesProduct: User;
+	saveMenuPlan: SavedMenu;
 	savePlanner: Scalars['Boolean']['output'];
 	updateDish: Dish;
 	updateProduct: Product;
@@ -182,6 +185,14 @@ export type MutationDeleteProductArgs = {
 	id: Scalars['ID']['input'];
 };
 
+export type MutationDeleteSavedMenuArgs = {
+	id: Scalars['ID']['input'];
+};
+
+export type MutationDuplicateSavedMenuArgs = {
+	id: Scalars['ID']['input'];
+};
+
 export type MutationInviteFamilyMemberArgs = {
 	email: Scalars['String']['input'];
 };
@@ -207,6 +218,13 @@ export type MutationRemoveFromFavoritesDishArgs = {
 
 export type MutationRemoveFromFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
+};
+
+export type MutationSaveMenuPlanArgs = {
+	endDate: Scalars['String']['input'];
+	name: Scalars['String']['input'];
+	startDate: Scalars['String']['input'];
+	weekNumber: Scalars['Int']['input'];
 };
 
 export type MutationSavePlannerArgs = {
@@ -303,6 +321,8 @@ export type Query = {
 	product: Maybe<Product>;
 	productByName: Maybe<Product>;
 	products: Array<Product>;
+	savedMenu: Maybe<SavedMenu>;
+	savedMenus: Array<SavedMenu>;
 };
 
 export type QueryDishArgs = {
@@ -343,6 +363,47 @@ export type QueryProductsArgs = {
 	limit?: InputMaybe<Scalars['Int']['input']>;
 	offset?: InputMaybe<Scalars['Int']['input']>;
 	search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type QuerySavedMenuArgs = {
+	id: Scalars['ID']['input'];
+};
+
+export type SavedMenu = {
+	__typename?: 'SavedMenu';
+	createdAt: Scalars['String']['output'];
+	endDate: Scalars['String']['output'];
+	id: Scalars['ID']['output'];
+	items: Array<SavedMenuItem>;
+	name: Scalars['String']['output'];
+	startDate: Scalars['String']['output'];
+	totalCalories: Scalars['Int']['output'];
+	totalCarbs: Scalars['Float']['output'];
+	totalDishes: Scalars['Int']['output'];
+	totalFat: Scalars['Float']['output'];
+	totalProtein: Scalars['Float']['output'];
+	updatedAt: Scalars['String']['output'];
+	weekNumber: Scalars['Int']['output'];
+};
+
+export type SavedMenuDish = {
+	__typename?: 'SavedMenuDish';
+	calories: Maybe<Scalars['Int']['output']>;
+	carbs: Maybe<Scalars['Float']['output']>;
+	fat: Maybe<Scalars['Float']['output']>;
+	id: Scalars['ID']['output'];
+	imageUrl: Maybe<Scalars['String']['output']>;
+	name: Scalars['String']['output'];
+	protein: Maybe<Scalars['Float']['output']>;
+};
+
+export type SavedMenuItem = {
+	__typename?: 'SavedMenuItem';
+	date: Scalars['String']['output'];
+	dish: SavedMenuDish;
+	dishId: Scalars['ID']['output'];
+	id: Scalars['ID']['output'];
+	mealTime: MealTime;
 };
 
 export type User = {
