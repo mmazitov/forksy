@@ -1,54 +1,70 @@
 fragment SavedMenuFields on SavedMenu {
-  id
-  name
-  startDate
-  endDate
-  weekNumber
-  totalDishes
-  totalCalories
-  totalProtein
-  totalFat
-  totalCarbs
-  createdAt
-  updatedAt
-  items {
-    id
-    dishId
-    date
-    mealTime
-    dish {
-      id
-      name
-      imageUrl
-      calories
-      protein
-      fat
-      carbs
-    }
-  }
+	id
+	name
+	startDate
+	endDate
+	weekNumber
+	totalDishes
+	totalCalories
+	totalProtein
+	totalFat
+	totalCarbs
+	createdAt
+	updatedAt
+	items {
+		id
+		dishId
+		date
+		mealTime
+		dish {
+			id
+			name
+			imageUrl
+			calories
+			protein
+			fat
+			carbs
+		}
+	}
 }
 
 query SavedMenus {
-  savedMenus {
-    ...SavedMenuFields
-  }
+	savedMenus {
+		...SavedMenuFields
+	}
 }
 
 query SavedMenu($id: ID!) {
-  savedMenu(id: $id) {
-    ...SavedMenuFields
-  }
+	savedMenu(id: $id) {
+		...SavedMenuFields
+	}
 }
 
 mutation DeleteSavedMenu($id: ID!) {
-  deleteSavedMenu(id: $id) {
-    id
-    name
-  }
+	deleteSavedMenu(id: $id) {
+		id
+		name
+	}
 }
 
 mutation DuplicateSavedMenu($id: ID!) {
-  duplicateSavedMenu(id: $id) {
-    ...SavedMenuFields
-  }
+	duplicateSavedMenu(id: $id) {
+		...SavedMenuFields
+	}
+}
+
+mutation SaveMenuPlan(
+	$name: String!
+	$startDate: String!
+	$endDate: String!
+	$weekNumber: Int!
+) {
+	saveMenuPlan(
+		name: $name
+		startDate: $startDate
+		endDate: $endDate
+		weekNumber: $weekNumber
+	) {
+		...SavedMenuFields
+	}
 }

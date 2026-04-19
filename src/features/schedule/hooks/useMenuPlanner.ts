@@ -6,6 +6,7 @@ import {
 	useGetMenuPlansQuery,
 	useSavePlannerItemsMutation,
 } from '@/shared/api/graphql/planner.gen';
+import { useSaveMenuPlanMutation } from '@/shared/api/graphql';
 import { CATEGORIES_DISHES } from '@/shared/constants';
 import { useSchedule } from '@/shared/hooks/useSchedule';
 import {
@@ -93,6 +94,11 @@ export const useMenuPlanner = () => {
 
 	const [savePlannerMutation] = useSavePlannerItemsMutation({
 		refetchQueries: ['GetPlannerItems', 'GetMenuPlans'],
+		awaitRefetchQueries: true,
+	});
+
+	const [saveMenuPlanMutation] = useSaveMenuPlanMutation({
+		refetchQueries: ['SavedMenus'],
 		awaitRefetchQueries: true,
 	});
 
@@ -216,11 +222,25 @@ export const useMenuPlanner = () => {
 			await savePlannerMutation({
 				variables: { items: itemsToSave, startDate, endDate },
 			});
+
+			const weekNumber = dayjs(startDate).isoWeek();
+			const menuName = `Меню тижня ${weekNumber}`;
+
+			await saveMenuPlanMutation({
+				variables: {
+					name: menuName,
+					startDate,
+					endDate,
+					weekNumber,
+				},
+			});
+
 			toast.success('Меню успішно збережено!');
-		} catch {
+		} catch (error) {
+			console.error('Save error:', error);
 			toast.error('Помилка при збереженні меню');
 		}
-	}, [menuPlan, savePlannerMutation, startDate, endDate]);
+	}, [menuPlan, savePlannerMutation, saveMenuPlanMutation, startDate, endDate]);
 
 	const weekDaysForFilter = weekDays.map((day, index) => ({
 		id: index,

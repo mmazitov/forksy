@@ -71,6 +71,18 @@ export type DuplicateSavedMenuMutation = {
 	duplicateSavedMenu: { __typename?: 'SavedMenu' } & SavedMenuFieldsFragment;
 };
 
+export type SaveMenuPlanMutationVariables = Types.Exact<{
+	name: Types.Scalars['String']['input'];
+	startDate: Types.Scalars['String']['input'];
+	endDate: Types.Scalars['String']['input'];
+	weekNumber: Types.Scalars['Int']['input'];
+}>;
+
+export type SaveMenuPlanMutation = {
+	__typename?: 'Mutation';
+	saveMenuPlan: { __typename?: 'SavedMenu' } & SavedMenuFieldsFragment;
+};
+
 export const SavedMenuFieldsFragmentDoc = {
 	kind: 'Document',
 	definitions: [
@@ -589,4 +601,196 @@ export function useDuplicateSavedMenuMutation(
 }
 export type DuplicateSavedMenuMutationHookResult = ReturnType<
 	typeof useDuplicateSavedMenuMutation
+>;
+export const SaveMenuPlanDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'SaveMenuPlan' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'startDate' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'endDate' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: {
+							kind: 'NamedType',
+							name: { kind: 'Name', value: 'String' },
+						},
+					},
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'weekNumber' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'saveMenuPlan' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'name' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'name' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'startDate' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'startDate' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'endDate' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'endDate' },
+								},
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'weekNumber' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'weekNumber' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{
+									kind: 'FragmentSpread',
+									name: { kind: 'Name', value: 'SavedMenuFields' },
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+		{
+			kind: 'FragmentDefinition',
+			name: { kind: 'Name', value: 'SavedMenuFields' },
+			typeCondition: {
+				kind: 'NamedType',
+				name: { kind: 'Name', value: 'SavedMenu' },
+			},
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'startDate' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'endDate' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'weekNumber' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'totalDishes' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'totalCalories' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'totalProtein' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'totalFat' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'totalCarbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'items' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'dishId' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'date' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'mealTime' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'dish' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'imageUrl' },
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'calories' },
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'protein' },
+											},
+											{ kind: 'Field', name: { kind: 'Name', value: 'fat' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'carbs' } },
+										],
+									},
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useSaveMenuPlanMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		SaveMenuPlanMutation,
+		SaveMenuPlanMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		SaveMenuPlanMutation,
+		SaveMenuPlanMutationVariables
+	>(SaveMenuPlanDocument, options);
+}
+export type SaveMenuPlanMutationHookResult = ReturnType<
+	typeof useSaveMenuPlanMutation
 >;

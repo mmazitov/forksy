@@ -10,6 +10,7 @@ import {
 	TabsTrigger,
 } from '@/shared/components';
 import { PAGE_TITLE } from '@/shared/constants';
+import { FAVORITE_TITLES } from '@/shared/constants/favorites';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Favorites = () => {
@@ -27,21 +28,21 @@ const Favorites = () => {
 				subtitle={PAGE_TITLE.favorites.subtitle}
 				buttonVisible={false}
 			/>
-			<Tabs defaultValue="dishes">
+			<Tabs defaultValue="menu">
 				<TabsList className="mb-6 inline-flex">
-					<TabsTrigger value="menu">Меню</TabsTrigger>
-					<TabsTrigger value="dishes">Страви</TabsTrigger>
-					<TabsTrigger value="products">Продукти</TabsTrigger>
+					{FAVORITE_TITLES.map((title) => (
+						<TabsTrigger key={title.value} value={title.value}>
+							{title.title}
+						</TabsTrigger>
+					))}
 				</TabsList>
-				<TabsContent value="menu" className="mt-0">
-					<SavedMenus />
-				</TabsContent>
-				<TabsContent value="dishes" className="mt-0">
-					<FavoriteDishes />
-				</TabsContent>
-				<TabsContent value="products" className="mt-0">
-					<FavoriteProducts />
-				</TabsContent>
+				{FAVORITE_TITLES.map((title) => (
+					<TabsContent key={title.value} value={title.value} className="mt-0">
+						{title.value === 'menu' && <SavedMenus />}
+						{title.value === 'dishes' && <FavoriteDishes />}
+						{title.value === 'products' && <FavoriteProducts />}
+					</TabsContent>
+				))}
 			</Tabs>
 		</div>
 	);
