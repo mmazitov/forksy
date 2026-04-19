@@ -1,10 +1,10 @@
-export interface FavoriteTitle {
+export interface FavoriteTab {
 	title: string;
 	value: string;
+	disabled: boolean;
 }
 
-export const FAVORITE_TITLES: FavoriteTitle[] = [
-	{ title: 'Меню', value: 'menu' },
-	{ title: 'Страви', value: 'dishes' },
-	{ title: 'Продукти', value: 'products' },
+export const FAVORITE_TABS: FavoriteTab[] = [
+	{ title: 'Страви', value: 'dishes', disabled: false },
+	{ title: 'Продукти', value: 'products', disabled: false },
 ];

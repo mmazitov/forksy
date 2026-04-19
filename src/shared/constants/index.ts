@@ -12,3 +12,5 @@ export { PAGE_TITLE } from './pageTitle';
 export { QUICK_ACTIONS, type QuickAction } from './quickActions';
 export { SOCIAL_ITEMS, type SocialItem } from './social';
 export { STATS_ITEMS, type Stat } from './stats';
+export * from './menus';
+export * from './favorites';

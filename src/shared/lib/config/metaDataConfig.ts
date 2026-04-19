@@ -31,6 +31,7 @@ export const METADATA_CONFIG = {
 		profile: PAGE_TITLE.profile.keywords,
 		favorites: PAGE_TITLE.favorites.keywords,
 		notFound: PAGE_TITLE.notFound.keywords,
+		menus: PAGE_TITLE.menus.keywords,
 	},
 
 	titles: {
@@ -48,6 +49,7 @@ export const METADATA_CONFIG = {
 		favorites: PAGE_TITLE.favorites.title,
 		notFound: PAGE_TITLE.notFound.title,
 		shoppingList: PAGE_TITLE.shoppingList.title,
+		menus: PAGE_TITLE.menus.title,
 	},
 
 	descriptions: {
@@ -65,5 +67,6 @@ export const METADATA_CONFIG = {
 		favorites: PAGE_TITLE.favorites.description,
 		notFound: PAGE_TITLE.notFound.description,
 		shoppingList: PAGE_TITLE.shoppingList.description,
+		menus: PAGE_TITLE.menus.description,
 	},
 };

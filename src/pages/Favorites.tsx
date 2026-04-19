@@ -1,6 +1,5 @@
-import { FavoriteDishes } from '@/features/dishes';
-import { SavedMenus } from '@/features/menus';
-import { FavoriteProducts } from '@/features/products';
+import { FavoriteDishes, useFavoriteDishes } from '@/features/dishes';
+import { FavoriteProducts, useFavoriteProducts } from '@/features/products';
 import {
 	MetaData,
 	PageTitle,
@@ -9,11 +8,30 @@ import {
 	TabsList,
 	TabsTrigger,
 } from '@/shared/components';
-import { PAGE_TITLE } from '@/shared/constants';
-import { FAVORITE_TITLES } from '@/shared/constants/favorites';
+import { PAGE_TITLE, FAVORITE_TABS } from '@/shared/constants';
+import { useTabsWithAutoSwitch } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
 const Favorites = () => {
+	const { dishes, loading: dishesLoading } = useFavoriteDishes();
+	const { products, loading: productsLoading } = useFavoriteProducts();
+
+	const isLoading = dishesLoading || productsLoading;
+
+	const tabs = FAVORITE_TABS.map((tab) => ({
+		...tab,
+		disabled:
+			!isLoading &&
+			((tab.value === 'dishes' && dishes.length === 0) ||
+				(tab.value === 'products' && products.length === 0)),
+	}));
+
+	const { activeTab, setActiveTab } = useTabsWithAutoSwitch({
+		tabs,
+		defaultTab: 'dishes',
+		isLoading,
+	});
+
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
@@ -28,19 +46,22 @@ const Favorites = () => {
 				subtitle={PAGE_TITLE.favorites.subtitle}
 				buttonVisible={false}
 			/>
-			<Tabs defaultValue="menu">
+			<Tabs value={activeTab} onValueChange={setActiveTab}>
 				<TabsList className="mb-6 inline-flex">
-					{FAVORITE_TITLES.map((title) => (
-						<TabsTrigger key={title.value} value={title.value}>
-							{title.title}
+					{tabs.map((tab) => (
+						<TabsTrigger
+							key={tab.value}
+							value={tab.value}
+							disabled={tab.disabled}
+						>
+							{tab.title}
 						</TabsTrigger>
 					))}
 				</TabsList>
-				{FAVORITE_TITLES.map((title) => (
-					<TabsContent key={title.value} value={title.value} className="mt-0">
-						{title.value === 'menu' && <SavedMenus />}
-						{title.value === 'dishes' && <FavoriteDishes />}
-						{title.value === 'products' && <FavoriteProducts />}
+				{tabs.map((tab) => (
+					<TabsContent key={tab.value} value={tab.value} className="mt-0">
+						{tab.value === tabs[0].value && <FavoriteDishes />}
+						{tab.value === tabs[1].value && <FavoriteProducts />}
 					</TabsContent>
 				))}
 			</Tabs>

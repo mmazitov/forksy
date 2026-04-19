@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSavedMenus } from '../hooks/useSavedMenus';
 import { useSavedMenuActions } from '../hooks/useSavedMenuActions';
-import { MenuCard } from './menuCard';
+import { MenuCard, MenuCardSkeleton } from './menuCard';
 
-import { Button, Grid } from '@/shared/components';
-import { Skeleton } from '@/shared/components/skeleton';
+import { Button } from '@/shared/components';
 import { ITEMS_PER_PAGE } from '@/shared/constants';
 
 const SavedMenus = () => {
@@ -31,14 +30,11 @@ const SavedMenus = () => {
 
 	if (loading) {
 		return (
-			<Grid
-				items={[]}
-				itemComponent={() => null}
-				showEmpty={false}
-				isLoading={true}
-				skeletonComponent={Skeleton}
-				skeletonCount={ITEMS_PER_PAGE}
-			/>
+			<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+					<MenuCardSkeleton key={i} />
+				))}
+			</div>
 		);
 	}
 

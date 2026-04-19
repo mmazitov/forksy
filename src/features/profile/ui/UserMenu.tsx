@@ -1,4 +1,5 @@
-import { LogOut, Settings, User, UserCircle } from 'lucide-react';
+import { LogOut, Settings, User, UserCircle, Heart } from 'lucide-react';
+import { LuNotebookPen } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -72,7 +73,15 @@ const UserMenu = ({
 					onClick={() => navigate('/favorites')}
 					className="cursor-pointer"
 				>
+					<Heart className="mr-2 h-4 w-4" />
 					Обране
+				</DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={() => navigate('/menus')}
+					className="cursor-pointer"
+				>
+					<LuNotebookPen className="mr-2 h-4 w-4" />
+					Меню
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
