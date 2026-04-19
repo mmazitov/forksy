@@ -1,3 +1,5 @@
+import { PAGE_TITLE } from '@/shared/constants/pageTitle';
+
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://mealvy.vercel.app';
 
 export const METADATA_CONFIG = {
@@ -19,108 +21,49 @@ export const METADATA_CONFIG = {
 	},
 
 	keywords: {
-		home: [
-			'планувальник харчування',
-			'менеджер рецептів',
-			'готування',
-			'планування їжі',
-			'калькулятор калорійності',
-		],
-		products: [
-			'продукти',
-			'інгредієнти',
-			'харчування',
-			'КБЖУ',
-			'база даних',
-			'поживна інформація',
-		],
-		dishes: ['рецепти', 'страви', 'готування', 'їжа', 'інструкції', 'кухня'],
-		schedule: [
-			'розклад',
-			'планування харчування',
-			'відстеження харчування',
-			'календар',
-			'тижневе меню',
-		],
-		menu: [
-			'планувальник меню',
-			'тижневе меню',
-			'планування харчування',
-			'страви',
-			'підготовка їжі',
-		],
-		shoppingList: [
-			'список покупок',
-			'продукти',
-			'інгредієнти',
-			'покупки',
-			'планування',
-		],
-		settings: [
-			'налаштування',
-			'уподобання',
-			'параметри додатку',
-			'безпека',
-			'сповіщення',
-		],
-		profile: [
-			'профіль користувача',
-			'особиста інформація',
-			'налаштування облікового запису',
-			'безпека',
-			'конфіденційність',
-		],
-		favorites: [
-			'обране',
-			'улюблені страви',
-			'кулінарія',
-			'збережені рецепти',
-			'Mealvy',
-		],
-		notFound: ['404', 'сторінка не знайдена', 'помилка', 'відсутня сторінка'],
+		home: PAGE_TITLE.home.keywords,
+		products: PAGE_TITLE.products.keywords,
+		dishes: PAGE_TITLE.dishes.keywords,
+		schedule: PAGE_TITLE.schedule.keywords,
+		menu: PAGE_TITLE.planer.keywords,
+		shoppingList: PAGE_TITLE.shoppingList.keywords,
+		settings: PAGE_TITLE.settings.keywords,
+		profile: PAGE_TITLE.profile.keywords,
+		favorites: PAGE_TITLE.favorites.keywords,
+		notFound: PAGE_TITLE.notFound.keywords,
 	},
 
 	titles: {
-		home: 'Головна',
-		products: 'Продукти',
-		dishes: 'Страви та рецепти',
-		schedule: 'Розклад харчування',
-		menu: 'Планувальник меню',
-		addProduct: 'Додати продукт',
-		editProduct: 'Редагувати продукт',
-		addDish: 'Додати страву',
-		editDish: 'Редагувати страву',
-		profile: 'Профіль користувача',
-		settings: 'Налаштування',
-		favorites: 'Обрані рецепти',
-		notFound: 'Сторінка не знайдена',
-		shoppingList: 'Список покупок',
+		home: PAGE_TITLE.home.title,
+		products: PAGE_TITLE.products.title,
+		dishes: PAGE_TITLE.dishes.title,
+		schedule: PAGE_TITLE.schedule.title,
+		menu: PAGE_TITLE.planer.title,
+		addProduct: PAGE_TITLE.addProduct.title,
+		editProduct: PAGE_TITLE.editProduct.title,
+		addDish: PAGE_TITLE.addDish.title,
+		editDish: PAGE_TITLE.editDish.title,
+		profile: PAGE_TITLE.profile.title,
+		settings: PAGE_TITLE.settings.title,
+		favorites: PAGE_TITLE.favorites.title,
+		notFound: PAGE_TITLE.notFound.title,
+		shoppingList: PAGE_TITLE.shoppingList.title,
 	},
 
 	descriptions: {
-		home: 'Mealvy — ваш особистий планувальник харчування та менеджер рецептів. Плануйте свої страви, керуйте рецептами та відкривайте нові страви з детальною інформацією про поживні речовини.',
-		products:
-			'Досліджуйте нашу базу продуктів із детальною поживною інформацією (КБЖУ). Знаходьте інгредієнти для своїх страв і рецептів.',
-		dishes:
-			'Відкрийте для себе колекцію улюблених рецептів із детальними інструкціями, інгредієнтами та поживною інформацією.',
-		schedule:
-			'Плануйте та відстежуйте свої страви за допомогою функції розкладу. Організовуйте своє харчування по тижнях або місяцях.',
-		menu: 'Створюйте ідеальний тижневий план меню. Організовуйте свої страви на кожен день тижня.',
-		addProduct:
-			'Додайте новий продукт до нашої бази з детальною поживною інформацією.',
-		editProduct:
-			'Редагуйте продукт у нашій базі з детальною поживною інформацією.',
-		addDish:
-			'Додайте новий рецепт до своєї колекції з інгредієнтами та інструкціями приготування.',
-		editDish:
-			'Редагуйте рецепт у своїй колекції з інгредієнтами та інструкціями приготування.',
-		profile: 'Керуйте своїм профілем користувача та налаштуваннями застосунку.',
-		settings: 'Налаштуйте параметри та уподобання вашого застосунку.',
-		favorites:
-			'Зберігайте найкращі кулінарні ідеї в одному місці. Ваша персональна колекція улюблених страв на Mealvy.',
-		notFound:
-			'Сторінка, яку ви шукаєте, не існує. Поверніться на головну сторінку.',
-		shoppingList:
-			'Ваш список покупок на основі запланованих страв. Відмічайте куплені продукти та експортуйте список.',
+		home: PAGE_TITLE.home.description,
+		products: PAGE_TITLE.products.description,
+		dishes: PAGE_TITLE.dishes.description,
+		schedule: PAGE_TITLE.schedule.description,
+		menu: PAGE_TITLE.planer.description,
+		addProduct: PAGE_TITLE.addProduct.description,
+		editProduct: PAGE_TITLE.editProduct.description,
+		addDish: PAGE_TITLE.addDish.description,
+		editDish: PAGE_TITLE.editDish.description,
+		profile: PAGE_TITLE.profile.description,
+		settings: PAGE_TITLE.settings.description,
+		favorites: PAGE_TITLE.favorites.description,
+		notFound: PAGE_TITLE.notFound.description,
+		shoppingList: PAGE_TITLE.shoppingList.description,
 	},
 };
