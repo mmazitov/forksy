@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { LuArrowLeft } from 'react-icons/lu';
 
 import { useSavedMenuQuery } from '@/shared/api/graphql';
@@ -43,6 +43,12 @@ const MenuDetail = () => {
 
 	const menu = data.savedMenu;
 
+	const getWeekLabel = (weekNum: number) => {
+		if (weekNum === 0) return 'Поточний тиждень';
+		if (weekNum > 0) return `Тиждень +${weekNum}`;
+		return `Тиждень ${weekNum}`;
+	};
+
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<MetaData
@@ -64,7 +70,7 @@ const MenuDetail = () => {
 
 			<PageTitle
 				title={menu.name}
-				subtitle={`Тиждень ${menu.weekNumber} • ${menu.totalDishes} страв • ${menu.totalCalories.toLocaleString()} ккал`}
+				subtitle={`${getWeekLabel(menu.weekNumber)} • ${menu.totalDishes} страв • ${menu.totalCalories.toLocaleString()} ккал`}
 				buttonVisible={false}
 			/>
 

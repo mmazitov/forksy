@@ -7,4 +7,3 @@ export { default as ScheduleWeek } from './ui/ScheduleWeek';
 
 export * from './hooks/useMenuPlanner';
 export * from './hooks/useScheduleWeek';
-export * from './hooks/useShoppingList';

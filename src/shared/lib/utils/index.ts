@@ -1,5 +1,15 @@
 export * from './cn';
-export { today, todayWeek, weekDays } from './day';
+export {
+	formatDateOrKeep,
+	formatDateToISO,
+	formatDayjsToISO,
+	getToday,
+	getTodayWeek,
+	getWeekDays,
+	today,
+	todayWeek,
+	weekDays,
+} from './date';
 export { createProductsMap, parseIngredient, parseIngredients } from './dish';
 export {
 	MEAL_TIME_UI_NAMES,

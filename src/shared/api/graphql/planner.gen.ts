@@ -17,7 +17,6 @@ export type GetPlannerItemsQuery = {
 		dishId: string;
 		date: string;
 		mealTime: Types.MealTime;
-		menuPlanId?: string | null;
 		dish: {
 			__typename?: 'Dish';
 			id: string;
@@ -26,43 +25,14 @@ export type GetPlannerItemsQuery = {
 			imageUrl?: string | null;
 			calories?: number | null;
 			description?: string | null;
-		};
-	}>;
-};
-
-export type GetMenuPlansQueryVariables = Types.Exact<{
-	startDate: Types.Scalars['String']['input'];
-	endDate: Types.Scalars['String']['input'];
-}>;
-
-export type GetMenuPlansQuery = {
-	__typename?: 'Query';
-	getMenuPlans: Array<{
-		__typename?: 'MenuPlan';
-		id: string;
-		date: string;
-		week?: number | null;
-		day?: string | null;
-		items: Array<{
-			__typename?: 'PlannerItem';
-			id: string;
-			dishId: string;
-			mealTime: Types.MealTime;
-			dish: {
-				__typename?: 'Dish';
-				id: string;
+			ingredients: Array<{
+				__typename?: 'Ingredient';
 				name: string;
-				imageUrl?: string | null;
-				calories?: number | null;
-				ingredients: Array<{
-					__typename?: 'Ingredient';
-					name: string;
-					amount: string;
-					productId?: string | null;
-					product?: { __typename?: 'Product'; category?: string | null } | null;
-				}>;
-			};
-		}>;
+				amount: string;
+				productId?: string | null;
+				product?: { __typename?: 'Product'; category?: string | null } | null;
+			}>;
+		};
 	}>;
 };
 
@@ -145,7 +115,6 @@ export const GetPlannerItemsDocument = {
 								{ kind: 'Field', name: { kind: 'Name', value: 'dishId' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'date' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'mealTime' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'menuPlanId' } },
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'dish' },
@@ -169,6 +138,40 @@ export const GetPlannerItemsDocument = {
 											{
 												kind: 'Field',
 												name: { kind: 'Name', value: 'description' },
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'ingredients' },
+												selectionSet: {
+													kind: 'SelectionSet',
+													selections: [
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'name' },
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'amount' },
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'productId' },
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'product' },
+															selectionSet: {
+																kind: 'SelectionSet',
+																selections: [
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'category' },
+																	},
+																],
+															},
+														},
+													],
+												},
 											},
 										],
 									},
@@ -215,197 +218,6 @@ export type GetPlannerItemsQueryHookResult = ReturnType<
 >;
 export type GetPlannerItemsLazyQueryHookResult = ReturnType<
 	typeof useGetPlannerItemsLazyQuery
->;
-export const GetMenuPlansDocument = {
-	kind: 'Document',
-	definitions: [
-		{
-			kind: 'OperationDefinition',
-			operation: 'query',
-			name: { kind: 'Name', value: 'GetMenuPlans' },
-			variableDefinitions: [
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'startDate' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-				{
-					kind: 'VariableDefinition',
-					variable: {
-						kind: 'Variable',
-						name: { kind: 'Name', value: 'endDate' },
-					},
-					type: {
-						kind: 'NonNullType',
-						type: {
-							kind: 'NamedType',
-							name: { kind: 'Name', value: 'String' },
-						},
-					},
-				},
-			],
-			selectionSet: {
-				kind: 'SelectionSet',
-				selections: [
-					{
-						kind: 'Field',
-						name: { kind: 'Name', value: 'getMenuPlans' },
-						arguments: [
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'startDate' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'startDate' },
-								},
-							},
-							{
-								kind: 'Argument',
-								name: { kind: 'Name', value: 'endDate' },
-								value: {
-									kind: 'Variable',
-									name: { kind: 'Name', value: 'endDate' },
-								},
-							},
-						],
-						selectionSet: {
-							kind: 'SelectionSet',
-							selections: [
-								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'date' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'week' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'day' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'items' },
-									selectionSet: {
-										kind: 'SelectionSet',
-										selections: [
-											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
-											{
-												kind: 'Field',
-												name: { kind: 'Name', value: 'dishId' },
-											},
-											{
-												kind: 'Field',
-												name: { kind: 'Name', value: 'mealTime' },
-											},
-											{
-												kind: 'Field',
-												name: { kind: 'Name', value: 'dish' },
-												selectionSet: {
-													kind: 'SelectionSet',
-													selections: [
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'id' },
-														},
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'name' },
-														},
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'imageUrl' },
-														},
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'calories' },
-														},
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'ingredients' },
-															selectionSet: {
-																kind: 'SelectionSet',
-																selections: [
-																	{
-																		kind: 'Field',
-																		name: { kind: 'Name', value: 'name' },
-																	},
-																	{
-																		kind: 'Field',
-																		name: { kind: 'Name', value: 'amount' },
-																	},
-																	{
-																		kind: 'Field',
-																		name: { kind: 'Name', value: 'productId' },
-																	},
-																	{
-																		kind: 'Field',
-																		name: { kind: 'Name', value: 'product' },
-																		selectionSet: {
-																			kind: 'SelectionSet',
-																			selections: [
-																				{
-																					kind: 'Field',
-																					name: {
-																						kind: 'Name',
-																						value: 'category',
-																					},
-																				},
-																			],
-																		},
-																	},
-																],
-															},
-														},
-													],
-												},
-											},
-										],
-									},
-								},
-							],
-						},
-					},
-				],
-			},
-		},
-	],
-} as unknown as DocumentNode;
-export function useGetMenuPlansQuery(
-	baseOptions: ApolloReactHooks.QueryHookOptions<
-		GetMenuPlansQuery,
-		GetMenuPlansQueryVariables
-	> &
-		(
-			| { variables: GetMenuPlansQueryVariables; skip?: boolean }
-			| { skip: boolean }
-		),
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useQuery<
-		GetMenuPlansQuery,
-		GetMenuPlansQueryVariables
-	>(GetMenuPlansDocument, options);
-}
-export function useGetMenuPlansLazyQuery(
-	baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-		GetMenuPlansQuery,
-		GetMenuPlansQueryVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return ApolloReactHooks.useLazyQuery<
-		GetMenuPlansQuery,
-		GetMenuPlansQueryVariables
-	>(GetMenuPlansDocument, options);
-}
-// @ts-ignore
-export type GetMenuPlansQueryHookResult = ReturnType<
-	typeof useGetMenuPlansQuery
->;
-export type GetMenuPlansLazyQueryHookResult = ReturnType<
-	typeof useGetMenuPlansLazyQuery
 >;
 export const SavePlannerItemsDocument = {
 	kind: 'Document',

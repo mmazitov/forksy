@@ -1,18 +1,18 @@
 import { CheckCircle2, Circle } from 'lucide-react';
 
 import {
-	MenuPlanData,
+	PlannerItemData,
 	useShoppingListState,
 } from '../hooks/useShoppingListState';
 
 import { Badge, Checkbox } from '@/shared/components';
 
 interface ShoppingListContentProps {
-	menuPlansData: MenuPlanData[];
+	plannerItemsData: PlannerItemData[];
 }
 
 export const ShoppingListContent = ({
-	menuPlansData,
+	plannerItemsData,
 }: ShoppingListContentProps) => {
 	const {
 		aggregatedIngredients,
@@ -21,7 +21,7 @@ export const ShoppingListContent = ({
 		toggleItem,
 		toggleCategory,
 		checkedItems,
-	} = useShoppingListState(menuPlansData);
+	} = useShoppingListState(plannerItemsData);
 
 	if (aggregatedIngredients.length === 0) {
 		return (

@@ -4,7 +4,6 @@ query GetPlannerItems($startDate: String!, $endDate: String!) {
 		dishId
 		date
 		mealTime
-		menuPlanId
 		dish {
 			id
 			name
@@ -12,32 +11,12 @@ query GetPlannerItems($startDate: String!, $endDate: String!) {
 			imageUrl
 			calories
 			description
-		}
-	}
-}
-
-query GetMenuPlans($startDate: String!, $endDate: String!) {
-	getMenuPlans(startDate: $startDate, endDate: $endDate) {
-		id
-		date
-		week
-		day
-		items {
-			id
-			dishId
-			mealTime
-			dish {
-				id
+			ingredients {
 				name
-				imageUrl
-				calories
-				ingredients {
-					name
-					amount
-					productId
-					product {
-						category
-					}
+				amount
+				productId
+				product {
+					category
 				}
 			}
 		}

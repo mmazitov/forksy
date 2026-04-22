@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/uk';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+import { formatDayjsToISO } from '@/shared/lib/utils';
 
 dayjs.extend(isoWeek);
 dayjs.locale('uk');
@@ -27,8 +29,8 @@ export const useSchedule = () => {
 	const endOfWeek = currentWeek.endOf('isoWeek');
 
 	const todayWeek = `${startOfWeek.format('D MMMM')} – ${endOfWeek.format('D MMMM')}`;
-	const startDate = startOfWeek.format('YYYY-MM-DD');
-	const endDate = endOfWeek.add(1, 'day').format('YYYY-MM-DD'); // Exclusive end date for database query
+	const startDate = formatDayjsToISO(startOfWeek);
+	const endDate = formatDayjsToISO(endOfWeek.add(1, 'day')); // Exclusive end date for database query
 
 	const weekDiff = currentWeek
 		.startOf('isoWeek')

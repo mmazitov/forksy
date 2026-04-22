@@ -5,7 +5,8 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 
 import { useShoppingListState } from './useShoppingListState';
 
-import { useGetMenuPlansQuery } from '@/shared/api/graphql/planner.gen';
+import { useGetPlannerItemsQuery } from '@/shared/api/graphql/planner.gen';
+import { formatDateToISO, formatDayjsToISO } from '@/shared/lib/utils';
 
 dayjs.extend(isoWeek);
 
@@ -32,10 +33,10 @@ export const useShoppingListPage = () => {
 	const currentWeek = dayjs().add(weekDiff, 'week');
 	const startOfWeek = currentWeek.startOf('isoWeek');
 	const endOfWeek = currentWeek.endOf('isoWeek');
-	const startDate = startOfWeek.format('YYYY-MM-DD');
-	const endDate = endOfWeek.add(1, 'day').format('YYYY-MM-DD');
+	const startDate = formatDayjsToISO(startOfWeek);
+	const endDate = formatDayjsToISO(endOfWeek.add(1, 'day'));
 
-	const { data, loading, error } = useGetMenuPlansQuery({
+	const { data, loading, error } = useGetPlannerItemsQuery({
 		variables: {
 			startDate,
 			endDate,
@@ -43,13 +44,13 @@ export const useShoppingListPage = () => {
 		fetchPolicy: 'cache-and-network',
 	});
 
-	const menuPlansData = data?.getMenuPlans || [];
+	const plannerItemsData = data?.getPlannerItems || [];
 
 	const { checkedCount, totalCount, categorizedIngredients } =
-		useShoppingListState(menuPlansData);
+		useShoppingListState(plannerItemsData);
 
 	const handleExport = () => {
-		if (menuPlansData.length === 0) return;
+		if (plannerItemsData.length === 0) return;
 
 		const lines: string[] = ['Список покупок', ''];
 
@@ -71,7 +72,7 @@ export const useShoppingListPage = () => {
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = `shopping-list-${new Date().toISOString().split('T')[0]}.txt`;
+		a.download = `shopping-list-${formatDateToISO(new Date())}.txt`;
 		a.click();
 		URL.revokeObjectURL(url);
 	};
@@ -83,7 +84,7 @@ export const useShoppingListPage = () => {
 		weekDiff,
 		loading,
 		error,
-		menuPlansData,
+		plannerItemsData,
 		checkedCount,
 		totalCount,
 		handleExport,

@@ -90,24 +90,13 @@ export enum MealTime {
 	Snack = 'SNACK',
 }
 
-export type MenuPlan = {
-	__typename?: 'MenuPlan';
-	createdAt: Scalars['String']['output'];
-	date: Scalars['String']['output'];
-	day: Maybe<Scalars['String']['output']>;
-	id: Scalars['ID']['output'];
-	items: Array<PlannerItem>;
-	updatedAt: Scalars['String']['output'];
-	userId: Scalars['ID']['output'];
-	week: Maybe<Scalars['Int']['output']>;
-};
-
 export type Mutation = {
 	__typename?: 'Mutation';
 	_empty: Maybe<Scalars['String']['output']>;
 	acceptFamilyInvitation: FamilyMember;
 	addToFavoritesDish: User;
 	addToFavoritesProduct: User;
+	applyTemplateToPlanner: Scalars['Boolean']['output'];
 	cancelFamilyInvitation: FamilyMember;
 	changePassword: Scalars['Boolean']['output'];
 	createDish: Dish;
@@ -140,6 +129,11 @@ export type MutationAddToFavoritesDishArgs = {
 
 export type MutationAddToFavoritesProductArgs = {
 	productId: Scalars['ID']['input'];
+};
+
+export type MutationApplyTemplateToPlannerArgs = {
+	savedMenuId: Scalars['ID']['input'];
+	targetStartDate: Scalars['String']['input'];
 };
 
 export type MutationCancelFamilyInvitationArgs = {
@@ -278,7 +272,6 @@ export type PlannerItem = {
 	dishId: Scalars['ID']['output'];
 	id: Scalars['ID']['output'];
 	mealTime: MealTime;
-	menuPlanId: Maybe<Scalars['ID']['output']>;
 	userId: Scalars['ID']['output'];
 };
 
@@ -315,7 +308,6 @@ export type Query = {
 	familyMembers: Array<FamilyMember>;
 	favoriteDishes: Array<Dish>;
 	favoriteProducts: Array<Product>;
-	getMenuPlans: Array<MenuPlan>;
 	getPlannerItems: Array<PlannerItem>;
 	me: Maybe<User>;
 	product: Maybe<Product>;
@@ -338,11 +330,6 @@ export type QueryDishesArgs = {
 	limit?: InputMaybe<Scalars['Int']['input']>;
 	offset?: InputMaybe<Scalars['Int']['input']>;
 	search?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type QueryGetMenuPlansArgs = {
-	endDate: Scalars['String']['input'];
-	startDate: Scalars['String']['input'];
 };
 
 export type QueryGetPlannerItemsArgs = {

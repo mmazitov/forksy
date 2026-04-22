@@ -1,15 +1,16 @@
-import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 import { toast } from 'sonner';
 
+import { useSaveMenuPlanMutation } from '@/shared/api/graphql';
 import {
-	useGetMenuPlansQuery,
+	useGetPlannerItemsQuery,
 	useSavePlannerItemsMutation,
 } from '@/shared/api/graphql/planner.gen';
-import { useSaveMenuPlanMutation } from '@/shared/api/graphql';
 import { CATEGORIES_DISHES } from '@/shared/constants';
 import { useSchedule } from '@/shared/hooks/useSchedule';
 import {
+	formatDayjsToISO,
 	mealTimeToUI,
 	UI_NAME_TO_MEAL_TIME,
 	weekDays,
@@ -51,13 +52,13 @@ export const useMenuPlanner = () => {
 	const schedule = useSchedule();
 	const { startDate, endDate } = schedule;
 
-	const { data: menuPlansData, loading } = useGetMenuPlansQuery({
+	const { data: plannerItemsData, loading } = useGetPlannerItemsQuery({
 		variables: { startDate, endDate },
 		fetchPolicy: 'cache-and-network',
 	});
 
 	useEffect(() => {
-		if (menuPlansData?.getMenuPlans) {
+		if (plannerItemsData?.getPlannerItems) {
 			const newPlan: DayMenuType = Object.fromEntries(
 				weekDays.map((day) => [
 					day,
@@ -65,35 +66,32 @@ export const useMenuPlanner = () => {
 				]),
 			) as DayMenuType;
 
-			menuPlansData.getMenuPlans.forEach((plan) => {
-				const timestamp = Number(plan.date);
-				const finalDate = isNaN(timestamp) ? plan.date : timestamp;
+			plannerItemsData.getPlannerItems.forEach((item) => {
+				const timestamp = Number(item.date);
+				const finalDate = isNaN(timestamp) ? item.date : timestamp;
 				const itemDay = weekDays[dayjs(finalDate).isoWeekday() - 1];
+				const uiMealTime = mealTimeToUI(item.mealTime);
 
-				plan.items.forEach((item) => {
-					const uiMealTime = mealTimeToUI(item.mealTime);
-					if (itemDay && newPlan[itemDay] && newPlan[itemDay][uiMealTime]) {
-						newPlan[itemDay][uiMealTime].push({
-							plannerItemId: item.id,
-							id: item.dish.id,
-							name: item.dish.name,
-							calories: item.dish.calories || 0,
-						});
-					}
-				});
+				if (itemDay && newPlan[itemDay] && newPlan[itemDay][uiMealTime]) {
+					newPlan[itemDay][uiMealTime].push({
+						plannerItemId: item.id,
+						id: item.dish.id,
+						name: item.dish.name,
+						calories: item.dish.calories || 0,
+					});
+				}
 			});
+
 			setMenuPlan(newPlan);
 			setInitialPlan(JSON.stringify(newPlan));
-			setHasSavedData(
-				menuPlansData.getMenuPlans.some((plan) => plan.items.length > 0),
-			);
+			setHasSavedData(plannerItemsData.getPlannerItems.length > 0);
 		}
-	}, [menuPlansData, startDate, endDate]);
+	}, [plannerItemsData, startDate, endDate]);
 
 	const isDirty = initialPlan !== JSON.stringify(menuPlan);
 
 	const [savePlannerMutation] = useSavePlannerItemsMutation({
-		refetchQueries: ['GetPlannerItems', 'GetMenuPlans'],
+		refetchQueries: ['GetPlannerItems'],
 		awaitRefetchQueries: true,
 	});
 
@@ -203,7 +201,7 @@ export const useMenuPlanner = () => {
 
 		Object.entries(menuPlan).forEach(([day, meals]) => {
 			const dayIndex = weekDays.indexOf(day);
-			const date = dayjs(startDate).add(dayIndex, 'day').format('YYYY-MM-DD');
+			const date = formatDayjsToISO(dayjs(startDate).add(dayIndex, 'day'));
 
 			Object.entries(meals).forEach(([mealTime, dishes]) => {
 				const enumMealTime = UI_NAME_TO_MEAL_TIME[mealTime];
@@ -223,8 +221,16 @@ export const useMenuPlanner = () => {
 				variables: { items: itemsToSave, startDate, endDate },
 			});
 
-			const weekNumber = dayjs(startDate).isoWeek();
-			const menuName = `Меню тижня ${weekNumber}`;
+			const weekDiff = dayjs(startDate)
+				.startOf('isoWeek')
+				.diff(dayjs().startOf('isoWeek'), 'week');
+			const weekNumber = weekDiff;
+			const menuName =
+				weekDiff === 0
+					? 'Меню поточного тижня'
+					: weekDiff > 0
+						? `Меню тижня +${weekDiff}`
+						: `Меню тижня ${weekDiff}`;
 
 			await saveMenuPlanMutation({
 				variables: {
@@ -269,6 +275,6 @@ export const useMenuPlanner = () => {
 		isDirty,
 		hasSavedData,
 		isLoading: loading,
-		menuPlansData: menuPlansData?.getMenuPlans || [],
+		plannerItemsData: plannerItemsData?.getPlannerItems || [],
 	};
 };

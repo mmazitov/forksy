@@ -1,6 +1,6 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import { GetMenuPlansQuery } from '@/shared/api/graphql/planner.gen';
+import { GetPlannerItemsQuery } from '@/shared/api/graphql/planner.gen';
 import { CATEGORIES_PRODUCTS } from '@/shared/constants';
 
 interface AggregatedIngredient {
@@ -12,46 +12,44 @@ interface AggregatedIngredient {
 	checked: boolean;
 }
 
-export type MenuPlanData = GetMenuPlansQuery['getMenuPlans'][number];
+export type PlannerItemData = GetPlannerItemsQuery['getPlannerItems'][number];
 
-export const useShoppingListState = (menuPlansData: MenuPlanData[]) => {
+export const useShoppingListState = (plannerItemsData: PlannerItemData[]) => {
 	const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
 
 	const aggregatedIngredients = useMemo(() => {
 		const ingredientMap = new Map<string, AggregatedIngredient>();
 
-		menuPlansData.forEach((plan) => {
-			plan.items.forEach((item) => {
-				item.dish.ingredients.forEach((ingredient) => {
-					const amountMatch = ingredient.amount.match(
-						/^(\d+(?:\.\d+)?)\s*(.*)$/,
-					);
-					const numericAmount = amountMatch ? parseFloat(amountMatch[1]) : 0;
-					const unit = amountMatch ? amountMatch[2].trim() : ingredient.amount;
+		plannerItemsData.forEach((item) => {
+			if (!item.dish.ingredients) return;
 
-					const key = `${ingredient.name.toLowerCase()}-${unit}`;
+			item.dish.ingredients.forEach((ingredient) => {
+				const amountMatch = ingredient.amount.match(/^(\d+(?:\.\d+)?)\s*(.*)$/);
+				const numericAmount = amountMatch ? parseFloat(amountMatch[1]) : 0;
+				const unit = amountMatch ? amountMatch[2].trim() : ingredient.amount;
 
-					if (ingredientMap.has(key)) {
-						const existing = ingredientMap.get(key)!;
-						existing.totalAmount += numericAmount;
-					} else {
-						const category = ingredient.product?.category || 'Інше';
+				const key = `${ingredient.name.toLowerCase()}-${unit}`;
 
-						ingredientMap.set(key, {
-							name: ingredient.name,
-							totalAmount: numericAmount,
-							unit,
-							category,
-							productId: ingredient.productId || null,
-							checked: checkedItems.has(key),
-						});
-					}
-				});
+				if (ingredientMap.has(key)) {
+					const existing = ingredientMap.get(key)!;
+					existing.totalAmount += numericAmount;
+				} else {
+					const category = ingredient.product?.category || 'Інше';
+
+					ingredientMap.set(key, {
+						name: ingredient.name,
+						totalAmount: numericAmount,
+						unit,
+						category,
+						productId: ingredient.productId || null,
+						checked: checkedItems.has(key),
+					});
+				}
 			});
 		});
 
 		return Array.from(ingredientMap.values());
-	}, [menuPlansData, checkedItems]);
+	}, [plannerItemsData, checkedItems]);
 
 	const categorizedIngredients = useMemo(() => {
 		const categoryMap = new Map<string, AggregatedIngredient[]>();

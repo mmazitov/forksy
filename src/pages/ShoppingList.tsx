@@ -9,7 +9,7 @@ const ShoppingList = () => {
 	const {
 		loading,
 		error,
-		menuPlansData,
+		plannerItemsData,
 		checkedCount,
 		totalCount,
 		handleExport,
@@ -58,7 +58,7 @@ const ShoppingList = () => {
 				}
 			/>
 
-			<ShoppingListContent menuPlansData={menuPlansData} />
+			<ShoppingListContent plannerItemsData={plannerItemsData} />
 		</div>
 	);
 };
