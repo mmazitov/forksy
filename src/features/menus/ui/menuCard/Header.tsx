@@ -1,12 +1,13 @@
 import dayjs from 'dayjs';
 
+import { getWeekLabel } from '@/shared/lib/utils';
+
 interface HeaderProps {
 	startDate: string;
 	endDate: string;
-	weekNumber: number;
 }
 
-const Header = ({ startDate, endDate, weekNumber }: HeaderProps) => {
+const Header = ({ startDate, endDate }: HeaderProps) => {
 	const actualEndDate = dayjs(endDate).subtract(1, 'day');
 
 	const formatDate = (dateString: string) => {
@@ -17,17 +18,11 @@ const Header = ({ startDate, endDate, weekNumber }: HeaderProps) => {
 		return dayjs(dateString).format('dddd');
 	};
 
-	const getWeekLabel = (weekNum: number) => {
-		if (weekNum === 0) return 'Поточний тиждень';
-		if (weekNum > 0) return `Тиждень +${weekNum}`;
-		return `Тиждень ${weekNum}`;
-	};
-
 	return (
 		<div className="space-y-1">
 			<div className="flex items-center justify-between">
 				<h3 className="text-lg leading-tight font-semibold">
-					{getWeekLabel(weekNumber)}
+					{getWeekLabel(startDate)}
 				</h3>
 				<span className="text-muted-foreground text-xs">
 					{getWeekday(startDate)} - {actualEndDate.format('dddd')}

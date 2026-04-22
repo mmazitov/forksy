@@ -6,6 +6,8 @@ export {
 	getToday,
 	getTodayWeek,
 	getWeekDays,
+	getWeekDiff,
+	getWeekLabel,
 	today,
 	todayWeek,
 	weekDays,

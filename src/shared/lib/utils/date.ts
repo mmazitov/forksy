@@ -46,6 +46,20 @@ export function getWeekDays(): string[] {
 	);
 }
 
+export function getWeekDiff(startDate: string): number {
+	const weekStart = dayjs(startDate).startOf('isoWeek');
+	const currentWeekStart = dayjs().startOf('isoWeek');
+	return weekStart.diff(currentWeekStart, 'week');
+}
+
+export function getWeekLabel(startDate: string): string {
+	const weekDiff = getWeekDiff(startDate);
+
+	if (weekDiff === 0) return 'Поточний тиждень';
+	if (weekDiff > 0) return `Тиждень +${weekDiff}`;
+	return `Тиждень ${weekDiff}`;
+}
+
 export const today = getToday();
 export const todayWeek = getTodayWeek();
 export const weekDays = getWeekDays();

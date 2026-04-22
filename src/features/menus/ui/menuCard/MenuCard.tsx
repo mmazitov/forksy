@@ -32,11 +32,7 @@ const MenuCard = ({ menu, onDelete, onDuplicate }: MenuCardProps) => {
 	return (
 		<Card className="group flex h-full flex-col gap-3 overflow-hidden shadow-sm transition-all duration-300 hover:shadow-lg">
 			<CardHeader className="space-y-2 pb-3">
-				<Header
-					startDate={menu.startDate}
-					endDate={menu.endDate}
-					weekNumber={menu.weekNumber}
-				/>
+				<Header startDate={menu.startDate} endDate={menu.endDate} />
 			</CardHeader>
 
 			<CardContent className="flex-1 space-y-3 px-6 py-0">
