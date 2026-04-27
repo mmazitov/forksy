@@ -1,14 +1,21 @@
 import type { ApolloCache } from '@apollo/client';
 import { toast } from 'sonner';
 
+// Local callable type compatible with Apollo's useMutation return value.
+// Apollo Client v4 removed the top-level MutationFunction export; it is now a
+// namespace member of useMutation with required generics.  Using `(options: any)`
+// here is intentional: it lets every concrete MutationFunction<TData, TVariables>
+// be assignable to this type without fighting TypeScript's strict function
+// parameter variance across differing variable shapes.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MutationFn = (options: any) => Promise<unknown>;
+
 interface UseFavoriteOptions {
 	entityType: 'Product' | 'Dish';
 	entityId: string;
 	isFavorite: boolean;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	addMutation: (options?: any) => Promise<any>;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	removeMutation: (options?: any) => Promise<any>;
+	addMutation: MutationFn;
+	removeMutation: MutationFn;
 	refetchQueries?: Array<{ query: unknown; variables?: unknown } | string>;
 	onUpdate?: (cache: ApolloCache) => void;
 }

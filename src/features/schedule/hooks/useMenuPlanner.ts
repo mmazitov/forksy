@@ -88,7 +88,10 @@ export const useMenuPlanner = () => {
 		}
 	}, [plannerItemsData, startDate, endDate]);
 
-	const isDirty = initialPlan !== JSON.stringify(menuPlan);
+	const isDirty = useMemo(
+		() => initialPlan !== JSON.stringify(menuPlan),
+		[initialPlan, menuPlan],
+	);
 
 	const [savePlannerMutation] = useSavePlannerItemsMutation({
 		refetchQueries: ['GetPlannerItems'],

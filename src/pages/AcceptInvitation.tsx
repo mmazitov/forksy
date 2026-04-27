@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CheckCircle2, XCircle } from 'lucide-react';
 
@@ -13,17 +13,24 @@ const AcceptInvitation = () => {
 	const { invitationId } = useParams<{ invitationId: string }>();
 	const [status, setStatus] = useState<InvitationStatus>('pending');
 	const [errorMessage, setErrorMessage] = useState<string>('');
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const [acceptInvitation, { loading }] = useAcceptFamilyInvitationMutation({
 		onCompleted: () => {
 			setStatus('success');
-			setTimeout(() => navigate('/profile'), 2000);
+			timerRef.current = setTimeout(() => navigate('/profile'), 2000);
 		},
 		onError: (error) => {
 			setStatus('error');
 			setErrorMessage(error.message || 'Не вдалося прийняти запрошення');
 		},
 	});
+
+	useEffect(() => {
+		return () => {
+			if (timerRef.current) clearTimeout(timerRef.current);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (!invitationId) {

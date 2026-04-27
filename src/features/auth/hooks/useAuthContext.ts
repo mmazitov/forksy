@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 
 import { AuthContext } from '@/features/auth/model/AuthContext';
 
@@ -12,7 +12,7 @@ export const useAuthContext = () => {
 	const isLoggedIn = !!context.user;
 	const userName =
 		context.user?.name || context.user?.email?.split('@')[0] || '';
-	const handleLogout = () => context.logout();
+	const handleLogout = useCallback(() => context.logout(), [context.logout]);
 
 	return {
 		...context,

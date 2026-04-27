@@ -19,7 +19,7 @@ const Menus = () => {
 		disabled:
 			!loading &&
 			((tab.value === 'my' && menus.length === 0) ||
-				(tab.value === 'shared' && true)),
+				tab.value === 'shared'), // TODO: shared menus not yet implemented
 	}));
 
 	const { activeTab, setActiveTab } = useTabsWithAutoSwitch({

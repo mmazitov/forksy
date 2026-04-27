@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 
 import {
+	FamilyMembersDocument,
 	useCancelFamilyInvitationMutation,
 	useFamilyMembersQuery,
 	useInviteFamilyMemberMutation,
@@ -11,15 +12,15 @@ import {
 export const useFamilyMembers = () => {
 	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
 
-	const { data, loading, refetch } = useFamilyMembersQuery({
+	const { data, loading } = useFamilyMembersQuery({
 		fetchPolicy: 'cache-and-network',
 	});
 
 	const [inviteMember, { loading: inviting }] = useInviteFamilyMemberMutation({
+		refetchQueries: [{ query: FamilyMembersDocument }],
 		onCompleted: () => {
 			toast.success('Запрошення надіслано');
 			setIsInviteDialogOpen(false);
-			refetch();
 		},
 		onError: (error) => {
 			toast.error(error.message || 'Помилка при надсиланні запрошення');
@@ -27,9 +28,9 @@ export const useFamilyMembers = () => {
 	});
 
 	const [removeMember, { loading: removing }] = useRemoveFamilyMemberMutation({
+		refetchQueries: [{ query: FamilyMembersDocument }],
 		onCompleted: () => {
 			toast.success("Члена сім'ї видалено");
-			refetch();
 		},
 		onError: (error) => {
 			toast.error(error.message || "Помилка при видаленні члена сім'ї");
@@ -38,9 +39,9 @@ export const useFamilyMembers = () => {
 
 	const [cancelInvitation, { loading: canceling }] =
 		useCancelFamilyInvitationMutation({
+			refetchQueries: [{ query: FamilyMembersDocument }],
 			onCompleted: () => {
 				toast.success('Запрошення скасовано');
-				refetch();
 			},
 			onError: (error) => {
 				toast.error(error.message || 'Помилка при скасуванні запрошення');

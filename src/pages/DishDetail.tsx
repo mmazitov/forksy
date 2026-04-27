@@ -1,12 +1,10 @@
-import { LuArrowLeft } from 'react-icons/lu';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
 import { CardFull } from '@/features/dishes';
 import { useDishByNameQuery } from '@/shared/api/graphql';
 import {
 	Breadcrumb,
-	Button,
 	Loader,
 	MetaData,
 	SchemaOrg,
@@ -17,18 +15,7 @@ import { generateRecipeSchema } from '@/shared/lib/utils/schemaOrg';
 const DishDetail = () => {
 	const { isAdmin, user } = useAuthContext();
 	const { id } = useParams<{ id: string }>();
-	const location = useLocation();
 	const dishName = id ? fromSlug(id) : '';
-
-	const from = location.state?.from || '/dishes';
-
-	const getBackText = () => {
-		if (from === '/favorites') return 'Назад до обраного';
-		if (from === '/schedule') return 'Назад до розкладу';
-		return 'Назад до страв';
-	};
-
-	const backText = getBackText();
 
 	const { data, loading, error } = useDishByNameQuery({
 		variables: { name: dishName },

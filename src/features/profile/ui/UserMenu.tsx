@@ -88,7 +88,7 @@ const UserMenu = ({
 					onClick={() => navigate('/profile')}
 					className="cursor-pointer"
 				>
-					<Settings className="mr-2 h-4 w-4" />
+					<User className="mr-2 h-4 w-4" />
 					Персональний кабінет
 				</DropdownMenuItem>
 				<DropdownMenuItem

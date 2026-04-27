@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import type { Reference } from '@apollo/client';
 
 import {
 	useDeleteSavedMenuMutation,
@@ -17,8 +18,7 @@ export const useSavedMenuActions = () => {
 						fields: {
 							savedMenus(existingMenus = [], { readField }) {
 								return existingMenus.filter(
-									// eslint-disable-next-line @typescript-eslint/no-explicit-any
-									(menuRef: any) =>
+									(menuRef: Reference) =>
 										readField('id', menuRef) !== data.deleteSavedMenu.id,
 								);
 							},

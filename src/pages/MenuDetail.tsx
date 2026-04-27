@@ -43,7 +43,7 @@ const MenuDetail = () => {
 
 	const menu = data.savedMenu;
 
-	const getWeekLabel = (weekNum: number) => {
+	const getWeekLabelFromNumber = (weekNum: number) => {
 		if (weekNum === 0) return 'Поточний тиждень';
 		if (weekNum > 0) return `Тиждень +${weekNum}`;
 		return `Тиждень ${weekNum}`;
@@ -70,7 +70,7 @@ const MenuDetail = () => {
 
 			<PageTitle
 				title={menu.name}
-				subtitle={`${getWeekLabel(menu.weekNumber)} • ${menu.totalDishes} страв • ${menu.totalCalories.toLocaleString()} ккал`}
+				subtitle={`${getWeekLabelFromNumber(menu.weekNumber)} • ${menu.totalDishes} страв • ${menu.totalCalories.toLocaleString()} ккал`}
 				buttonVisible={false}
 			/>
 

@@ -1,4 +1,4 @@
-import { Clock, Mail, Trash2, User, X } from 'lucide-react';
+import { Calendar, Clock, Mail, Trash2, User, X } from 'lucide-react';
 
 import { Badge, Button } from '@/shared/components';
 import { FamilyMemberStatus, FamilyMember } from '@/shared/types';
@@ -52,8 +52,9 @@ const FamilyMemberCard = ({
 						<span>{member.email}</span>
 					</div>
 					{!isPending && member.sharedMenusCount !== undefined && (
-						<p className="text-muted-foreground text-xs">
-							📅 {member.sharedMenusCount} спільних меню
+						<p className="text-muted-foreground flex items-center gap-1 text-xs">
+							<Calendar className="h-3 w-3" />
+							{member.sharedMenusCount} спільних меню
 						</p>
 					)}
 					{isPending && (

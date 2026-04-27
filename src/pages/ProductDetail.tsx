@@ -1,12 +1,10 @@
-import { ArrowLeft } from 'lucide-react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useAuthContext } from '@/features/auth';
 import { CardFull } from '@/features/products';
 import { useProductByNameQuery } from '@/shared/api/graphql';
 import {
 	Breadcrumb,
-	Button,
 	Loader,
 	MetaData,
 	SchemaOrg,
@@ -17,12 +15,7 @@ import { generateProductSchema } from '@/shared/lib/utils/schemaOrg';
 const ProductDetail = () => {
 	const { isAdmin, user } = useAuthContext();
 	const { id } = useParams<{ id: string }>();
-	const location = useLocation();
 	const productName = id ? fromSlug(id) : '';
-
-	const from = location.state?.from || '/products';
-	const backText =
-		from === '/favorites' ? 'Назад до обраного' : 'Назад до продуктів';
 
 	const { data, loading, error } = useProductByNameQuery({
 		variables: { name: productName },

@@ -100,7 +100,7 @@ describe('useAuthState', () => {
 
 	it('should call logout mutation and clear cache', async () => {
 		const mockLogout = vi.fn().mockResolvedValue({});
-		const mockClearStore = vi.fn().mockResolvedValue(undefined);
+		const mockResetStore = vi.fn().mockResolvedValue(undefined);
 
 		vi.spyOn(graphql, 'useMeQuery').mockReturnValue({
 			data: { me: mockUser },
@@ -109,7 +109,7 @@ describe('useAuthState', () => {
 		} as any);
 
 		vi.spyOn(graphql, 'useLogoutMutation').mockReturnValue([mockLogout] as any);
-		vi.spyOn(apollo.client, 'clearStore').mockImplementation(mockClearStore);
+		vi.spyOn(apollo.client, 'resetStore').mockImplementation(mockResetStore);
 
 		const { result } = renderHook(() => useAuthState());
 
@@ -120,7 +120,7 @@ describe('useAuthState', () => {
 		await result.current.logout();
 
 		expect(mockLogout).toHaveBeenCalled();
-		expect(mockClearStore).toHaveBeenCalled();
+		expect(mockResetStore).toHaveBeenCalled();
 	});
 
 	it('should refetch user on login', async () => {
@@ -149,7 +149,7 @@ describe('useAuthState', () => {
 
 	it('should handle logout errors gracefully', async () => {
 		const mockLogout = vi.fn().mockRejectedValue(new Error('Logout failed'));
-		const mockClearStore = vi.fn().mockResolvedValue(undefined);
+		const mockResetStore = vi.fn().mockResolvedValue(undefined);
 
 		vi.spyOn(graphql, 'useMeQuery').mockReturnValue({
 			data: { me: mockUser },
@@ -158,7 +158,7 @@ describe('useAuthState', () => {
 		} as any);
 
 		vi.spyOn(graphql, 'useLogoutMutation').mockReturnValue([mockLogout] as any);
-		vi.spyOn(apollo.client, 'clearStore').mockImplementation(mockClearStore);
+		vi.spyOn(apollo.client, 'resetStore').mockImplementation(mockResetStore);
 
 		const { result } = renderHook(() => useAuthState());
 
@@ -168,7 +168,7 @@ describe('useAuthState', () => {
 
 		await result.current.logout();
 
-		expect(mockClearStore).toHaveBeenCalled();
+		expect(mockResetStore).toHaveBeenCalled();
 	});
 
 	it('should handle me query errors', async () => {

@@ -12,22 +12,12 @@ export const useSplashScreen = () => {
 					true;
 
 			const isPWAInstalled = localStorage.getItem('pwa-installed') === 'true';
-			const hasServiceWorker = 'serviceWorker' in navigator;
 
 			const isPWAMode = isStandalone || isPWAInstalled;
 			setIsPWA(isPWAMode);
 
 			if (isPWAMode) {
 				setShowSplash(true);
-			}
-
-			if (import.meta.env.DEV) {
-				console.log('PWA Check:', {
-					isStandalone,
-					isPWAInstalled,
-					hasServiceWorker,
-					isPWAMode,
-				});
 			}
 		};
 
