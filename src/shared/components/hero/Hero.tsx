@@ -28,7 +28,7 @@ const Hero = () => {
 					<span className="capitalize">{today}</span>
 				</div>
 
-				<h1 className="font-display text-foreground mb-6 text-4xl leading-[1.1] font-bold tracking-tight md:text-6xl">
+				<h1 className="font-display text-foreground mb-6 text-4xl leading-[1.05] font-bold tracking-tight md:text-6xl md:tracking-tighter">
 					Плануйте меню <span className="text-primary italic">з легкістю</span>
 				</h1>
 

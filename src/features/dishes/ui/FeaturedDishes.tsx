@@ -31,7 +31,7 @@ const FeaturedDishes = () => {
 		<>
 			<div className="mb-8 flex items-center justify-between">
 				<div>
-					<h2 className="text-foreground mb-2 text-3xl font-bold">
+					<h2 className="text-foreground mb-2 text-3xl leading-tight font-bold tracking-tight">
 						Популярні страви
 					</h2>
 					<p className="text-muted-foreground">
