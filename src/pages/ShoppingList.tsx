@@ -2,13 +2,7 @@ import {
 	ShoppingListContent,
 	useShoppingListPage,
 } from '@/features/shoppingList';
-import {
-	BackButton,
-	Breadcrumb,
-	Loader,
-	MetaData,
-	PageTitle,
-} from '@/shared/components';
+import { Breadcrumb, Loader, MetaData, PageTitle } from '@/shared/components';
 import { useBreadcrumbs } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 
@@ -59,23 +53,18 @@ const ShoppingList = () => {
 				keywords={METADATA_CONFIG.keywords.shoppingList}
 				type="website"
 			/>
-			<BackButton
-				title="До планувальника"
-				href={backHref}
-				ctaButton={true}
-				ctaButtonText="Експорт"
-				ctaButtonClick={handleExport}
-				ctaButtonDisabled={totalCount === 0}
-			/>
 
 			<PageTitle
 				title="Список покупок"
-				buttonVisible={false}
 				subtitle={
 					totalCount > 0
 						? `${totalCount} ${totalCount === 1 ? 'продукт' : totalCount < 5 ? 'продукти' : 'продуктів'}${checkedCount > 0 ? ` • ${checkedCount} відмічено` : ''}`
 						: 'Додайте страви до планувальника меню'
 				}
+				buttonVisible={true}
+				buttonText="Експорт"
+				onClick={handleExport}
+				buttonDisable={totalCount === 0}
 			/>
 
 			<ShoppingListContent plannerItemsData={plannerItemsData} />
