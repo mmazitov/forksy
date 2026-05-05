@@ -9,6 +9,7 @@ fragment SavedMenuFields on SavedMenu {
 	totalProtein
 	totalFat
 	totalCarbs
+	isFavorite
 	createdAt
 	updatedAt
 	items {
@@ -67,5 +68,23 @@ mutation SaveMenuPlan(
 		weekNumber: $weekNumber
 	) {
 		...SavedMenuFields
+	}
+}
+
+mutation AddToFavoritesMenu($menuId: ID!) {
+	addToFavoritesMenu(menuId: $menuId) {
+		id
+		favoriteMenus {
+			id
+		}
+	}
+}
+
+mutation RemoveFromFavoritesMenu($menuId: ID!) {
+	removeFromFavoritesMenu(menuId: $menuId) {
+		id
+		favoriteMenus {
+			id
+		}
 	}
 }

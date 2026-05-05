@@ -95,6 +95,7 @@ export type Mutation = {
 	_empty: Maybe<Scalars['String']['output']>;
 	acceptFamilyInvitation: FamilyMember;
 	addToFavoritesDish: User;
+	addToFavoritesMenu: User;
 	addToFavoritesProduct: User;
 	applyTemplateToPlanner: Scalars['Boolean']['output'];
 	cancelFamilyInvitation: FamilyMember;
@@ -111,6 +112,7 @@ export type Mutation = {
 	register: AuthPayload;
 	removeFamilyMember: FamilyMember;
 	removeFromFavoritesDish: User;
+	removeFromFavoritesMenu: User;
 	removeFromFavoritesProduct: User;
 	saveMenuPlan: SavedMenu;
 	savePlanner: Scalars['Boolean']['output'];
@@ -125,6 +127,10 @@ export type MutationAcceptFamilyInvitationArgs = {
 
 export type MutationAddToFavoritesDishArgs = {
 	dishId: Scalars['ID']['input'];
+};
+
+export type MutationAddToFavoritesMenuArgs = {
+	menuId: Scalars['ID']['input'];
 };
 
 export type MutationAddToFavoritesProductArgs = {
@@ -208,6 +214,10 @@ export type MutationRemoveFamilyMemberArgs = {
 
 export type MutationRemoveFromFavoritesDishArgs = {
 	dishId: Scalars['ID']['input'];
+};
+
+export type MutationRemoveFromFavoritesMenuArgs = {
+	menuId: Scalars['ID']['input'];
 };
 
 export type MutationRemoveFromFavoritesProductArgs = {
@@ -361,6 +371,7 @@ export type SavedMenu = {
 	createdAt: Scalars['String']['output'];
 	endDate: Scalars['String']['output'];
 	id: Scalars['ID']['output'];
+	isFavorite: Scalars['Boolean']['output'];
 	items: Array<SavedMenuItem>;
 	name: Scalars['String']['output'];
 	startDate: Scalars['String']['output'];
@@ -404,6 +415,7 @@ export type User = {
 	dislike: Array<Scalars['String']['output']>;
 	email: Maybe<Scalars['String']['output']>;
 	favoriteDishes: Array<Dish>;
+	favoriteMenus: Array<SavedMenu>;
 	favoriteProducts: Array<Product>;
 	id: Scalars['ID']['output'];
 	name: Maybe<Scalars['String']['output']>;

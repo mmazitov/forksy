@@ -84,4 +84,42 @@ describe('FavoriteButton', () => {
 		const button = screen.getByRole('button');
 		expect(button).not.toHaveClass('text-red-500');
 	});
+
+	it('should use overlay variant by default', () => {
+		render(<FavoriteButton isFavorite={false} onClick={vi.fn()} />);
+
+		const button = screen.getByRole('button');
+		expect(button).toHaveClass('absolute');
+	});
+
+	it('should use inline variant when specified', () => {
+		render(
+			<FavoriteButton isFavorite={false} onClick={vi.fn()} variant="inline" />,
+		);
+
+		const button = screen.getByRole('button');
+		expect(button).not.toHaveClass('absolute');
+	});
+
+	it('should use smaller icon for inline variant', () => {
+		render(
+			<FavoriteButton isFavorite={false} onClick={vi.fn()} variant="inline" />,
+		);
+
+		const button = screen.getByRole('button');
+		const svg = button.querySelector('svg');
+		expect(svg).toHaveClass('h-4');
+		expect(svg).toHaveClass('w-4');
+	});
+
+	it('should use larger icon for overlay variant', () => {
+		render(
+			<FavoriteButton isFavorite={false} onClick={vi.fn()} variant="overlay" />,
+		);
+
+		const button = screen.getByRole('button');
+		const svg = button.querySelector('svg');
+		expect(svg).toHaveClass('h-5');
+		expect(svg).toHaveClass('w-5');
+	});
 });
