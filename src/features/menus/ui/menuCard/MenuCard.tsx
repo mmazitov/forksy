@@ -4,6 +4,7 @@ import Actions from './Actions';
 import Header from './Header';
 import Preview from './Preview';
 import Stats from './Stats';
+import { useFavoriteMenu } from '../../hooks/useFavoriteMenu';
 
 import { SavedMenuFieldsFragment } from '@/shared/api/graphql';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/components';
@@ -16,6 +17,7 @@ interface MenuCardProps {
 
 const MenuCard = ({ menu, onDelete, onDuplicate }: MenuCardProps) => {
 	const navigate = useNavigate();
+	const { toggleFavorite } = useFavoriteMenu(menu.id, menu.isFavorite);
 
 	const handleView = () => {
 		navigate(`/menu/${menu.id}`);
@@ -51,6 +53,8 @@ const MenuCard = ({ menu, onDelete, onDuplicate }: MenuCardProps) => {
 					onView={handleView}
 					onDuplicate={handleDuplicate}
 					onDelete={handleDelete}
+					onToggleFavorite={toggleFavorite}
+					isFavorite={menu.isFavorite}
 				/>
 			</CardFooter>
 		</Card>

@@ -1,15 +1,13 @@
-import { gql } from '@apollo/client';
 import type { Reference } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { toast } from 'sonner';
 
 import {
 	useDeleteSavedMenuMutation,
 	useDuplicateSavedMenuMutation,
 } from '@/shared/api/graphql';
-import { useToast } from '@/shared/hooks';
 
 export const useSavedMenuActions = () => {
-	const { toast } = useToast();
-
 	const [deleteMutation, { loading: deleteLoading }] =
 		useDeleteSavedMenuMutation({
 			update(cache, { data }) {
@@ -27,16 +25,13 @@ export const useSavedMenuActions = () => {
 				}
 			},
 			onCompleted: (data) => {
-				toast({
-					title: 'Меню видалено',
+				toast.success('Меню видалено', {
 					description: `Меню "${data.deleteSavedMenu.name}" успішно видалено`,
 				});
 			},
 			onError: (error) => {
-				toast({
-					title: 'Помилка',
+				toast.error('Помилка', {
 					description: error.message,
-					variant: 'destructive',
 				});
 			},
 		});
@@ -74,16 +69,13 @@ export const useSavedMenuActions = () => {
 				}
 			},
 			onCompleted: (data) => {
-				toast({
-					title: 'Меню дубльовано',
+				toast.success('Меню дубльовано', {
 					description: `Створено копію меню "${data.duplicateSavedMenu.name}"`,
 				});
 			},
 			onError: (error) => {
-				toast({
-					title: 'Помилка',
+				toast.error('Помилка', {
 					description: error.message,
-					variant: 'destructive',
 				});
 			},
 		});

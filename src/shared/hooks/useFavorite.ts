@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 type MutationFn = (options: any) => Promise<unknown>;
 
 interface UseFavoriteOptions {
-	entityType: 'Product' | 'Dish';
+	entityType: 'Product' | 'Dish' | 'SavedMenu';
 	entityId: string;
 	isFavorite: boolean;
 	addMutation: MutationFn;
@@ -35,7 +35,9 @@ export const useFavorite = ({
 			const variables =
 				entityType === 'Product'
 					? { productId: entityId }
-					: { dishId: entityId };
+					: entityType === 'Dish'
+						? { dishId: entityId }
+						: { menuId: entityId };
 
 			await mutation({
 				variables,
@@ -44,10 +46,14 @@ export const useFavorite = ({
 					[isFavorite
 						? entityType === 'Product'
 							? 'removeFromFavoritesProduct'
-							: 'removeFromFavoritesDish'
+							: entityType === 'Dish'
+								? 'removeFromFavoritesDish'
+								: 'removeFromFavoritesMenu'
 						: entityType === 'Product'
 							? 'addToFavoritesProduct'
-							: 'addToFavoritesDish']: {
+							: entityType === 'Dish'
+								? 'addToFavoritesDish'
+								: 'addToFavoritesMenu']: {
 						id: entityId,
 						name: 'Optimistic Update',
 					},
@@ -68,14 +74,24 @@ export const useFavorite = ({
 				},
 			});
 
-			const entityName = entityType === 'Product' ? 'продукт' : 'страву';
+			const entityName =
+				entityType === 'Product'
+					? 'продукт'
+					: entityType === 'Dish'
+						? 'страву'
+						: 'меню';
 			toast.success(
 				isFavorite
 					? `${entityName.charAt(0).toUpperCase() + entityName.slice(1)} видалено з улюблених`
 					: `${entityName.charAt(0).toUpperCase() + entityName.slice(1)} додано до улюблених`,
 			);
 		} catch (error) {
-			const entityName = entityType === 'Product' ? 'продуктів' : 'страв';
+			const entityName =
+				entityType === 'Product'
+					? 'продуктів'
+					: entityType === 'Dish'
+						? 'страв'
+						: 'меню';
 			toast.error(
 				`Помилка при оновленні улюблених ${entityName}, лише авторизовані користувачі можуть додавати улюблені ${entityName}`,
 			);

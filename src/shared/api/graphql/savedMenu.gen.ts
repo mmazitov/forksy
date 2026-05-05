@@ -16,6 +16,7 @@ export type SavedMenuFieldsFragment = {
 	totalProtein: number;
 	totalFat: number;
 	totalCarbs: number;
+	isFavorite: boolean;
 	createdAt: string;
 	updatedAt: string;
 	items: Array<{
@@ -84,6 +85,32 @@ export type SaveMenuPlanMutation = {
 	saveMenuPlan: { __typename?: 'SavedMenu' } & SavedMenuFieldsFragment;
 };
 
+export type AddToFavoritesMenuMutationVariables = Types.Exact<{
+	menuId: Types.Scalars['ID']['input'];
+}>;
+
+export type AddToFavoritesMenuMutation = {
+	__typename?: 'Mutation';
+	addToFavoritesMenu: {
+		__typename?: 'User';
+		id: string;
+		favoriteMenus: Array<{ __typename?: 'SavedMenu'; id: string }>;
+	};
+};
+
+export type RemoveFromFavoritesMenuMutationVariables = Types.Exact<{
+	menuId: Types.Scalars['ID']['input'];
+}>;
+
+export type RemoveFromFavoritesMenuMutation = {
+	__typename?: 'Mutation';
+	removeFromFavoritesMenu: {
+		__typename?: 'User';
+		id: string;
+		favoriteMenus: Array<{ __typename?: 'SavedMenu'; id: string }>;
+	};
+};
+
 export const SavedMenuFieldsFragmentDoc = {
 	kind: 'Document',
 	definitions: [
@@ -107,6 +134,7 @@ export const SavedMenuFieldsFragmentDoc = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalProtein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalFat' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalCarbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 					{
@@ -202,6 +230,7 @@ export const SavedMenusDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalProtein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalFat' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalCarbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 					{
@@ -346,6 +375,7 @@ export const SavedMenuDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalProtein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalFat' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalCarbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 					{
@@ -555,6 +585,7 @@ export const DuplicateSavedMenuDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalProtein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalFat' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalCarbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 					{
@@ -751,6 +782,7 @@ export const SaveMenuPlanDocument = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalProtein' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalFat' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'totalCarbs' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'isFavorite' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
 					{
@@ -814,4 +846,150 @@ export function useSaveMenuPlanMutation(
 }
 export type SaveMenuPlanMutationHookResult = ReturnType<
 	typeof useSaveMenuPlanMutation
+>;
+export const AddToFavoritesMenuDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'AddToFavoritesMenu' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'menuId' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'addToFavoritesMenu' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'menuId' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'menuId' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'favoriteMenus' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+										],
+									},
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useAddToFavoritesMenuMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		AddToFavoritesMenuMutation,
+		AddToFavoritesMenuMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		AddToFavoritesMenuMutation,
+		AddToFavoritesMenuMutationVariables
+	>(AddToFavoritesMenuDocument, options);
+}
+export type AddToFavoritesMenuMutationHookResult = ReturnType<
+	typeof useAddToFavoritesMenuMutation
+>;
+export const RemoveFromFavoritesMenuDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'mutation',
+			name: { kind: 'Name', value: 'RemoveFromFavoritesMenu' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'menuId' },
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+					},
+				},
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'removeFromFavoritesMenu' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'menuId' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'menuId' },
+								},
+							},
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'favoriteMenus' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+										],
+									},
+								},
+							],
+						},
+					},
+				],
+			},
+		},
+	],
+} as unknown as DocumentNode;
+export function useRemoveFromFavoritesMenuMutation(
+	baseOptions?: ApolloReactHooks.MutationHookOptions<
+		RemoveFromFavoritesMenuMutation,
+		RemoveFromFavoritesMenuMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return ApolloReactHooks.useMutation<
+		RemoveFromFavoritesMenuMutation,
+		RemoveFromFavoritesMenuMutationVariables
+	>(RemoveFromFavoritesMenuDocument, options);
+}
+export type RemoveFromFavoritesMenuMutationHookResult = ReturnType<
+	typeof useRemoveFromFavoritesMenuMutation
 >;
