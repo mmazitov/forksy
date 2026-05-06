@@ -119,6 +119,7 @@ export type Mutation = {
 	updateDish: Dish;
 	updateProduct: Product;
 	updateProfile: User;
+	updateSavedMenu: SavedMenu;
 };
 
 export type MutationAcceptFamilyInvitationArgs = {
@@ -272,6 +273,13 @@ export type MutationUpdateProfileArgs = {
 	dislike?: InputMaybe<Array<Scalars['String']['input']>>;
 	name?: InputMaybe<Scalars['String']['input']>;
 	phone?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationUpdateSavedMenuArgs = {
+	endDate: Scalars['String']['input'];
+	id: Scalars['ID']['input'];
+	name: Scalars['String']['input'];
+	startDate: Scalars['String']['input'];
 };
 
 export type PlannerItem = {

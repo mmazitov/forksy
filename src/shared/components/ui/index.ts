@@ -72,5 +72,6 @@ export { Tooltip, TooltipContent, TooltipTrigger } from './tooltip';
 export { Checkbox } from './checkbox';
 
 export { Counter } from './counter';
+export { DateRangePicker } from './dateRangePicker';
 export * from './form';
 export { SkeletonBody } from './skeletonBody';

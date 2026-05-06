@@ -1,13 +1,12 @@
 import dayjs from 'dayjs';
 
-import { getWeekLabel } from '@/shared/lib/utils';
-
 interface HeaderProps {
+	name: string;
 	startDate: string;
 	endDate: string;
 }
 
-const Header = ({ startDate, endDate }: HeaderProps) => {
+const Header = ({ name, startDate, endDate }: HeaderProps) => {
 	const actualEndDate = dayjs(endDate).subtract(1, 'day');
 
 	const formatDate = (dateString: string) => {
@@ -21,9 +20,7 @@ const Header = ({ startDate, endDate }: HeaderProps) => {
 	return (
 		<div className="space-y-1">
 			<div className="flex items-center justify-between">
-				<h3 className="text-lg leading-tight font-semibold">
-					{getWeekLabel(startDate)}
-				</h3>
+				<h3 className="text-lg leading-tight font-semibold">{name}</h3>
 				<span className="text-muted-foreground text-xs">
 					{getWeekday(startDate)} - {actualEndDate.format('dddd')}
 				</span>
