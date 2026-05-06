@@ -1,9 +1,19 @@
-import { LuCopy, LuEye, LuTrash2 } from 'react-icons/lu';
+import { LuCopy, LuEye, LuPencil, LuTrash2 } from 'react-icons/lu';
+import { MdMoreVert } from 'react-icons/md';
 
-import { Button, FavoriteButton } from '@/shared/components';
+import {
+	Button,
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+	FavoriteButton,
+} from '@/shared/components';
 
 interface ActionsProps {
 	onView: () => void;
+	onEdit: () => void;
 	onDuplicate: () => void;
 	onDelete: () => void;
 	onToggleFavorite: () => void;
@@ -12,6 +22,7 @@ interface ActionsProps {
 
 const Actions = ({
 	onView,
+	onEdit,
 	onDuplicate,
 	onDelete,
 	onToggleFavorite,
@@ -33,34 +44,55 @@ const Actions = ({
 					<LuEye className="mr-1 h-4 w-4" />
 					Переглянути
 				</Button>
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={(e) => {
-						e.preventDefault();
-						onDuplicate();
-					}}
-					aria-label="Дублювати меню"
-				>
-					<LuCopy className="h-4 w-4" />
-				</Button>
 				<FavoriteButton
 					isFavorite={isFavorite}
 					onClick={onToggleFavorite}
 					variant="inline"
 				/>
 			</div>
-			<Button
-				variant="outline"
-				size="sm"
-				onClick={(e) => {
-					e.preventDefault();
-					onDelete();
-				}}
-				aria-label="Видалити меню"
-			>
-				<LuTrash2 className="h-4 w-4" />
-			</Button>
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={(e) => e.preventDefault()}
+						aria-label="Більше дій"
+					>
+						<MdMoreVert className="h-4 w-4" />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					<DropdownMenuItem
+						onClick={(e) => {
+							e.preventDefault();
+							onEdit();
+						}}
+					>
+						<LuPencil className="mr-2 h-4 w-4" />
+						Редагувати
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={(e) => {
+							e.preventDefault();
+							onDuplicate();
+						}}
+					>
+						<LuCopy className="mr-2 h-4 w-4" />
+						Дублювати
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem
+						onClick={(e) => {
+							e.preventDefault();
+							onDelete();
+						}}
+						className="text-destructive hover:text-var(--color-destructive-foreground)"
+					>
+						<LuTrash2 className="mr-2 h-4 w-4" />
+						Видалити
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
 		</div>
 	);
 };

@@ -15,7 +15,6 @@ import { Loader } from '@/shared/components/loader';
 import { Skeleton } from '@/shared/components/skeleton';
 import { useBreadcrumbs, useMenuSchema } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
-import { getWeekLabel } from '@/shared/lib/utils';
 
 const MenuDetail = () => {
 	const { id } = useParams<{ id: string }>();
@@ -70,7 +69,7 @@ const MenuDetail = () => {
 			<Breadcrumb items={breadcrumbItems} />
 			<PageTitle
 				title={menu.name}
-				subtitle={`${getWeekLabel(menu.startDate)} • ${menu.totalDishes} страв • ${menu.totalCalories.toLocaleString()} ккал`}
+				subtitle={`${menu.totalDishes} страв • ${menu.totalCalories.toLocaleString()} ккал`}
 				buttonVisible={false}
 			/>
 			<div className="space-y-6">

@@ -55,6 +55,22 @@ mutation DuplicateSavedMenu($id: ID!) {
 	}
 }
 
+mutation UpdateSavedMenu(
+	$id: ID!
+	$name: String!
+	$startDate: String!
+	$endDate: String!
+) {
+	updateSavedMenu(
+		id: $id
+		name: $name
+		startDate: $startDate
+		endDate: $endDate
+	) {
+		...SavedMenuFields
+	}
+}
+
 mutation SaveMenuPlan(
 	$name: String!
 	$startDate: String!
