@@ -1,43 +1,43 @@
 import dayjs, { type Dayjs } from 'dayjs';
-import isoWeek from 'dayjs/plugin/isoWeek';
 import { LuChevronLeft, LuChevronRight, LuRefreshCw } from 'react-icons/lu';
 
 import { Button } from './button';
 
-dayjs.extend(isoWeek);
-
 interface DateRangePickerProps {
 	startDate: string;
+	endDate: string;
 	onDateChange: (startDate: string, endDate: string) => void;
 }
 
 export const DateRangePicker = ({
 	startDate,
+	endDate,
 	onDateChange,
 }: DateRangePickerProps) => {
 	const currentStart = dayjs(startDate);
+	const rangeDays = dayjs(endDate).diff(currentStart, 'day');
 
 	const handlePreviousWeek = () => {
 		const newStart = currentStart.subtract(1, 'week').startOf('isoWeek');
-		const newEnd = newStart.add(7, 'day');
+		const newEnd = newStart.add(rangeDays, 'day');
 		onDateChange(newStart.format('YYYY-MM-DD'), newEnd.format('YYYY-MM-DD'));
 	};
 
 	const handleNextWeek = () => {
 		const newStart = currentStart.add(1, 'week').startOf('isoWeek');
-		const newEnd = newStart.add(7, 'day');
+		const newEnd = newStart.add(rangeDays, 'day');
 		onDateChange(newStart.format('YYYY-MM-DD'), newEnd.format('YYYY-MM-DD'));
 	};
 
 	const handleCurrentWeek = () => {
 		const newStart = dayjs().startOf('isoWeek');
-		const newEnd = newStart.add(7, 'day');
+		const newEnd = newStart.add(rangeDays, 'day');
 		onDateChange(newStart.format('YYYY-MM-DD'), newEnd.format('YYYY-MM-DD'));
 	};
 
-	const formatWeekRange = (start: Dayjs) => {
-		const end = start.add(6, 'day');
-		return `${start.format('D MMMM')} - ${end.format('D MMMM YYYY')}`;
+	const formatWeekRange = (start: Dayjs, end: string) => {
+		const endDay = dayjs(end).subtract(1, 'day');
+		return `${start.format('D MMMM')} - ${endDay.format('D MMMM YYYY')}`;
 	};
 
 	const isCurrentWeek = currentStart.isSame(dayjs().startOf('isoWeek'), 'day');
@@ -55,7 +55,7 @@ export const DateRangePicker = ({
 
 			<div className="flex items-center gap-1">
 				<span className="text-sm font-medium">
-					{formatWeekRange(currentStart)}
+					{formatWeekRange(currentStart, endDate)}
 				</span>
 				{!isCurrentWeek && (
 					<Button

@@ -21,18 +21,14 @@ export const useUpdateMenu = () => {
 		name: string,
 		startDate: string,
 		endDate: string,
-	) => {
+	): Promise<boolean> => {
 		try {
-			await updateMutation({
-				variables: {
-					id,
-					name,
-					startDate,
-					endDate,
-				},
+			const result = await updateMutation({
+				variables: { id, name, startDate, endDate },
 			});
-		} catch (error) {
-			console.error('Update menu error:', error);
+			return !!result.data;
+		} catch {
+			return false;
 		}
 	};
 

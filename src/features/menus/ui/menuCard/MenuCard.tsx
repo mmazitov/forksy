@@ -54,8 +54,8 @@ const MenuCard = ({ menu, onDelete, onDuplicate }: MenuCardProps) => {
 
 	const handleSave = async () => {
 		if (editName.trim()) {
-			await updateMenu(menu.id, editName.trim(), editStartDate, editEndDate);
-			setIsEditing(false);
+			const success = await updateMenu(menu.id, editName.trim(), editStartDate, editEndDate);
+			if (success) setIsEditing(false);
 		}
 	};
 
@@ -85,6 +85,7 @@ const MenuCard = ({ menu, onDelete, onDuplicate }: MenuCardProps) => {
 						/>
 						<DateRangePicker
 							startDate={editStartDate}
+							endDate={editEndDate}
 							onDateChange={handleDateChange}
 						/>
 					</div>

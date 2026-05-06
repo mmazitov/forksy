@@ -52,12 +52,7 @@ const Actions = ({
 			</div>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={(e) => e.preventDefault()}
-						aria-label="Більше дій"
-					>
+					<Button variant="ghost" size="sm" aria-label="Більше дій">
 						<MdMoreVert className="h-4 w-4" />
 					</Button>
 				</DropdownMenuTrigger>
@@ -86,7 +81,7 @@ const Actions = ({
 							e.preventDefault();
 							onDelete();
 						}}
-						className="text-destructive hover:text-var(--color-destructive-foreground)"
+						className="text-destructive hover:text-(--color-destructive-foreground)"
 					>
 						<LuTrash2 className="mr-2 h-4 w-4" />
 						Видалити
