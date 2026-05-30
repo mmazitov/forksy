@@ -1,3 +1,5 @@
+import { memo, useCallback } from 'react';
+
 import CardPlaning from './CardPlaning';
 
 import { Card, CardContent } from '@/shared/components';
@@ -15,6 +17,44 @@ interface PlannerWeekProps {
 	weeklyTotalDishes: number;
 }
 
+interface DayMealCardProps {
+	dayKey: string;
+	meal: string;
+	mealDishes: PlanningDish[];
+	mealCalories: number;
+	onStableAdd: (day: string, meal: string) => void;
+	onStableRemove: (day: string, meal: string, dishId: string) => void;
+}
+
+const DayMealCard = memo(function DayMealCard({
+	dayKey,
+	meal,
+	mealDishes,
+	mealCalories,
+	onStableAdd,
+	onStableRemove,
+}: DayMealCardProps) {
+	const handleAdd = useCallback(
+		(m: string) => onStableAdd(dayKey, m),
+		[dayKey, onStableAdd],
+	);
+	const handleRemove = useCallback(
+		(m: string, dId: string) => onStableRemove(dayKey, m, dId),
+		[dayKey, onStableRemove],
+	);
+	return (
+		<CardPlaning
+			meal={meal}
+			mealDishes={mealDishes}
+			mealCalories={mealCalories}
+			onAddDish={handleAdd}
+			onRemoveDish={handleRemove}
+			isCompact
+			disableNavigation
+		/>
+	);
+});
+
 const PlannerWeek = ({
 	weekDaysForFilter,
 	mealTimes,
@@ -25,6 +65,21 @@ const PlannerWeek = ({
 	weeklyTotalCalories,
 	weeklyTotalDishes,
 }: PlannerWeekProps) => {
+	const handleStableAdd = useCallback(
+		(day: string, meal: string) => {
+			setSelectedDay(day);
+			openDialog(meal);
+		},
+		[setSelectedDay, openDialog],
+	);
+
+	const handleStableRemove = useCallback(
+		(day: string, meal: string, dishId: string) => {
+			removeDishFromMenu(day, meal, dishId);
+		},
+		[removeDishFromMenu],
+	);
+
 	return (
 		<div className="animate-fade-up overflow-x-auto pb-4">
 			<div className="inline-grid w-full grid-cols-1 gap-4 lg:grid-cols-7">
@@ -62,20 +117,14 @@ const PlannerWeek = ({
 										0,
 									);
 									return (
-										<CardPlaning
+										<DayMealCard
 											key={`${dayKey}-${meal}`}
+											dayKey={dayKey}
 											meal={meal}
 											mealDishes={mealDishes}
 											mealCalories={mealCalories}
-											onAddDish={(m: string) => {
-												setSelectedDay(dayKey);
-												openDialog(m);
-											}}
-											onRemoveDish={(m: string, dId: string) => {
-												removeDishFromMenu(dayKey, m, dId);
-											}}
-											isCompact
-											disableNavigation
+											onStableAdd={handleStableAdd}
+											onStableRemove={handleStableRemove}
 										/>
 									);
 								})}

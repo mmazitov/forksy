@@ -44,7 +44,7 @@ export const useMenuPlanner = () => {
 		),
 	);
 
-	const [initialPlan, setInitialPlan] = useState<string>('');
+	const [isDirty, setIsDirty] = useState(false);
 	const [hasSavedData, setHasSavedData] = useState<boolean | undefined>(
 		undefined,
 	);
@@ -83,15 +83,10 @@ export const useMenuPlanner = () => {
 			});
 
 			setMenuPlan(newPlan);
-			setInitialPlan(JSON.stringify(newPlan));
+			setIsDirty(false);
 			setHasSavedData(plannerItemsData.getPlannerItems.length > 0);
 		}
 	}, [plannerItemsData, startDate, endDate]);
-
-	const isDirty = useMemo(
-		() => initialPlan !== JSON.stringify(menuPlan),
-		[initialPlan, menuPlan],
-	);
 
 	const [savePlannerMutation] = useSavePlannerItemsMutation({
 		refetchQueries: ['GetPlannerItems'],
@@ -134,6 +129,7 @@ export const useMenuPlanner = () => {
 					],
 				},
 			}));
+			setIsDirty(true);
 
 			toast.success(`${dish.name} додано до ${selectedMeal}`);
 			closeDialog();
@@ -150,24 +146,21 @@ export const useMenuPlanner = () => {
 					[meal]: prev[day]?.[meal]?.filter((d) => d.id !== dishId) || [],
 				},
 			}));
+			setIsDirty(true);
 
 			toast.success('Блюдо видалено');
 		},
 		[],
 	);
 
-	const getDailyStats = useCallback(() => {
+	const dailyStats = useMemo(() => {
 		const dayMeals = menuPlan[selectedDay] || {};
 		const allDishes = Object.values(dayMeals).flat();
 		const totalCalories = allDishes.reduce(
 			(sum, dish) => sum + dish.calories,
 			0,
 		);
-
-		return {
-			dishes: allDishes.length,
-			calories: totalCalories,
-		};
+		return { dishes: allDishes.length, calories: totalCalories };
 	}, [menuPlan, selectedDay]);
 
 	const weeklyTotalCalories = useMemo(
@@ -245,6 +238,7 @@ export const useMenuPlanner = () => {
 			});
 
 			toast.success('Меню успішно збережено!');
+			setIsDirty(false);
 		} catch (error) {
 			console.error('Save error:', error);
 			toast.error('Помилка при збереженні меню');
@@ -268,7 +262,7 @@ export const useMenuPlanner = () => {
 		menuPlan,
 		addDishToMenu,
 		removeDishFromMenu,
-		getDailyStats,
+		dailyStats,
 		weeklyTotalCalories,
 		weeklyTotalDishes,
 		handleSave,

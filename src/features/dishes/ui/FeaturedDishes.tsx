@@ -10,7 +10,9 @@ import { Skeleton } from '@/shared/components/skeleton';
 import { Button } from '@/shared/components/ui/button';
 
 const FeaturedDishes = () => {
-	const { data, loading, error } = useDishesQuery();
+	const { data, loading, error } = useDishesQuery({
+		variables: { limit: 20 },
+	});
 
 	const randomDishes = useMemo(() => {
 		if (!data?.dishes) return [];

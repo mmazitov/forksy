@@ -40,7 +40,7 @@ const MenuPlanner = () => {
 		menuPlan,
 		addDishToMenu,
 		removeDishFromMenu,
-		getDailyStats,
+		dailyStats,
 		weeklyTotalCalories,
 		weeklyTotalDishes,
 		handleSave,
@@ -51,8 +51,6 @@ const MenuPlanner = () => {
 		hasSavedData,
 		isLoading,
 	} = useMenuPlanner();
-
-	const dailyStats = getDailyStats();
 
 	const menuItems: FloatingMenuItem[] = [
 		{

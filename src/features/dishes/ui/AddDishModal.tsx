@@ -1,3 +1,4 @@
+import { useDebounce } from '@/shared/hooks';
 import { useDishesQuery } from '@/shared/api/graphql/dish.gen';
 import { Search } from '@/shared/components/search';
 import { Card } from '@/shared/components/ui/card';
@@ -18,10 +19,12 @@ const AddDishModal = ({
 	onDishSelect,
 	selectedMeal,
 }: AddDishModalProps) => {
+	const debouncedSearch = useDebounce(searchQuery);
+
 	const { data } = useDishesQuery({
 		variables: {
 			category: selectedMeal || undefined,
-			search: searchQuery || undefined,
+			search: debouncedSearch || undefined,
 		},
 		fetchPolicy: 'cache-and-network',
 	});

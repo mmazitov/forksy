@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
 
 import { CardCompact } from '@/features/products';
@@ -18,19 +18,30 @@ import {
 	ITEMS_PER_PAGE,
 	PAGE_TITLE,
 } from '@/shared/constants';
-import { useBreadcrumbs, useFilter, usePagination, useItemListSchema } from '@/shared/hooks';
+import { useBreadcrumbs, useDebounce, usePagination, useItemListSchema } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 import { type ItemListSchemaItem, createSlug } from '@/shared/lib/utils';
+
 const Products = () => {
 	const breadcrumbItems = useBreadcrumbs();
-	const { data, loading, error } = useProductsQuery();
+	const [searchQuery, setSearchQuery] = useState('');
+	const [selectedCategory, setSelectedCategory] = useState('Усі');
+	const debouncedSearch = useDebounce(searchQuery);
 
-	const products = data?.products;
-	const productsData = products ?? [];
+	const { data, loading, error } = useProductsQuery({
+		variables: {
+			search: debouncedSearch || undefined,
+			category: selectedCategory !== 'Усі' ? selectedCategory : undefined,
+			limit: 100,
+		},
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const products = data?.products ?? [];
 
 	const productItems = useMemo<ItemListSchemaItem[]>(
 		() =>
-			(products ?? []).map((product) => ({
+			products.map((product) => ({
 				name: product.name,
 				url: `${METADATA_CONFIG.site.url}/products/${createSlug(product.name)}`,
 				image: product.imageUrl ?? undefined,
@@ -40,23 +51,11 @@ const Products = () => {
 	);
 	useItemListSchema(productItems, 'Product');
 
-	const {
-		searchQuery,
-		setSearchQuery,
-		selectedCategory,
-		setSelectedCategory,
-		filteredItems,
-	} = useFilter(productsData, {
-		searchField: 'name',
-		categoryField: 'category',
-		defaultCategory: 'Усі',
-	});
-
 	const { currentPage, totalPages, paginatedItems, handlePageChange } =
 		usePagination({
-			items: filteredItems,
+			items: products,
 			itemsPerPage: ITEMS_PER_PAGE,
-			resetKey: `${searchQuery}-${selectedCategory}`,
+			resetKey: `${debouncedSearch}-${selectedCategory}`,
 		});
 
 	const showPagination = !loading && totalPages > 1;
@@ -119,7 +118,7 @@ const Products = () => {
 					totalPages={totalPages}
 					onPageChange={handlePageChange}
 					itemsPerPage={ITEMS_PER_PAGE}
-					totalItems={filteredItems.length}
+					totalItems={products.length}
 					className="mt-8"
 				/>
 			)}

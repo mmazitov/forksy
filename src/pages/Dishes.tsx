@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { LuPlus } from 'react-icons/lu';
 
 import { CardCompact } from '@/features/dishes';
@@ -18,20 +18,30 @@ import {
 	ITEMS_PER_PAGE,
 	PAGE_TITLE,
 } from '@/shared/constants';
-import { useBreadcrumbs, useFilter, usePagination, useItemListSchema } from '@/shared/hooks';
+import { useBreadcrumbs, useDebounce, usePagination, useItemListSchema } from '@/shared/hooks';
 import { METADATA_CONFIG } from '@/shared/lib/config';
 import { type ItemListSchemaItem, createSlug } from '@/shared/lib/utils';
 
 const Dishes = () => {
 	const breadcrumbItems = useBreadcrumbs();
-	const { data, loading, error } = useDishesQuery();
+	const [searchQuery, setSearchQuery] = useState('');
+	const [selectedCategory, setSelectedCategory] = useState('Усі');
+	const debouncedSearch = useDebounce(searchQuery);
 
-	const dishes = data?.dishes;
-	const dishesData = dishes ?? [];
+	const { data, loading, error } = useDishesQuery({
+		variables: {
+			search: debouncedSearch || undefined,
+			category: selectedCategory !== 'Усі' ? selectedCategory : undefined,
+			limit: 100,
+		},
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const dishes = data?.dishes ?? [];
 
 	const dishItems = useMemo<ItemListSchemaItem[]>(
 		() =>
-			(dishes ?? []).map((dish) => ({
+			dishes.map((dish) => ({
 				name: dish.name,
 				url: `${METADATA_CONFIG.site.url}/dishes/${createSlug(dish.name)}`,
 				image: dish.imageUrl ?? undefined,
@@ -41,23 +51,11 @@ const Dishes = () => {
 	);
 	useItemListSchema(dishItems, 'Recipe');
 
-	const {
-		searchQuery,
-		setSearchQuery,
-		selectedCategory,
-		setSelectedCategory,
-		filteredItems,
-	} = useFilter(dishesData, {
-		searchField: 'name',
-		categoryField: 'category',
-		defaultCategory: 'Усі',
-	});
-
 	const { currentPage, totalPages, paginatedItems, handlePageChange } =
 		usePagination({
-			items: filteredItems,
+			items: dishes,
 			itemsPerPage: ITEMS_PER_PAGE,
-			resetKey: `${searchQuery}-${selectedCategory}`,
+			resetKey: `${debouncedSearch}-${selectedCategory}`,
 		});
 
 	const showPagination = !loading && totalPages > 1;
@@ -120,7 +118,7 @@ const Dishes = () => {
 					totalPages={totalPages}
 					onPageChange={handlePageChange}
 					itemsPerPage={ITEMS_PER_PAGE}
-					totalItems={filteredItems.length}
+					totalItems={dishes.length}
 					className="mt-8"
 				/>
 			)}
